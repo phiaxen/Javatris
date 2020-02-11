@@ -1,4 +1,5 @@
 package server;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -12,9 +13,13 @@ import java.net.Socket;
  */
 public class ConnectionHandler implements Runnable
 {
-
-	private BufferedReader indata;
+	public interface Delegate {
+		void addRow(int row);
+		void gameOver();
+	}
 	
+	private BufferedReader indata;
+	public Delegate delegate;
 
 	public ConnectionHandler(Socket server) throws IOException 
 	{
@@ -35,6 +40,7 @@ public class ConnectionHandler implements Runnable
 				switch(code)
 				{
 					case 0: case 1: case 2: case 3: case 4: case 5: case 6: case 7: case 8: case 9:
+						System.out.println(code);
 						addRow(code); break;
 					case 10:
 						win(); break;
@@ -94,9 +100,10 @@ public class ConnectionHandler implements Runnable
 	
 	public void addRow(int n) 
 	{
-
 		System.out.println("Add row with opening " + n);
-		//add code here
+		if (delegate != null) {
+			delegate.addRow(n);
+		}
 	}
 
 }

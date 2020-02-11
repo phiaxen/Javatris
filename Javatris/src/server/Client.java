@@ -1,22 +1,59 @@
 package server;
+
 import java.net.*;
+
+import model.GameEngine;
+
 import java.io.*;
 
 public class Client 
 {
-	private static final String IP = "127.0.0.1";
-	private static final int PORT = 6969;
-	private boolean ready;
-	static PrintWriter output;
 
+	// private GameEngine engine;
+	private boolean ready;
+	private Socket socket;
+	static PrintWriter output;
+	
+	public Client(GameEngine engine, String ip, int port) 
+	{
+		try {
+			socket = new Socket(ip, port);
+			//this.engine = engine;
+			ConnectionHandler handler = new ConnectionHandler(socket);
+			handler.delegate = new ConnectionHandler.Delegate() {
+				
+				@Override
+				public void addRow(int row) {
+					engine.addRow(row, 1);
+				}
+				
+				@Override
+				public void gameOver() {
+					System.out.println("Game Over! No");
+				}
+			};
+			
+			
+			output =  new PrintWriter(socket.getOutputStream(), true);
+			new Thread(handler).start();
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	/*
 	public static void main(String[] args) throws UnknownHostException, IOException 
 	{
 		Socket cSocket = new Socket(IP, PORT);
-		ConnectionHandler handler = new ConnectionHandler(cSocket);
+
 		BufferedReader keyboard = new BufferedReader(new InputStreamReader(System.in));
-		output =  new PrintWriter(cSocket.getOutputStream(), true);
+
 		
-		new Thread(handler).start();
+
 		
 		while (true) 
 		{
@@ -50,18 +87,27 @@ public class Client
 
 		}
 		
-		cSocket.close();
-		System.exit(0);
+
 		
 	}
 	
 	/*
 	 *  Sends an integer to the other client via the server
 	 */
-	private static void sendInt(int n)
+	
+	public void sendInt(int n)
 	{
 		output.println("msg " + n);
 	}
 	
+	private void exit() 
+	{
+		try {
+			socket.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 }

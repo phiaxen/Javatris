@@ -1,5 +1,5 @@
 package model;
-
+import server.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.concurrent.ThreadLocalRandom;
@@ -23,7 +23,8 @@ public class GameEngine implements Runnable {
 	private BufferedImage blocks;
 	private BufferedImage[] colors = new BufferedImage[7];
 	private SideInfo sideInfo;
-	
+	private Client client;
+	private Boolean mulitplayer = true;
 	public int level = 0;
 	public int points = 0;
 	public int rowsDeleted = 0;
@@ -40,13 +41,16 @@ public class GameEngine implements Runnable {
 		this.board = board;
 		this.boardView = boardView;
 		this.sideInfo = sideInfo;
-		
+		if(mulitplayer) 
+		{
+			client = new Client(this, "127.0.0.1", 6969);
+		}
 		setColors();
 		setShapes();
 		SpawnShape();
 		board = new Board(20,10);
 		
-		// provisorisk lösning =)
+		// provisorisk lï¿½sning =)
 //		timer = new Timer(delay,this);
 //		Timer t = new Timer(delay,boardView);
 //		timer.start();
@@ -193,9 +197,9 @@ public class GameEngine implements Runnable {
 		return currentShape;
 	}
 	
-	// funktionen antar i början att en hel rad är full. 
-	// Om en kolumn inte är i fylld sätts en flagga(fullRow) till false
-	// Annars kommer funktionen deleteRow ta bort raden och funktionen moveRowsDown flyttar alla övriga rader ovanför ner.
+	// funktionen antar i bï¿½rjan att en hel rad ï¿½r full. 
+	// Om en kolumn inte ï¿½r i fylld sï¿½tts en flagga(fullRow) till false
+	// Annars kommer funktionen deleteRow ta bort raden och funktionen moveRowsDown flyttar alla ï¿½vriga rader ovanfï¿½r ner.
 	private void checkFullRow() {
 		
 		int row = 0;
@@ -213,6 +217,10 @@ public class GameEngine implements Runnable {
 			if(fullRow) {
 				deleteRow(row);
 				moveRowsDown(row);
+				if(mulitplayer) 
+				{
+					client.sendInt(6);
+				}
 				rowsDeleted++;
 			}
 			row++;
@@ -335,16 +343,38 @@ public class GameEngine implements Runnable {
 	}
 	
 	
-		//everything in game that updates
-		private void tick() {
-			update();
-		}
+	//everything in game that updates
+	private void tick() {
+		update();
+	}
+	
+	//everything in game that renders
+	private void render() {
 		
-		//everything in game that renders
-		private void render() {
-			
-			boardView.repaint();
-			
-			
+		boardView.repaint();
+		
+		
+	}
+	
+	private void moveRowsUp() {
+		
+		for(int i=0; i < 20; i++) {
+			for(int j=0; j<board.getBoard()[0].length; j++) {
+				board.getBoard()[i][j] = board.getBoard()[i][j];
+			}
 		}
+	}
+	
+	public void addRow(int collum, int color) 
+	{
+		moveRowsUp();
+		if(collum >= 0 && collum < 10) 
+		{
+			for(int i = 0; i < 9; i++) 
+			{
+				if(i != collum)
+				board.getBoard()[19][i] = color;
+			}
+		}
+	}
 }
