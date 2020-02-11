@@ -69,6 +69,8 @@ public class Menu {
 	public void addTitle(String fileName) {
 		BufferedImage image;
 		JLabel title;
+		
+		this.menuFrame.setResizable(true);
 		try {
 			image = ImageIO.read(new File(fileName));
 			title = new JLabel(new ImageIcon(image));
@@ -76,6 +78,7 @@ public class Menu {
 		} catch (IOException e) {
 			System.out.println("ERROR: File not found!");// placeholder
 		}
+		this.menuFrame.setResizable(false);
 	}
 	
 	/**
@@ -91,4 +94,23 @@ public class Menu {
 	public void closeMenu() {
 		this.menuFrame.setVisible(false);
 	}	
+	
+	/**
+	 * Set location for menu
+	 * @param x : menus new center x position
+	 * @param y : menus new center y position
+	 */
+	public void setLocation(int x, int y) {
+		int height = (int)menuFrame.getWidth();
+		int width = (int)menuFrame.getWidth();
+		
+		menuFrame.setLocation(x - (width/2), y - (height/2));
+	}
+	
+	/**
+	 * Get menu-size
+	 */
+	public Dimension getSize() {
+		return menuFrame.getSize();
+	}
 }
