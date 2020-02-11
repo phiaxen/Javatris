@@ -73,7 +73,7 @@ public class Game {
 		boardView.setPreferredSize(new Dimension(400,800));
 		boardView.setBorder(new EmptyBorder(10,10,10,10));
 //		border.add(boardView);
-		FixedPanel.add(sideInfo);
+//		FixedPanel.add(sideInfo);
 		FixedPanel.add(boardView);
 		
 		frame.add(FixedPanel);

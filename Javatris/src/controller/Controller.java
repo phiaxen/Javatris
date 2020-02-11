@@ -42,6 +42,9 @@ public class Controller implements KeyListener{
 		if(key == KeyEvent.VK_DOWN) {
 			GameEngine.getCurrentShape().fasterSpeedDown();
 		}
+		if(key == KeyEvent.VK_0) {
+			GameEngine.addRow(2,1);
+		}
 	}
 
 	@Override

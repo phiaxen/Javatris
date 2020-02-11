@@ -19,7 +19,7 @@ public class GameEngine implements Runnable {
 
 	public static Shape currentShape;
 	public Shape shapes[] = new Shape[7];
-	public Board board;
+	public static Board board;
 	private BufferedImage blocks;
 	private BufferedImage[] colors = new BufferedImage[7];
 	private SideInfo sideInfo;
@@ -246,7 +246,7 @@ public class GameEngine implements Runnable {
 	
 	private void moveRowsDown(int row) {
 		
-		for(int i=row-1; i>0; i--) {
+		for(int i=row-1; i>=0; i--) {
 			for(int j=0; j<board.getBoard()[0].length; j++) {
 				board.getBoard()[i+1][j] = board.getBoard()[i][j];
 			}
@@ -356,21 +356,21 @@ public class GameEngine implements Runnable {
 		
 	}
 	
-	private void moveRowsUp() {
+	private static void moveRowsUp() {
 		
-		for(int i=0; i < 20; i++) {
+		for(int i=1; i<20; i++) {
 			for(int j=0; j<board.getBoard()[0].length; j++) {
-				board.getBoard()[i][j] = board.getBoard()[i][j];
+				board.getBoard()[i-1][j] = board.getBoard()[i][j];
 			}
 		}
 	}
 	
-	public void addRow(int collum, int color) 
+	public static void addRow(int collum, int color) 
 	{
 		moveRowsUp();
 		if(collum >= 0 && collum < 10) 
 		{
-			for(int i = 0; i < 9; i++) 
+			for(int i = 0; i < 10; i++) 
 			{
 				if(i != collum)
 				board.getBoard()[19][i] = color;
