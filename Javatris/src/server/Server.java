@@ -27,18 +27,18 @@ public class Server
 		sSocket = new ServerSocket(port);
 		BufferedReader keyboard = new BufferedReader(new InputStreamReader(System.in));
 		
-		//OÃ¤ndlig Loop som kÃ¶r servern
+		//Oändlig Loop som kör servern
 		while(true) 
 		{
 			System.out.println("Waiting for Client");
 			Socket client = sSocket.accept();
 			System.out.println("Client connected");
-			// Skapar en ny trÃ¥d av ClientHandler
+			// Skapar en ny tråd av ClientHandler
 			ClientHandler clientThread = new ClientHandler(client, clients);
-			//LÃ¤gger till ClientThreden i litan av alla uppkopplade clienter.
+			//Lägger till ClientThreden i listan av alla uppkopplade clienter.
 			clients.add(clientThread);
 			
-			//Startar trÃ¥den fÃ¶r ClientThread
+			//Startar tråden för ClientThread
 			pool.execute(clientThread);
 		}
 

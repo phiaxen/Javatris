@@ -43,7 +43,7 @@ public class Controller implements KeyListener{
 			GameEngine.getCurrentShape().fasterSpeedDown();
 		}
 		if(key == KeyEvent.VK_0) {
-			GameEngine.addRow(2,1);
+//			Board.addRow(2,1);
 		}
 	}
 

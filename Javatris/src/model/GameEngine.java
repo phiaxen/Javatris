@@ -16,63 +16,41 @@ import view.*;
  * @version 1.0
  */
 public class GameEngine implements Runnable {
-
-	public static Shape currentShape;
-	public Shape shapes[] = new Shape[7];
-	public static Board board;
-	private BufferedImage blocks;
-	private BufferedImage[] colors = new BufferedImage[7];
+ 
+	public static Shape currentShape;	//The shape that is currently in action
+	public Shape shapes[] = new Shape[7];	//An array that contains 7 different shapes
+	public Board board;	
+	private BufferedImage blocks;	
 	private SideInfo sideInfo;
 	private Client client;
-	private Boolean mulitplayer = true;
+	private Boolean mulitplayer = false; //Change this to true for multiplayer 
 	public int level = 0;
 	public int points = 0;
-	public int rowsDeleted = 0;
-	
-	private Timer timer;
-	private final int FPS = 60;
-	private final int delay = 1000/FPS;
+
 	
 	private boolean running = false;
 	private Thread thread;
 	
 	private BoardView boardView;
+	
 	public GameEngine(Board board, BoardView boardView, SideInfo sideInfo) {
 		this.board = board;
 		this.boardView = boardView;
 		this.sideInfo = sideInfo;
+		
 		if(mulitplayer) 
 		{
 			client = new Client(this, "127.0.0.1", 6969);
 		}
-		setColors();
-		setShapes();
+	
 		SpawnShape();
-		board = new Board(20,10);
-		
-		// provisorisk l�sning =)
-//		timer = new Timer(delay,this);
-//		Timer t = new Timer(delay,boardView);
-//		timer.start();
-//		t.start();
-	
 	}
 	
 	
-	public void setColors() {
-		try {
-			blocks = ImageIO.read(Board.class.getResource("/images/tiles.png"));
-		}catch(IOException e) {
-			e.printStackTrace();
-		}
-		for(int i=0; i<colors.length; i++){
-			colors[i] = blocks.getSubimage(i*40,0, 40, 40);
-		}
-	}
+	
 	
 	public void update() {
 	
-		
 		
 		currentShape.time += System.currentTimeMillis() - currentShape.lastTime;
 		currentShape.lastTime = System.currentTimeMillis();
@@ -91,11 +69,22 @@ public class GameEngine implements Runnable {
 			CheckCollisionX();
 			
 			if(currentShape.hasCollidedY()) {
-				
 				setStaticShapes();
 				SpawnShape();
-				checkFullRow();
+				int rowsDeleted = 0;
+				for(int i=0; i<board.getBoard().length; i++) {
+					if(board.checkFullRow(i)) {
+						rowsDeleted++;
+						if(mulitplayer) 
+							{
+								client.sendInt(6);
+							}
+					}
+				}
 				
+				points += scoreHandler(level,rowsDeleted);
+				sideInfo.updateScore(points);
+				System.out.println("points: " + points);	
 				
 			}
 		
@@ -113,7 +102,9 @@ public class GameEngine implements Runnable {
 			currentShape.setDeltaX(0);
 	}
 	
-	
+	public void addRow(int column, int color) {
+		board.addRow(column, color);
+	}
 	public void CheckCollisionX() {
 		
 		for(int i = 0; i<currentShape.getShape().length; i++) {
@@ -150,39 +141,39 @@ public class GameEngine implements Runnable {
 		}
 	}
 	
-	public void setShapes() {
-		shapes[0] = new Shape(board,1,colors[0], new int[][] {
+	private Shape getShape(int shape) {
+		
+		switch(shape){
+		case 0: return new Shape(board,1, new int[][] {
 			{1,1,1,1}}); //I
-	
-		shapes[1] = new Shape(board,2,colors[1], new int[][] {
+		case 1: return new Shape(board,2, new int[][] {
 			{1,1,0},
 			{0,1,1}}); //Z
-		
-		shapes[2] = new Shape(board,3,colors[2],new int[][] {
+		case 2: return new Shape(board,3,new int[][] {
 			{0,1,1},
 			{1,1,0}}); //S
-		
-		shapes[3] = new Shape(board,4,colors[3], new int[][] {
+		case 3: return new Shape(board,4, new int[][] {
 			{0,0,1},
 			{1,1,1}}); //L
-		
-		shapes[4]= new Shape(board,5,colors[4], new int[][] {
+		case 4: return new Shape(board,5, new int[][] {
 			{1,1,1},
 			{0,0,1}}); //J
-		
-		shapes[5]= new Shape(board,6,colors[5], new int[][] {
+		case 5: return new Shape(board,6, new int[][] {
 			{1,1,1},
 			{0,1,0}}); //T
-		
-		shapes[6]= new Shape(board,7,colors[6], new int[][] {
+		case 6: return shapes[6]= new Shape(board,7, new int[][] {
 			{1,1},
 			{1,1}}); //Box 
+		default: break;
+		}
+		return null;
+		
 	}
 	
 	public void SpawnShape() {
 		
 		int randomNum = ThreadLocalRandom.current().nextInt(0, shapes.length);
-		currentShape = new Shape(board,randomNum+1,shapes[randomNum].getBlock(),shapes[randomNum].getCoords());
+		currentShape = getShape(randomNum);
 		
 	}
 	
@@ -195,63 +186,7 @@ public class GameEngine implements Runnable {
 	
 	public static Shape getCurrentShape() {
 		return currentShape;
-	}
-	
-	// funktionen antar i b�rjan att en hel rad �r full. 
-	// Om en kolumn inte �r i fylld s�tts en flagga(fullRow) till false
-	// Annars kommer funktionen deleteRow ta bort raden och funktionen moveRowsDown flyttar alla �vriga rader ovanf�r ner.
-	private void checkFullRow() {
-		
-		int row = 0;
-		int col = board.getBoard()[0].length;
-		boolean fullRow = true;
-		
-		while(row <= board.getBoard().length-1) {
-			
-			for(int j = 0; j < col; j++) { 
-				if(board.getBoard()[row][j] == 0) {
-						
-						fullRow = false;
-				}
-			}
-			if(fullRow) {
-				deleteRow(row);
-				moveRowsDown(row);
-				if(mulitplayer) 
-				{
-					client.sendInt(6);
-				}
-				rowsDeleted++;
-			}
-			row++;
-			fullRow= true;
-		}
-		
-	
-		
-		points += scoreHandler(level,rowsDeleted);
-		System.out.println("points: " + points);
-		sideInfo.updateScore(points);
-		rowsDeleted = 0;
-
-	}
-	
-	
-	private void deleteRow(int row) {
-			for(int i = 0; i < board.getBoard()[0].length; i++) {
-				board.getBoard()[row][i] = 0;
-			}
-		
-	}
-	
-	private void moveRowsDown(int row) {
-		
-		for(int i=row-1; i>=0; i--) {
-			for(int j=0; j<board.getBoard()[0].length; j++) {
-				board.getBoard()[i+1][j] = board.getBoard()[i][j];
-			}
-		}
-	}
+	}	
 	
 	private void levelUp() {
 		
@@ -312,8 +247,16 @@ public class GameEngine implements Runnable {
 		int frames = 0;
 		long timer = System.currentTimeMillis();
 		
-		//gameloop
-		while(running) {
+		//gameloop, now the CPU-usage should not rise as much as before =)
+		while(!Thread.interrupted()) {
+			
+			try {
+				Thread.sleep(1);
+			}
+			catch(InterruptedException e) {
+				break;
+			}
+			
 			long now = System.nanoTime();
 			deltaTime += (now - lastTime) / ns;
 			lastTime = now;
@@ -350,31 +293,8 @@ public class GameEngine implements Runnable {
 	
 	//everything in game that renders
 	private void render() {
-		
 		boardView.repaint();
-		
-		
 	}
 	
-	private static void moveRowsUp() {
-		
-		for(int i=1; i<20; i++) {
-			for(int j=0; j<board.getBoard()[0].length; j++) {
-				board.getBoard()[i-1][j] = board.getBoard()[i][j];
-			}
-		}
-	}
 	
-	public static void addRow(int collum, int color) 
-	{
-		moveRowsUp();
-		if(collum >= 0 && collum < 10) 
-		{
-			for(int i = 0; i < 10; i++) 
-			{
-				if(i != collum)
-				board.getBoard()[19][i] = color;
-			}
-		}
-	}
 }

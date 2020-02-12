@@ -2,6 +2,7 @@ package server;
 
 import java.net.*;
 
+import model.Board;
 import model.GameEngine;
 
 import java.io.*;
@@ -23,8 +24,8 @@ public class Client
 			handler.delegate = new ConnectionHandler.Delegate() {
 				
 				@Override
-				public void addRow(int row) {
-					engine.addRow(row, 1);
+				public void addRow(int column) {
+					engine.addRow(column, 1);
 				}
 				
 				@Override

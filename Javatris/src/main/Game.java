@@ -2,6 +2,7 @@ package main;
 import server.*;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 
 import javax.swing.BorderFactory;
@@ -26,14 +27,28 @@ public class Game {
 	private final  int BoardWidth = 10;
 	private final  int BoardHeight = 20;
 	
+	private JFrame frame;
 	private int FrameWidth = 0;
 	private int FrameHeight = 0;
 	
-
-	private BoardView boardView;
+	private JPanel FixedPanel;
+	
 	private Board board;
+	private BoardView boardView;
 	private GameEngine gameEngine; 
+	private Controller controller;
 	private SideInfo sideInfo;
+	
+	
+	public Game() {
+		ResizeFrame();
+		Init();
+		SetUpFrame();	
+	}
+	
+	public static void main(String[] args) {
+		new Game();
+	}
 	
 	//Temporary solution
 	public void ResizeFrame() {
@@ -41,54 +56,36 @@ public class Game {
 		FrameHeight = BlockSize * BoardHeight + 37;
 	}
 	
-	public static void main(String[] args) {
-		new Game();
-	}
-	
-	public Game() {
-	
-		
-		board = new Board(BoardHeight,BoardWidth);
+	private void Init() {
+		board = Board.getInstance();
 		boardView = new BoardView(board,BoardHeight,BoardWidth,BlockSize,false);
 		sideInfo = new SideInfo();
 		gameEngine = new GameEngine(board, boardView,sideInfo);
 		gameEngine.start();
+		controller = new Controller();
+	}
+	
+	public void SetUpFrame() {
+	
+		frame = new JFrame("JavaTris");
+		frame.setSize(FrameWidth,FrameHeight);	//add 300 on width if sideInfo is included
 		
+		FixedPanel = new JPanel(new GridBagLayout());
 		
-		Controller controller = new Controller();
-		ResizeFrame();
-		
-		JFrame frame = new JFrame("Tetris");
-		frame.setSize(FrameWidth,FrameHeight);	
-				
-		boardView.setLayout(null);
-       
-
-//		JPanel border = new JPanel(new GridBagLayout());
-		JPanel FixedPanel = new JPanel(new GridBagLayout());
 		FixedPanel.setPreferredSize(frame.getSize());
 		FixedPanel.setBackground(Color.WHITE);
-//		border.setPreferredSize(new Dimension(440,840));
-//		border.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY,20));
-		boardView.setPreferredSize(new Dimension(400,800));
-		boardView.setBorder(new EmptyBorder(10,10,10,10));
-//		border.add(boardView);
-//		FixedPanel.add(sideInfo);
+
+
+//		FixedPanel.add(sideInfo); 
 		FixedPanel.add(boardView);
-		
 		frame.add(FixedPanel);
 		
 //		frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
 		frame.addKeyListener(controller);
 		frame.setResizable(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
 		frame.setVisible(true);	
-		
-	
-		
 	}
-	
 	
 	//Temporary solution with getters
 	public int getBoardWidth() {

@@ -12,12 +12,11 @@ import java.awt.image.BufferedImage;
  * En Shape har följande egenskaper:
  * 1. x- och y position
  * 2. En 2D-array för själva formen, där 1 = ifylld och 0 = transparent
- * 3. Färg, en int mellan 0-6 som motsvarar de olika färgerna
+ * 3. Färg, en int mellan 1-7 som motsvarar de olika färgerna
 */
 
 public class Shape {
 
-	private BufferedImage block;
 	private Board board;
 	private int[][] shape;
 	public int x,y;
@@ -33,11 +32,10 @@ public class Shape {
 	
 	private int color;
 	
-	public Shape(Board board,int color,BufferedImage block, int[][] positions) {
+	public Shape(Board board,int color, int[][] positions) {
 		
 		this.board = board;
 		this.color = color;
-		this.block = block;
 		this.shape = positions;
 		
 		x = 3;
@@ -145,9 +143,6 @@ public class Shape {
 	}
 	public int[][] getShape(){
 		return shape;
-	}
-	public BufferedImage getBlock() {
-		return block;
 	}
 	public int[][] getCoords() {
 		return shape;
