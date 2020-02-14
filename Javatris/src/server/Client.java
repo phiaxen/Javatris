@@ -43,6 +43,11 @@ public class Client
 				{
 					engine.stop();
 				}
+				
+				public void quit() 
+				{
+					engine.quit();
+				}
 			};
 			
 			
