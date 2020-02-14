@@ -20,16 +20,16 @@ public class GameEngine implements Runnable {
 	public static Shape currentShape;	//The shape that is currently in action
 	public Shape shapes[] = new Shape[7];	//An array that contains 7 different shapes
 	public Board board;	
-	private BufferedImage blocks;	
 	private SideInfo sideInfo;
 	private Client client;
 	private Boolean mulitplayer = false; //Change this to true for multiplayer 
 	public int level = 0;
 	public int points = 0;
 
-	
 	private boolean running = false;
+	public boolean paused = false;
 	private Thread thread;
+	public final int TICKSPERSECOND = 60;
 	
 	private BoardView boardView;
 	
@@ -51,7 +51,6 @@ public class GameEngine implements Runnable {
 	
 	public void update() {
 	
-		
 		currentShape.time += System.currentTimeMillis() - currentShape.lastTime;
 		currentShape.lastTime = System.currentTimeMillis();
 	
@@ -184,7 +183,7 @@ public class GameEngine implements Runnable {
 	
 	}
 	
-	public static Shape getCurrentShape() {
+	public Shape getCurrentShape() {
 		return currentShape;
 	}	
 	
@@ -220,11 +219,23 @@ public class GameEngine implements Runnable {
 		thread = new Thread(this);
 		thread.start(); //start thread
 	}
+	
+	public void pause() {
+		paused = true;
+	}
+	
+	public void resume() {
+		synchronized(thread) {
+			paused = false;
+			thread.notify();
+		}
+		
+	}
 
 	private synchronized void stop() {
 		if(!running) {
 			return; 
-		}
+		} 
 		running = false;
 		try {
 			thread.join();
@@ -237,49 +248,63 @@ public class GameEngine implements Runnable {
 	//This function gets called when we start the thread.
 	@Override
 	public void run() {
-//		init();
 		
 		long lastTime = System.nanoTime();
-		final double amountOfTicks = 60.0;
-		double ns = 1000000000 / amountOfTicks;
+		double ns = 1000000000 / TICKSPERSECOND;
 		double deltaTime = 0;
 		int updates = 0;
 		int frames = 0;
-		long timer = System.currentTimeMillis();
+		long fpsTimer = System.currentTimeMillis();
 		
 		//gameloop, now the CPU-usage should not rise as much as before =)
-		while(!Thread.interrupted()) {
+		while(!Thread.interrupted() ) {
 			
-			try {
-				Thread.sleep(1);
-			}
-			catch(InterruptedException e) {
-				break;
-			}
 			
-			long now = System.nanoTime();
-			deltaTime += (now - lastTime) / ns;
-			lastTime = now;
-			
-			if(deltaTime >= 1) {
-				tick();
+			if(paused) {
+				try {
+					synchronized(thread) {
+						thread.wait();
+					}
+				}catch(InterruptedException e){
+					e.printStackTrace();
+				}
+			}else {
+				try {
+					Thread.sleep(1); //sleep in 1ms
+				}
+				catch(InterruptedException e) {
+					break;
+				}
 				
-				updates++;
+				long now = System.nanoTime();
+				deltaTime += (now - lastTime) / ns;
+				lastTime = now;
 				
-				deltaTime--;
-				render();
+				
+				if(deltaTime >= 1) {
+					tick();
+//					System.out.println(deltaTime);
+					updates++;
+					
+					deltaTime--;
+					render();
+				}
+				
+				
+				
+				frames++;
+				
+				//debug
+//				if(System.currentTimeMillis() - fpsTimer > 1000){
+//					fpsTimer += 1000; 
+//					System.out.println(updates + " Ticks, FPS " + frames);
+//					updates = 0;
+//					frames = 0;
+//					
+//				}
 			}
 			
 			
-			
-			frames++;
-			
-			if(System.currentTimeMillis() - timer > 1000){
-				timer += 1000; 
-				updates = 0;
-				frames = 0;
-				
-			}
 		}
 		stop();
 		
@@ -293,6 +318,7 @@ public class GameEngine implements Runnable {
 	
 	//everything in game that renders
 	private void render() {
+		boardView.setCurrentShape(currentShape);
 		boardView.repaint();
 	}
 	

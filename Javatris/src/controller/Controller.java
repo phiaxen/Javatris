@@ -15,8 +15,9 @@ import model.*;
 
 public class Controller implements KeyListener{
 
-	public Controller() {
-		
+	private GameEngine gameEngine;
+	public Controller(GameEngine gameEngine) {
+		this.gameEngine = gameEngine;
 	}
 	@Override
 	public void keyTyped(KeyEvent e) {
@@ -27,23 +28,28 @@ public class Controller implements KeyListener{
 	public void keyPressed(KeyEvent e) {
 		
 		int key = e.getKeyCode();
-		if(key == KeyEvent.VK_RIGHT) {
-			GameEngine.getCurrentShape().setDeltaX(1);
+		if((key == KeyEvent.VK_RIGHT)&&!gameEngine.paused) {
+			gameEngine.getCurrentShape().setDeltaX(1);
 		}
 		
-		if(key == KeyEvent.VK_LEFT) {
-			GameEngine.getCurrentShape().setDeltaX(-1);
+		if((key == KeyEvent.VK_LEFT)&&!gameEngine.paused) {
+			gameEngine.getCurrentShape().setDeltaX(-1);
 		}
 		
-		if(key == KeyEvent.VK_UP) {
-			GameEngine.getCurrentShape().rotate();
+		if((key == KeyEvent.VK_UP)&&!gameEngine.paused) {
+			gameEngine.getCurrentShape().rotate();
 		}
 		
-		if(key == KeyEvent.VK_DOWN) {
-			GameEngine.getCurrentShape().fasterSpeedDown();
+		if((key == KeyEvent.VK_DOWN)&&!gameEngine.paused) {
+			gameEngine.getCurrentShape().fasterSpeedDown();
 		}
-		if(key == KeyEvent.VK_0) {
-//			Board.addRow(2,1);
+		if(key == KeyEvent.VK_ESCAPE) {
+			if(!gameEngine.paused) {
+				gameEngine.pause();
+			}else {
+				gameEngine.resume();
+			}
+			
 		}
 	}
 
@@ -51,7 +57,7 @@ public class Controller implements KeyListener{
 	public void keyReleased(KeyEvent e) {
 		int key = e.getKeyCode();
 		if(key == KeyEvent.VK_DOWN) {
-			GameEngine.getCurrentShape().normalSpeedDown();
+			gameEngine.getCurrentShape().normalSpeedDown();
 		}
 		
 	}

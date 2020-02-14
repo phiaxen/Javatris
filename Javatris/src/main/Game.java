@@ -62,7 +62,7 @@ public class Game {
 		sideInfo = new SideInfo();
 		gameEngine = new GameEngine(board, boardView,sideInfo);
 		gameEngine.start();
-		controller = new Controller();
+		controller = new Controller(gameEngine);
 	}
 	
 	public void SetUpFrame() {

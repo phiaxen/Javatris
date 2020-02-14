@@ -35,8 +35,9 @@ public class BoardView extends JPanel{
 	private Board board;
 	private boolean withGrid;  
 	private BufferedImage[] colors;
+	private GameEngine gameEngine;
 	
-	public BoardView(Board board,int height,int width, int blocksize, boolean withGrid) {
+	public BoardView(Board board, int height,int width, int blocksize, boolean withGrid) {
 		this.board = board;
 		this.HEIGHT = height;
 		this.WIDTH = width;
@@ -47,6 +48,9 @@ public class BoardView extends JPanel{
 		
 	}
 	
+	public void setCurrentShape(Shape currentShape) {
+		this.currentShape = currentShape;
+	}
 	
 	
 	public void init() {
@@ -79,7 +83,7 @@ public class BoardView extends JPanel{
 
 		g2.drawImage(background,0,0,null); //rita upp bakgrunden
 		
-		currentShape = GameEngine.getCurrentShape(); 
+		
 		
 		if(withGrid) {
 			
@@ -118,5 +122,7 @@ public class BoardView extends JPanel{
 		}
 		
 	}
+
+	
 	
 }

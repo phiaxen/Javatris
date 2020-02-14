@@ -41,7 +41,7 @@ public class Client
 				@Override
 				public void pause() 
 				{
-					engine.stop();
+					engine.pause();
 				}
 			};
 			
