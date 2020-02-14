@@ -30,7 +30,6 @@ public class Game {
 	private JFrame frame;
 	private int FrameWidth = 0;
 	private int FrameHeight = 0;
-	
 	private JPanel FixedPanel;
 	
 	private Board board;

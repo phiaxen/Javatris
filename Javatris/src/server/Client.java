@@ -43,6 +43,12 @@ public class Client
 				{
 					engine.stop();
 				}
+				
+				@Override
+				public void quit() 
+				{
+					engine.quit();
+				}
 			};
 			
 			

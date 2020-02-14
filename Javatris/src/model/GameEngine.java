@@ -23,7 +23,7 @@ public class GameEngine implements Runnable {
 	private BufferedImage blocks;	
 	private SideInfo sideInfo;
 	private Client client;
-	private Boolean mulitplayer = false; //Change this to true for multiplayer 
+	private Boolean mulitplayer = true; //Change this to true for multiplayer 
 	public int level = 0;
 	public int points = 0;
 
@@ -221,7 +221,7 @@ public class GameEngine implements Runnable {
 		thread.start(); //start thread
 	}
 
-	private synchronized void stop() {
+	public synchronized void stop() {
 		if(!running) {
 			return; 
 		}
@@ -285,6 +285,10 @@ public class GameEngine implements Runnable {
 		
 	}
 	
+	public void quit() 
+	{
+		System.exit(0);
+	}
 	
 	//everything in game that updates
 	private void tick() {
