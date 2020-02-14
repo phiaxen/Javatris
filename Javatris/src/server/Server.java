@@ -40,6 +40,13 @@ public class Server
 					messageClients(11);
 					running = true;
 			}
+			else if (clients.size() < 2 && running ) 
+			{		
+					System.out.println("I should quit");
+					//Stops the clients if either stops, should be a quit the mulitplayer session in the future or atleast give a notice to the player.
+					messageClients(12);
+					System.exit(1);
+			}
 			else if (clients.size() < 2) 
 			{
 				System.out.println("Waiting for Client");

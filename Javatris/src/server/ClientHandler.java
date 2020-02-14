@@ -32,7 +32,19 @@ public class ClientHandler implements Runnable
 		try 
 		{
 			while(true) 
-			{	
+			{	/*
+				if( client == null) 
+				{
+					for(ClientHandler oClient : clients) 
+					{
+						if(oClient == this) 
+						{
+							clients.remove(oClient);
+							break;
+						}
+					}
+					
+				}*/
 				String message = reader.readLine();
 				//writer.println("client says:" + message);
 				if (message.startsWith("msg"))
@@ -47,9 +59,7 @@ public class ClientHandler implements Runnable
 		}
 		catch( IOException e)
 		{
-			System.out.println("Client disconnected");
-			System.out.println("Exiting..");
-			toOther("12");
+			
 		}
 
 	}

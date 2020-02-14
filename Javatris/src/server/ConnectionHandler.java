@@ -21,7 +21,6 @@ public class ConnectionHandler implements Runnable
 		void gameOver();
 		void start();
 		void pause();
-		void quit();
 	}
 	
 	private BufferedReader indata;
@@ -55,7 +54,7 @@ public class ConnectionHandler implements Runnable
 						System.out.println("Start");
 						break;
 					case 12:
-						quit(); 
+						stop(); 
 						System.out.println("stop");
 						break;
 					case 15:
@@ -140,11 +139,5 @@ public class ConnectionHandler implements Runnable
 			delegate.addRow(n);
 		}
 	}
-	
-	public void quit() 
-	{
-		if (delegate != null) {
-			delegate.quit();
-		}
-	}
+
 }
