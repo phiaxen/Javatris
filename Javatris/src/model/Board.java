@@ -2,7 +2,7 @@ package model;
 
 /**
  * THIS CLASS IS A MODEL
- * Board is a (singleton) class that creates the 20x10 board in the game.
+ * Board is a class(singleton) that creates the 20x10 board in the game.
  * 
  * @author Philip
  * @version 1.0

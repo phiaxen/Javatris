@@ -27,7 +27,7 @@ public class GameEngine implements Runnable {
 	public int points = 0;
 
 	private boolean running = false;
-	public boolean paused = false;
+	public boolean paused = false; 
 	private Thread thread;
 	public final int TICKSPERSECOND = 60;
 	
