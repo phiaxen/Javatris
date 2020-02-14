@@ -13,9 +13,14 @@ import java.net.Socket;
  */
 public class ConnectionHandler implements Runnable
 {
+	/*
+	 * Interface that handles the communication with the game engine.
+	 */
 	public interface Delegate {
 		void addRow(int row);
 		void gameOver();
+		void start();
+		void pause();
 	}
 	
 	private BufferedReader indata;
@@ -45,7 +50,13 @@ public class ConnectionHandler implements Runnable
 					case 10:
 						win(); break;
 					case 11:
-						start(); break;
+						start();
+						System.out.println("Start");
+						break;
+					case 12:
+						stop(); 
+						System.out.println("stop");
+						break;
 					case 15:
 						System.out.println("Says " + serverOutput); break;
 				}
@@ -86,18 +97,41 @@ public class ConnectionHandler implements Runnable
 		return num;	
 	}
 	
+	/*
+	 * Uses the delegate interaface to call the start function from game engine and starts game.
+	 */
 	public void start() 
 	{
 		System.out.println("Start game");
-		//add code here
+		if (delegate != null) {
+			delegate.start();
+		}
 	}
 	
+	/*
+	 *  Uses the delegate interface to call the stop function from game engine and stops the game.
+	 */
+	public void stop() 
+	{
+		System.out.println("stop game");
+		if (delegate != null) {
+			delegate.pause();
+		}
+	}
+	
+	/*
+	 * Does nothing for now, Should communicate with the game engine to display a victory screen
+	 */
 	public void win() 
 	{
 		System.out.println("You won");
 		//add code here
 	}
 	
+	/*
+	 * Uses the delagate interface to communication with game engine adding a row to the board with a oppening a the postion n
+	 * @param n the position with a opening in the added row
+	 */
 	public void addRow(int n) 
 	{
 		System.out.println("Add row with opening " + n);

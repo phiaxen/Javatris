@@ -32,7 +32,19 @@ public class ClientHandler implements Runnable
 		try 
 		{
 			while(true) 
-			{
+			{	/*
+				if( client == null) 
+				{
+					for(ClientHandler oClient : clients) 
+					{
+						if(oClient == this) 
+						{
+							clients.remove(oClient);
+							break;
+						}
+					}
+					
+				}*/
 				String message = reader.readLine();
 				//writer.println("client says:" + message);
 				if (message.startsWith("msg"))
@@ -52,6 +64,10 @@ public class ClientHandler implements Runnable
 
 	}
 	
+	/*
+	 * Sends a message to all other clients connected to the server
+	 * @param message the message string that is sent
+	 */
 	private void toOther(String message) 
 	{
 		for(ClientHandler oClient : clients) 
@@ -63,4 +79,12 @@ public class ClientHandler implements Runnable
 		}
 	}
 	
+	/*
+	 * gets the writer of the client handler, is used if the server should directly communication with the clients
+	 * @return returns the clients handlers writer.
+	 */
+	PrintWriter getWriter() 
+	{
+		return writer;
+	}
 }

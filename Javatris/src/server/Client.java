@@ -10,8 +10,6 @@ import java.io.*;
 public class Client 
 {
 
-	// private GameEngine engine;
-	private boolean ready;
 	private Socket socket;
 	static PrintWriter output;
 	
@@ -21,6 +19,7 @@ public class Client
 			socket = new Socket(ip, port);
 			//this.engine = engine;
 			ConnectionHandler handler = new ConnectionHandler(socket);
+			//Lambda function for handling the communcation between the game engine and connection handler
 			handler.delegate = new ConnectionHandler.Delegate() {
 				
 				@Override
@@ -31,6 +30,18 @@ public class Client
 				@Override
 				public void gameOver() {
 					System.out.println("Game Over! No");
+				}
+				
+				@Override
+				public void start() 
+				{
+					engine.start();
+				}
+				
+				@Override
+				public void pause() 
+				{
+					engine.stop();
 				}
 			};
 			
@@ -94,13 +105,16 @@ public class Client
 	
 	/*
 	 *  Sends an integer to the other client via the server
+	 *  @param n the message sent
 	 */
-	
 	public void sendInt(int n)
 	{
 		output.println("msg " + n);
 	}
 	
+	/*
+	 * Closes the socket for server communcation
+	 */
 	private void exit() 
 	{
 		try {
