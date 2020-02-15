@@ -13,7 +13,7 @@ import java.util.concurrent.Executors;
 
 public class Server 
 {
-	private static final int port = 6969;
+ 	private static final int port = 6969;
 	private static ServerSocket sSocket;
 	//Listan med de olika ClientHandlers så att server kan komma åt dem enkelt
 	private static ArrayList<ClientHandler> clients = new ArrayList<>();

@@ -19,10 +19,10 @@ public class Shape {
 
 	private Board board;
 	private int[][] shape;
-	public int x,y;
+	private int x,y;
 	public long time, lastTime;
 	public int currentSpeed,normalSpeed = 600, fastSpeed = 60;
-	private int deltaX;
+	private int deltaX = 0;
 
 	public boolean CanMoveX = true;
 	public boolean CanRotate = true;
@@ -87,12 +87,24 @@ public class Shape {
 				}
 			}
 		}
-		
-		
-		
 		shape = Transposed;
 	}
 	
+	public void moveLeft() {
+		x--;
+	}
+	
+	public void moveRight() {
+		x++;
+	}
+	
+	public void moveDown() {
+		y++;
+	}
+	
+	public void moveDeltaX() {
+		x+= deltaX;
+	}
 	
 	//provisorisk lösning:
 	
@@ -129,7 +141,7 @@ public class Shape {
 	public int getY() {
 		return y;
 	}
-	public int getDX() {
+	public int getDeltaX() {
 		return deltaX;
 	}
 	public boolean hasCollidedY() {
@@ -140,9 +152,6 @@ public class Shape {
 	}
 	public int getColor() {
 		return color;
-	}
-	public int[][] getShape(){
-		return shape;
 	}
 	public int[][] getCoords() {
 		return shape;

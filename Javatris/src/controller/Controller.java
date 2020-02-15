@@ -51,6 +51,9 @@ public class Controller implements KeyListener{
 			}
 			
 		}
+		if((key == KeyEvent.VK_0)&&!gameEngine.paused) {
+			gameEngine.addRow(0,1);
+		}
 	}
 
 	@Override

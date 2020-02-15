@@ -23,7 +23,7 @@ import controller.*;
 
 public class Game {
 	
-	private final  int BlockSize = 40;
+	private final  int BlockSize = 40; //resize game <=40 (standard is 40)
 	private final  int BoardWidth = 10;
 	private final  int BoardHeight = 20;
 	
@@ -74,7 +74,6 @@ public class Game {
 		
 		FixedPanel.setPreferredSize(frame.getSize());
 		FixedPanel.setBackground(Color.WHITE);
-
 
 //		FixedPanel.add(sideInfo); 
 		FixedPanel.add(boardView);

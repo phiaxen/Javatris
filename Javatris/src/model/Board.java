@@ -59,9 +59,10 @@ public class Board {
 	 * Moves rows up 
 	 */
 	private void moveRowsUp() {
-		for(int i=1; i<20; i++) {
+		for(int i=1; i<board.length; i++) {
 			for(int j=0; j<board[0].length; j++) {
 				board[i-1][j] = board[i][j];
+				board[i][j] = 0;
 			}
 		}
 	}
@@ -92,7 +93,7 @@ public class Board {
 			for(int i = 0; i < 10; i++) 
 			{
 				if(i != column)
-				board[19][i] = color;
+				board[board.length - 1][i] = color;
 			}
 		}
 	}

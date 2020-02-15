@@ -53,16 +53,16 @@ public class GameEngine implements Runnable {
 	
 		currentShape.time += System.currentTimeMillis() - currentShape.lastTime;
 		currentShape.lastTime = System.currentTimeMillis();
-	
-			while((currentShape.getX() + currentShape.getDX() < 0)) {
-				currentShape.x++;
+		
+			while((currentShape.getX() + currentShape.getDeltaX() < 0)) {
+				currentShape.moveRight();
+				System.out.println("RIGHT");
 			}
-			if(currentShape.getX() + currentShape.getDX() + currentShape.getShape()[0].length > 10) {
-				while(currentShape.getX() + currentShape.getDX() + currentShape.getShape()[0].length > 10) {
-					currentShape.x--;
-				}
+		
+			while(currentShape.getX() + currentShape.getDeltaX() + currentShape.getCoords()[0].length > 10) {
+				currentShape.moveLeft();
+				System.out.println("LEFT");
 			}
-			
 			
 			CheckCollisionY();
 			CheckCollisionX();
@@ -89,12 +89,12 @@ public class GameEngine implements Runnable {
 		
 			if((currentShape.time > currentShape.currentSpeed)&&(!currentShape.hasCollidedY())) {
 				
-				currentShape.y++;
+				currentShape.moveDown();
 				currentShape.time = 0;
 			}
 			if(!currentShape.hasCollidedX()) {
 					
-					currentShape.x += currentShape.getDX();
+					currentShape.moveDeltaX();
 					
 				}
 			
@@ -104,12 +104,14 @@ public class GameEngine implements Runnable {
 	public void addRow(int column, int color) {
 		board.addRow(column, color);
 	}
+	
+	//not bug free
 	public void CheckCollisionX() {
 		
-		for(int i = 0; i<currentShape.getShape().length; i++) {
-			for(int j = 0; j<currentShape.getShape()[0].length; j++) {
-				if(currentShape.getShape()[i][j] !=0) {
-					if(board.getBoard()[currentShape.getY()+i][currentShape.getX()+j+currentShape.getDX()] !=0) {
+		for(int i = 0; i<currentShape.getCoords().length; i++) {
+			for(int j = 0; j<currentShape.getCoords()[0].length; j++) {
+				if(currentShape.getCoords()[i][j] !=0) {
+					if(board.getBoard()[currentShape.getY()+i][currentShape.getX()+j+currentShape.getDeltaX()] !=0) {
 						currentShape.collidedX();
 						return;
 					}	
@@ -121,13 +123,13 @@ public class GameEngine implements Runnable {
 	
 	public void CheckCollisionY() {
 		
-		if((currentShape.y + 1 + currentShape.getShape().length > 20)) {
+		if((currentShape.getY() + 1 + currentShape.getCoords().length > 20)) {
 			currentShape.collidedY();
 		}else {
-			for(int i=0; i<currentShape.getShape().length; i++) {
-				for(int j=0; j<currentShape.getShape()[0].length; j++) {
-					if(currentShape.getShape()[i][j] != 0) {
-						if(board.getBoard()[currentShape.y+i+1][j+currentShape.x] != 0) {
+			for(int i=0; i<currentShape.getCoords().length; i++) {
+				for(int j=0; j<currentShape.getCoords()[0].length; j++) {
+					if(currentShape.getCoords()[i][j] != 0) {
+						if(board.getBoard()[currentShape.getY()+i+1][j+currentShape.getX()] != 0) {
 				
 							currentShape.collidedY();
 							
@@ -143,24 +145,24 @@ public class GameEngine implements Runnable {
 	private Shape getShape(int shape) {
 		
 		switch(shape){
-		case 0: return new Shape(board,1, new int[][] {
+		case 0: return new Shape(board,2, new int[][] {
 			{1,1,1,1}}); //I
-		case 1: return new Shape(board,2, new int[][] {
+		case 1: return new Shape(board,3, new int[][] {
 			{1,1,0},
 			{0,1,1}}); //Z
-		case 2: return new Shape(board,3,new int[][] {
+		case 2: return new Shape(board,4,new int[][] {
 			{0,1,1},
 			{1,1,0}}); //S
-		case 3: return new Shape(board,4, new int[][] {
+		case 3: return new Shape(board,5, new int[][] {
 			{0,0,1},
 			{1,1,1}}); //L
-		case 4: return new Shape(board,5, new int[][] {
+		case 4: return new Shape(board,6, new int[][] {
 			{1,1,1},
 			{0,0,1}}); //J
-		case 5: return new Shape(board,6, new int[][] {
+		case 5: return new Shape(board,7, new int[][] {
 			{1,1,1},
 			{0,1,0}}); //T
-		case 6: return shapes[6]= new Shape(board,7, new int[][] {
+		case 6: return shapes[6]= new Shape(board,8, new int[][] {
 			{1,1},
 			{1,1}}); //Box 
 		default: break;
@@ -179,7 +181,7 @@ public class GameEngine implements Runnable {
 
 	public void setStaticShapes() {
 	
-		board.setStaticShapeInBoard(currentShape.getShape(),currentShape.x,currentShape.y,currentShape.getColor());
+		board.setStaticShapeInBoard(currentShape.getCoords(),currentShape.getX(),currentShape.getY(),currentShape.getColor());
 	
 	}
 	
