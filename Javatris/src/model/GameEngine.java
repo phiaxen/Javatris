@@ -324,5 +324,10 @@ public class GameEngine implements Runnable {
 		boardView.repaint();
 	}
 	
+	public void quit() 
+	{
+		System.exit(1);
+	}
+	
 	
 }
