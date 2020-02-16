@@ -4,8 +4,10 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
 
 import javax.swing.BorderFactory;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.AbstractBorder;
@@ -19,6 +21,10 @@ import controller.*;
  * MAIN CLASS
  * @author Philip
  * @version 1.0
+ * 
+ * Added a simple start-menu
+ * @author Jocke
+ * @version 1.1
  */
 
 public class Game {
@@ -39,11 +45,14 @@ public class Game {
 	private Controller controller;
 	private SideInfo sideInfo;
 	
+	private Menu startMenu;
+	
 	
 	public Game() {
 		ResizeFrame();
-		Init();
-		SetUpFrame();	
+		makeStartmenu();
+		//Init();
+		//SetUpFrame();	
 	}
 	
 	public static void main(String[] args) {
@@ -95,6 +104,32 @@ public class Game {
 	}
 	public int getBlockSize() {
 		return BlockSize;
+	}
+	
+	/**
+	 * Creates a basic start-menu
+	 */
+	private void makeStartmenu() {
+		startMenu = new Menu(new Dimension(200,300), 2);
+		JButton startButton = new JButton("START");
+		JButton exitButton = new JButton("EXIT");
+		
+		startButton.addActionListener((ActionEvent e) -> {startGame();});
+		exitButton.addActionListener((ActionEvent e) -> {System.exit(0);});
+		
+		startMenu.addElement(startButton);
+		startMenu.addElement(exitButton);
+		
+		startMenu.openMenu();
+	}
+	
+	/**
+	 * Starts game
+	 */
+	private void startGame() {
+		Init();
+		SetUpFrame();
+		startMenu.closeMenu();
 	}
 	
 	
