@@ -93,9 +93,12 @@ public class GameEngine implements Runnable {
 					}
 				}
 				
-				points += scoreHandler(level,rowsDeleted);
-				sideInfo.updateScore(points);
-				System.out.println("points: " + points);	
+				//uppdater score endast om rader har tagits bort
+				if(rowsDeleted >0) {
+					points += scoreHandler(level,rowsDeleted);
+					sideInfo.updateScore(points);
+					System.out.println("points: " + points);
+				}	
 				
 			}
 		
