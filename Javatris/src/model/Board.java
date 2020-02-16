@@ -6,7 +6,7 @@ package model;
  * 
  * @author Philip
  * @version 1.0
- * @since 2020-02-13
+ * @since 2020-02-15
  */
 
 public class Board {

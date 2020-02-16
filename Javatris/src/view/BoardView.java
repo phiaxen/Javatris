@@ -50,11 +50,14 @@ public class BoardView extends JPanel{
 	
 	private void init() {
 		colors = new BufferedImage[8];
-		this.setBackground(Color.WHITE); //om man vill ha en enfärgad bakgrund:
+		this.setBackground(Color.white); //om man vill ha en enfärgad bakgrund:
 		boardCoords = board.getBoard(); //hämta spelplanen
 		loadImages();
 		setColors();
 	}
+	
+	
+
 	
 	private void loadImages() {
 		try {
@@ -67,9 +70,10 @@ public class BoardView extends JPanel{
 	
 	private void setColors() {
 		for(int i=0; i<colors.length; i++){
-			colors[i] = tiles.getSubimage(i*40,0, BLOCKSIZE, BLOCKSIZE);	
+			colors[i] = tiles.getSubimage(i*BLOCKSIZE,0, BLOCKSIZE, BLOCKSIZE);	
 		}
 	}
+	
 	
 	public void setCurrentShape(Shape currentShape) {
 		this.currentShape = currentShape;
@@ -82,7 +86,7 @@ public class BoardView extends JPanel{
 		Graphics2D g2 = (Graphics2D)g;
 
 		g2.drawImage(background,0,0,null); //Draw the background 
-//		g2.drawImage(colors[0],0,0,null);
+//		g2.drawImage(tiles,0,0,null);
 		if(withGrid) {
 			
 			g2.setColor(Color.BLACK); //set color 
@@ -99,6 +103,7 @@ public class BoardView extends JPanel{
 			}
 		}
 		
+		//not bug free 
 		//draws currentShape
 		for(int i = 0; i < currentShape.getCoords().length; i++) {
 			for(int j = 0; j < currentShape.getCoords()[i].length; j++) {

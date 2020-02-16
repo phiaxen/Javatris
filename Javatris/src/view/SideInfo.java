@@ -21,7 +21,6 @@ import javax.swing.GroupLayout.Alignment;
 public class SideInfo extends JPanel {
 	private static final long serialVersionUID = 1L;
 	
-	
 //	private BufferedImage scoreTitle;
 	private JLabel scoreText;
 	private JLabel timeLabel;
@@ -34,9 +33,7 @@ public class SideInfo extends JPanel {
 	
 		box = new BoxLayout(this, BoxLayout.Y_AXIS);
 		
-		
-		this.setBorder(new EmptyBorder(10, 20, 10, 10));
-		
+		this.setBorder(new EmptyBorder(20, 20, 20, 20));
 		
 		
 		this.setBackground(Color.LIGHT_GRAY);
@@ -44,15 +41,14 @@ public class SideInfo extends JPanel {
 		this.setLayout(box);
 		
 		scoreText = new JLabel("SCORE: 0");
-		scoreText.setFont(new Font("Arial", Font.ITALIC, 30));
-		
+		scoreText.setFont(new Font("Arial", Font.BOLD, 30));
 		
 		timeLabel = new JLabel("TIME: 100");
-		timeLabel.setFont(new Font("Arial", Font.ITALIC, 30));
+		timeLabel.setFont(new Font("Arial",Font.PLAIN, 30));
 		
 		next = new JLabel("NEXT SHAPE");
 		next.setFont(new Font("Arial", Font.PLAIN, 30));	
-		next.setBorder(new EmptyBorder(40, 35, 10, 10));
+		next.setBorder(new EmptyBorder(40, 30, 10, 10));
 		
 		nextPanel = new JPanel(new GridLayout(4,18,1,1));
 		nextPanel.setBackground(Color.black);
@@ -65,7 +61,7 @@ public class SideInfo extends JPanel {
 		
 		
 		
-		//next.setAlignmentX(CENTER_ALIGNMENT);;
+//		next.setAlignmentX(CENTER_ALIGNMENT);
 	}
 	
 	//Uppdaterar score när den kallas utifrån
@@ -76,8 +72,10 @@ public class SideInfo extends JPanel {
 	//Kanske borde hållas reda på i denna klass
 	//Borde kanske inte vara en int som inparameter
 	public void updateTime(int time) {
-		this.timeLabel.setText("TIME: "+time);
+		this.timeLabel.setText("TIME: " + time + "s");
 	}
+	
+	
 //	private void init() {
 //		
 //		try {

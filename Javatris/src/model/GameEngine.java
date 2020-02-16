@@ -2,9 +2,10 @@ package model;
 import server.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.TimerTask;
 import java.util.concurrent.ThreadLocalRandom;
 import javax.imageio.ImageIO;
-import javax.swing.Timer;
+import java.util.Timer;
 
 import view.*;
 
@@ -31,6 +32,9 @@ public class GameEngine implements Runnable {
 	private Thread thread;
 	public final int TICKSPERSECOND = 60;
 	
+	private int timePassed = 0;
+	private Timer GameTime;
+	
 	private BoardView boardView;
 	
 	public GameEngine(Board board, BoardView boardView, SideInfo sideInfo) {
@@ -44,12 +48,20 @@ public class GameEngine implements Runnable {
 		}
 	
 		SpawnShape();
+		GameTime = new Timer();
 	}
 	
 	
-	
+	TimerTask task = new TimerTask() {
+		public void run() {
+			timePassed++;
+			sideInfo.updateTime(timePassed);
+		}
+		
+	};
 	
 	public void update() {
+//		System.out.println("TIME: " + timePassed);
 	
 		currentShape.time += System.currentTimeMillis() - currentShape.lastTime;
 		currentShape.lastTime = System.currentTimeMillis();
@@ -213,10 +225,12 @@ public class GameEngine implements Runnable {
 	}
 
 	public synchronized void start() {
-		
+		System.out.println("GAME START");
 		if(running) {
 			return;
 		}
+		GameTime.scheduleAtFixedRate(task, 0, 1000);
+		
 		running = true;
 		thread = new Thread(this);
 		thread.start(); //start thread
