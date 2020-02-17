@@ -113,4 +113,12 @@ public class Menu {
 	public Dimension getSize() {
 		return menuFrame.getSize();
 	}
+	
+	/*
+	 * Get the menu's frame
+	 */
+	public JFrame getFrame() 
+	{
+		return menuFrame;
+	}
 }

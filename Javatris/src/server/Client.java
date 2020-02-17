@@ -131,5 +131,14 @@ public class Client
 			e.printStackTrace();
 		}
 	}
+	
+	/*
+	 * returns this instance of the client
+	 * @Return Returns this client
+	 */
+	public Client getClient() 
+	{
+		return this;
+	}
 
 }

@@ -1,5 +1,7 @@
 package model;
 import server.*;
+import server.ConnectionHandler.Delegate;
+
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.TimerTask;
@@ -19,15 +21,24 @@ import view.*;
  * @version 1.0
  */
 public class GameEngine implements Runnable {
- 
+	
+	
+	/*
+	 * Interface that handles the communication with the game engine.
+	 */
+	public interface Delegate {
+		Client getClient();
+	}
+	
 	public static Shape currentShape;	//The shape that is currently in action
 	public Shape shapes[] = new Shape[7];	//An array that contains 7 different shapes
 	public Board board;	
 	private SideInfo sideInfo;
 	private Client client;
-	private Boolean mulitplayer = false; //Change this to true for multiplayer 
+	private Boolean online = false; //Change this to true for multiplayer 
 	public int level = 0;
 	public int points = 0;
+	public Delegate delegate;
 
 	private boolean running = false;
 	public boolean paused = false; 
@@ -41,20 +52,23 @@ public class GameEngine implements Runnable {
 	
 	
 	
-	public GameEngine(Board board, BoardView boardView, SideInfo sideInfo) {
+	public GameEngine(Board board, BoardView boardView, SideInfo sideInfo, Boolean online) {
 		this.board = board;
 		this.boardView = boardView;
 		this.sideInfo = sideInfo;
-		
-		if(mulitplayer) 
+		this.online = online;
+		if(online) 
 		{
-			client = new Client(this, "127.0.0.1", 6969);
+			if(delegate != null) 
+			{
+				client = delegate.getClient();
+			}
 		}
-	
 		SpawnShape();
 		GameTime = new Timer();
 		
 	}
+	
 	
 	
 	TimerTask task = new TimerTask() {
@@ -82,7 +96,7 @@ public class GameEngine implements Runnable {
 				for(int i=0; i<board.getBoard().length; i++) {
 					if(board.checkFullRow(i)) {
 						rowsDeleted++;
-						if(mulitplayer) 
+						if(online) 
 							{
 								client.sendInt(6);
 							}

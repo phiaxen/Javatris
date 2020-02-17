@@ -6,8 +6,8 @@ import java.io.InputStreamReader;
 import java.net.Socket;
 
 /**
- * Handles the input from the server to the client in a seperate thread so it can both recive and
- * output data without either processes blocking eachother.
+ * Handles the input from the server to the client in a separate thread so it can both receive and
+ * output data without either processes blocking each other.
  * @author adde_
  *
  */
@@ -84,7 +84,12 @@ public class ConnectionHandler implements Runnable
 		
 	}
 	
-	
+	/*
+	 * Converts a string cotaining number to a integer,
+	 * if the string does not contain any numbers the number 15 is instead returned
+	 * @param s the string that is converted to a int
+	 * @return the string converted to a int
+	 */
 	public int stringToInt(String s) 
 	{
 		int num;
@@ -120,6 +125,9 @@ public class ConnectionHandler implements Runnable
 		}
 	}
 	
+	/*
+	 *  Uses the delegate interface to call the quit function from game engine and exits the application.
+	 */
 	public void quit() 
 	{
 		if (delegate != null) {
