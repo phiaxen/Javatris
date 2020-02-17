@@ -4,6 +4,8 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.TimerTask;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.TimeUnit;
+
 import javax.imageio.ImageIO;
 import java.util.Timer;
 
@@ -37,6 +39,8 @@ public class GameEngine implements Runnable {
 	
 	private BoardView boardView;
 	
+	
+	
 	public GameEngine(Board board, BoardView boardView, SideInfo sideInfo) {
 		this.board = board;
 		this.boardView = boardView;
@@ -49,6 +53,7 @@ public class GameEngine implements Runnable {
 	
 		SpawnShape();
 		GameTime = new Timer();
+		
 	}
 	
 	
@@ -70,6 +75,7 @@ public class GameEngine implements Runnable {
 			CheckCollisionY();
 			
 			if(currentShape.hasCollidedY()) {
+				
 				setStaticShapes();
 				SpawnShape();
 				int rowsDeleted = 0;

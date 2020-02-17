@@ -59,27 +59,31 @@ public class Shape {
 		Transposed[0] = Transposed[cols - 1];
 		Transposed[cols - 1] = temp;
 		
+		int tempx = x;
+		
 		//Before setting the rotation on the shape, check if rotation is possible. Ska kanske vara i GameEngine
 		if((x+deltaX+Transposed[0].length > 10)||(x + deltaX < 0)) {
 			
-			while(x + deltaX < 0) {
-				x++;
+			while(tempx + deltaX < 0) {
+				tempx++;
 			}
 			
-			while(x+deltaX+Transposed[0].length > 10) {
-				x--;
+			while(tempx +deltaX+Transposed[0].length > 10) {
+				tempx--;
 			}
-		}else {
+		}
 			for(int i=0; i<Transposed.length; i++) {
 				for(int j=0; j<Transposed[0].length; j++) {
 					if(Transposed[i][j] != 0) {
-						if(board.getBoard()[y+i][j+x+deltaX] != 0) {
+						
+						if((board.getBoard()[y+i][j+tempx+deltaX] != 0)) {
 							return;
 						}
 					}
 				}
 			}
-		}
+		
+		x = tempx;
 		shape = Transposed;
 	}
 	
