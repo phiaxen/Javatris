@@ -70,8 +70,9 @@ public class Game {
 		boardView = new BoardView(board,BoardHeight,BoardWidth,BlockSize,false);
 		sideInfo = new SideInfo();
 		gameEngine = new GameEngine(board, boardView,sideInfo);
-		gameEngine.start();
 		controller = new Controller(gameEngine);
+		gameEngine.start();
+		
 	}
 	
 	public void SetUpFrame() {

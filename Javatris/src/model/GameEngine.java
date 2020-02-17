@@ -229,6 +229,7 @@ public class GameEngine implements Runnable {
 
 	public synchronized void start() {
 		System.out.println("GAME START");
+		boardView.setCurrentShape(currentShape);
 		if(running) {
 			return;
 		}
