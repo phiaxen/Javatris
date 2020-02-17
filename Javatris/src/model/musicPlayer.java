@@ -58,11 +58,6 @@ public class musicPlayer {
 
 		}
 		catch(Exception e) {System.out.println("No musik running");}
-	}
-	
-	public void terminateThread() {
-		Thread.currentThread();
-	}
-	
+	}	
 
 }
