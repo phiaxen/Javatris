@@ -65,19 +65,9 @@ public class GameEngine implements Runnable {
 	
 		currentShape.time += System.currentTimeMillis() - currentShape.lastTime;
 		currentShape.lastTime = System.currentTimeMillis();
-		
-			while((currentShape.getX() + currentShape.getDeltaX() < 0)) {
-				currentShape.moveRight();
-				System.out.println("RIGHT");
-			}
-		
-			while(currentShape.getX() + currentShape.getDeltaX() + currentShape.getCoords()[0].length > 10) {
-				currentShape.moveLeft();
-				System.out.println("LEFT");
-			}
 			
-			CheckCollisionY();
 			CheckCollisionX();
+			CheckCollisionY();
 			
 			if(currentShape.hasCollidedY()) {
 				setStaticShapes();
@@ -93,7 +83,7 @@ public class GameEngine implements Runnable {
 					}
 				}
 				
-				//uppdater score endast om rader har tagits bort
+				//uppdaterar score endast om rader har tagits bort
 				if(rowsDeleted >0) {
 					points += scoreHandler(level,rowsDeleted);
 					sideInfo.updateScore(points);

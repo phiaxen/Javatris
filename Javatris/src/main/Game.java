@@ -62,7 +62,7 @@ public class Game {
 	//Temporary solution
 	public void ResizeFrame() {
 		FrameWidth = BlockSize * BoardWidth + 14;
-		FrameHeight = BlockSize * BoardHeight + 37;
+		FrameHeight = BlockSize * BoardHeight + 37;  
 	}
 	
 	private void Init() {
@@ -118,7 +118,7 @@ public class Game {
 		startButton.addActionListener((ActionEvent e) -> {startGame();});
 		exitButton.addActionListener((ActionEvent e) -> {System.exit(0);});
 		
-		startMenu.addElement(startButton);
+		startMenu.addElement(startButton); 
 		startMenu.addElement(exitButton);
 		
 		startMenu.openMenu();

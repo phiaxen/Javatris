@@ -29,11 +29,15 @@ public class Controller implements KeyListener{
 		
 		int key = e.getKeyCode();
 		if((key == KeyEvent.VK_RIGHT)&&!gameEngine.paused) {
-			gameEngine.getCurrentShape().setDeltaX(1);
+			if(!gameEngine.getCurrentShape().rightBound()) {
+				gameEngine.getCurrentShape().setDeltaX(1);
+			}
 		}
 		
 		if((key == KeyEvent.VK_LEFT)&&!gameEngine.paused) {
-			gameEngine.getCurrentShape().setDeltaX(-1);
+			if(!gameEngine.getCurrentShape().leftBound()) {
+				gameEngine.getCurrentShape().setDeltaX(-1);
+			}
 		}
 		
 		if((key == KeyEvent.VK_UP)&&!gameEngine.paused) {

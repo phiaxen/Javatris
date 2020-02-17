@@ -8,13 +8,6 @@ import java.awt.image.BufferedImage;
  */
 
 
-/*
- * En Shape har följande egenskaper:
- * 1. x- och y position
- * 2. En 2D-array för själva formen, där 1 = ifylld och 0 = transparent
- * 3. Färg, en int mellan 1-7 som motsvarar de olika färgerna
-*/
-
 public class Shape {
 
 	private Board board;
@@ -90,12 +83,18 @@ public class Shape {
 		shape = Transposed;
 	}
 	
-	public void moveLeft() {
-		x--;
+	public boolean rightBound() {
+		if(x + shape[0].length == 10) {
+			return true;
+		}
+		return false;
 	}
 	
-	public void moveRight() {
-		x++;
+	public boolean leftBound() {
+		if(x == 0) {
+			return true;
+		}
+		return false;
 	}
 	
 	public void moveDown() {
