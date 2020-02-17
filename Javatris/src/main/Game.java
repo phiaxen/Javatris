@@ -90,15 +90,16 @@ public class Game {
 		sideInfo = new SideInfo();
 		gameEngine = new GameEngine(board, boardView,sideInfo,true);
 		client = new Client(gameEngine, ip, port);
+		controller = new Controller(gameEngine);
 		gameEngine.delegate = new GameEngine.Delegate() 
 		{
 			public Client getClient()
 			{
 				return client.getClient();
 			}
-		}
-		;
-		controller = new Controller(gameEngine);
+		};
+		
+		gameEngine.start();
 	}
 	
 	public void SetUpFrame() {

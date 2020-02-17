@@ -247,7 +247,16 @@ public class GameEngine implements Runnable {
 		
 		running = true;
 		thread = new Thread(this);
-		thread.start(); //start thread
+		if(!online) 
+		{
+			thread.start(); //start thread
+		}
+		
+	}
+	
+	public void startOnline() 
+	{
+		thread.start();
 	}
 	
 	public void pause() {
