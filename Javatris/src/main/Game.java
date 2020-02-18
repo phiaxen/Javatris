@@ -93,6 +93,7 @@ public class Game {
 		controller = new Controller(gameEngine);
 		gameEngine.delegate = new GameEngine.Delegate() 
 		{
+			@Override
 			public Client getClient()
 			{
 				return client.getClient();
@@ -181,7 +182,7 @@ public class Game {
 		//Only starts if
 		if(!code.isBlank() && !code.isEmpty()) 
 		{
-			String[] adress = code.split(":");
+			String[] adress = code.split("-");
 			Init(adress[0], Integer.parseInt(adress[1]));
 			SetUpFrame();
 			startMenu.closeMenu();
