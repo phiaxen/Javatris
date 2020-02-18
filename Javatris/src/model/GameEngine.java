@@ -57,13 +57,6 @@ public class GameEngine implements Runnable {
 		this.boardView = boardView;
 		this.sideInfo = sideInfo;
 		this.online = online;
-		if(online) 
-		{
-			if(delegate != null) 
-			{
-				client = delegate.getClient();
-			}
-		}
 		SpawnShape();
 		GameTime = new Timer();
 		
@@ -256,7 +249,12 @@ public class GameEngine implements Runnable {
 	
 	public void startOnline() 
 	{
+		thread = new Thread(this);
 		thread.start();
+		if(delegate != null) 
+		{
+			client = delegate.getClient();
+		}
 	}
 	
 	public void pause() {
