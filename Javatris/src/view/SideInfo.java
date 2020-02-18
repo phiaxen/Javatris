@@ -25,9 +25,11 @@ public class SideInfo extends JPanel {
 	private JLabel scoreText;
 	private JLabel timeLabel;
 	private JLabel next;
+	private JLabel row;
 	private JPanel nextPanel;
 	private int[] shape;
 	private BoxLayout box;
+	private int rowsRemoved = 0;
 	
 	public SideInfo() {
 	
@@ -46,6 +48,10 @@ public class SideInfo extends JPanel {
 		timeLabel = new JLabel("TIME: 100");
 		timeLabel.setFont(new Font("Arial",Font.PLAIN, 30));
 		
+		row = new JLabel("ROWS REMOVED: "+rowsRemoved);
+		row.setFont(new Font("Arial",Font.PLAIN, 30));
+		
+		
 		next = new JLabel("NEXT SHAPE");
 		next.setFont(new Font("Arial", Font.PLAIN, 30));	
 		next.setBorder(new EmptyBorder(40, 30, 10, 10));
@@ -56,6 +62,7 @@ public class SideInfo extends JPanel {
 		
 		this.add(scoreText);
 		this.add(timeLabel);
+		this.add(row);
 		this.add(next);
 		this.add(nextPanel);
 		
@@ -75,7 +82,11 @@ public class SideInfo extends JPanel {
 		this.timeLabel.setText("TIME: " + time + "s");
 	}
 	
-	
+	public void updateRow() {
+		
+		this.rowsRemoved++;
+		this.row.setText("ROWS REMOVED: "+rowsRemoved);
+	}
 //	private void init() {
 //		
 //		try {

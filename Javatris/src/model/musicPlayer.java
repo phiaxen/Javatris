@@ -5,6 +5,7 @@ import java.io.File;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import javax.sound.sampled.FloatControl;
 import javax.swing.JOptionPane;
 
 
@@ -15,13 +16,15 @@ public class musicPlayer {
 	private boolean restart;
 	musicPlayer(){}
 	
+	private boolean fileLoaded = false;
+	
 	//exempel på url:er
 	public void cheat() {		
 		
 		//playMusic4("G:\\firefox\\eclipse object ori\\Javatris2\\Javatris\\src\\songs\\Tetris99 Game Theme.wav");	Lokal dator
 		//playMusic4("Javatris\\\\src\\\\songs\\\\Tetris99 Game Theme.wav"); // Vet inte varför det har blivit fler \\ det var inte fyra från början
-		playMusic("Javatris/src/songs/Tetris99 Game Theme.wav"); // Denna funkar också		
-
+		//playMusic("Javatris/src/songs/Tetris99 Game Theme.wav"); // Denna funkar också		
+		playMusic("Javatris/src/songs/Tetris Game Theme.wav");
 	}
 	
 	// funkar
@@ -34,7 +37,8 @@ public class musicPlayer {
 			
 			audioClip = AudioSystem.getClip();         
 			audioClip.open(audioStream);    
-			audioClip.loop(Clip.LOOP_CONTINUOUSLY);           
+			audioClip.loop(Clip.LOOP_CONTINUOUSLY);  
+			fileLoaded = true;
 		}
 		catch(Exception e){
 			
@@ -43,21 +47,82 @@ public class musicPlayer {
 	}
 	
 	public void stopSong() {
-		this.restart = false;
-		try {
-		audioClip.stop();
-		}
-		catch(Exception e) {System.out.println("No musik running");}
+		if(fileLoaded) {
+			this.restart = false;
+			try {
+				audioClip.stop();
+			}
+			catch(Exception e) {System.out.println("No musik running");}
+			}
 	}
 	
 	public void restartSong() {
-		if(restart == false)
-		this.restart = true;
-		try {
+		if((restart == false) && fileLoaded)
+		{
+			this.restart = true;
+			try {
 				audioClip.loop(Clip.LOOP_CONTINUOUSLY);
 
+			}
+			catch(Exception e) {System.out.println("No musik running");}
 		}
-		catch(Exception e) {System.out.println("No musik running");}
-	}	
+	}
+	
+	public float getVolume() {
+		if(fileLoaded) {
+	    
+			FloatControl gainControl = (FloatControl) audioClip.getControl(FloatControl.Type.MASTER_GAIN);        
+	    
+			return (float) Math.pow(10f, gainControl.getValue() / 20f);
+	    }
+		return 0f;
+	}
+	
+	public void setVolume(float volume){
+		if(fileLoaded) {
+			if (volume < 0f || volume > 1f) {
+				throw new IllegalArgumentException("Volume not valid: " + volume);}
+			else {
+				FloatControl gainControl = (FloatControl) audioClip.getControl(FloatControl.Type.MASTER_GAIN);        
+				gainControl.setValue(20f * (float) Math.log10(volume));
+			}
+		}
+		
+	}
+	
+	public void incVolume() {
+		if(fileLoaded) {
+			float volume = getVolume() + 0.5f;
+			if(volume > 1) {
+				throw new IllegalArgumentException("Volume not valid: " + (volume));
+			}
+			else{
+				FloatControl gainControl = (FloatControl) audioClip.getControl(FloatControl.Type.MASTER_GAIN);        
+			    gainControl.setValue(20f * (float) Math.log10(volume));
+			}
+		}
 
+	}
+	
+	public void decVolume() {
+		if(fileLoaded) {
+			float volume = getVolume() - 0.5f;
+			if(volume < 1) {
+				throw new IllegalArgumentException("Volume not valid: " + (volume));
+			}
+			else{
+				FloatControl gainControl = (FloatControl) audioClip.getControl(FloatControl.Type.MASTER_GAIN);        
+			    gainControl.setValue(20f * (float) Math.log10(volume));
+			}
+		}
+	}
+	
+	public void mute() {
+		if(fileLoaded) {
+			float volume = 0.0f;			
+			FloatControl gainControl = (FloatControl) audioClip.getControl(FloatControl.Type.MASTER_GAIN);        
+			gainControl.setValue(20f * (float) Math.log10(volume));
+		}
+
+	}
 }
