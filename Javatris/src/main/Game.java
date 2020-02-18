@@ -71,7 +71,7 @@ public class Game {
 	 * Initializes the game and creates all the nececcary components that are needed
 	 */
 	private void Init() {
-		board = Board.getInstance();
+		board = new Board();
 		boardView = new BoardView(board,BoardHeight,BoardWidth,BlockSize,false);
 		sideInfo = new SideInfo();
 		gameEngine = new GameEngine(board, boardView,sideInfo,false);
@@ -85,7 +85,7 @@ public class Game {
 	 * @Param port the port of the server
 	 */
 	private void Init(String ip, int port) {
-		board = Board.getInstance();
+		board = new Board();
 		boardView = new BoardView(board,BoardHeight,BoardWidth,BlockSize,false);
 		sideInfo = new SideInfo();
 		gameEngine = new GameEngine(board, boardView,sideInfo,true);

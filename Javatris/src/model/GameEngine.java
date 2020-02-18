@@ -196,7 +196,7 @@ public class GameEngine implements Runnable {
 	
 	public void SpawnShape() {
 		int randomNum = ThreadLocalRandom.current().nextInt(0, shapes.length);
-		currentShape = getShape(randomNum);
+		currentShape = getShape(0);
 	}
 	
 
@@ -238,8 +238,7 @@ public class GameEngine implements Runnable {
 		if(running) {
 			return;
 		}
-		
-		
+	
 		running = true;
 		
 		if(!online) 
@@ -255,11 +254,9 @@ public class GameEngine implements Runnable {
 	{
 		thread = new Thread(this);
 		thread.start();
-		System.out.println("delegate: " + delegate);
 		if(delegate != null) 
 		{
 			client = delegate.getClient();
-			System.out.println("client: " + client);
 		}
 	}
 	
