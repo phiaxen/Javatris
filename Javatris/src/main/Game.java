@@ -182,7 +182,7 @@ public class Game {
 		//Only starts if
 		if(!code.isBlank() && !code.isEmpty()) 
 		{
-			String[] adress = code.split("-");
+			String[] adress = code.split(":");
 			Init(adress[0], Integer.parseInt(adress[1]));
 			SetUpFrame();
 			startMenu.closeMenu();

@@ -139,9 +139,7 @@ public class Board {
 			
 			fullRow= true;
 		}
-		
 		return rowsDeleted;
-
 	}
 	
 	//check one row
