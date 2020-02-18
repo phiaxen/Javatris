@@ -26,6 +26,7 @@ public class Server
 	
 	public static void main(String[] args) throws IOException 
 	{
+		
 		sSocket = new ServerSocket(port);
 		BufferedReader keyboard = new BufferedReader(new InputStreamReader(System.in));
 		

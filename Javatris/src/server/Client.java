@@ -24,6 +24,7 @@ public class Client
 				
 				@Override
 				public void addRow(int column) {
+					System.out.println("test");
 					engine.addRow(column, 1);
 				}
 				

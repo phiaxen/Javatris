@@ -2,7 +2,7 @@ package model;
 
 /**
  * THIS CLASS IS A MODEL
- * Board is a class(singleton) that creates the 20x10 board in the game.
+ * Board is a class that creates the 20x10 board in the game.
  * 
  * @author Philip
  * @version 1.0
@@ -15,25 +15,11 @@ public class Board {
 	
 	private final int HEIGHT = 20;	//Heigth of the game-board
 	private final int WIDTH = 10;	//Width of the game-board
-	
-	private static Board single_instance = null; //static variable single_instance of type Board 
-	
-	/**
-	 * Creates an instance of Board class if it has not been done before
-	 * @return single_instance : returns a single instance of Board
-	 */
-    public static synchronized Board getInstance() 
-    { 
-        if (single_instance == null) {
-        	single_instance = new Board(); 
-        }
-        return single_instance; 
-    } 
     
 	/**
 	 * Creates a board
 	 */
-	private Board() {
+	public Board() {
 		board = new int[HEIGHT][WIDTH];
 	}
 	
@@ -139,9 +125,7 @@ public class Board {
 			
 			fullRow= true;
 		}
-		
 		return rowsDeleted;
-
 	}
 	
 	//check one row

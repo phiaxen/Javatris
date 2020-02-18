@@ -60,9 +60,14 @@ public class GameEngine implements Runnable {
 		SpawnShape();
 		GameTime = new Timer();
 		
+		this.delegate = new GameEngine.Delegate() 
+		{
+			public Client getClient()
+			{
+				return client.getClient();
+			}
+		};
 	}
-	
-	
 	
 	TimerTask task = new TimerTask() {
 		public void run() {
@@ -190,17 +195,14 @@ public class GameEngine implements Runnable {
 	}
 	
 	public void SpawnShape() {
-		
 		int randomNum = ThreadLocalRandom.current().nextInt(0, shapes.length);
-		currentShape = getShape(randomNum);
-		
+		currentShape = getShape(0);
 	}
 	
 
 	public void setStaticShapes() {
 	
 		board.setStaticShapeInBoard(currentShape.getCoords(),currentShape.getX(),currentShape.getY(),currentShape.getColor());
-	
 	}
 	
 	public Shape getCurrentShape() {
@@ -236,18 +238,19 @@ public class GameEngine implements Runnable {
 		if(running) {
 			return;
 		}
-		GameTime.scheduleAtFixedRate(task, 0, 1000);
-		
+	
 		running = true;
-		thread = new Thread(this);
+		
 		if(!online) 
 		{
+			GameTime.scheduleAtFixedRate(task, 0, 1000);
+			thread = new Thread(this);
 			thread.start(); //start thread
 		}
 		
 	}
 	
-	public void startOnline() 
+	public synchronized void startOnline() 
 	{
 		thread = new Thread(this);
 		thread.start();
@@ -295,7 +298,6 @@ public class GameEngine implements Runnable {
 		
 		//gameloop, now the CPU-usage should not rise as much as before =)
 		while(!Thread.interrupted() ) {
-			
 			
 			if(paused) {
 				try {

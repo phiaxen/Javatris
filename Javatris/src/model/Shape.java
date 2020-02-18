@@ -76,7 +76,7 @@ public class Shape {
 				for(int j=0; j<Transposed[0].length; j++) {
 					if(Transposed[i][j] != 0) {
 						
-						if((board.getBoard()[y+i][j+tempx+deltaX] != 0)) {
+						if((board.getBoard()[y+i][j+tempx+deltaX] != 0)) { 
 							return;
 						}
 					}

@@ -44,6 +44,7 @@ public class musicPlayer {
 			
 			JOptionPane.showMessageDialog(null, "Error");
 		}
+		
 	}
 	
 	public void stopSong() {
