@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 
 import javax.swing.BorderFactory;
@@ -127,6 +128,9 @@ public class Game {
 		frame.addKeyListener(controller);
 		frame.setResizable(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	
+		frame.setLocationRelativeTo(null); //set frame in the middle of the screen
+		
 		frame.setVisible(true);	
 	}
 	

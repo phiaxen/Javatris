@@ -52,6 +52,7 @@ public class Menu {
 		this.contentPane.add(menuPane);
 		this.menuFrame.setSize(size);
 		this.menuFrame.setResizable(false);	
+		menuFrame.setLocationRelativeTo(null); //set frame in the middle of the screen
 	}
 	
 	/**

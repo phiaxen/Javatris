@@ -36,8 +36,7 @@ public class MusicPlayer {
 //		File audioFile = new File(fp);
 		 Path path = FileSystems.getDefault().getPath("").toAbsolutePath();
 		 File audioFile = new File(path + "\\src\\songs\\Tetris99 Game Theme.wav");
-		 
-		 System.out.println(path);
+	
 		try {
 								
 			AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
