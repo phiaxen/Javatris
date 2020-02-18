@@ -10,11 +10,11 @@ import javax.swing.JOptionPane;
 
 
 
-public class musicPlayer {
+public class MusicPlayer {
 	
 	private Clip audioClip;
 	private boolean restart;
-	musicPlayer(){}
+	MusicPlayer(){}
 	
 	private boolean fileLoaded = false;
 	
