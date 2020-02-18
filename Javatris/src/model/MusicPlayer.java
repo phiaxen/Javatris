@@ -82,7 +82,9 @@ public class MusicPlayer {
 	    
 			FloatControl gainControl = (FloatControl) audioClip.getControl(FloatControl.Type.MASTER_GAIN);        
 	    
-			return (float) Math.pow(10f, gainControl.getValue() / 20f);
+			float volume = (float) Math.pow(10f, gainControl.getValue() / 20f);
+			volume = (float) Math.round(volume*100)/100;
+			return volume;
 	    }
 		return 0f;
 	}
@@ -102,7 +104,6 @@ public class MusicPlayer {
 	public void incVolume() {
 		if(fileLoaded) {
 			float volume = getVolume();
-			volume = (float) Math.round(volume*100)/100;
 			if(volume < 1.0f) {
 				volume += steps;		
 				volume = (float)Math.round(volume*100)/100;
@@ -117,7 +118,6 @@ public class MusicPlayer {
 	public void decVolume() {
 		if(fileLoaded) {
 			float volume = getVolume();
-			volume = (float) Math.round(volume*100)/100;
 			if(volume > 0.0f) {
 				volume -= steps;
 				volume = (float) Math.round(volume*100)/100;
