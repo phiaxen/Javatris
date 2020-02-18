@@ -46,7 +46,8 @@ public class Game {
 	private Controller controller;
 	private SideInfo sideInfo;
 	private Client client;
-	
+	private MusicPlayer musicPlayer;
+
 	private Menu startMenu;
 	
 	
@@ -71,11 +72,14 @@ public class Game {
 	 * Initializes the game and creates all the nececcary components that are needed
 	 */
 	private void Init() {
+		musicPlayer = new MusicPlayer();
+		
 		board = new Board();
 		boardView = new BoardView(board,BoardHeight,BoardWidth,BlockSize,false);
 		sideInfo = new SideInfo();
 		gameEngine = new GameEngine(board, boardView,sideInfo,false);
-		controller = new Controller(gameEngine);
+		controller = new Controller(gameEngine,musicPlayer);//musicplayer ska inte vara i kontroller egentligen, men har den där för att testa
+		
 		gameEngine.start();
 	}
 	
@@ -85,12 +89,14 @@ public class Game {
 	 * @Param port the port of the server
 	 */
 	private void Init(String ip, int port) {
+		musicPlayer = new MusicPlayer();
+		
 		board = new Board();
 		boardView = new BoardView(board,BoardHeight,BoardWidth,BlockSize,false);
 		sideInfo = new SideInfo();
 		gameEngine = new GameEngine(board, boardView,sideInfo,true);
 		client = new Client(gameEngine, ip, port);
-		controller = new Controller(gameEngine);
+		controller = new Controller(gameEngine,musicPlayer);
 		gameEngine.delegate = new GameEngine.Delegate() 
 		{
 			@Override
@@ -129,7 +135,7 @@ public class Game {
 		return BoardWidth;
 	}
 	public int getBoardHeight() {
-		return BoardHeight;
+		return BoardHeight; 
 	}
 	public int getBlockSize() {
 		return BlockSize;

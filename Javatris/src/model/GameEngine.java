@@ -196,7 +196,7 @@ public class GameEngine implements Runnable {
 	
 	public void SpawnShape() {
 		int randomNum = ThreadLocalRandom.current().nextInt(0, shapes.length);
-		currentShape = getShape(0);
+		currentShape = getShape(randomNum);
 	}
 	
 

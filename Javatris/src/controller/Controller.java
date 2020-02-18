@@ -16,8 +16,11 @@ import model.*;
 public class Controller implements KeyListener{
 
 	private GameEngine gameEngine;
-	public Controller(GameEngine gameEngine) {
+	private MusicPlayer musicPlayer; //just for testing
+	
+	public Controller(GameEngine gameEngine, MusicPlayer musicPlayer) {
 		this.gameEngine = gameEngine;
+		this.musicPlayer = musicPlayer;
 	}
 	@Override
 	public void keyTyped(KeyEvent e) {
@@ -55,9 +58,21 @@ public class Controller implements KeyListener{
 			}
 			
 		}
+		
+		//Just for testing
 		if((key == KeyEvent.VK_0)&&!gameEngine.paused) {
 			gameEngine.addRow(0,1);
 		}
+		if((key == KeyEvent.VK_W)&&!gameEngine.paused) {
+			musicPlayer.incVolume();
+		}
+		if((key == KeyEvent.VK_S)&&!gameEngine.paused) {
+			musicPlayer.decVolume();
+		}
+		if((key == KeyEvent.VK_M)&&!gameEngine.paused) {
+			musicPlayer.mute();
+		}
+		
 	}
 
 	@Override
