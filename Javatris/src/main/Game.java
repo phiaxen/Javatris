@@ -98,6 +98,7 @@ public class Game {
 		gameEngine = new GameEngine(board, boardView,sideInfo,true);
 		client = new Client(gameEngine, ip, port);
 		controller = new Controller(gameEngine,musicPlayer);
+		
 		gameEngine.delegate = new GameEngine.Delegate() 
 		{
 			@Override

@@ -61,14 +61,6 @@ public class GameEngine implements Runnable {
 		this.online = online;
 		SpawnShape();
 		GameTime = new Timer();
-		
-		this.delegate = new GameEngine.Delegate() 
-		{
-			public Client getClient()
-			{
-				return client.getClient();
-			}
-		};
 	}
 	
 	TimerTask task = new TimerTask() {
@@ -99,6 +91,7 @@ public class GameEngine implements Runnable {
 						rowsDeleted++;
 						if(online) 
 							{
+							System.out.println("WHAT IS CLIENT, CLIENT IS: " + client);
 								client.sendInt(6);
 							}
 					}
@@ -274,6 +267,12 @@ public class GameEngine implements Runnable {
 			GameTime.scheduleAtFixedRate(task, 0, 1000);
 			thread = new Thread(this);
 			thread.start(); //start thread
+		}else {
+			if(this.delegate != null) 
+			{
+				client = this.delegate.getClient();
+				
+			}
 		}
 		
 	}
@@ -282,10 +281,6 @@ public class GameEngine implements Runnable {
 	{
 		thread = new Thread(this);
 		thread.start();
-		if(delegate != null) 
-		{
-			client = delegate.getClient();
-		}
 	}
 	
 	public void pause() {
