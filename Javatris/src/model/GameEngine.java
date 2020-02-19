@@ -30,9 +30,9 @@ public class GameEngine implements Runnable {
 		Client getClient();
 	}
 	
-	public static Shape currentShape;	//The shape that is currently in action
-	public Shape shapes[] = new Shape[7];	//An array that contains 7 different shapes
-	public Board board;	
+	private static Shape currentShape;	//The shape that is currently in action
+	private Shape shapes[] = new Shape[7];	//An array that contains 7 different shapes
+	private Board board;	
 	private SideInfo sideInfo;
 	private Client client;
 	private Boolean online = false; //Change this to true for multiplayer 
@@ -84,26 +84,28 @@ public class GameEngine implements Runnable {
 			if(currentShape.hasCollidedY()) {
 				
 				setStaticShapes();
-				SpawnShape();
+				
 				int rowsDeleted = 0;
+				int column = 0;
 				for(int i=0; i<board.getBoard().length; i++) {
 					if(board.checkFullRow(i)) {
 						rowsDeleted++;
+						
 						if(online) 
 							{
-							System.out.println("WHAT IS CLIENT, CLIENT IS: " + client);
-								client.sendInt(6);
+								client.sendInt(currentShape.getX());
 							}
 					}
 				}
 				
+				
 				//uppdaterar score endast om rader har tagits bort
-				if(rowsDeleted >0) {
+				if(rowsDeleted > 0) {
 					points += scoreHandler(level,rowsDeleted);
 					sideInfo.updateScore(points);
 					System.out.println("points: " + points);
 				}	
-				
+				SpawnShape();
 			}
 		
 			if((time > currentShape.getCurrentSpeed())&&(!currentShape.hasCollidedY())) {

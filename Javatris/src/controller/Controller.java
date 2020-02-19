@@ -72,7 +72,6 @@ public class Controller implements KeyListener{
 		if((key == KeyEvent.VK_M)&&!gameEngine.paused) {
 			musicPlayer.mute();
 		}
-		
 	}
 
 	@Override

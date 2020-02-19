@@ -30,7 +30,7 @@ public class MusicPlayer {
 		
 		
 		//playMusic("Javatris/src/songs/Tetris99 Game Theme.wav");  // variant 1	
-		playMusic("\\src\\songs\\Tetris Game Theme.wav");			// variant 2	
+		playMusic("\\src\\songs\\Tetris Game Theme1.wav");			// variant 2	
 	}
 	
 	// funkar
