@@ -50,7 +50,9 @@ public class GameEngine implements Runnable {
 	
 	private BoardView boardView;
 	
+	private long time, lastTime;
 	
+	private boolean gameOver = false;
 	
 	public GameEngine(Board board, BoardView boardView, SideInfo sideInfo, Boolean online) {
 		this.board = board;
@@ -77,11 +79,12 @@ public class GameEngine implements Runnable {
 		
 	};
 	
+	
 	public void update() {
 //		System.out.println("TIME: " + timePassed);
-	
-		currentShape.time += System.currentTimeMillis() - currentShape.lastTime;
-		currentShape.lastTime = System.currentTimeMillis();
+		checkIfGameOver();
+		time += System.currentTimeMillis() - lastTime;
+		lastTime = System.currentTimeMillis();
 			
 			CheckCollisionX();
 			CheckCollisionY();
@@ -110,10 +113,10 @@ public class GameEngine implements Runnable {
 				
 			}
 		
-			if((currentShape.time > currentShape.currentSpeed)&&(!currentShape.hasCollidedY())) {
+			if((time > currentShape.getCurrentSpeed())&&(!currentShape.hasCollidedY())) {
 				
 				currentShape.moveDown();
-				currentShape.time = 0;
+				time = 0;
 			}
 			if(!currentShape.hasCollidedX()) {
 					
@@ -197,9 +200,34 @@ public class GameEngine implements Runnable {
 	public void SpawnShape() {
 		int randomNum = ThreadLocalRandom.current().nextInt(0, shapes.length);
 		currentShape = getShape(randomNum);
+		
+//		checkIfGameOver();
 	}
 	
+//	public void checkIfGameOver() {
+//		int rows = currentShape.getCoords().length;
+//		int cols =  currentShape.getCoords()[0].length;
+//		int startPos = currentShape.getStartPos();
+//		
+//		for(int i = 0; i < rows; i++){
+//			for(int j = 0; j <cols; j++ ) {
+//				if(board.getBoard()[i][j + startPos] !=0) {
+//					gameOver = true;
+//					System.out.println("GAME OVER =(");
+//				}
+//			}
+//			
+//		}
+//	}
 
+	public void checkIfGameOver(){
+		for(int i = 0; i <10; i++ ) {
+			if(board.getBoard()[0][i] !=0) {
+				gameOver = true;
+				System.out.println("GAME OVER =(");
+			}
+		}
+	}
 	public void setStaticShapes() {
 	
 		board.setStaticShapeInBoard(currentShape.getCoords(),currentShape.getX(),currentShape.getY(),currentShape.getColor());
@@ -352,6 +380,7 @@ public class GameEngine implements Runnable {
 	
 	//everything in game that updates
 	private void tick() {
+		if(!gameOver)
 		update();
 	}
 	

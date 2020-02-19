@@ -13,9 +13,9 @@ public class Shape {
 	private Board board;
 	private int[][] shape;
 	private int x,y;
-	public long time, lastTime;
 	public int currentSpeed,normalSpeed = 600, fastSpeed = 60;
 	private int deltaX = 0;
+	private final int startPos = 4;
 
 	public boolean CanMoveX = true;
 	public boolean CanRotate = true;
@@ -30,11 +30,9 @@ public class Shape {
 		this.board = board;
 		this.color = color;
 		this.shape = positions;
-		
-		x = 3;
-		time = 0;
+		x = startPos;
 		currentSpeed = normalSpeed;
-		lastTime = System.currentTimeMillis();
+		
 	}
 	
 
@@ -158,6 +156,12 @@ public class Shape {
 	}
 	public int[][] getCoords() {
 		return shape;
+	}
+	public int getCurrentSpeed() {
+		return currentSpeed;
+	}
+	public int getStartPos() {
+		return startPos;
 	}
 	
 }

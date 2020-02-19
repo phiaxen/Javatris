@@ -28,14 +28,14 @@ public class MusicPlayer {
 		//playMusic4("G:\\firefox\\eclipse object ori\\Javatris2\\Javatris\\src\\songs\\Tetris99 Game Theme.wav");	Lokal dator
 		//playMusic4("Javatris\\\\src\\\\songs\\\\Tetris99 Game Theme.wav"); // Vet inte varför det har blivit fler \\ det var inte fyra från början
 		//playMusic("Javatris/src/songs/Tetris99 Game Theme.wav"); // Denna funkar också		
-		playMusic("Javatris/src/songs/Tetris Game Theme.wav");
+		playMusic("\\src\\songs\\Tetris Game Theme.wav");
 	}
 	
 	// funkar
 	public void playMusic(String fp) {
 //		File audioFile = new File(fp);
 		 Path path = FileSystems.getDefault().getPath("").toAbsolutePath();
-		 File audioFile = new File(path + "\\src\\songs\\Tetris99 Game Theme.wav");
+		 File audioFile = new File(path + fp);
 	
 		try {
 								
