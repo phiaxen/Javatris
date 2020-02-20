@@ -88,7 +88,7 @@ public class SideInfo extends JPanel implements PropertyChangeListener{
 	//Uppdaterar score när den kallas utifrån
 	public void updateScore(int score) {
 		this.scoreText.setText("SCORE: " + score);
-		repaint();
+		scoreText.repaint();
 	}
 	
 	//Kanske borde hållas reda på i denna klass
@@ -96,24 +96,29 @@ public class SideInfo extends JPanel implements PropertyChangeListener{
 	public void updateTime(int time) {
 		this.timeLabel.setText("TIME: " + time + "s");
 		timeLabel.repaint();
+
 	}
 	
 	public void updateLines(int lines) {
 		this.linesLabel.setText("Lines: " + lines);
 		linesLabel.repaint();
+
+
 	}
 	
 	public void updateLevel(int level) {
 		this.levelLabel.setText("Level: " + level);
 		levelLabel.repaint();
 	}
-	
+
 	public void updateNextShape(LinkedList<Shape> shapes) {
 		for(int i = 0; i < 3; i++) {
 			nextShapesPanel.updateNextShape(shapes.get(i).clone());
 		}
 		nextShapesPanel.repaint();
 	}
+
+
 	
 //	private void init() {
 //		

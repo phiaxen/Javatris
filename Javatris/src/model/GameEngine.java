@@ -229,8 +229,8 @@ public class GameEngine extends AbstractModel implements Runnable{
 	
 	private Shape nextShape() {
 		Shape nextShape;
-		
 		LinkedList<Shape> oldShapes = new LinkedList<Shape>();
+
 		if(oldShapes.size() < 4) {
 			for(int i = 0; i < 4; i++) {
 				oldShapes.add(i, new Shape(board, 1, new int[][] {{1}})); //used in the start of the game
@@ -255,8 +255,9 @@ public class GameEngine extends AbstractModel implements Runnable{
 		nextShape = nextShapes.pollFirst();
 		int randomNum = ThreadLocalRandom.current().nextInt(0, shapes.length);
 		nextShapes.addLast(getShape(randomNum));
-		
+
 		firePropertyChange("next shape", oldShapes, nextShapes);
+
 		return nextShape;
 	}
 	
@@ -447,7 +448,7 @@ public class GameEngine extends AbstractModel implements Runnable{
 	
 	//everything in game that renders
 	private void render() {
-		firePropertyChange("shape", oldShape.clone(), currentShape.clone());	
+		firePropertyChange("shape", oldShape.clone(), currentShape.clone());
 	}
 	
 	public void quit() 
