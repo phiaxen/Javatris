@@ -12,6 +12,8 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 
 import javax.imageio.ImageIO;
+
+import java.util.LinkedList;
 import java.util.Timer;
 
 import view.*;
@@ -43,8 +45,13 @@ public class GameEngine extends AbstractModel implements Runnable{
 	private SideInfo sideInfo;
 	private Client client;
 	private Boolean online = false; //Change this to true for multiplayer 
-	public int level = 0;
+	
+	//points and levelup things
+	public int level = 1;
 	public int points = 0;
+	private int linesToClear = 10;	//how many lines it takes to level up, increase by 5 for each level
+	
+	private int linesCleared = 0;	//how many lines the player has cleared
 	public Delegate delegate;
 
 	private boolean running = false;
@@ -60,6 +67,10 @@ public class GameEngine extends AbstractModel implements Runnable{
 	private long time, lastTime;
 	
 	private boolean gameOver = false;
+	
+	private LinkedList<Shape> nextShapes = new LinkedList<Shape>(); 
+	  
+	private boolean GameStart = true;
 	
 	public GameEngine(Board board, BoardView boardView, SideInfo sideInfo, Boolean online) {
 		super();
@@ -100,7 +111,7 @@ public class GameEngine extends AbstractModel implements Runnable{
 				for(int i=0; i<board.getBoard().length; i++) {
 					if(board.checkFullRow(i)) {
 						rowsDeleted++;
-						
+						linesCleared++;
 						if(online) 
 							{
 								client.sendInt(currentShape.getX());
@@ -111,9 +122,14 @@ public class GameEngine extends AbstractModel implements Runnable{
 				
 				//uppdaterar score endast om rader har tagits bort
 				if(rowsDeleted > 0) {
+					levelUp();
 					points += scoreHandler(level,rowsDeleted);
 					sideInfo.updateScore(points);
+					sideInfo.updateLines(linesCleared);
+					sideInfo.updateLevel(level);
+					
 					System.out.println("points: " + points);
+					System.out.println("lines: " + linesCleared);
 				}	
 				SpawnShape();
 			}
@@ -205,10 +221,34 @@ public class GameEngine extends AbstractModel implements Runnable{
 	}
 	
 	public void SpawnShape() {
-		int randomNum = ThreadLocalRandom.current().nextInt(0, shapes.length);
-		currentShape = getShape(randomNum);
+
+		currentShape = nextShape();
 		
 //		checkIfGameOver();
+	}
+	
+	private Shape nextShape() {
+		Shape nextShape;
+		
+		//When the game starts, fill the list with 4 random shapes
+		if(GameStart) {
+			for(int i = 0; i < 4; i++) {
+				int randomNum = ThreadLocalRandom.current().nextInt(0, shapes.length);
+				nextShapes.add(getShape(randomNum));
+				
+			}
+			GameStart = false;
+		}
+		
+		for(int i = 0; i < 3; i++) {
+			sideInfo.updateNextShape(nextShapes.get(i+1));
+			sideInfo.repaint();
+		}
+		nextShape = nextShapes.pollFirst();
+		int randomNum = ThreadLocalRandom.current().nextInt(0, shapes.length);
+		nextShapes.addLast(getShape(randomNum));
+		
+		return nextShape;
 	}
 	
 //	public void checkIfGameOver() {
@@ -245,7 +285,10 @@ public class GameEngine extends AbstractModel implements Runnable{
 	}	
 	
 	private void levelUp() {
-		
+		if(linesCleared == linesToClear) {
+			level++;
+			linesToClear = linesToClear + 5;
+		}
 	}
 	
 	public int getLevel() {
@@ -258,10 +301,10 @@ public class GameEngine extends AbstractModel implements Runnable{
 	
 	private int scoreHandler(int level, int rows) {
 		switch(rows) {
-			case 1: return 40*(level + 1);
-			case 2: return 100*(level + 1);
-			case 3: return 300*(level + 1);
-			case 4: return 1200*(level + 1);
+			case 1: return 40*level;
+			case 2: return 100*level;
+			case 3: return 300*level;
+			case 4: return 1200*level;
 			default: return 0;
 		}
 		
@@ -397,6 +440,7 @@ public class GameEngine extends AbstractModel implements Runnable{
 	private void render() {
 		boardView.setCurrentShape(currentShape);
 		boardView.repaint();
+		
 	}
 	
 	public void quit() 

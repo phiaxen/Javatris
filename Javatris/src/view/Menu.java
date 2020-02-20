@@ -33,10 +33,9 @@ public class Menu {
 	 * Creates a menu according to user specifications 
 	 */
 	public Menu(Dimension size, int elements) {
-		this.menuFrame = new JFrame();
+		this.menuFrame = new JFrame("JavaTris");
 		this.contentPane = (JPanel)menuFrame.getContentPane();
 		this.menuPane = new JPanel();
-
 		menuSetup(size, elements);
 	}
 	
@@ -52,6 +51,7 @@ public class Menu {
 		this.contentPane.add(menuPane);
 		this.menuFrame.setSize(size);
 		this.menuFrame.setResizable(false);	
+		
 		menuFrame.setLocationRelativeTo(null); //set frame in the middle of the screen
 	}
 	
@@ -74,6 +74,9 @@ public class Menu {
 		this.menuFrame.setResizable(true);
 		try {
 			image = ImageIO.read(new File(fileName));
+			
+			image = ImageResizer.resize(image,0.2);
+			
 			title = new JLabel(new ImageIcon(image));
 			this.menuPane.add(title, 0);
 		} catch (IOException e) {

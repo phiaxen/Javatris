@@ -2,14 +2,22 @@ package main;
 import server.*;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
 
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.AbstractBorder;
@@ -113,7 +121,7 @@ public class Game {
 	public void SetUpFrame() {
 	
 		frame = new JFrame("JavaTris");
-		frame.setSize(FrameWidth,FrameHeight);	//add 300 on width if sideInfo is included
+		frame.setSize(FrameWidth + 300,FrameHeight);	//add 300 on width if sideInfo is included
 		
 		FixedPanel = new JPanel(new GridBagLayout());
 		
@@ -149,19 +157,39 @@ public class Game {
 	 * Creates a basic start-menu
 	 */
 	private void makeStartmenu() {
-		startMenu = new Menu(new Dimension(200,300), 3);
+		startMenu = new Menu(new Dimension(400,800), 4);
+		
+//		ImageIcon startButtonImage = null;
+//		try {
+//			startButtonImage = new ImageIcon(ImageIO.read(new File("src/images/tiles.png")));
+//		} catch (IOException e1) {
+//			e1.printStackTrace();
+//		}
+		
 		JButton startButton = new JButton("START");
+		
 		JButton onlineButton = new JButton("ONLINE");
 		JButton exitButton = new JButton("EXIT");
 		
+		startButton.setFont(new Font("Arial", Font.BOLD, 40));
+//		startButton.setBackground(Color.BLACK);
+		
+		
 		startButton.addActionListener((ActionEvent e) -> {startGame();});
+		
+		onlineButton.setFont(new Font("Arial", Font.BOLD, 40));
 		onlineButton.addActionListener((ActionEvent e) -> {startOnlineGame();});
+		
+		exitButton.setFont(new Font("Arial", Font.BOLD, 40));
 		exitButton.addActionListener((ActionEvent e) -> {System.exit(0);});
+		
 		
 		startMenu.addElement(startButton); 
 		startMenu.addElement(onlineButton); 
 		startMenu.addElement(exitButton);
 		
+		
+		startMenu.addTitle("src/images/javatris2.png");
 		startMenu.openMenu();
 	}
 	
