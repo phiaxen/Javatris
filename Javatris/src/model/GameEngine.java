@@ -447,8 +447,7 @@ public class GameEngine extends AbstractModel implements Runnable{
 	
 	//everything in game that renders
 	private void render() {
-		firePropertyChange("shape", oldShape.clone(), currentShape.clone());
-		
+		firePropertyChange("shape", oldShape.clone(), currentShape.clone());	
 	}
 	
 	public void quit() 
