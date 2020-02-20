@@ -200,6 +200,7 @@ public class Game {
 		Init();
 		SetUpFrame();
 		gameEngine.addPropertyChangeListener(boardView);
+		gameEngine.addPropertyChangeListener(sideInfo);
 		startMenu.closeMenu();
 	}
 	
@@ -225,6 +226,7 @@ public class Game {
 			Init(adress[0], Integer.parseInt(adress[1]));
 			SetUpFrame();
 			gameEngine.addPropertyChangeListener(boardView);
+			gameEngine.addPropertyChangeListener(sideInfo);
 			startMenu.closeMenu();
 		}
 	}

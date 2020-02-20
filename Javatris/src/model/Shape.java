@@ -1,5 +1,6 @@
 package model;
 import java.awt.image.BufferedImage;
+import java.util.Arrays;
 
 /**
  * 
@@ -8,7 +9,7 @@ import java.awt.image.BufferedImage;
  */
 
 
-public class Shape {
+public class Shape implements Cloneable{
 
 	private Board board;
 	private int[][] shape;
@@ -164,4 +165,39 @@ public class Shape {
 		return startPos;
 	}
 	
+	/**
+	 * Compares this with other
+	 * @param other : object to compare with
+	 */
+	@Override
+	public boolean equals(Object other){
+		if(this == other) {
+			return true;
+		}
+		if((other != null) && (this.getClass() == other.getClass())) {
+			Shape temp = (Shape)other;
+			if(board.equals(temp.board) && Arrays.deepEquals(this.shape, temp.shape) && (x == temp.x) && (y == temp.y) && (hasCollidedY == temp.hasCollidedY) && (hasCollidedX == temp.hasCollidedX) && (color == temp.color)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	/**
+	 * Returns deep clone of shape
+	 */
+	@Override
+	public Shape clone() {
+		try {
+			Shape copy = (Shape)super.clone();
+			copy.board = board.clone();
+			for (int i = 0; i < shape.length; i++) {
+				copy.shape[i] = shape[i].clone();
+			}
+			return copy;
+ 		}
+		catch(CloneNotSupportedException e) {
+			throw new InternalError();
+		}
+	}
 }

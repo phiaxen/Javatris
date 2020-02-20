@@ -230,6 +230,11 @@ public class GameEngine extends AbstractModel implements Runnable{
 	private Shape nextShape() {
 		Shape nextShape;
 		
+		LinkedList<Shape> oldShapes = (LinkedList<Shape>)nextShapes.clone();
+		for(int i = 0; i < nextShapes.size(); i++) {
+			oldShapes.add(i, nextShapes.get(i).clone());
+		}
+		
 		//When the game starts, fill the list with 4 random shapes
 		if(GameStart) {
 			for(int i = 0; i < 4; i++) {
@@ -239,11 +244,10 @@ public class GameEngine extends AbstractModel implements Runnable{
 			}
 			GameStart = false;
 		}
-		
 		for(int i = 0; i < 3; i++) {
-			sideInfo.updateNextShape(nextShapes.get(i+1));
-			sideInfo.repaint();
+			firePropertyChange("next shape", oldShapes, nextShapes.get(i+1).clone());
 		}
+		
 		nextShape = nextShapes.pollFirst();
 		int randomNum = ThreadLocalRandom.current().nextInt(0, shapes.length);
 		nextShapes.addLast(getShape(randomNum));
@@ -285,7 +289,7 @@ public class GameEngine extends AbstractModel implements Runnable{
 	}	
 	
 	private void levelUp() {
-		if(linesCleared == linesToClear) {
+		if(linesCleared >= linesToClear) {
 			level++;
 			linesToClear = linesToClear + 5;
 		}

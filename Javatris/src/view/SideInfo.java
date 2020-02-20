@@ -9,6 +9,8 @@ import java.awt.Graphics2D;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.image.BufferedImage;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.util.LinkedList;
 
@@ -23,7 +25,7 @@ import model.Shape;
 import javax.swing.BoxLayout;
 import javax.swing.GroupLayout.Alignment;
 
-public class SideInfo extends JPanel {
+public class SideInfo extends JPanel implements PropertyChangeListener{
 	private static final long serialVersionUID = 1L;
 	
 //	private BufferedImage scoreTitle;
@@ -99,7 +101,7 @@ public class SideInfo extends JPanel {
 	}
 	
 	public void updateLevel(int level) {
-		this.levelLabel.setText("Lines: " + level);
+		this.levelLabel.setText("Level: " + level);
 	}
 	
 	public void updateNextShape(Shape shape) {
@@ -123,6 +125,20 @@ public class SideInfo extends JPanel {
 		Graphics2D g2 = (Graphics2D)g;
 //		g.drawImage(scoreTitle,0,0,200,50,null);
 		
+		
+	}
+
+	/**
+	 * Handles updating next-shape sequence after update in GameEngine
+	 * @param evt : event triggering update
+	 */
+	@Override
+	public void propertyChange(PropertyChangeEvent evt) {
+		String property = evt.getPropertyName();
+		if(property.equals("next shape")) {
+			updateNextShape((Shape)evt.getNewValue());
+			repaint();
+		}
 		
 	}
 }
