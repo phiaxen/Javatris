@@ -51,7 +51,7 @@ public class NextShapesPanel extends JPanel{
 	}
 	
 	public void updateNextShape(Shape shape) {
-		shapes.addLast(shape);
+		shapes.addLast(shape.clone());
 	}
 	
 	protected void paintComponent(Graphics g) {

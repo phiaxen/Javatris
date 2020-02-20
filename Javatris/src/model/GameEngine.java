@@ -40,14 +40,15 @@ public class GameEngine extends AbstractModel implements Runnable{
 	}
 
 	private static Shape currentShape;	//The shape that is currently in action
+	private static Shape oldShape;
 	private Shape shapes[] = new Shape[7];	//An array that contains 7 different shapes
 	private Board board;	
-	private SideInfo sideInfo;
 	private Client client;
 	private Boolean online = false; //Change this to true for multiplayer 
 	
 	//points and levelup things
 	public int level = 1;
+	private int oldLevel;
 	public int points = 0;
 	private int linesToClear = 10;	//how many lines it takes to level up, increase by 5 for each level
 	
@@ -62,8 +63,6 @@ public class GameEngine extends AbstractModel implements Runnable{
 	private int timePassed = 0;
 	private Timer GameTime;
 	
-	private BoardView boardView;
-	
 	private long time, lastTime;
 	
 	private boolean gameOver = false;
@@ -72,20 +71,21 @@ public class GameEngine extends AbstractModel implements Runnable{
 	  
 	private boolean GameStart = true;
 	
-	public GameEngine(Board board, BoardView boardView, SideInfo sideInfo, Boolean online) {
+	public GameEngine(Board board, Boolean online) {
 		super();
 		this.board = board;
-		this.boardView = boardView;
-		this.sideInfo = sideInfo;
 		this.online = online;
+		oldLevel = 1;
+		oldShape = new Shape(board, 1, new int[][] {{1}});//placeholder for start of game
 		SpawnShape();
 		GameTime = new Timer();
 	}
 	
 	TimerTask task = new TimerTask() {
 		public void run() {
+			int oldTime = timePassed;
 			timePassed++;
-			sideInfo.updateTime(timePassed);
+			firePropertyChange("time", oldTime, timePassed);
 		}
 		
 	};
@@ -108,6 +108,7 @@ public class GameEngine extends AbstractModel implements Runnable{
 				
 				int rowsDeleted = 0;
 				int column = 0;
+				int oldlinesC = linesCleared;
 				for(int i=0; i<board.getBoard().length; i++) {
 					if(board.checkFullRow(i)) {
 						rowsDeleted++;
@@ -123,13 +124,12 @@ public class GameEngine extends AbstractModel implements Runnable{
 				//uppdaterar score endast om rader har tagits bort
 				if(rowsDeleted > 0) {
 					levelUp();
+					int oldPoints = points;
 					points += scoreHandler(level,rowsDeleted);
-					sideInfo.updateScore(points);
-					sideInfo.updateLines(linesCleared);
-					sideInfo.updateLevel(level);
 					
-					System.out.println("points: " + points);
-					System.out.println("lines: " + linesCleared);
+					firePropertyChange("points", oldPoints, points);
+					firePropertyChange("lines cleared", oldlinesC, linesCleared);
+					firePropertyChange("level", oldLevel, level);
 				}	
 				SpawnShape();
 			}
@@ -230,11 +230,18 @@ public class GameEngine extends AbstractModel implements Runnable{
 	private Shape nextShape() {
 		Shape nextShape;
 		
-		LinkedList<Shape> oldShapes = (LinkedList<Shape>)nextShapes.clone();
-		for(int i = 0; i < nextShapes.size(); i++) {
-			oldShapes.add(i, nextShapes.get(i).clone());
+		LinkedList<Shape> oldShapes = new LinkedList<Shape>();
+		if(oldShapes.size() < 4) {
+			for(int i = 0; i < 4; i++) {
+				oldShapes.add(i, new Shape(board, 1, new int[][] {{1}})); //used in the start of the game
+			}
 		}
-		
+		else {
+			for(int i = 0; i < nextShapes.size(); i++) {
+				oldShapes.add(i, nextShapes.get(i).clone());
+			}
+		}
+	
 		//When the game starts, fill the list with 4 random shapes
 		if(GameStart) {
 			for(int i = 0; i < 4; i++) {
@@ -244,14 +251,12 @@ public class GameEngine extends AbstractModel implements Runnable{
 			}
 			GameStart = false;
 		}
-		for(int i = 0; i < 3; i++) {
-			firePropertyChange("next shape", oldShapes, nextShapes.get(i+1).clone());
-		}
 		
 		nextShape = nextShapes.pollFirst();
 		int randomNum = ThreadLocalRandom.current().nextInt(0, shapes.length);
 		nextShapes.addLast(getShape(randomNum));
 		
+		firePropertyChange("next shape", oldShapes, nextShapes);
 		return nextShape;
 	}
 	
@@ -290,6 +295,7 @@ public class GameEngine extends AbstractModel implements Runnable{
 	
 	private void levelUp() {
 		if(linesCleared >= linesToClear) {
+			oldLevel = level;
 			level++;
 			linesToClear = linesToClear + 5;
 		}
@@ -316,7 +322,6 @@ public class GameEngine extends AbstractModel implements Runnable{
 
 	public synchronized void start() {
 		System.out.println("GAME START");
-		boardView.setCurrentShape(currentShape);
 		if(running) {
 			return;
 		}
@@ -335,7 +340,7 @@ public class GameEngine extends AbstractModel implements Runnable{
 				
 			}
 		}
-		
+		firePropertyChange("shape", oldShape, currentShape);
 	}
 	
 	public synchronized void startOnline() 
@@ -442,8 +447,7 @@ public class GameEngine extends AbstractModel implements Runnable{
 	
 	//everything in game that renders
 	private void render() {
-		boardView.setCurrentShape(currentShape);
-		boardView.repaint();
+		firePropertyChange("shape", oldShape.clone(), currentShape.clone());
 		
 	}
 	

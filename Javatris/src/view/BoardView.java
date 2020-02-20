@@ -41,12 +41,10 @@ public class BoardView extends JPanel implements PropertyChangeListener{
 	private int[][] boardCoords;
 	private final int HEIGHT,WIDTH, BLOCKSIZE;
 	private Shape currentShape;
-	private Board board;
 	private boolean withGrid;  
 	private BufferedImage[] colors;
 	
-	public BoardView(Board board, int height,int width, int blocksize, boolean withGrid) {
-		this.board = board;
+	public BoardView(int height,int width, int blocksize, boolean withGrid) {
 		this.HEIGHT = height;
 		this.WIDTH = width;
 		this.BLOCKSIZE = blocksize;
@@ -59,7 +57,6 @@ public class BoardView extends JPanel implements PropertyChangeListener{
 		colors = new BufferedImage[8];
 		this.setBackground(Color.white); //om man vill ha en enfärgad bakgrund:
 		
-		//boardCoords = board.getBoard(); //hämta spelplanen
 		boardCoords = new int[HEIGHT][WIDTH]; //hämta spelplanen - använd för MVC 
 		loadImages();
 		
@@ -115,6 +112,8 @@ public class BoardView extends JPanel implements PropertyChangeListener{
 		
 		//not bug free 
 		//draws currentShape
+		if(currentShape == null) {System.out.println("-----------------NULL--------------");}
+		
 		for(int i = 0; i < currentShape.getCoords().length; i++) {
 			for(int j = 0; j < currentShape.getCoords()[i].length; j++) {
 				if(currentShape.getCoords()[i][j] == 1) {
@@ -144,6 +143,10 @@ public class BoardView extends JPanel implements PropertyChangeListener{
 		String property = evt.getPropertyName();
 		if(property.equals("board")) {
 			boardCoords = ((Board)evt.getNewValue()).getBoard();
+		}
+		if(property.equals("shape")) {
+			setCurrentShape((Shape)evt.getNewValue());
+			repaint();
 		}
 	}
 }

@@ -88,24 +88,31 @@ public class SideInfo extends JPanel implements PropertyChangeListener{
 	//Uppdaterar score när den kallas utifrån
 	public void updateScore(int score) {
 		this.scoreText.setText("SCORE: " + score);
+		repaint();
 	}
 	
 	//Kanske borde hållas reda på i denna klass
 	//Borde kanske inte vara en int som inparameter
 	public void updateTime(int time) {
 		this.timeLabel.setText("TIME: " + time + "s");
+		timeLabel.repaint();
 	}
 	
 	public void updateLines(int lines) {
 		this.linesLabel.setText("Lines: " + lines);
+		linesLabel.repaint();
 	}
 	
 	public void updateLevel(int level) {
 		this.levelLabel.setText("Level: " + level);
+		levelLabel.repaint();
 	}
 	
-	public void updateNextShape(Shape shape) {
-		nextShapesPanel.updateNextShape(shape);
+	public void updateNextShape(LinkedList<Shape> shapes) {
+		for(int i = 0; i < 3; i++) {
+			nextShapesPanel.updateNextShape(shapes.get(i).clone());
+		}
+		nextShapesPanel.repaint();
 	}
 	
 //	private void init() {
@@ -136,9 +143,23 @@ public class SideInfo extends JPanel implements PropertyChangeListener{
 	public void propertyChange(PropertyChangeEvent evt) {
 		String property = evt.getPropertyName();
 		if(property.equals("next shape")) {
-			updateNextShape((Shape)evt.getNewValue());
-			repaint();
+			updateNextShape((LinkedList<Shape>)evt.getNewValue());
 		}
 		
+		if(property.equals("time")) {
+			updateTime((int)evt.getNewValue());
+		}
+		
+		if(property.equals("level")) {
+			updateLevel((int)evt.getNewValue());
+		}
+		
+		if(property.equals("points")) {
+			updateScore((int)evt.getNewValue());
+		}
+		
+		if(property.equals("lines cleared")) {
+			updateLines((int)evt.getNewValue());
+		}
 	}
 }

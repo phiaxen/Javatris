@@ -59,4 +59,14 @@ public abstract class AbstractModel implements PropertyChange{
 	protected void firePropertyChange(String property, Object oldValue, Object newValue) {
 		pcs.firePropertyChange(property, oldValue, newValue);
 	}
+	
+	/**
+	 * Notifies any potential listeners that a change has occurred
+	 * @param property : property name
+	 * @param oldValue : the property's value before change
+	 * @param newValue : the property's value after change
+	 */
+	protected void firePropertyChange(String property, int oldValue, int newValue) {
+		pcs.firePropertyChange(property, oldValue, newValue);
+	}
 }
