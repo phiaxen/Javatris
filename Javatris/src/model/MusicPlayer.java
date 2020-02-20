@@ -8,7 +8,9 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.FloatControl;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileSystemView;
 
 
 
@@ -22,29 +24,29 @@ public class MusicPlayer {
 	
 	private boolean fileLoaded = false;
 	
-	//exempel på url:er
-	public MusicPlayer() {		
+	
+	public void preparedMusicPlayer(){}
+	
+	public MusicPlayer () {		
 		
-		//playMusic4("G:\\firefox\\eclipse object ori\\Javatris2\\Javatris\\src\\songs\\Tetris99 Game Theme.wav");	Lokal dator
-		//playMusic4("Javatris\\\\src\\\\songs\\\\Tetris99 Game Theme.wav"); // Vet inte varför det har blivit fler \\ det var inte fyra från början
+		playMusic("\\src\\songs\\Tetris Game Theme1.wav");
 		
-		
-		//playMusic("Javatris/src/songs/Tetris99 Game Theme.wav");  // variant 1	
-		playMusic("\\src\\songs\\Tetris Game Theme1.wav");			// variant 2	
 	}
 	
 	// funkar
 	public void playMusic(String fp) {
 		
-//		File audioFile = new File(fp);	// variant 1	
+		if(fileLoaded){
+			audioClip.stop();
+			audioClip.flush();
+		}
 		
-		
-		 Path path = FileSystems.getDefault().getPath("").toAbsolutePath(); // variant 2	
-		 File audioFile = new File(path + fp);								// variant 2	
+		Path path = FileSystems.getDefault().getPath("").toAbsolutePath(); 
+		File audioFile = new File(path + fp);													
 	
 		try {
 								
-			AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
+			AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);				
 			
 			audioClip = AudioSystem.getClip();         
 			audioClip.open(audioStream);    
@@ -54,7 +56,37 @@ public class MusicPlayer {
 		}
 		catch(Exception e){
 			
-			JOptionPane.showMessageDialog(null, "Error");
+			JOptionPane.showMessageDialog(null, "Error with audio loading");
+		}
+		
+	}
+	
+	/*	borde kanske slå ihop denna med playMusic men det verkade jobbigare
+	 *  än vad det var värt.
+	 * 
+	 */
+public void playMusicFile(File audioFile) {										 	
+	
+		if(fileLoaded){
+			audioClip.stop();
+			audioClip.flush();
+		}
+		
+		try {
+			
+								
+			AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
+			
+			
+			audioClip = AudioSystem.getClip();         
+			audioClip.open(audioStream);    
+			
+			audioClip.loop(Clip.LOOP_CONTINUOUSLY);  
+			fileLoaded = true;
+		}
+		catch(Exception e){
+			
+			JOptionPane.showMessageDialog(null, "Error with audio loading");
 		}
 		
 	}
@@ -155,4 +187,32 @@ public class MusicPlayer {
 		}
 
 	}
+	
+	/*	Om du kallar på denna och har en pause eller breakpoint 
+	 * 	kommer rutan kanske öppnas i bakgrunden och man måste
+	 * 	minimera sina fönster
+	 */
+	public void playtFile() {
+		
+		JFileChooser j = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory()); 
+		  
+        // invoke the showsSaveDialog function to show the save dialog 
+        int r = j.showSaveDialog(null); 
+
+        // if the user selects a file 
+        if(r == JFileChooser.APPROVE_OPTION){ 
+        	File path = new File(j.getSelectedFile().getAbsolutePath());
+ 
+        	if (path.getName().endsWith((".wav"))){
+        		playMusicFile(j.getSelectedFile());
+        	}
+        	else {
+        		JOptionPane.showMessageDialog(null, "Wrong file type "+j.getSelectedFile().getAbsolutePath()); // System.out.println();
+        	}
+        } 
+        // if the user cancelled the operation 
+        else
+        	JOptionPane.showMessageDialog(null,"The user cancelled the operation"); 
+	}
+	
 }

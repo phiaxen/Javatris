@@ -55,6 +55,8 @@ public class SideInfo extends JPanel {
 		next = new JLabel("NEXT SHAPE");
 		next.setFont(new Font("Arial", Font.PLAIN, 30));	
 		next.setBorder(new EmptyBorder(40, 30, 10, 10));
+	//	next.setHorizontalAlignment(JLabel.CENTER);
+		
 		
 		nextPanel = new JPanel(new GridLayout(4,18,1,1));
 		nextPanel.setBackground(Color.black);
@@ -82,9 +84,9 @@ public class SideInfo extends JPanel {
 		this.timeLabel.setText("TIME: " + time + "s");
 	}
 	
-	public void updateRow() {
+	public void updateRow(int removed) {
 		
-		this.rowsRemoved++;
+		this.rowsRemoved += removed;
 		this.row.setText("ROWS REMOVED: "+rowsRemoved);
 	}
 //	private void init() {
