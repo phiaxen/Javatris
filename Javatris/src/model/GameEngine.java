@@ -145,7 +145,7 @@ public class GameEngine extends AbstractModel implements Runnable{
 			
 			currentShape.setDeltaX(0);
 			
-			firePropertyChange("board", oldBoard, board.clone());
+			firePropertyChange("board", oldBoard, board);
 	}
 	
 	public void addRow(int column, int color) {
@@ -446,7 +446,7 @@ public class GameEngine extends AbstractModel implements Runnable{
 	
 	//everything in game that renders
 	private void render() {
-		firePropertyChange("shape", oldShape.clone(), currentShape.clone());
+		firePropertyChange("shape", oldShape, currentShape);
 	}
 	
 	public void quit() 
