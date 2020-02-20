@@ -222,7 +222,7 @@ public class GameEngine implements Runnable {
 		if(GameStart) {
 			for(int i = 0; i < 4; i++) {
 				int randomNum = ThreadLocalRandom.current().nextInt(0, shapes.length);
-				nextShapes.add(getShape(0));
+				nextShapes.add(getShape(randomNum));
 				
 			}
 			GameStart = false;
@@ -234,7 +234,7 @@ public class GameEngine implements Runnable {
 		}
 		nextShape = nextShapes.pollFirst();
 		int randomNum = ThreadLocalRandom.current().nextInt(0, shapes.length);
-		nextShapes.addLast(getShape(0));
+		nextShapes.addLast(getShape(randomNum));
 		
 		return nextShape;
 	}
