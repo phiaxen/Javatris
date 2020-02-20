@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Arrays;
+
 /**
  * THIS CLASS IS A MODEL
  * Board is a class that creates the 20x10 board in the game.
@@ -7,9 +9,13 @@ package model;
  * @author Philip
  * @version 1.0
  * @since 2020-02-15
+ * 
+ * Added clone and equals methods
+ * @author Joachim Antfolk
+ * @version 2.0
  */
 
-public class Board {
+public class Board implements Cloneable{
 	
 	private int[][] board; //2D-array of the board (standard: 20x10)
 	
@@ -153,5 +159,45 @@ public class Board {
 	 */
 	public int[][] getBoard() {
 		return board;
+	}
+	
+	/**
+	 * Returns deep copy of Board object
+	 * @return Board : copy of this Board
+	 */
+	@Override
+	public Board clone() {
+		try {
+			int[][] boardClone = new int[HEIGHT][WIDTH];
+			
+			Board copy = (Board)super.clone();
+			for (int i = 0; i < HEIGHT; i++) {
+				boardClone[i] = board[i].clone();
+			}
+			
+			copy.board = boardClone;
+			return copy;
+		}
+		catch(CloneNotSupportedException e) {
+			throw new InternalError();
+		}
+	}
+	
+	/**
+	 * Compares this object with parameter
+	 * @param other : Object to be compared to
+	 */
+	@Override
+	public boolean equals(Object other) {
+		if(this == other) {
+			return true;
+		}
+		if((other != null) && (this.getClass() == other.getClass())) {
+			Board temp = (Board)other;
+			if((temp.HEIGHT == HEIGHT) && (temp.WIDTH == WIDTH) && (Arrays.deepEquals(this.board, temp.board))) {
+				return true;
+			}
+		}
+		return false;
 	}
 }

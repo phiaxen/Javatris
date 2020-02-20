@@ -17,6 +17,9 @@ import javax.swing.JPanel;
 
 import model.*;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+
 /**
  * THIS CLASS IS A VIEW
  * BoardView is a class that draws the 20x10 board on a JPanel.
@@ -24,9 +27,13 @@ import model.*;
  * 
  * @author Philip
  * @version 1.0
+ * 
+ * Implemented PropertyChangeListener
+ * @author Joachim Antfolk
+ * @version 1.1
  */
 
-public class BoardView extends JPanel{
+public class BoardView extends JPanel implements PropertyChangeListener{
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -51,8 +58,11 @@ public class BoardView extends JPanel{
 	private void init() {
 		colors = new BufferedImage[8];
 		this.setBackground(Color.white); //om man vill ha en enfärgad bakgrund:
-		boardCoords = board.getBoard(); //hämta spelplanen
+		
+		//boardCoords = board.getBoard(); //hämta spelplanen
+		boardCoords = new int[HEIGHT][WIDTH]; //hämta spelplanen - använd för MVC 
 		loadImages();
+		
 		setColors();
 	}
 	
@@ -124,7 +134,16 @@ public class BoardView extends JPanel{
 		}
 		
 	}
-
 	
-	
+	/**
+	 * Listens for property-changes in observed objects
+	 * @param evt : the fired event
+	 */
+	@Override
+	public void propertyChange(PropertyChangeEvent evt) {
+		String property = evt.getPropertyName();
+		if(property.equals("board")) {
+			boardCoords = ((Board)evt.getNewValue()).getBoard();
+		}
+	}
 }

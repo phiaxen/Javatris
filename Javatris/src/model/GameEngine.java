@@ -3,6 +3,9 @@ import server.*;
 import server.ConnectionHandler.Delegate;
 
 import java.awt.image.BufferedImage;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.io.IOException;
 import java.util.TimerTask;
 import java.util.concurrent.ThreadLocalRandom;
@@ -19,8 +22,12 @@ import view.*;
  * 
  * @author Philip
  * @version 1.0
+ * 
+ * Implemented support for PropertyChange
+ * @author Joachim Antfolk
+ * @version 2.0
  */
-public class GameEngine implements Runnable {
+public class GameEngine extends AbstractModel implements Runnable{
 	
 	
 	/*
@@ -29,7 +36,7 @@ public class GameEngine implements Runnable {
 	public interface Delegate {
 		Client getClient();
 	}
-	
+
 	private static Shape currentShape;	//The shape that is currently in action
 	private Shape shapes[] = new Shape[7];	//An array that contains 7 different shapes
 	private Board board;	
@@ -55,6 +62,7 @@ public class GameEngine implements Runnable {
 	private boolean gameOver = false;
 	
 	public GameEngine(Board board, BoardView boardView, SideInfo sideInfo, Boolean online) {
+		super();
 		this.board = board;
 		this.boardView = boardView;
 		this.sideInfo = sideInfo;
@@ -74,6 +82,8 @@ public class GameEngine implements Runnable {
 	
 	public void update() {
 //		System.out.println("TIME: " + timePassed);
+		Board oldBoard = board.clone();
+		
 		checkIfGameOver();
 		time += System.currentTimeMillis() - lastTime;
 		lastTime = System.currentTimeMillis();
@@ -120,6 +130,8 @@ public class GameEngine implements Runnable {
 				}
 			
 			currentShape.setDeltaX(0);
+			
+			firePropertyChange("board", oldBoard, board.clone());
 	}
 	
 	public void addRow(int column, int color) {
@@ -391,6 +403,5 @@ public class GameEngine implements Runnable {
 	{
 		System.exit(1);
 	}
-	
-	
+
 }

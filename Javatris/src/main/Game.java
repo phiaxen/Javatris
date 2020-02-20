@@ -25,7 +25,7 @@ import controller.*;
  * @version 1.0
  * 
  * Added a simple start-menu
- * @author Jocke
+ * @author Joachim Antfolk
  * @version 1.1
  */
 
@@ -106,8 +106,7 @@ public class Game {
 			{
 				return client.getClient();
 			}
-		};
-		
+		};		
 		gameEngine.start();
 	}
 	
@@ -121,7 +120,7 @@ public class Game {
 		FixedPanel.setPreferredSize(frame.getSize());
 		FixedPanel.setBackground(Color.WHITE);
 
-//		FixedPanel.add(sideInfo); 
+		FixedPanel.add(sideInfo); 
 		FixedPanel.add(boardView);
 		frame.add(FixedPanel);
 		
@@ -172,6 +171,7 @@ public class Game {
 	private void startGame() {
 		Init();
 		SetUpFrame();
+		gameEngine.addPropertyChangeListener(boardView);
 		startMenu.closeMenu();
 	}
 	
@@ -196,6 +196,7 @@ public class Game {
 			String[] adress = code.split(":");
 			Init(adress[0], Integer.parseInt(adress[1]));
 			SetUpFrame();
+			gameEngine.addPropertyChangeListener(boardView);
 			startMenu.closeMenu();
 		}
 	}
