@@ -16,8 +16,6 @@ import javax.imageio.ImageIO;
 import java.util.LinkedList;
 import java.util.Timer;
 
-import view.*;
-
 /**
  * THIS CLASS IS A MODEL
  * GameEngine is a class that handles all the calculations in the game.

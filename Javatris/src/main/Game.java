@@ -222,8 +222,9 @@ public class Game {
 		if(code != null&&!code.isBlank() && !code.isEmpty()) 
 		{
 			String[] adress = code.split(":");
-			SetUpFrame();
 			Init(adress[0], Integer.parseInt(adress[1]));
+			SetUpFrame();
+			
 			gameEngine.addPropertyChangeListener(boardView);
 			gameEngine.addPropertyChangeListener(sideInfo);
 			startMenu.closeMenu();
