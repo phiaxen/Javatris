@@ -99,7 +99,7 @@ public class SideInfo extends JPanel {
 	}
 	
 	public void updateLevel(int level) {
-		this.levelLabel.setText("Lines: " + level);
+		this.levelLabel.setText("Level: " + level);
 	}
 	
 	public void updateNextShape(Shape shape) {
