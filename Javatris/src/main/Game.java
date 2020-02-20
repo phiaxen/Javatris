@@ -84,12 +84,8 @@ public class Game {
 		musicPlayer = new MusicPlayer();
 		
 		board = new Board();
-		boardView = new BoardView(board,BoardHeight,BoardWidth,BlockSize,false);
-		sideInfo = new SideInfo();
-		gameEngine = new GameEngine(board, boardView,sideInfo,false);
+		gameEngine = new GameEngine(board,false);
 		controller = new Controller(gameEngine,musicPlayer);//musicplayer ska inte vara i kontroller egentligen, men har den där för att testa
-		
-		gameEngine.start();
 	}
 	
 	/*
@@ -101,9 +97,9 @@ public class Game {
 		musicPlayer = new MusicPlayer();
 		
 		board = new Board();
-		boardView = new BoardView(board,BoardHeight,BoardWidth,BlockSize,false);
+		boardView = new BoardView(BoardHeight,BoardWidth,BlockSize,false);
 		sideInfo = new SideInfo();
-		gameEngine = new GameEngine(board, boardView,sideInfo,true);
+		gameEngine = new GameEngine(board,true);
 		client = new Client(gameEngine, ip, port);
 		controller = new Controller(gameEngine,musicPlayer);
 		
@@ -115,11 +111,12 @@ public class Game {
 				return client.getClient();
 			}
 		};		
-		gameEngine.start();
 	}
 	
 	public void SetUpFrame() {
-	
+		sideInfo = new SideInfo();
+		boardView = new BoardView(BoardHeight,BoardWidth,BlockSize,false);
+		
 		frame = new JFrame("JavaTris");
 		frame.setSize(FrameWidth + 300,FrameHeight);	//add 300 on width if sideInfo is included
 		
@@ -132,7 +129,7 @@ public class Game {
 		FixedPanel.add(boardView);
 		frame.add(FixedPanel);
 		
-//		frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+		frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
 		frame.addKeyListener(controller);
 		frame.setResizable(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -199,9 +196,11 @@ public class Game {
 	private void startGame() {
 		Init();
 		SetUpFrame();
+		
 		gameEngine.addPropertyChangeListener(boardView);
 		gameEngine.addPropertyChangeListener(sideInfo);
 		startMenu.closeMenu();
+		gameEngine.start();
 	}
 	
 	/*
@@ -223,11 +222,12 @@ public class Game {
 		if(code != null&&!code.isBlank() && !code.isEmpty()) 
 		{
 			String[] adress = code.split(":");
-			Init(adress[0], Integer.parseInt(adress[1]));
 			SetUpFrame();
+			Init(adress[0], Integer.parseInt(adress[1]));
 			gameEngine.addPropertyChangeListener(boardView);
 			gameEngine.addPropertyChangeListener(sideInfo);
 			startMenu.closeMenu();
+			gameEngine.start();
 		}
 	}
 	
