@@ -61,7 +61,7 @@ public class Game {
 	
 	
 	public Game() {
-		makeStartmenu();
+		makeStartMenu();
 	}
 	
 	public static void main(String[] args) {
@@ -72,7 +72,7 @@ public class Game {
 	/*
 	 * Initializes the game and creates all the nececcary components that are needed
 	 */
-	private void Init() {
+	private void init() {
 		musicPlayer = new MusicPlayer(1);
 		
 		board = new Board();
@@ -85,14 +85,10 @@ public class Game {
 	 * @Param ip the ip of the server
 	 * @Param port the port of the server
 	 */
-	private void Init(String ip, int port) {
-		musicPlayer = new MusicPlayer(1);
-		
-		board = new Board();
-		sideInfo = new SideInfo();
-		gameEngine = new GameEngine(board,true);
+	private void init(String ip, int port) {
+		init();
 		client = new Client(gameEngine, ip, port);
-		controller = new Controller(gameEngine,musicPlayer);
+		
 		
 		gameEngine.delegate = new GameEngine.Delegate() 
 		{
@@ -104,7 +100,7 @@ public class Game {
 		};		
 	}
 	
-	public void SetUpFrame() {
+	public void setUpFrame() {
 		sideInfo = new SideInfo();
 		boardView = new BoardView(BoardHeight,BoardWidth,BlockSize,true);
 		
@@ -135,33 +131,29 @@ public class Game {
 	}
 	
 	/**
-	 * Creates a basic start-menu
+	 * Creates start-menu
 	 */
-	private void makeStartmenu() {
+	private void makeStartMenu() {
 		startMenu = new Menu(new Dimension(400,800), 4);
-		
-//		ImageIcon startButtonImage = null;
-//		try {
-//			startButtonImage = new ImageIcon(ImageIO.read(new File("src/images/tiles.png")));
-//		} catch (IOException e1) {
-//			e1.printStackTrace();
-//		}
-		
+
 		JButton startButton = new JButton("START");
 		
 		JButton onlineButton = new JButton("ONLINE");
 		JButton exitButton = new JButton("EXIT");
 		
 		startButton.setFont(new Font("Arial", Font.BOLD, 40));
-//		startButton.setBackground(Color.BLACK);
-		
-		
+		startButton.setBackground(Color.BLACK);
+		startButton.setFocusPainted(false);
 		startButton.addActionListener((ActionEvent e) -> {startGame();});
 		
 		onlineButton.setFont(new Font("Arial", Font.BOLD, 40));
+		onlineButton.setBackground(Color.BLACK);
+		onlineButton.setFocusPainted(false);
 		onlineButton.addActionListener((ActionEvent e) -> {startOnlineGame();});
 		
 		exitButton.setFont(new Font("Arial", Font.BOLD, 40));
+		exitButton.setBackground(Color.BLACK);
+		exitButton.setFocusPainted(false);
 		exitButton.addActionListener((ActionEvent e) -> {System.exit(0);});
 		
 		
@@ -179,8 +171,8 @@ public class Game {
 	 */
 	private void startGame() {
 		
-		Init();
-		SetUpFrame();
+		init();
+		setUpFrame();
 		
 		gameEngine.addPropertyChangeListener(boardView);
 		gameEngine.addPropertyChangeListener(sideInfo);
@@ -208,8 +200,8 @@ public class Game {
 		{
 			String[] adress = code.split(":");
 			
-			Init(adress[0], Integer.parseInt(adress[1]));
-			SetUpFrame();
+			init(adress[0], Integer.parseInt(adress[1]));
+			setUpFrame();
 		
 			gameEngine.addPropertyChangeListener(boardView);
 			gameEngine.addPropertyChangeListener(sideInfo);
