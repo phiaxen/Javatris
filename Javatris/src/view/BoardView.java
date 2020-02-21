@@ -108,8 +108,6 @@ public class BoardView extends JPanel implements PropertyChangeListener{
 		
 		//not bug free 
 		//draws currentShape
-		if(currentShape == null) {System.out.println("-----------------NULL--------------");}
-		
 		for(int i = 0; i < currentShape.getCoords().length; i++) {
 			for(int j = 0; j < currentShape.getCoords()[i].length; j++) {
 				if(currentShape.getCoords()[i][j] == 1) {

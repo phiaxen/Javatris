@@ -40,30 +40,10 @@ public class MusicPlayer {
 	
 	// funkar
 	public void playMusic(String fp) {
-		
-		if(fileLoaded){
-			audioClip.stop();
-			audioClip.flush();
-		}
-		
+
 		Path path = FileSystems.getDefault().getPath("").toAbsolutePath(); 
-		File audioFile = new File(path + fp);													
-	
-		try {
-								
-			AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);				
-			
-			audioClip = AudioSystem.getClip();         
-			audioClip.open(audioStream);    
-			
-			audioClip.loop(Clip.LOOP_CONTINUOUSLY);  
-			fileLoaded = true;
-		}
-		catch(Exception e){
-			
-			JOptionPane.showMessageDialog(null, "Error with audio loading");
-		}
-		
+		File audioFile = new File(path + fp);		
+		playMusicFile(audioFile);
 	}
 	
 	/*	borde kanske slå ihop denna med playMusic men det verkade jobbigare

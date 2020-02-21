@@ -212,10 +212,8 @@ public class GameEngine extends AbstractModel implements Runnable{
 		case 6: return shapes[6]= new Shape(board,8, new int[][] {
 			{1,1},
 			{1,1}}); //Box 
-		default: break;
-		}
-		return null;
-		
+		default: return null;
+		}	
 	}
 	
 	public void SpawnShape() {
