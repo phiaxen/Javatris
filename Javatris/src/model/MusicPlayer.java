@@ -197,7 +197,7 @@ public void playMusicFile(File audioFile) {
 	 * 	kommer rutan kanske öppnas i bakgrunden och man måste
 	 * 	minimera sina fönster
 	 */
-	public void playtFile() {
+	public void playFile() {
 		
 		JFileChooser j = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory()); 
 		  
