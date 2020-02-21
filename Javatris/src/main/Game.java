@@ -62,8 +62,6 @@ public class Game {
 	
 	public Game() {
 		makeStartmenu();
-		//Init();
-		//SetUpFrame();	
 	}
 	
 	public static void main(String[] args) {

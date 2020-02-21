@@ -74,7 +74,7 @@ public class GameEngine extends AbstractModel implements Runnable{
 		this.online = online;
 		oldLevel = 1;
 		oldShape = new Shape(board, 1, new int[][] {{1}});//placeholder for start of game
-		//SpawnShape();
+		SpawnShape();
 		GameTime = new Timer();
 	}
 	
@@ -341,7 +341,6 @@ public class GameEngine extends AbstractModel implements Runnable{
 				
 			}
 		}
-		SpawnShape();
 		firePropertyChange("shape", oldShape, currentShape);
 	}
 	

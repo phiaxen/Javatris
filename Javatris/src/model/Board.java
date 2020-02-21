@@ -78,7 +78,6 @@ public class Board implements Cloneable{
 	 */
 	public void addRow(int column, int color) 
 	{
-		System.out.println("ADD ROW");
 		moveRowsUp();
 		if(column >= 0 && column < 10) 
 		{
