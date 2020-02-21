@@ -32,9 +32,10 @@ public class MusicPlayer {
 		else if(choice == 2){
 		playMusic("\\src\\\\songs\\\\Tetris99 Game Theme1.wav");
 		}
-		else {
-			
+		else if(choice == 3){
+		playMusic("\\src\\\\songs\\\\08 Dave Rodgers - Deja Vu.wav");	
 		}
+		else {}
 		
 	}
 	
