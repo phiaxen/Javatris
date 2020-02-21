@@ -24,12 +24,17 @@ public class MusicPlayer {
 	
 	private boolean fileLoaded = false;
 	
-	
-	public void preparedMusicPlayer(){}
-	
-	public MusicPlayer () {		
+	public MusicPlayer (int choice) {		
 		
+		if(choice == 1) {
 		playMusic("\\src\\songs\\Tetris Game Theme1.wav");
+		}
+		else if(choice == 2){
+		playMusic("\\src\\\\songs\\\\Tetris99 Game Theme1.wav");
+		}
+		else {
+			
+		}
 		
 	}
 	
@@ -97,7 +102,7 @@ public void playMusicFile(File audioFile) {
 			try {
 				audioClip.stop();
 			}
-			catch(Exception e) {System.out.println("No music running");}
+			catch(Exception e) {System.out.println("No musik running");}
 			}
 	}
 	
@@ -109,7 +114,7 @@ public void playMusicFile(File audioFile) {
 				audioClip.loop(Clip.LOOP_CONTINUOUSLY);
 
 			}
-			catch(Exception e) {System.out.println("No music running");}
+			catch(Exception e) {System.out.println("No musik running");}
 		}
 	}
 	
@@ -192,7 +197,7 @@ public void playMusicFile(File audioFile) {
 	 * 	kommer rutan kanske öppnas i bakgrunden och man måste
 	 * 	minimera sina fönster
 	 */
-	public void playtFile() {
+	public void playFile() {
 		
 		JFileChooser j = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory()); 
 		  
