@@ -228,8 +228,8 @@ public class GameEngine extends AbstractModel implements Runnable{
 	private Shape nextShape() {
 		Shape nextShape;
 
-		if(oldShapes.size() < 4) {
-			for(int i = 0; i < 4; i++) {
+		if(oldShapes.size() < 3) {
+			for(int i = 0; i < 3; i++) {
 				oldShapes.add(i, new Shape(board, 1, new int[][] {{1}})); //used in the start of the game
 			}
 		}
@@ -241,7 +241,7 @@ public class GameEngine extends AbstractModel implements Runnable{
 	
 		//When the game starts, fill the list with 4 random shapes
 		if(GameStart) {
-			for(int i = 0; i < 4; i++) {
+			for(int i = 0; i < 3; i++) {
 				int randomNum = ThreadLocalRandom.current().nextInt(0, shapes.length);
 				nextShapes.add(getShape(randomNum));
 				
@@ -261,8 +261,7 @@ public class GameEngine extends AbstractModel implements Runnable{
 	/**
 	 *Fire the nextShape sequence
 	 */
-	public void fireNextShapes() {
-		
+	public void fireNextShapes() {	
 		firePropertyChange("next shape", oldShapes, nextShapes);
 	}
 	
