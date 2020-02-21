@@ -63,9 +63,6 @@ public class BoardView extends JPanel implements PropertyChangeListener{
 		setColors();
 	}
 	
-	
-
-	
 	private void loadImages() {
 		try {
 			tiles = ImageIO.read(Board.class.getResource("/images/tiles4.png"));
@@ -93,7 +90,6 @@ public class BoardView extends JPanel implements PropertyChangeListener{
 		Graphics2D g2 = (Graphics2D)g;
 
 		g2.drawImage(background,0,0,null); //Draw the background 
-//		g2.drawImage(tiles,0,0,null);
 		if(withGrid) {
 			
 			g2.setColor(Color.BLACK); //set color 
@@ -135,7 +131,7 @@ public class BoardView extends JPanel implements PropertyChangeListener{
 	}
 	
 	/**
-	 * Listens for property-changes in observed objects
+	 * Applies property-changes from observed objects
 	 * @param evt : the fired event
 	 */
 	@Override

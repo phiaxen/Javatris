@@ -61,7 +61,6 @@ public class Game {
 	
 	
 	public Game() {
-		ResizeFrame();
 		makeStartmenu();
 		//Init();
 		//SetUpFrame();	
@@ -71,11 +70,6 @@ public class Game {
 		new Game();
 	}
 	
-	//Temporary solution
-	public void ResizeFrame() {
-		FrameWidth = BlockSize * BoardWidth + 14;
-		FrameHeight = BlockSize * BoardHeight + 37;  
-	}
 	
 	/*
 	 * Initializes the game and creates all the nececcary components that are needed
@@ -97,7 +91,6 @@ public class Game {
 		musicPlayer = new MusicPlayer();
 		
 		board = new Board();
-		boardView = new BoardView(BoardHeight,BoardWidth,BlockSize,false);
 		sideInfo = new SideInfo();
 		gameEngine = new GameEngine(board,true);
 		client = new Client(gameEngine, ip, port);
@@ -115,27 +108,20 @@ public class Game {
 	
 	public void SetUpFrame() {
 		sideInfo = new SideInfo();
-		boardView = new BoardView(BoardHeight,BoardWidth,BlockSize,false);
+		boardView = new BoardView(BoardHeight,BoardWidth,BlockSize,true);
 		
 		frame = new JFrame("JavaTris");
-		frame.setSize(FrameWidth + 300,FrameHeight);	//add 300 on width if sideInfo is included
 		
 		FixedPanel = new JPanel(new GridBagLayout());
-		
-		FixedPanel.setPreferredSize(frame.getSize());
-		FixedPanel.setBackground(Color.WHITE);
-
 		FixedPanel.add(sideInfo); 
 		FixedPanel.add(boardView);
+		
 		frame.add(FixedPanel);
-		
-		frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
 		frame.addKeyListener(controller);
-		frame.setResizable(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	
+		frame.pack();
 		frame.setLocationRelativeTo(null); //set frame in the middle of the screen
-		
+		frame.setResizable(false);
 		frame.setVisible(true);	
 	}
 	
@@ -224,7 +210,7 @@ public class Game {
 			String[] adress = code.split(":");
 			Init(adress[0], Integer.parseInt(adress[1]));
 			SetUpFrame();
-			
+		
 			gameEngine.addPropertyChangeListener(boardView);
 			gameEngine.addPropertyChangeListener(sideInfo);
 			startMenu.closeMenu();

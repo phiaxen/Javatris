@@ -51,6 +51,7 @@ public class SideInfo extends JPanel implements PropertyChangeListener{
 		
 		this.setBorder(new EmptyBorder(20, 20, 20, 20));
 	
+		//this.setBackground(Color.LIGHT_GRAY);
 		this.setBackground(Color.LIGHT_GRAY);
 		this.setPreferredSize(new Dimension(280,800));
 		this.setLayout(box);

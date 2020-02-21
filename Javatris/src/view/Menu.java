@@ -47,12 +47,16 @@ public class Menu {
 	private void menuSetup(Dimension size, int elements) {
 		this.menuPane.setLayout(new GridLayout(elements,1,1,1));
 		this.menuPane.setBorder(new BevelBorder(BevelBorder.LOWERED));
+		this.menuPane.setBackground(Color.DARK_GRAY);
+		
 		this.contentPane.setBorder(new EmptyBorder(20,20,20,20));
+		this.contentPane.setBackground(Color.LIGHT_GRAY);
 		this.contentPane.add(menuPane);
+		
 		this.menuFrame.setSize(size);
 		this.menuFrame.setResizable(false);	
 		
-		menuFrame.setLocationRelativeTo(null); //set frame in the middle of the screen
+		this.menuFrame.setLocationRelativeTo(null); //set frame in the middle of the screen
 	}
 	
 	/**

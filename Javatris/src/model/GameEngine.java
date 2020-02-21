@@ -1,7 +1,6 @@
 package model;
 import server.*;
 import server.ConnectionHandler.Delegate;
-
 import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -68,14 +67,14 @@ public class GameEngine extends AbstractModel implements Runnable{
 	private LinkedList<Shape> nextShapes = new LinkedList<Shape>(); 
 	  
 	private boolean GameStart = true;
-	
+
 	public GameEngine(Board board, Boolean online) {
 		super();
 		this.board = board;
 		this.online = online;
 		oldLevel = 1;
 		oldShape = new Shape(board, 1, new int[][] {{1}});//placeholder for start of game
-		SpawnShape();
+		//SpawnShape();
 		GameTime = new Timer();
 	}
 	
@@ -92,6 +91,8 @@ public class GameEngine extends AbstractModel implements Runnable{
 	public void update() {
 //		System.out.println("TIME: " + timePassed);
 		Board oldBoard = board.clone();
+		
+		
 		
 		checkIfGameOver();
 		time += System.currentTimeMillis() - lastTime;
@@ -339,6 +340,7 @@ public class GameEngine extends AbstractModel implements Runnable{
 				
 			}
 		}
+		SpawnShape();
 		firePropertyChange("shape", oldShape, currentShape);
 	}
 	
@@ -453,5 +455,4 @@ public class GameEngine extends AbstractModel implements Runnable{
 	{
 		System.exit(1);
 	}
-
 }
