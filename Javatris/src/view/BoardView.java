@@ -66,7 +66,7 @@ public class BoardView extends JPanel implements PropertyChangeListener{
 	private void loadImages() {
 		try {
 			tiles = ImageIO.read(Board.class.getResource("/images/tiles4.png"));
-			background = ImageIO.read(Board.class.getResource("/images/background1.png"));
+			background = ImageIO.read(Board.class.getResource("/images/background3.png"));
 		}catch(IOException e) {
 			e.printStackTrace();
 		}
@@ -92,8 +92,8 @@ public class BoardView extends JPanel implements PropertyChangeListener{
 		g2.drawImage(background,0,0,null); //Draw the background 
 		if(withGrid) {
 			
-			g2.setColor(Color.BLACK); //set color 
-			g2.setStroke(new BasicStroke(2)); //set thickness
+			g2.setColor(Color.DARK_GRAY); //set color 
+			g2.setStroke(new BasicStroke(1)); //set thickness
 					
 			//horizontal
 			for(int i = 0; i <= HEIGHT; i++) {
