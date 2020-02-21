@@ -337,10 +337,9 @@ public class GameEngine extends AbstractModel implements Runnable{
 	
 		running = true;
 		
-		GameTime.scheduleAtFixedRate(task, 0, 1000);
-		
 		if(!online) 
 		{
+			GameTime.scheduleAtFixedRate(task, 0, 1000);
 			thread = new Thread(this);
 			thread.start(); //start thread
 		}else {
@@ -358,12 +357,15 @@ public class GameEngine extends AbstractModel implements Runnable{
 	
 	public synchronized void startOnline() 
 	{
+		GameTime.scheduleAtFixedRate(task, 0, 1000);
 		thread = new Thread(this);
 		thread.start();
 	}
 	
 	public void pause() {
-		paused = true;
+		if(!online) {
+			paused = true;
+		}
 	}
 	
 	public void resume() {

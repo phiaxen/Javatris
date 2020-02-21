@@ -20,12 +20,12 @@ public class MusicPlayer {
 	private boolean restart;
 	private final float MaxSteps = 20; //Even numbers only
 	private final float steps = 1/MaxSteps;
-	
+	private float volume;
 	
 	private boolean fileLoaded = false;
+	private boolean muted = false;
 	
 	public MusicPlayer (int choice) {		
-		
 		if(choice == 1) {
 		playMusic("\\src\\songs\\Tetris Game Theme1.wav");
 		}
@@ -73,7 +73,7 @@ public void playMusicFile(File audioFile) {
 			
 			JOptionPane.showMessageDialog(null, "Error with audio loading");
 		}
-		
+		volume = getVolume();
 	}
 	
 	public void stopSong() {
@@ -118,6 +118,7 @@ public void playMusicFile(File audioFile) {
 				FloatControl gainControl = (FloatControl) audioClip.getControl(FloatControl.Type.MASTER_GAIN);        
 				gainControl.setValue(20f * (float) Math.log10(volume));
 			}
+			this.volume = volume;
 		}
 		
 	}
@@ -156,7 +157,7 @@ public void playMusicFile(File audioFile) {
 			    gainControl.setValue(20f * (float) Math.log10(volume));
 			}
 			else {
-				volume = 0f;
+				volume = 0.0f;
 				
 				FloatControl gainControl = (FloatControl) audioClip.getControl(FloatControl.Type.MASTER_GAIN);        
 			    gainControl.setValue(20f * (float) Math.log10(volume));
@@ -164,13 +165,21 @@ public void playMusicFile(File audioFile) {
 		}
 	}
 	
+	/*
+	 * Mutes/unmutes the music
+	 */
 	public void mute() {
 		if(fileLoaded) {
-			float volume = 0.0f;			
-			FloatControl gainControl = (FloatControl) audioClip.getControl(FloatControl.Type.MASTER_GAIN);        
-			gainControl.setValue(20f * (float) Math.log10(volume));
+			System.out.println(muted);
+			if(muted) {
+				setVolume(volume);
+				muted = false;
+			}
+			else {
+				setVolume(0f);
+				muted = true;
+			}
 		}
-
 	}
 	
 	/*	Om du kallar på denna och har en pause eller breakpoint 

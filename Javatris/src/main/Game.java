@@ -147,17 +147,24 @@ public class Game {
 		startButton.setFont(new Font("Arial", Font.BOLD, 40));
 		startButton.setBackground(Color.BLACK);
 		startButton.setFocusPainted(false);
-		startButton.addActionListener((ActionEvent e) -> {startGame();});
+		startButton.addActionListener((ActionEvent e) -> {
+			startGame();
+		});
 		
 		onlineButton.setFont(new Font("Arial", Font.BOLD, 40));
 		onlineButton.setBackground(Color.BLACK);
 		onlineButton.setFocusPainted(false);
-		onlineButton.addActionListener((ActionEvent e) -> {startOnlineGame();});
+		onlineButton.addActionListener((ActionEvent e) -> {
+			Toolkit.getDefaultToolkit().beep();
+			startOnlineGame();	
+		});
 		
 		exitButton.setFont(new Font("Arial", Font.BOLD, 40));
 		exitButton.setBackground(Color.BLACK);
 		exitButton.setFocusPainted(false);
-		exitButton.addActionListener((ActionEvent e) -> {System.exit(0);});
+		exitButton.addActionListener((ActionEvent e) -> {
+			System.exit(0);
+		});
 		
 		
 		startMenu.addElement(startButton); 
