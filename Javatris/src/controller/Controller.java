@@ -31,45 +31,47 @@ public class Controller implements KeyListener{
 	public void keyPressed(KeyEvent e) {
 		
 		int key = e.getKeyCode();
-		if((key == KeyEvent.VK_RIGHT)&&!gameEngine.paused) {
+		if((key == KeyEvent.VK_RIGHT)&&!gameEngine.paused()) {
 			if(!gameEngine.getCurrentShape().rightBound()) {
 				gameEngine.getCurrentShape().setDeltaX(1);
 			}
 		}
 		
-		if((key == KeyEvent.VK_LEFT)&&!gameEngine.paused) {
+		if((key == KeyEvent.VK_LEFT)&&!gameEngine.paused()) {
 			if(!gameEngine.getCurrentShape().leftBound()) {
 				gameEngine.getCurrentShape().setDeltaX(-1);
 			}
 		}
 		
-		if((key == KeyEvent.VK_UP)&&!gameEngine.paused) {
+		if((key == KeyEvent.VK_UP)&&!gameEngine.paused()) {
 			gameEngine.getCurrentShape().rotate();
 		}
 		
-		if((key == KeyEvent.VK_DOWN)&&!gameEngine.paused) {
+		if((key == KeyEvent.VK_DOWN)&&!gameEngine.paused()) {
 			gameEngine.getCurrentShape().fasterSpeedDown();
 		}
 		if(key == KeyEvent.VK_ESCAPE) {
-			if(!gameEngine.paused) {
+			if(!gameEngine.paused()) {
 				gameEngine.pause();
+				musicPlayer.stopSong();
 			}else {
 				gameEngine.resume();
+				musicPlayer.restartSong();
 			}
 			
 		}
 		
 		//Just for testing
-		if((key == KeyEvent.VK_0)&&!gameEngine.paused) {
+		if((key == KeyEvent.VK_0)&&!gameEngine.paused()) {
 			gameEngine.addRow(0,1);
 		}
-		if((key == KeyEvent.VK_W)&&!gameEngine.paused) {
+		if((key == KeyEvent.VK_W)&&!gameEngine.paused()) {
 			musicPlayer.incVolume();
 		}
-		if((key == KeyEvent.VK_S)&&!gameEngine.paused) {
+		if((key == KeyEvent.VK_S)&&!gameEngine.paused()) {
 			musicPlayer.decVolume();
 		}
-		if((key == KeyEvent.VK_M)&&!gameEngine.paused) {
+		if((key == KeyEvent.VK_M)&&!gameEngine.paused()) {
 			musicPlayer.mute();
 		}
 	}

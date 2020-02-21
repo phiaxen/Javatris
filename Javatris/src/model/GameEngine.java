@@ -44,18 +44,18 @@ public class GameEngine extends AbstractModel implements Runnable{
 	private Boolean online = false; //Change this to true for multiplayer 
 	
 	//points and levelup things
-	public int level = 1;
+	private int level = 1;
 	private int oldLevel;
-	public int points = 0;
+	private int points = 0;
 	private int linesToClear = 10;	//how many lines it takes to level up, increase by 5 for each level
 	
 	private int linesCleared = 0;	//how many lines the player has cleared
 	public Delegate delegate;
 
 	private boolean running = false;
-	public boolean paused = false; 
+	private boolean paused = false; 
 	private Thread thread;
-	public final int TICKSPERSECOND = 60;
+	private final int TICKSPERSECOND = 60;
 	
 	private int timePassed = 0;
 	private Timer GameTime;
@@ -80,19 +80,18 @@ public class GameEngine extends AbstractModel implements Runnable{
 	
 	TimerTask task = new TimerTask() {
 		public void run() {
-			int oldTime = timePassed;
-			timePassed++;
-			firePropertyChange("time", oldTime, timePassed);
+			if(!paused) {
+				int oldTime = timePassed;
+				timePassed++;
+				firePropertyChange("time", oldTime, timePassed);
+			}
 		}
 		
 	};
 	
 	
 	public void update() {
-//		System.out.println("TIME: " + timePassed);
 		Board oldBoard = board.clone();
-		
-		
 		
 		checkIfGameOver();
 		time += System.currentTimeMillis() - lastTime;
@@ -307,6 +306,10 @@ public class GameEngine extends AbstractModel implements Runnable{
 	
 	public int getPoints() {
 		return points;
+	}
+	
+	public boolean paused() {
+		return paused;
 	}
 	
 	private int scoreHandler(int level, int rows) {

@@ -97,7 +97,7 @@ public void playMusicFile(File audioFile) {
 			try {
 				audioClip.stop();
 			}
-			catch(Exception e) {System.out.println("No musik running");}
+			catch(Exception e) {System.out.println("No music running");}
 			}
 	}
 	
@@ -109,7 +109,7 @@ public void playMusicFile(File audioFile) {
 				audioClip.loop(Clip.LOOP_CONTINUOUSLY);
 
 			}
-			catch(Exception e) {System.out.println("No musik running");}
+			catch(Exception e) {System.out.println("No music running");}
 		}
 	}
 	
