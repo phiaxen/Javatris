@@ -97,7 +97,7 @@ public class Board {
 	
 	/**
 	 * Checks if the board contains a full row, if so, delete the row and return the amount of rows deleted.
-	 * @return rowsDeleted : This returns the amount of rows deleted
+	 * @return rowsDeleted : this returns the amount of rows deleted
 	 */
 	public int checkFullRows() {
 		

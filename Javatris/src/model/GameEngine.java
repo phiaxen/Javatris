@@ -62,15 +62,14 @@ public class GameEngine implements Runnable {
 	private boolean gameOver = false;
 	
 	private LinkedList<Shape> nextShapes = new LinkedList<Shape>(); 
-	  
-	private boolean GameStart = true;
+
 	
 	public GameEngine(Board board, BoardView boardView, SideInfo sideInfo, Boolean online) {
 		this.board = board;
 		this.boardView = boardView;
 		this.sideInfo = sideInfo;
 		this.online = online;
-		SpawnShape();
+		setFirstShape();
 		GameTime = new Timer();
 	}
 	
@@ -121,7 +120,7 @@ public class GameEngine implements Runnable {
 					System.out.println("points: " + points);
 					System.out.println("lines: " + linesCleared);
 				}	
-				SpawnShape();
+				setCurrentShape();
 			}
 		
 			if((time > currentShape.getCurrentSpeed())&&(!currentShape.hasCollidedY())) {
@@ -179,6 +178,8 @@ public class GameEngine implements Runnable {
 		}
 	}
 	
+
+	
 	private Shape getShape(int shape) {
 		
 		switch(shape){
@@ -208,34 +209,35 @@ public class GameEngine implements Runnable {
 		
 	}
 	
-	public void SpawnShape() {
-
-		currentShape = nextShape();
+	//this function is called only when the game starts, only once
+	private void setFirstShape() {
+		int randomNum = ThreadLocalRandom.current().nextInt(0, shapes.length);
+		currentShape = getShape(randomNum);
 		
-//		checkIfGameOver();
+		//When the game starts, fill the list with 3 random shapes
+		for(int i = 0; i < 3; i++) {
+			randomNum = ThreadLocalRandom.current().nextInt(0, shapes.length);
+			nextShapes.add(getShape(randomNum));
+			sideInfo.updateNextShape(nextShapes.get(i));
+			sideInfo.repaint();
+		}
+	}
+	
+	public void setCurrentShape() {
+		currentShape = nextShape();
 	}
 	
 	private Shape nextShape() {
 		Shape nextShape;
 		
-		//When the game starts, fill the list with 4 random shapes
-		if(GameStart) {
-			for(int i = 0; i < 4; i++) {
-				int randomNum = ThreadLocalRandom.current().nextInt(0, shapes.length);
-				nextShapes.add(getShape(randomNum));
-				
-			}
-			GameStart = false;
-		}
-		
-		for(int i = 0; i < 3; i++) {
-			sideInfo.updateNextShape(nextShapes.get(i+1));
-			sideInfo.repaint();
-		}
 		nextShape = nextShapes.pollFirst();
 		int randomNum = ThreadLocalRandom.current().nextInt(0, shapes.length);
 		nextShapes.addLast(getShape(randomNum));
 		
+		for(int i = 0; i < 3; i++) {
+			sideInfo.updateNextShape(nextShapes.get(i));
+			sideInfo.repaint();
+		}
 		return nextShape;
 	}
 	

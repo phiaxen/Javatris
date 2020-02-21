@@ -59,22 +59,20 @@ public class NextShapesPanel extends JPanel{
 		Graphics2D g2 = (Graphics2D)g;
 		int row = 2;
 		for(int k = 0; k<3; k++) {
-				System.out.println(shapes.size());
-				Shape shape = shapes.pollFirst();
-				if(shape!=null) {
-					
-					for(int i = 0; i < shape.getCoords().length; i++) {
-						for(int j = 0; j < shape.getCoords()[i].length; j++) {
-							if(shape.getCoords()[i][j] == 1) {
-								g.drawImage(colors[shape.getColor()-1],j*40 + 1*40,i*40 + row* 40,null);
-								
-							}
+			Shape shape = shapes.pollFirst();
+			if(shape!=null) {
+				for(int i = 0; i < shape.getCoords().length; i++) {
+					for(int j = 0; j < shape.getCoords()[i].length; j++) {
+						if(shape.getCoords()[i][j] == 1) {
+							g2.drawImage(colors[shape.getColor()-1],j*40 + 1*40,i*40 + row* 40,null);
+							
 						}
 					}
-					
 				}
-				row = row +4;
+				
 			}
+			row = row +4;
+		}
 		
 	}
 }
