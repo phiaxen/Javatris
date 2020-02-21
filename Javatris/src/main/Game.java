@@ -86,7 +86,11 @@ public class Game {
 	 * @Param port the port of the server
 	 */
 	private void init(String ip, int port) {
-		init();
+		musicPlayer = new MusicPlayer(1);
+		
+		board = new Board();
+		gameEngine = new GameEngine(board,true);
+		controller = new Controller(gameEngine,musicPlayer);//musicplayer ska inte vara i kontroller egentligen, men har den där för att testa
 		client = new Client(gameEngine, ip, port);
 		
 		
