@@ -114,7 +114,7 @@ public class SideInfo extends JPanel implements PropertyChangeListener{
 
 	public void updateNextShape(LinkedList<Shape> shapes) {
 		for(int i = 0; i < 3; i++) {
-			nextShapesPanel.updateNextShape(shapes.get(i).clone());
+			nextShapesPanel.updateNextShape(shapes.get(i));
 		}
 		nextShapesPanel.repaint();
 	}
@@ -132,7 +132,7 @@ public class SideInfo extends JPanel implements PropertyChangeListener{
 //	}
 	
 	
-	
+	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D)g;

@@ -178,6 +178,7 @@ public class Game {
 	 * Starts game
 	 */
 	private void startGame() {
+		
 		Init();
 		SetUpFrame();
 		
@@ -206,6 +207,7 @@ public class Game {
 		if(code != null&&!code.isBlank() && !code.isEmpty()) 
 		{
 			String[] adress = code.split(":");
+			
 			Init(adress[0], Integer.parseInt(adress[1]));
 			SetUpFrame();
 		

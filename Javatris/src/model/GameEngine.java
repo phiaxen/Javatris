@@ -64,7 +64,8 @@ public class GameEngine extends AbstractModel implements Runnable{
 	
 	private boolean gameOver = false;
 	
-	private LinkedList<Shape> nextShapes = new LinkedList<Shape>(); 
+	private LinkedList<Shape> nextShapes = new LinkedList<Shape>();
+	private LinkedList<Shape> oldShapes = new LinkedList<Shape>();
 	  
 	private boolean GameStart = true;
 
@@ -80,7 +81,7 @@ public class GameEngine extends AbstractModel implements Runnable{
 	
 	TimerTask task = new TimerTask() {
 		public void run() {
-			if(!paused) {
+			if(!paused && !gameOver) {
 				int oldTime = timePassed;
 				timePassed++;
 				firePropertyChange("time", oldTime, timePassed);
@@ -94,8 +95,9 @@ public class GameEngine extends AbstractModel implements Runnable{
 		Board oldBoard = board.clone();
 		
 		checkIfGameOver();
-		time += System.currentTimeMillis() - lastTime;
-		lastTime = System.currentTimeMillis();
+		if(!gameOver) {
+			time += System.currentTimeMillis() - lastTime;
+			lastTime = System.currentTimeMillis();
 			
 			CheckCollisionX();
 			CheckCollisionY();
@@ -146,6 +148,7 @@ public class GameEngine extends AbstractModel implements Runnable{
 			currentShape.setDeltaX(0);
 			
 			firePropertyChange("board", oldBoard, board);
+		}
 	}
 	
 	public void addRow(int column, int color) {
@@ -219,13 +222,11 @@ public class GameEngine extends AbstractModel implements Runnable{
 	public void SpawnShape() {
 
 		currentShape = nextShape();
-		
 //		checkIfGameOver();
 	}
 	
 	private Shape nextShape() {
 		Shape nextShape;
-		LinkedList<Shape> oldShapes = new LinkedList<Shape>();
 
 		if(oldShapes.size() < 4) {
 			for(int i = 0; i < 4; i++) {
@@ -252,9 +253,17 @@ public class GameEngine extends AbstractModel implements Runnable{
 		int randomNum = ThreadLocalRandom.current().nextInt(0, shapes.length);
 		nextShapes.addLast(getShape(randomNum));
 
-		firePropertyChange("next shape", oldShapes, nextShapes);
-
+		fireNextShapes();
+		
 		return nextShape;
+	}
+	
+	/**
+	 *Fire the nextShape sequence
+	 */
+	public void fireNextShapes() {
+		
+		firePropertyChange("next shape", oldShapes, nextShapes);
 	}
 	
 //	public void checkIfGameOver() {
@@ -275,7 +284,7 @@ public class GameEngine extends AbstractModel implements Runnable{
 
 	public void checkIfGameOver(){
 		for(int i = 0; i <10; i++ ) {
-			if(board.getBoard()[0][i] !=0) {
+			if(board.getBoard()[0][i] != 0) {
 				gameOver = true;
 				System.out.println("GAME OVER =(");
 			}
@@ -341,6 +350,9 @@ public class GameEngine extends AbstractModel implements Runnable{
 				
 			}
 		}
+		
+		fireNextShapes();//WHY
+		fireNextShapes();//DF
 		firePropertyChange("shape", oldShape, currentShape);
 	}
 	
