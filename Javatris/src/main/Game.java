@@ -39,14 +39,11 @@ import controller.*;
 
 public class Game {
 	
-	private final  int BlockSize = 40; //resize game <=40 (standard is 40)
-	private final  int BoardWidth = 10;
-	private final  int BoardHeight = 20;
+	private final int BlockSize = 40; //resize game <=40 (standard is 40)
+	private final int BoardWidth = 10;
+	private final int BoardHeight = 20;
 	
-	private JFrame frame;
-	private int FrameWidth = 0;
-	private int FrameHeight = 0;
-	
+	private JFrame frame;	
 	private JPanel FixedPanel;
 	
 	private Board board;
@@ -59,8 +56,10 @@ public class Game {
 
 	private Menu startMenu;
 	
+	private boolean made;
 	
 	public Game() {
+		made = false;
 		makeStartMenu();
 	}
 	
@@ -174,14 +173,17 @@ public class Game {
 	 * Starts game
 	 */
 	private void startGame() {
-		
-		init();
-		setUpFrame();
-		
-		gameEngine.addPropertyChangeListener(boardView);
-		gameEngine.addPropertyChangeListener(sideInfo);
-		startMenu.closeMenu();
-		gameEngine.start();
+		if(!made) {
+			init();
+			setUpFrame();
+			
+			gameEngine.addPropertyChangeListener(boardView);
+			gameEngine.addPropertyChangeListener(sideInfo);
+			startMenu.closeMenu();
+			gameEngine.start();
+			
+			made = true;
+		}
 	}
 	
 	/*
@@ -189,28 +191,30 @@ public class Game {
 	 * It should be inputed like this: 127.0.0.1:2525
 	 * in other words ip:port
 	 */
-	private void startOnlineGame() 
-	{
-		String code = JOptionPane.showInputDialog
-		(
-	        startMenu.getFrame(), 
-	        "Enter the sever ip and port", 
-	        "Connect to server", 
-	        JOptionPane.PLAIN_MESSAGE
-		 );
-		
-		//Only starts if
-		if(code != null&&!code.isBlank() && !code.isEmpty()) 
-		{
-			String[] adress = code.split(":");
+	private void startOnlineGame() {
+		if(!made) {
+			String code = JOptionPane.showInputDialog
+			(
+		        startMenu.getFrame(), 
+		        "Enter the sever ip and port", 
+		        "Connect to server", 
+		        JOptionPane.PLAIN_MESSAGE
+			 );
 			
-			init(adress[0], Integer.parseInt(adress[1]));
-			setUpFrame();
-		
-			gameEngine.addPropertyChangeListener(boardView);
-			gameEngine.addPropertyChangeListener(sideInfo);
-			startMenu.closeMenu();
-			gameEngine.start();
+			//Only starts if
+			if(code != null&&!code.isBlank() && !code.isEmpty()) 
+			{
+				String[] adress = code.split(":");
+				
+				init(adress[0], Integer.parseInt(adress[1]));
+				setUpFrame();
+			
+				gameEngine.addPropertyChangeListener(boardView);
+				gameEngine.addPropertyChangeListener(sideInfo);
+				startMenu.closeMenu();
+				gameEngine.start();
+			}
+			made = true;
 		}
 	}
 	
