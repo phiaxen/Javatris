@@ -24,12 +24,17 @@ public class MusicPlayer {
 	
 	private boolean fileLoaded = false;
 	
-	
-	public void preparedMusicPlayer(){}
-	
-	public MusicPlayer () {		
+	public MusicPlayer (int choice) {		
 		
+		if(choice == 1) {
 		playMusic("\\src\\songs\\Tetris Game Theme1.wav");
+		}
+		else if(choice == 2){
+		playMusic("\\src\\\\songs\\\\Tetris99 Game Theme1.wav");
+		}
+		else {
+			
+		}
 		
 	}
 	
