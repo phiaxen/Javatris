@@ -174,8 +174,9 @@ public class Game {
 		startMenu.addElement(onlineButton); 
 		startMenu.addElement(exitButton);
 		
-		
-		startMenu.addTitle("src/images/javatris2.png");
+		Path path = FileSystems.getDefault().getPath("").toAbsolutePath(); 
+		startMenu.addTitle(path.toString() + "\\src\\images\\javatris2.png");
+		//startMenu.addTitle("src/images/javatris2.png");
 		startMenu.openMenu();
 	}
 	
