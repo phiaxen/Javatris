@@ -27,15 +27,14 @@ public class MusicPlayer {
 	
 	public MusicPlayer (int choice) {		
 		if(choice == 1) {
-		playMusic("\\src\\songs\\Tetris Game Theme1.wav");
+		playMusic("/src/songs/Tetris Game Theme1.wav");
 		}
 		else if(choice == 2){
-		playMusic("\\src\\\\songs\\\\Tetris99 Game Theme1.wav");
+		playMusic("/src/songs/Tetris99 Game Theme1.wav");
 		}
 		else {
 			
 		}
-		
 	}
 	
 	// funkar
@@ -73,7 +72,7 @@ public void playMusicFile(File audioFile) {
 			
 			JOptionPane.showMessageDialog(null, "Error with audio loading");
 		}
-		volume = getVolume();
+		setVolume(0.5f);
 	}
 	
 	public void stopSong() {
