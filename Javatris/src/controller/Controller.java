@@ -68,6 +68,18 @@ public class Controller implements KeyListener{
 			}
 			
 		}
+		if(key == KeyEvent.VK_N) {
+			if(!gameEngine.paused()) {
+				gameEngine.pause();
+				musicPlayer.stopSong();
+				musicPlayer.playFile();
+				musicPlayer.stopSong();
+			}else {
+				gameEngine.resume();
+				musicPlayer.restartSong();
+			}
+			
+		}
 		
 		//Just for testing
 		if((key == KeyEvent.VK_0)&&!gameEngine.paused()) {
