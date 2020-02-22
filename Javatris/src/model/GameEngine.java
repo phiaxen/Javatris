@@ -76,6 +76,7 @@ public class GameEngine extends AbstractModel implements Runnable{
 		oldLevel = 1;
 		oldShape = new Shape(board, 1, new int[][] {{1}});//placeholder for start of game
 		GameTime = new Timer();
+		setFirstShape();
 	}
 	
 	TimerTask task = new TimerTask() {
@@ -156,7 +157,7 @@ public class GameEngine extends AbstractModel implements Runnable{
 	
 	//not bug free
 	public void CheckCollisionX() {
-		
+
 		for(int i = 0; i<currentShape.getCoords().length; i++) {
 			for(int j = 0; j<currentShape.getCoords()[0].length; j++) {
 				if(currentShape.getCoords()[i][j] !=0) {
@@ -194,7 +195,7 @@ public class GameEngine extends AbstractModel implements Runnable{
 	/*
 	 * this function is called only when the game starts, only once
 	 */
-	private void setFirstShape() {
+	public void setFirstShape() {
 		int randomNum = ThreadLocalRandom.current().nextInt(0, shapes.length);
 		currentShape = getShape(randomNum);
 		
@@ -206,9 +207,6 @@ public class GameEngine extends AbstractModel implements Runnable{
 		for(int i = 0; i < 3; i++) {
 			randomNum = ThreadLocalRandom.current().nextInt(0, shapes.length);
 			nextShapes.add(getShape(randomNum));
-//			sideInfo.updateNextShape(nextShapes);
-//			sideInfo.repaint();
-			firePropertyChange("next shape", oldShapes, nextShapes);
 		}
 	}
 	
@@ -266,18 +264,11 @@ public class GameEngine extends AbstractModel implements Runnable{
 		int randomNum = ThreadLocalRandom.current().nextInt(0, shapes.length);
 		nextShapes.addLast(getShape(randomNum));
 
-		fireNextShapes();
+		firePropertyChange("next shape", oldShapes, nextShapes);
 		
 		return nextShape;
 	}
-	
-	/**
-	 *Fire the nextShape sequence
-	 */
-	public void fireNextShapes() {	
-		firePropertyChange("next shape", oldShapes, nextShapes);
-	}
-	
+		
 //	public void checkIfGameOver() {
 //		int rows = currentShape.getCoords().length;
 //		int cols =  currentShape.getCoords()[0].length;
@@ -343,13 +334,14 @@ public class GameEngine extends AbstractModel implements Runnable{
 	}
 
 	public synchronized void start() {
+		firePropertyChange("shape", oldShape, currentShape);
+		firePropertyChange("next shape", oldShapes, nextShapes);
+		
 		System.out.println("GAME START");
 		if(running) {
 			return;
 		}
 	
-		setFirstShape();
-		
 		running = true;
 		
 		if(!online) 
@@ -364,10 +356,6 @@ public class GameEngine extends AbstractModel implements Runnable{
 				
 			}
 		}
-		
-	//	fireNextShapes();//WHY
-		//fireNextShapes();//DF
-		firePropertyChange("shape", oldShape, currentShape);
 	}
 	
 	public synchronized void startOnline() 

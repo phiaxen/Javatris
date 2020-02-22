@@ -56,10 +56,10 @@ public class Game {
 
 	private Menu startMenu;
 	
-	private boolean made;
+	private boolean madeGame;
 	
 	public Game() {
-		made = false;
+		madeGame = false;
 		makeStartMenu();
 	}
 	
@@ -104,12 +104,11 @@ public class Game {
 	}
 	
 	public void setUpFrame() {
+		frame = new JFrame("JavaTris");
 		sideInfo = new SideInfo();
 		boardView = new BoardView(BoardHeight,BoardWidth,BlockSize,true);
-		
-		frame = new JFrame("JavaTris");
-		
 		FixedPanel = new JPanel(new GridBagLayout());
+		
 		FixedPanel.add(sideInfo); 
 		FixedPanel.add(boardView);
 		
@@ -180,7 +179,7 @@ public class Game {
 	 * Starts game
 	 */
 	private void startGame() {
-		if(!made) {
+		if(!madeGame) {
 			init();
 			setUpFrame();
 			
@@ -189,7 +188,7 @@ public class Game {
 			startMenu.closeMenu();
 			gameEngine.start();
 			
-			made = true;
+			madeGame = true;
 		}
 	}
 	
@@ -199,7 +198,7 @@ public class Game {
 	 * in other words ip:port
 	 */
 	private void startOnlineGame() {
-		if(!made) {
+		if(!madeGame) {
 			String code = JOptionPane.showInputDialog
 			(
 		        startMenu.getFrame(), 
@@ -221,7 +220,7 @@ public class Game {
 				startMenu.closeMenu();
 				gameEngine.start();
 			}
-			made = true;
+			madeGame = true;
 		}
 	}
 	

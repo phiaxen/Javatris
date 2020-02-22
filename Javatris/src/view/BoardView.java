@@ -56,7 +56,6 @@ public class BoardView extends JPanel implements PropertyChangeListener{
 	private void init() {
 		colors = new BufferedImage[8];
 		this.setBackground(Color.white); //om man vill ha en enfärgad bakgrund:
-		
 		boardCoords = new int[HEIGHT][WIDTH]; //hämta spelplanen - använd för MVC 
 		loadImages();
 		
