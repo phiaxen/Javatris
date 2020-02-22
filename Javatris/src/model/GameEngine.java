@@ -75,7 +75,7 @@ public class GameEngine extends AbstractModel implements Runnable{
 		this.online = online;
 		oldLevel = 1;
 		oldShape = new Shape(board, 1, new int[][] {{1}});//placeholder for start of game
-		SpawnShape();
+		//setFirstShape();
 		GameTime = new Timer();
 	}
 	
@@ -192,6 +192,27 @@ public class GameEngine extends AbstractModel implements Runnable{
 		}
 	}
 	
+	/*
+	 * this function is called only when the game starts, only once
+	 */
+	private void setFirstShape() {
+		int randomNum = ThreadLocalRandom.current().nextInt(0, shapes.length);
+		currentShape = getShape(randomNum);
+		
+		for(int i = 0; i < 3; i++) {
+			oldShapes.add(i, new Shape(board, 1, new int[][] {{1}})); //used in the start of the game
+		}
+		
+		//When the game starts, fill the list with 3 random shapes
+		for(int i = 0; i < 3; i++) {
+			randomNum = ThreadLocalRandom.current().nextInt(0, shapes.length);
+			nextShapes.add(getShape(randomNum));
+//			sideInfo.updateNextShape(nextShapes);
+//			sideInfo.repaint();
+			firePropertyChange("next shape", oldShapes, nextShapes);
+		}
+	}
+	
 	private Shape getShape(int shape) {
 		
 		switch(shape){
@@ -227,16 +248,9 @@ public class GameEngine extends AbstractModel implements Runnable{
 	
 	private Shape nextShape() {
 		Shape nextShape;
-
-		if(oldShapes.size() < 3) {
-			for(int i = 0; i < 3; i++) {
-				oldShapes.add(i, new Shape(board, 1, new int[][] {{1}})); //used in the start of the game
-			}
-		}
-		else {
-			for(int i = 0; i < nextShapes.size(); i++) {
-				oldShapes.add(i, nextShapes.get(i).clone());
-			}
+	
+		for(int i = 0; i < nextShapes.size(); i++) {
+			oldShapes.add(i, nextShapes.get(i).clone());
 		}
 	
 		//When the game starts, fill the list with 4 random shapes
@@ -335,6 +349,8 @@ public class GameEngine extends AbstractModel implements Runnable{
 			return;
 		}
 	
+		setFirstShape();
+		
 		running = true;
 		
 		if(!online) 
