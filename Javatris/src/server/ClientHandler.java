@@ -34,7 +34,7 @@ public class ClientHandler implements Runnable
 			while(true) 
 			{
 				String message = reader.readLine();
-				//writer.println("client says:" + message);
+				writer.println("client says:" + message);
 				if (message.startsWith("msg"))
 				{
 					int firstSpace = message.indexOf(" ");

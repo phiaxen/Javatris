@@ -30,6 +30,7 @@ public class GameEngine implements Runnable {
 	 */
 	public interface Delegate {
 		Client getClient();
+		void createPauseMenu();
 	}
 	
 	private static Shape currentShape;	//The shape that is currently in action
@@ -342,7 +343,12 @@ public class GameEngine implements Runnable {
 	}
 	
 	public void pause() {
+		System.out.println("Games is paused");
 		paused = true;
+		if(this.delegate != null) 
+		{
+			this.delegate.createPauseMenu();
+		}
 	}
 	
 	public void resume() {
@@ -446,7 +452,7 @@ public class GameEngine implements Runnable {
 	
 	public void quit() 
 	{
-		System.exit(1);
+		System.exit(0);
 	}
 	
 	

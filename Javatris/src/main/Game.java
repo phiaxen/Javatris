@@ -58,6 +58,7 @@ public class Game {
 	private MusicPlayer musicPlayer;
 	private SfxManager sfxManager;
 	private Menu startMenu;
+	private Menu pauseMenu;
 	
 	
 	public Game() {
@@ -81,13 +82,31 @@ public class Game {
 	 * Initializes the game and creates all the nececcary components that are needed
 	 */
 	private void Init() {
-		musicPlayer = new MusicPlayer(1);
+		musicPlayer = new MusicPlayer(3);
 	
 		board = new Board();
 		boardView = new BoardView(board,BoardHeight,BoardWidth,BlockSize,false);
 		sideInfo = new SideInfo();
 		gameEngine = new GameEngine(board, boardView,sideInfo,false);
-		controller = new Controller(gameEngine,musicPlayer);//musicplayer ska inte vara i kontroller egentligen, men har den där för att testa
+		controller = new Controller(gameEngine,musicPlayer);//musicplayer ska inte vara i kontroller egentligen, men har den dï¿½r fï¿½r att testa
+		
+		gameEngine.delegate = new GameEngine.Delegate() 
+		{
+			@Override
+			public Client getClient()
+			{
+				return client.getClient();
+			}
+			
+			@Override
+			public void createPauseMenu()
+			{
+				System.out.println(this);
+				System.out.println("create the pause");
+				makePauseNenu();
+			}
+			
+		};
 		
 		gameEngine.start();
 	}
@@ -98,7 +117,7 @@ public class Game {
 	 * @Param port the port of the server
 	 */
 	private void Init(String ip, int port) {
-		musicPlayer = new MusicPlayer(1);
+		musicPlayer = new MusicPlayer(3);
 		
 		board = new Board();
 		boardView = new BoardView(board,BoardHeight,BoardWidth,BlockSize,false);
@@ -114,6 +133,12 @@ public class Game {
 			{
 				return client.getClient();
 			}
+			
+			@Override
+			public void createPauseMenu()
+			{
+			}
+			
 		};
 		
 		gameEngine.start();
@@ -158,7 +183,7 @@ public class Game {
 	 * Creates a basic start-menu
 	 */
 	private void makeStartmenu() {
-		startMenu = new Menu(new Dimension(400,800), 4);
+		startMenu = new Menu(new Dimension(400,800), 5);
 		
 //		ImageIcon startButtonImage = null;
 //		try {
@@ -168,8 +193,8 @@ public class Game {
 //		}
 		
 		JButton startButton = new JButton("START");
-		
 		JButton onlineButton = new JButton("ONLINE");
+		JButton loadButton = new JButton("LOAD");
 		JButton exitButton = new JButton("EXIT");
 		
 		startButton.setFont(new Font("Arial", Font.BOLD, 40));
@@ -184,14 +209,44 @@ public class Game {
 		exitButton.setFont(new Font("Arial", Font.BOLD, 40));
 		exitButton.addActionListener((ActionEvent e) -> {System.exit(0);});
 		
+		loadButton.setFont(new Font("Arial", Font.BOLD, 40));
+		loadButton.addActionListener((ActionEvent e) -> {});
 		
 		startMenu.addElement(startButton); 
 		startMenu.addElement(onlineButton); 
+		startMenu.addElement(loadButton);
 		startMenu.addElement(exitButton);
 		
 		
-		startMenu.addTitle("src/images/javatris2.png");
+		
+		startMenu.addTitle("\\Javatris\\src\\images\\javatris2.PNG");
 		startMenu.openMenu();
+	}
+	
+	/*
+	 * Creates a pause Menu
+	 */
+	private void makePauseNenu()
+	{
+		pauseMenu = new Menu(new Dimension(400,800), 3);
+		JButton resumeButton = new JButton("Resume");
+		JButton saveButton = new JButton("Save");
+		JButton exitButton = new JButton("Main Menu");
+		
+		resumeButton.setFont(new Font("Arial", Font.BOLD, 40));
+		resumeButton.addActionListener((ActionEvent e) -> {resumeGame();});
+		
+		saveButton.setFont(new Font("Arial", Font.BOLD, 40));
+		saveButton.addActionListener((ActionEvent e) -> {saveGame();});
+		
+		exitButton.setFont(new Font("Arial", Font.BOLD, 40));
+		exitButton.addActionListener((ActionEvent e) -> {toMainMenu();});
+		
+		pauseMenu.addElement(resumeButton); 
+		pauseMenu.addElement(saveButton); 
+		pauseMenu.addElement(exitButton); 
+		
+		pauseMenu.openMenu();
 	}
 	
 	/**
@@ -202,6 +257,48 @@ public class Game {
 		SetUpFrame();
 		startMenu.closeMenu();
 	}
+	
+	/*
+	 * Resumes the paused game 
+	 */
+	private void resumeGame() 
+	{
+		gameEngine.resume();
+		pauseMenu.closeMenu();
+	}
+	
+	/*
+	 * Exits the current game and goes to the main menu
+	 */
+	private void toMainMenu() 
+	{
+		makeStartmenu();
+		gameEngine.pause();
+		frame.setVisible(false);
+		musicPlayer.stopSong();
+		pauseMenu.closeMenu();
+		System.out.println("exit pause menu");
+	}
+	
+	/*
+	 * Saves the current game to a file
+	 */
+	private void saveGame() 
+	{
+		Init();
+		SetUpFrame();
+		//load the game here
+		startMenu.closeMenu();
+	}
+	
+	/*
+	 * Loads a saved game state and starts the game
+	 */
+	private void loadsGame() 
+	{
+		
+	}
+	
 	
 	/*
 	 * Starts a multiplayer Session of the game, opens up a prompt so the user can enter the ip and port to the server

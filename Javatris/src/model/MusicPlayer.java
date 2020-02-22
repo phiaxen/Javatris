@@ -27,13 +27,13 @@ public class MusicPlayer {
 	public MusicPlayer (int choice) {		
 		
 		if(choice == 1) {
-		playMusic("\\src\\songs\\Tetris Game Theme1.wav");
+		playMusic("\\Javatris\\src\\songs\\Tetris Game Theme1.wav");
 		}
 		else if(choice == 2){
-		playMusic("\\src\\\\songs\\\\Tetris99 Game Theme1.wav");
+		playMusic("\\Javatris\\src\\songs\\Tetris99 Game Theme1.wav");
 		}
 		else if(choice == 3){
-		playMusic("\\src\\\\songs\\\\08 Dave Rodgers - Deja Vu.wav");	
+		playMusic("\\Javatris\\src\\songs\\08 Dave Rodgers - Deja Vu.wav");	
 		}
 		else {}
 		
@@ -68,8 +68,8 @@ public class MusicPlayer {
 		setVolume(0.2f);
 	}
 	
-	/*	borde kanske slå ihop denna med playMusic men det verkade jobbigare
-	 *  än vad det var värt.
+	/*	borde kanske slï¿½ ihop denna med playMusic men det verkade jobbigare
+	 *  ï¿½n vad det var vï¿½rt.
 	 * 
 	 */
 public void playMusicFile(File audioFile) {										 	
@@ -195,9 +195,9 @@ public void playMusicFile(File audioFile) {
 
 	}
 	
-	/*	Om du kallar på denna och har en pause eller breakpoint 
-	 * 	kommer rutan kanske öppnas i bakgrunden och man måste
-	 * 	minimera sina fönster
+	/*	Om du kallar pï¿½ denna och har en pause eller breakpoint 
+	 * 	kommer rutan kanske ï¿½ppnas i bakgrunden och man mï¿½ste
+	 * 	minimera sina fï¿½nster
 	 */
 	public void playFile() {
 		

@@ -32,7 +32,7 @@ public class SfxManager {
 	private void getSound1() {
 		try {
 			Path path = FileSystems.getDefault().getPath("").toAbsolutePath(); 
-			File file1 = new File(path + "\\src\\soundEffects\\sfx1.wav");	
+			File file1 = new File(path + "\\Javatris\\src\\soundEffects\\sfx1.wav");	
 			sfx1 = AudioSystem.getClip();  
 			sfx1.open(AudioSystem.getAudioInputStream(file1)); 
 			float volume = 0.1f;			
@@ -47,7 +47,7 @@ public class SfxManager {
 	private void getSound2() {
 		try {
 			Path path = FileSystems.getDefault().getPath("").toAbsolutePath(); 
-			File file2 = new File(path + "\\src\\soundEffects\\sfx2.wav");	
+			File file2 = new File(path + "\\Javatris\\src\\soundEffects\\sfx2.wav");	
 			sfx2 = AudioSystem.getClip();         
 			sfx2.open(AudioSystem.getAudioInputStream(file2)); 
 			
@@ -59,7 +59,7 @@ public class SfxManager {
 	private void getSound3() {
 		try {
 			Path path = FileSystems.getDefault().getPath("").toAbsolutePath(); 
-			File file3 = new File(path + "\\src\\soundEffects\\sfx3.wav");	
+			File file3 = new File(path + "\\Javatris\\src\\soundEffects\\sfx3.wav");	
 			sfx3 = AudioSystem.getClip();         
 			sfx3.open(AudioSystem.getAudioInputStream(file3)); 
 			
@@ -71,7 +71,7 @@ public class SfxManager {
 	private void getSound4() {
 		try {
 			Path path = FileSystems.getDefault().getPath("").toAbsolutePath(); 
-			File file4 = new File(path + "\\src\\soundEffects\\sfx4.wav");	
+			File file4 = new File(path + "\\Javatris\\src\\soundEffects\\sfx4.wav");	
 			sfx4 = AudioSystem.getClip();         
 			sfx4.open(AudioSystem.getAudioInputStream(file4)); 
 			float volume = 0.3f;			
