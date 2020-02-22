@@ -63,11 +63,8 @@ public class NextShapesPanel extends JPanel{
 		Graphics2D g2 = (Graphics2D)g;
 		int row = 2;
 		for(int k = 0; k<3; k++) {
-			System.out.println("SIZE OF LSIST IS: " + shapes.size());
-			
 			if(shapes!=null&& shapes.size() != 0) {
 				Shape shape = shapes.get(k);
-				System.out.println("TEST!!");
 				for(int i = 0; i < shape.getCoords().length; i++) {
 					for(int j = 0; j < shape.getCoords()[i].length; j++) {
 						if(shape.getCoords()[i][j] == 1) {
