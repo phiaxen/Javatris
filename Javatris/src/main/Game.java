@@ -56,6 +56,7 @@ public class Game {
 	private SfxManager sfxManager; 
 
 	private Menu startMenu;
+	private Menu pauseMenu;
 	
 	private boolean madeGame;
 	
@@ -63,6 +64,7 @@ public class Game {
 		madeGame = false;
 		sfxManager = new SfxManager();
 		makeStartMenu();
+		makePauseMenu();
 	}
 	
 	public static void main(String[] args) {
@@ -78,7 +80,7 @@ public class Game {
 		
 		board = new Board();
 		gameEngine = new GameEngine(board, sfxManager, false);
-		controller = new Controller(gameEngine, musicPlayer, sfxManager);//musicplayer ska inte vara i kontroller egentligen, men har den där för att testa
+		controller = new Controller(gameEngine, musicPlayer, sfxManager, pauseMenu);//musicplayer ska inte vara i kontroller egentligen, men har den där för att testa
 	}
 	
 	/*
@@ -91,7 +93,7 @@ public class Game {
 		
 		board = new Board();
 		gameEngine = new GameEngine(board, sfxManager, true);
-		controller = new Controller(gameEngine,musicPlayer, sfxManager);//musicplayer ska inte vara i kontroller egentligen, men har den där för att testa
+		controller = new Controller(gameEngine,musicPlayer, sfxManager, pauseMenu);//musicplayer ska inte vara i kontroller egentligen, men har den där för att testa
 		client = new Client(gameEngine, ip, port);
 		
 		
@@ -175,6 +177,45 @@ public class Game {
 		
 		startMenu.addTitle("src/images/javatris2.png");
 		startMenu.openMenu();
+	}
+	
+	/*
+	 * Creates a pause Menu
+	 */
+	private void makePauseMenu(){
+		pauseMenu = new Menu(new Dimension(400,800), 3);
+		JButton resumeButton = new JButton("Resume");
+		JButton saveButton = new JButton("Save");
+		JButton exitButton = new JButton("Main Menu");
+		
+		resumeButton.setFont(new Font("Arial", Font.BOLD, 40));
+		resumeButton.setBackground(Color.BLACK);
+		resumeButton.setFocusPainted(false);
+		resumeButton.addActionListener((ActionEvent e) -> {
+			gameEngine.resume();
+			musicPlayer.restartSong();
+			pauseMenu.closeMenu();
+		});
+		
+		saveButton.setFont(new Font("Arial", Font.BOLD, 40));
+		saveButton.setBackground(Color.BLACK);
+		saveButton.setFocusPainted(false);
+		saveButton.addActionListener((ActionEvent e) -> {
+		});
+		
+		exitButton.setFont(new Font("Arial", Font.BOLD, 40));
+		exitButton.setBackground(Color.BLACK);
+		exitButton.setFocusPainted(false);
+		exitButton.addActionListener((ActionEvent e) -> {
+			frame.setVisible(false);
+			pauseMenu.closeMenu();
+			startMenu.openMenu();
+			madeGame = false;
+		});
+		
+		pauseMenu.addElement(resumeButton); 
+		pauseMenu.addElement(saveButton); 
+		pauseMenu.addElement(exitButton); 
 	}
 	
 	/**

@@ -1,8 +1,10 @@
 package controller;
+
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import model.*;
+import view.*;
 
 /**
  * THIS CLASS IS A CONTROLLER
@@ -18,11 +20,13 @@ public class Controller implements KeyListener{
 	private GameEngine gameEngine;
 	private MusicPlayer musicPlayer; //just for testing
 	private SfxManager sfxManager;
+	private Menu pauseMenu;
 	
-	public Controller(GameEngine gameEngine, MusicPlayer musicPlayer, SfxManager sfxmanager) {
+	public Controller(GameEngine gameEngine, MusicPlayer musicPlayer, SfxManager sfxmanager, Menu pauseMenu) {
 		this.gameEngine = gameEngine;
 		this.musicPlayer = musicPlayer;
 		this.sfxManager = sfxmanager;
+		this.pauseMenu = pauseMenu;
 	}
 	
 	/**
@@ -62,9 +66,11 @@ public class Controller implements KeyListener{
 			if(!gameEngine.paused()) {
 				gameEngine.pause();
 				musicPlayer.stopSong();
+				pauseMenu.openMenu();
 			}else {
 				gameEngine.resume();
 				musicPlayer.restartSong();
+				pauseMenu.closeMenu();
 			}
 			
 		}
