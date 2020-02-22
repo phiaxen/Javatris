@@ -341,7 +341,7 @@ public class GameEngine implements Runnable {
 		thread = new Thread(this);
 		thread.start();
 	}
-	
+	//hej
 	public void pause() {
 		System.out.println("Games is paused");
 		paused = true;

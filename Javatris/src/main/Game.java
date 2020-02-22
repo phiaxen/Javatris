@@ -38,7 +38,7 @@ import controller.*;
  */
 
 public class Game {
-	
+	//hej
 	private final  int BlockSize = 40; //resize game <=40 (standard is 40)
 	private final  int BoardWidth = 10;
 	private final  int BoardHeight = 20;

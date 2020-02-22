@@ -20,6 +20,7 @@ public class Savedata implements Serializable{
 	int level;
 	int removedRows;
 	
+	//hej
 	public Savedata(int board[][], Shape shape, LinkedList<Shape> shapes, int score, int time, int level, int removedRows) 
 	{
 		this.board = board;

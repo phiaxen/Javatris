@@ -20,7 +20,7 @@ public class SaveManager {
 	public static void saveFile(Serializable data, String fileName ) throws Exception 
 	{
 		try (ObjectOutputStream outputStream = new ObjectOutputStream(Files.newOutputStream(Paths.get(fileName))))
-		{
+		{	//hej
 			outputStream.writeObject(data);
 		}
 	}
