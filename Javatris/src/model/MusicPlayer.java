@@ -117,10 +117,9 @@ public void playMusicFile(File audioFile) {
 			else {
 				FloatControl gainControl = (FloatControl) audioClip.getControl(FloatControl.Type.MASTER_GAIN);        
 				gainControl.setValue(20f * (float) Math.log10(volume));
+				this.volume = volume;
 			}
-			this.volume = volume;
-		}
-		
+		}	
 	}
 	
 	public void incVolume() {
@@ -131,14 +130,11 @@ public void playMusicFile(File audioFile) {
 			if(volume < 1.0f) {						
 				volume = (float)Math.round(volume*100)/100;
 				System.out.println(volume);
-				FloatControl gainControl = (FloatControl) audioClip.getControl(FloatControl.Type.MASTER_GAIN);        
-			    gainControl.setValue(20f * (float) Math.log10(volume));
+				setVolume(volume);
 			}
 			else {
 				volume = 1f;
-				
-				FloatControl gainControl = (FloatControl) audioClip.getControl(FloatControl.Type.MASTER_GAIN);        
-			    gainControl.setValue(20f * (float) Math.log10(volume));
+				setVolume(volume);
 			}
 		}
 
@@ -152,15 +148,11 @@ public void playMusicFile(File audioFile) {
 			if(volume > 0.0f) {				
 				volume = (float) Math.round(volume*100)/100;
 				System.out.println(volume);
-				
-				FloatControl gainControl = (FloatControl) audioClip.getControl(FloatControl.Type.MASTER_GAIN);        
-			    gainControl.setValue(20f * (float) Math.log10(volume));
+				setVolume(volume);
 			}
 			else {
 				volume = 0.0f;
-				
-				FloatControl gainControl = (FloatControl) audioClip.getControl(FloatControl.Type.MASTER_GAIN);        
-			    gainControl.setValue(20f * (float) Math.log10(volume));
+				setVolume(volume);
 			}
 		}
 	}
@@ -169,14 +161,14 @@ public void playMusicFile(File audioFile) {
 	 * Mutes/unmutes the music
 	 */
 	public void mute() {
-		if(fileLoaded) {
-			System.out.println(muted);
+		if(fileLoaded) {     
 			if(muted) {
 				setVolume(volume);
 				muted = false;
 			}
-			else {
-				setVolume(0f);
+			else {   
+				FloatControl gainControl = (FloatControl) audioClip.getControl(FloatControl.Type.MASTER_GAIN);
+			    gainControl.setValue(20f * (float) Math.log10(0f));
 				muted = true;
 			}
 		}
