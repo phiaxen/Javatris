@@ -42,15 +42,15 @@ public class Controller implements KeyListener{
 	public void keyPressed(KeyEvent e) {
 		
 		int key = e.getKeyCode();
-		if((key == KeyEvent.VK_RIGHT)&&!gameEngine.paused) {
-			if(!gameEngine.getCurrentShape().rightBound()) {	
+		if((key == KeyEvent.VK_RIGHT)&&!gameEngine.paused) {	
+			if(!(gameEngine.getCurrentShape().getX() + gameEngine.getCurrentShape().getCoords()[0].length == 10)) {
 				gameEngine.getCurrentShape().setDeltaX(1);
 				sfxManager.playSound1();
 			}
 		}
 		
 		if((key == KeyEvent.VK_LEFT)&&!gameEngine.paused) {
-			if(!gameEngine.getCurrentShape().leftBound()) {
+			if(!(gameEngine.getCurrentShape().getX() == 0)){
 				gameEngine.getCurrentShape().setDeltaX(-1);
 				sfxManager.playSound1();
 			}

@@ -1,6 +1,7 @@
 package model;
 
 import java.io.File;
+import java.net.URL;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 
@@ -25,18 +26,11 @@ public class MusicPlayer {
 	private boolean fileLoaded = false;
 	
 	public MusicPlayer (int choice) {		
-		
-		if(choice == 1) {
-		playMusic("\\Javatris\\src\\songs\\Tetris Game Theme1.wav");
-		}
-		else if(choice == 2){
-		playMusic("\\Javatris\\src\\songs\\Tetris99 Game Theme1.wav");
-		}
-		else if(choice == 3){
-		playMusic("\\Javatris\\src\\songs\\08 Dave Rodgers - Deja Vu.wav");	
-		}
-		else {}
-		
+		switch(choice) {
+		case 1: playMusic("/songs/Tetris Game Theme1.wav"); break;
+		case 2: playMusic("/songs/Tetris99 Game Theme1.wav"); break;
+		case 3: playMusic("/songs/08 Dave Rodgers - Deja Vu.wav"); break;
+		}	
 	}
 	
 	// funkar
@@ -47,9 +41,8 @@ public class MusicPlayer {
 			audioClip.flush();
 		}
 		
-		Path path = FileSystems.getDefault().getPath("").toAbsolutePath(); 
-		File audioFile = new File(path + fp);													
-	
+														
+		URL audioFile = SfxManager.class.getResource(fp);	
 		
 		try {
 								

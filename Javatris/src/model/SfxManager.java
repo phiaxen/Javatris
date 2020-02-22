@@ -2,6 +2,7 @@ package model;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 
@@ -10,6 +11,8 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.FloatControl;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
+
+import view.Menu;
 
 public class SfxManager {
 
@@ -31,8 +34,7 @@ public class SfxManager {
 	
 	private void getSound1() {
 		try {
-			Path path = FileSystems.getDefault().getPath("").toAbsolutePath(); 
-			File file1 = new File(path + "\\Javatris\\src\\soundEffects\\sfx1.wav");	
+			URL file1 = SfxManager.class.getResource("/soundEffects/sfx1.wav");	
 			sfx1 = AudioSystem.getClip();  
 			sfx1.open(AudioSystem.getAudioInputStream(file1)); 
 			float volume = 0.1f;			
@@ -46,8 +48,7 @@ public class SfxManager {
 	
 	private void getSound2() {
 		try {
-			Path path = FileSystems.getDefault().getPath("").toAbsolutePath(); 
-			File file2 = new File(path + "\\Javatris\\src\\soundEffects\\sfx2.wav");	
+			URL file2 = SfxManager.class.getResource("/soundEffects/sfx2.1.wav");	
 			sfx2 = AudioSystem.getClip();         
 			sfx2.open(AudioSystem.getAudioInputStream(file2)); 
 			
@@ -58,8 +59,7 @@ public class SfxManager {
 	
 	private void getSound3() {
 		try {
-			Path path = FileSystems.getDefault().getPath("").toAbsolutePath(); 
-			File file3 = new File(path + "\\Javatris\\src\\soundEffects\\sfx3.wav");	
+			URL file3 = SfxManager.class.getResource("/soundEffects/sfx3.wav");
 			sfx3 = AudioSystem.getClip();         
 			sfx3.open(AudioSystem.getAudioInputStream(file3)); 
 			
@@ -70,8 +70,8 @@ public class SfxManager {
 	
 	private void getSound4() {
 		try {
-			Path path = FileSystems.getDefault().getPath("").toAbsolutePath(); 
-			File file4 = new File(path + "\\Javatris\\src\\soundEffects\\sfx4.wav");	
+			
+			URL file4 = SfxManager.class.getResource("/soundEffects/sfx4.wav");
 			sfx4 = AudioSystem.getClip();         
 			sfx4.open(AudioSystem.getAudioInputStream(file4)); 
 			float volume = 0.3f;			

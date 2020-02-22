@@ -8,6 +8,8 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.*;
 
+import model.Board;
+
 /**
  * A swing menu with a generic layout.
  * 
@@ -73,7 +75,7 @@ public class Menu {
 		
 		this.menuFrame.setResizable(true);
 		try {
-			image = ImageIO.read(new File(fileName));
+			image = ImageIO.read(Menu.class.getResource(fileName));
 			
 			image = ImageResizer.resize(image,0.2);
 			

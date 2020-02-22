@@ -7,40 +7,30 @@ import java.awt.image.BufferedImage;
  * @version 1.0
  */
 
-
 public class Shape {
 
 	private Board board;
 	private int[][] shape;
 	private int x,y;
-	public int currentSpeed,normalSpeed = 600, fastSpeed = 60;
+	private int currentSpeed,normalSpeed = 600, fastSpeed = 60;
 	private int deltaX = 0;
 	private final int startPos = 4;
 
-	public boolean CanMoveX = true;
-	public boolean CanRotate = true;
-	public boolean atBottom = false;
 	private boolean hasCollidedY = false;
 	private boolean hasCollidedX = false;
-	
 	private int color;
 	
 	public Shape(Board board,int color, int[][] positions) {
-		
 		this.board = board;
 		this.color = color;
 		this.shape = positions;
 		x = startPos;
 		currentSpeed = normalSpeed;
-		
 	}
 	
-
 	//Rotate the shape anti-clockwise.
 	public void rotate() {
-		if(!CanRotate) {
-			return;
-		}
+		
 		int rows = shape.length;
 		int cols = shape[0].length;
 		int [][] Transposed = new int[cols][rows];
@@ -83,20 +73,6 @@ public class Shape {
 		
 		x = tempx;
 		shape = Transposed;
-	}
-	
-	public boolean rightBound() {
-		if(x + shape[0].length == 10) {
-			return true;
-		}
-		return false;
-	}
-	
-	public boolean leftBound() {
-		if(x == 0) {
-			return true;
-		}
-		return false;
 	}
 	
 	public void moveDown() {
@@ -159,9 +135,6 @@ public class Shape {
 	}
 	public int getCurrentSpeed() {
 		return currentSpeed;
-	}
-	public int getStartPos() {
-		return startPos;
 	}
 	
 }

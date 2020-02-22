@@ -217,9 +217,7 @@ public class Game {
 		startMenu.addElement(loadButton);
 		startMenu.addElement(exitButton);
 		
-		
-		
-		startMenu.addTitle("\\Javatris\\src\\images\\javatris2.PNG");
+		startMenu.addTitle("/images/javatris2.PNG");
 		startMenu.openMenu();
 	}
 	
