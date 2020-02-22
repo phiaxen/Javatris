@@ -20,16 +20,16 @@ public class ImageResizer {
      * @throws IOException
      */
     public static BufferedImage resize(BufferedImage image, int scaledWidth, int scaledHeight) throws IOException {
-    	// create the resized image
-        BufferedImage resizedImage = new BufferedImage(scaledWidth,
-                scaledHeight, image.getType());
- 
-        // scale the input image to the resized image
+        
+        Image tmp = image.getScaledInstance(scaledWidth, scaledHeight, Image.SCALE_SMOOTH);
+        BufferedImage resizedImage = new BufferedImage(scaledWidth, scaledHeight, BufferedImage.TYPE_INT_ARGB);
+
         Graphics2D g2d = resizedImage.createGraphics();
-        g2d.drawImage(image, 0, 0, scaledWidth, scaledHeight, null);
+        g2d.drawImage(tmp, 0, 0, null);
         g2d.dispose();
- 
+
         return resizedImage;
+        
     }
  
     /**

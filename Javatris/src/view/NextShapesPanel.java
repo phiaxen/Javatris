@@ -50,17 +50,24 @@ public class NextShapesPanel extends JPanel{
 		}
 	}
 	
-	public void updateNextShape(Shape shape) {
-		shapes.addLast(shape);
+	public void updateNextShape(LinkedList<Shape> shape) {
+		shapes = shape;
 	}
 	
 	protected void paintComponent(Graphics g) {
+		
 		super.paintComponent(g);
+		if(shapes==null|| shapes.size() == 0) {
+			return;
+		}
 		Graphics2D g2 = (Graphics2D)g;
 		int row = 2;
 		for(int k = 0; k<3; k++) {
-			Shape shape = shapes.pollFirst();
-			if(shape!=null) {
+			System.out.println("SIZE OF LSIST IS: " + shapes.size());
+			
+			if(shapes!=null&& shapes.size() != 0) {
+				Shape shape = shapes.get(k);
+				System.out.println("TEST!!");
 				for(int i = 0; i < shape.getCoords().length; i++) {
 					for(int j = 0; j < shape.getCoords()[i].length; j++) {
 						if(shape.getCoords()[i][j] == 1) {
@@ -71,7 +78,7 @@ public class NextShapesPanel extends JPanel{
 				}
 				
 			}
-			row = row +4;
+			row = row + 4;
 		}
 		
 	}

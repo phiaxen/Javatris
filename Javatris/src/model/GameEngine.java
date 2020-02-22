@@ -218,7 +218,7 @@ public class GameEngine implements Runnable {
 		for(int i = 0; i < 3; i++) {
 			randomNum = ThreadLocalRandom.current().nextInt(0, shapes.length);
 			nextShapes.add(getShape(randomNum));
-			sideInfo.updateNextShape(nextShapes.get(i));
+			sideInfo.updateNextShape(nextShapes);
 			sideInfo.repaint();
 		}
 	}
@@ -228,6 +228,8 @@ public class GameEngine implements Runnable {
 	}
 	
 	private Shape nextShape() {
+		
+		
 		Shape nextShape;
 		
 		nextShape = nextShapes.pollFirst();
@@ -235,7 +237,7 @@ public class GameEngine implements Runnable {
 		nextShapes.addLast(getShape(randomNum));
 		
 		for(int i = 0; i < 3; i++) {
-			sideInfo.updateNextShape(nextShapes.get(i));
+			sideInfo.updateNextShape(nextShapes);
 			sideInfo.repaint();
 		}
 		return nextShape;
