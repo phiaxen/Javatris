@@ -74,7 +74,7 @@ public class Game {
 	 * Initializes the game and creates all the nececcary components that are needed
 	 */
 	private void init() {
-		musicPlayer = new MusicPlayer(1);
+		musicPlayer = new MusicPlayer(3);
 		
 		board = new Board();
 		gameEngine = new GameEngine(board, sfxManager, false);
@@ -87,7 +87,7 @@ public class Game {
 	 * @Param port the port of the server
 	 */
 	private void init(String ip, int port) {
-		musicPlayer = new MusicPlayer(1);
+		musicPlayer = new MusicPlayer(3);
 		
 		board = new Board();
 		gameEngine = new GameEngine(board, sfxManager, true);

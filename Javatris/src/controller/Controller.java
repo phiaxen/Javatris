@@ -24,6 +24,10 @@ public class Controller implements KeyListener{
 		this.musicPlayer = musicPlayer;
 		this.sfxManager = sfxmanager;
 	}
+	
+	/**
+	 * 
+	 */
 	@Override
 	public void keyTyped(KeyEvent e) {
 		

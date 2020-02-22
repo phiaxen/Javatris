@@ -27,13 +27,13 @@ public class MusicPlayer {
 	
 	public MusicPlayer (int choice) {		
 		if(choice == 1) {
-		playMusic("/src/songs/Tetris Game Theme1.wav");
+			playMusic("/src/songs/Tetris Game Theme1.wav");
 		}
 		else if(choice == 2){
-		playMusic("/src/songs/Tetris99 Game Theme1.wav");
+			playMusic("/src/songs/Tetris99 Game Theme1.wav");
 		}
-		else {
-			
+		else if(choice == 3){
+			playMusic("/src/songs/08 Dave Rodgers - Deja Vu.wav");
 		}
 	}
 	
@@ -81,7 +81,7 @@ public void playMusicFile(File audioFile) {
 			try {
 				audioClip.stop();
 			}
-			catch(Exception e) {System.out.println("No musik running");}
+			catch(Exception e) {System.out.println("No music running");}
 			}
 	}
 	
@@ -93,7 +93,7 @@ public void playMusicFile(File audioFile) {
 				audioClip.loop(Clip.LOOP_CONTINUOUSLY);
 
 			}
-			catch(Exception e) {System.out.println("No musik running");}
+			catch(Exception e) {System.out.println("No music running");}
 		}
 	}
 	
