@@ -53,6 +53,7 @@ public class Game {
 	private SideInfo sideInfo;
 	private Client client;
 	private MusicPlayer musicPlayer;
+	private SfxManager sfxManager; 
 
 	private Menu startMenu;
 	
@@ -60,6 +61,7 @@ public class Game {
 	
 	public Game() {
 		madeGame = false;
+		sfxManager = new SfxManager();
 		makeStartMenu();
 	}
 	
@@ -76,7 +78,7 @@ public class Game {
 		
 		board = new Board();
 		gameEngine = new GameEngine(board,false);
-		controller = new Controller(gameEngine,musicPlayer);//musicplayer ska inte vara i kontroller egentligen, men har den där för att testa
+		controller = new Controller(gameEngine, musicPlayer, sfxManager);//musicplayer ska inte vara i kontroller egentligen, men har den där för att testa
 	}
 	
 	/*
@@ -89,7 +91,7 @@ public class Game {
 		
 		board = new Board();
 		gameEngine = new GameEngine(board,true);
-		controller = new Controller(gameEngine,musicPlayer);//musicplayer ska inte vara i kontroller egentligen, men har den där för att testa
+		controller = new Controller(gameEngine,musicPlayer, sfxManager);//musicplayer ska inte vara i kontroller egentligen, men har den där för att testa
 		client = new Client(gameEngine, ip, port);
 		
 		

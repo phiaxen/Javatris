@@ -17,10 +17,12 @@ public class Controller implements KeyListener{
 
 	private GameEngine gameEngine;
 	private MusicPlayer musicPlayer; //just for testing
+	private SfxManager sfxManager;
 	
-	public Controller(GameEngine gameEngine, MusicPlayer musicPlayer) {
+	public Controller(GameEngine gameEngine, MusicPlayer musicPlayer, SfxManager sfxmanager) {
 		this.gameEngine = gameEngine;
 		this.musicPlayer = musicPlayer;
+		this.sfxManager = sfxmanager;
 	}
 	@Override
 	public void keyTyped(KeyEvent e) {
@@ -34,12 +36,14 @@ public class Controller implements KeyListener{
 		if((key == KeyEvent.VK_RIGHT)&&!gameEngine.paused()) {
 			if(!gameEngine.getCurrentShape().rightBound()) {
 				gameEngine.getCurrentShape().setDeltaX(1);
+				sfxManager.playSound1();
 			}
 		}
 		
 		if((key == KeyEvent.VK_LEFT)&&!gameEngine.paused()) {
 			if(!gameEngine.getCurrentShape().leftBound()) {
 				gameEngine.getCurrentShape().setDeltaX(-1);
+				sfxManager.playSound1();
 			}
 		}
 		
