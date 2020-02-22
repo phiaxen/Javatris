@@ -351,6 +351,11 @@ public class GameEngine implements Runnable {
 		}
 	}
 	
+	public void pause2() {
+		System.out.println("Games is paused");
+		paused = true;
+	}
+	
 	public void resume() {
 		synchronized(thread) {
 			paused = false;
