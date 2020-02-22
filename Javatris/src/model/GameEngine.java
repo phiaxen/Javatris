@@ -75,7 +75,6 @@ public class GameEngine extends AbstractModel implements Runnable{
 		this.online = online;
 		oldLevel = 1;
 		oldShape = new Shape(board, 1, new int[][] {{1}});//placeholder for start of game
-		//setFirstShape();
 		GameTime = new Timer();
 	}
 	
