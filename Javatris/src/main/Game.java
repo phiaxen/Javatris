@@ -77,7 +77,7 @@ public class Game {
 		musicPlayer = new MusicPlayer(1);
 		
 		board = new Board();
-		gameEngine = new GameEngine(board,false);
+		gameEngine = new GameEngine(board, sfxManager, false);
 		controller = new Controller(gameEngine, musicPlayer, sfxManager);//musicplayer ska inte vara i kontroller egentligen, men har den där för att testa
 	}
 	
@@ -90,7 +90,7 @@ public class Game {
 		musicPlayer = new MusicPlayer(1);
 		
 		board = new Board();
-		gameEngine = new GameEngine(board,true);
+		gameEngine = new GameEngine(board, sfxManager, true);
 		controller = new Controller(gameEngine,musicPlayer, sfxManager);//musicplayer ska inte vara i kontroller egentligen, men har den där för att testa
 		client = new Client(gameEngine, ip, port);
 		
