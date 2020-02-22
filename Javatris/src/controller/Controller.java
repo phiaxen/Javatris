@@ -1,6 +1,15 @@
 package controller;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
+
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 
 import model.*;
 
@@ -17,10 +26,12 @@ public class Controller implements KeyListener{
 
 	private GameEngine gameEngine;
 	private MusicPlayer musicPlayer; //just for testing
+	private SfxManager sfxManager;
 	
 	public Controller(GameEngine gameEngine, MusicPlayer musicPlayer) {
 		this.gameEngine = gameEngine;
 		this.musicPlayer = musicPlayer;
+		this.sfxManager = new SfxManager();
 	}
 	@Override
 	public void keyTyped(KeyEvent e) {
@@ -32,14 +43,16 @@ public class Controller implements KeyListener{
 		
 		int key = e.getKeyCode();
 		if((key == KeyEvent.VK_RIGHT)&&!gameEngine.paused) {
-			if(!gameEngine.getCurrentShape().rightBound()) {
+			if(!gameEngine.getCurrentShape().rightBound()) {	
 				gameEngine.getCurrentShape().setDeltaX(1);
+				sfxManager.playSound1();
 			}
 		}
 		
 		if((key == KeyEvent.VK_LEFT)&&!gameEngine.paused) {
 			if(!gameEngine.getCurrentShape().leftBound()) {
 				gameEngine.getCurrentShape().setDeltaX(-1);
+				sfxManager.playSound1();
 			}
 		}
 		

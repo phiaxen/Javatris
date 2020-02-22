@@ -50,6 +50,7 @@ public class MusicPlayer {
 		Path path = FileSystems.getDefault().getPath("").toAbsolutePath(); 
 		File audioFile = new File(path + fp);													
 	
+		
 		try {
 								
 			AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);				
@@ -64,7 +65,7 @@ public class MusicPlayer {
 			
 			JOptionPane.showMessageDialog(null, "Error with audio loading");
 		}
-		
+		setVolume(0.2f);
 	}
 	
 	/*	borde kanske slå ihop denna med playMusic men det verkade jobbigare

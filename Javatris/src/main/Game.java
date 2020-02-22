@@ -56,7 +56,7 @@ public class Game {
 	private SideInfo sideInfo;
 	private Client client;
 	private MusicPlayer musicPlayer;
-
+	private SfxManager sfxManager;
 	private Menu startMenu;
 	
 	
@@ -82,7 +82,7 @@ public class Game {
 	 */
 	private void Init() {
 		musicPlayer = new MusicPlayer(1);
-		
+	
 		board = new Board();
 		boardView = new BoardView(board,BoardHeight,BoardWidth,BlockSize,false);
 		sideInfo = new SideInfo();

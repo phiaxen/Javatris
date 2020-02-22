@@ -63,6 +63,7 @@ public class GameEngine implements Runnable {
 	
 	private LinkedList<Shape> nextShapes = new LinkedList<Shape>(); 
 
+	private SfxManager sfxManager;
 	
 	public GameEngine(Board board, BoardView boardView, SideInfo sideInfo, Boolean online) {
 		this.board = board;
@@ -71,6 +72,7 @@ public class GameEngine implements Runnable {
 		this.online = online;
 		setFirstShape();
 		GameTime = new Timer();
+		this.sfxManager = new SfxManager();
 	}
 	
 	TimerTask task = new TimerTask() {
@@ -93,12 +95,14 @@ public class GameEngine implements Runnable {
 			
 			if(currentShape.hasCollidedY()) {
 				
+				sfxManager.playSound2();
 				setStaticShapes();
 				
 				int rowsDeleted = 0;
 				int column = 0;
 				for(int i=0; i<board.getBoard().length; i++) {
 					if(board.checkFullRow(i)) {
+						
 						rowsDeleted++;
 						linesCleared++;
 						if(online) 
@@ -111,7 +115,13 @@ public class GameEngine implements Runnable {
 				
 				//uppdaterar score endast om rader har tagits bort
 				if(rowsDeleted > 0) {
-					levelUp();
+					
+					if(linesCleared >= linesToClear) {
+						levelUp();
+					}
+					else {
+						sfxManager.playSound3();
+					}
 					points += scoreHandler(level,rowsDeleted);
 					sideInfo.updateScore(points);
 					sideInfo.updateLines(linesCleared);
@@ -277,10 +287,9 @@ public class GameEngine implements Runnable {
 	}	
 	
 	private void levelUp() {
-		if(linesCleared >= linesToClear) {
+			sfxManager.playSound4();
 			level++;
 			linesToClear = linesToClear + 5;
-		}
 	}
 	
 	public int getLevel() {
