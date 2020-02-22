@@ -350,8 +350,8 @@ public class GameEngine extends AbstractModel implements Runnable{
 			}
 		}
 		
-		fireNextShapes();//WHY
-		fireNextShapes();//DF
+	//	fireNextShapes();//WHY
+		//fireNextShapes();//DF
 		firePropertyChange("shape", oldShape, currentShape);
 	}
 	

@@ -50,31 +50,33 @@ public class NextShapesPanel extends JPanel{
 		}
 	}
 	
-	public void updateNextShape(Shape shape) {
-		shapes.addLast(shape.clone());
+	public void updateNextShape(LinkedList<Shape> shape) {
+		shapes = shape;
 	}
 	
 	protected void paintComponent(Graphics g) {
+		
 		super.paintComponent(g);
+		if(shapes==null|| shapes.size() == 0) {
+			return;
+		}
 		Graphics2D g2 = (Graphics2D)g;
 		int row = 2;
 		for(int k = 0; k<3; k++) {
-				System.out.println(shapes.size());
-				Shape shape = shapes.pollFirst();
-				if(shape!=null) {
-					
-					for(int i = 0; i < shape.getCoords().length; i++) {
-						for(int j = 0; j < shape.getCoords()[i].length; j++) {
-							if(shape.getCoords()[i][j] == 1) {
-								g.drawImage(colors[shape.getColor()-1],j*40 + 1*40,i*40 + row* 40,null);
-								
-							}
+			if(shapes!=null&& shapes.size() != 0) {
+				Shape shape = shapes.get(k);
+				for(int i = 0; i < shape.getCoords().length; i++) {
+					for(int j = 0; j < shape.getCoords()[i].length; j++) {
+						if(shape.getCoords()[i][j] == 1) {
+							g2.drawImage(colors[shape.getColor()-1],j*40 + 1*40,i*40 + row* 40,null);
+							
 						}
 					}
-					
 				}
-				row = row +4;
+				
 			}
+			row = row + 4;
+		}
 		
 	}
 }

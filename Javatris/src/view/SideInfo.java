@@ -114,7 +114,7 @@ public class SideInfo extends JPanel implements PropertyChangeListener{
 
 	public void updateNextShape(LinkedList<Shape> shapes) {
 		for(int i = 0; i < shapes.size(); i++) {
-			nextShapesPanel.updateNextShape(shapes.get(i));
+			nextShapesPanel.updateNextShape(shapes);
 		}
 		nextShapesPanel.repaint();
 	}
