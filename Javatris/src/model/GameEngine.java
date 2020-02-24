@@ -31,6 +31,7 @@ public class GameEngine implements Runnable {
 	public interface Delegate {
 		Client getClient();
 		void createPauseMenu();
+		void resume();
 	}
 	
 	private static Shape currentShape;	//The shape that is currently in action
@@ -366,7 +367,10 @@ public class GameEngine implements Runnable {
 	
 	public void resume() {
 		
-		
+		if((this.delegate != null)) 
+		{
+			this.delegate.resume();
+		}
 		synchronized(thread) {
 			paused = false;
 			thread.notify();
@@ -386,6 +390,7 @@ public class GameEngine implements Runnable {
 		timePassed = 0;
 		gameOver = false;
 		firstStart = false;
+		nextShapes.removeAll(nextShapes);
 		start();
 	
 	}

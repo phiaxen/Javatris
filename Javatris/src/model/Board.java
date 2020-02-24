@@ -12,7 +12,6 @@ package model;
 public class Board {
 	
 	private int[][] board; //2D-array of the board (standard: 20x10)
-	
 	private final int HEIGHT = 20;	//Heigth of the game-board
 	private final int WIDTH = 10;	//Width of the game-board
     
@@ -99,35 +98,6 @@ public class Board {
 	 * Checks if the board contains a full row, if so, delete the row and return the amount of rows deleted.
 	 * @return rowsDeleted : this returns the amount of rows deleted
 	 */
-	public int checkFullRows() {
-		
-		int rows = board.length;
-		int cols = board[0].length;
-		int rowsDeleted = 0;
-		boolean fullRow = true;
-		
-		for(int i = 0; i <rows; i++ ) {
-			for(int j = 0; j < cols; j++) { 
-				if(board[i][j] == 0) {
-						
-						fullRow = false;
-				}
-			}
-			
-			if(fullRow) {
-				deleteRow(i);
-//					if(mulitplayer) 
-//					{
-//						client.sendInt(6);
-//					}
-				rowsDeleted++;
-			}
-			
-			fullRow= true;
-		}
-		return rowsDeleted;
-	}
-	
 	//check one row
 	public boolean checkFullRow(int row) {
 		int cols = board[0].length;

@@ -67,7 +67,7 @@ public class BoardView extends JPanel{
 	private void loadImages() {
 		try {
 			tiles = ImageIO.read(Board.class.getResource("/images/tiles4.png"));
-			background = ImageIO.read(Board.class.getResource("/images/background1.png"));
+			background = ImageIO.read(Board.class.getResource("/images/background3.png"));
 		}catch(IOException e) {
 			e.printStackTrace();
 		}

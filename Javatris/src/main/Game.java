@@ -26,10 +26,17 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextPane;
 import javax.swing.RootPaneContainer;
+import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.border.AbstractBorder;
 import javax.swing.border.EmptyBorder;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyledDocument;
 
 import model.*;
 import view.*;
@@ -69,6 +76,7 @@ public class Game {
 	private Menu pauseMenu;
 	private JPanel gamePanel;
 	private boolean firstGame = true;
+	private StartMenu creditsMenu;
 	
 	public Game(JFrame frame) {
 		this.frame = frame;
@@ -94,7 +102,7 @@ public class Game {
 	 * Initializes the game and creates all the nececcary components that are needed
 	 */
 	private void Init() {
-		musicPlayer = new MusicPlayer(1);
+		musicPlayer = new MusicPlayer(2);
 	
 		board = new Board();
 		boardView = new BoardView(board,BoardHeight,BoardWidth,BlockSize,false);
@@ -119,6 +127,12 @@ public class Game {
 				System.out.println("create the pause");
 				musicPlayer.stop();
 				makePauseMenu();
+			}
+
+			@Override
+			public void resume() {
+				closePauseMenu();
+				
 			}
 			
 		};
@@ -157,6 +171,12 @@ public class Game {
 			public void createPauseMenu()
 			{
 			}
+
+			@Override
+			public void resume() {
+				// TODO Auto-generated method stub
+				
+			}
 			
 		};
 		
@@ -185,8 +205,8 @@ public class Game {
 		
 		frame.add(FixedPanel);
 		
-//		frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
-//		frame.setUndecorated(true);
+		frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+		frame.setUndecorated(true);
 		frame.setResizable(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	
@@ -212,7 +232,7 @@ public class Game {
 	 */
 	private void makeStartmenu() {
 		
-		startMenu = new StartMenu(new Dimension(500,600),true,4,Color.BLACK);
+		startMenu = new StartMenu(new Dimension(700,820),0,5,0.25f,0.75f,Color.BLACK);
 		startMenu.addTitle("/images/javatris1.png");
 //		ImageIcon startButtonImage = null;
 //		try {
@@ -225,26 +245,106 @@ public class Game {
 		JButton onlineButton = new JButton("ONLINE");
 		JButton loadButton = new JButton("LOAD");
 		JButton exitButton = new JButton("EXIT");
+		JButton credits = new JButton("CREDITS");
 		
-		startButton.setFont(new Font("Arial", Font.BOLD, 40));
+		startButton.setFont(new Font("Arial", Font.BOLD, 90));
+		startButton.setForeground(Color.WHITE);
+		startButton.setBackground(Color.BLACK);
+		startButton.setBorderPainted(false);
+		startButton.setFocusPainted(false); 
 		startButton.addActionListener((ActionEvent e) -> {startGame();});
 		
-		onlineButton.setFont(new Font("Arial", Font.BOLD, 40));
+		
+		onlineButton.setFont(new Font("Arial", Font.BOLD, 50));
+		onlineButton.setForeground(Color.WHITE);
+		onlineButton.setBackground(Color.BLACK);
+		onlineButton.setBorderPainted(false);
+		onlineButton.setFocusPainted(false); 
 //		onlineButton.addActionListener((ActionEvent e) -> {startOnlineGame();});
 		
-		exitButton.setFont(new Font("Arial", Font.BOLD, 40));
-		exitButton.addActionListener((ActionEvent e) -> {System.exit(0);});
-		
-		loadButton.setFont(new Font("Arial", Font.BOLD, 40));
+		loadButton.setFont(new Font("Arial", Font.BOLD, 50));
+		loadButton.setForeground(Color.WHITE);
+		loadButton.setBackground(Color.BLACK);
+		loadButton.setBorderPainted(false);
+		loadButton.setFocusPainted(false); 
 		loadButton.addActionListener((ActionEvent e) -> {});
 		
-		startMenu.addElement(startButton); 
-		startMenu.addElement(onlineButton); 
-		startMenu.addElement(loadButton);
-		startMenu.addElement(exitButton);
+		
+		exitButton.setFont(new Font("Arial", Font.BOLD, 40));
+		exitButton.setForeground(Color.WHITE);
+		exitButton.setBackground(Color.BLACK);
+		exitButton.setBorderPainted(false);
+		exitButton.setFocusPainted(false); 
+		exitButton.addActionListener((ActionEvent e) -> {System.exit(0);});
+		
+		
+		
+		credits.setFont(new Font("Arial", Font.ITALIC, 20));
+		credits.setForeground(Color.WHITE);
+		credits.setBackground(Color.BLACK);
+		credits.setBorderPainted(false);
+		credits.setFocusPainted(false); 
+		credits.addActionListener((ActionEvent e) -> {rollCredits();});
+		
+		
+		startMenu.addElementBot(startButton); 
+		startMenu.addElementBot(onlineButton); 
+		startMenu.addElementBot(loadButton);
+		startMenu.addElementBot(exitButton);
+		startMenu.addElementBot(credits);
 		startMenu.openMenu();
 	}
 	
+	public void rollCredits() {
+		startMenu.closeMenu();
+		makeCreditsMenu();
+		FixedPanel.add(creditsMenu);
+		
+	}
+	private void makeCreditsMenu() {
+	
+		
+		
+		creditsMenu = new StartMenu(new Dimension(700,820),2,1,0.8f,0.2f,Color.GREEN);
+		
+		JButton back = new JButton("Back");
+		back.setFont(new Font("Arial", Font.BOLD, 20));
+		back.setForeground(Color.WHITE);
+		back.setBackground(Color.BLACK);
+		back.setBorderPainted(false);
+		back.setFocusPainted(false); 
+		back.addActionListener((ActionEvent e) -> {toMainMenu();});
+		
+		JLabel text1 = new JLabel("CREATED BY",SwingConstants.CENTER);
+		text1.setForeground(Color.white);
+		text1.setFont(new Font("Arial", Font.BOLD, 50));
+	
+		
+		JTextPane textArea = new JTextPane();
+		textArea.setBackground(Color.BLACK);
+		textArea.setForeground(Color.WHITE);
+	
+		StyledDocument doc = textArea.getStyledDocument();
+		SimpleAttributeSet center = new SimpleAttributeSet();
+		StyleConstants.setAlignment(center, StyleConstants.ALIGN_CENTER);
+		doc.setParagraphAttributes(0, doc.getLength(), center, false);
+		
+		textArea.setFont(new Font("Arial", Font.PLAIN, 30));
+		textArea.setText("Joachim Antfolk\r\n" + 
+				"\r\n" + 
+				"Philip Axenhamn\r\n" + 
+				"\r\n" + 
+				"Andreas Greppe\r\n" + 
+				"\r\n" + 
+				"Tobias Mauritzon\r\n" + 
+				"\r\n");
+		
+		creditsMenu.addElementTop(text1);
+		creditsMenu.addElementTop(textArea);
+
+		creditsMenu.addElementBot(back); 
+		creditsMenu.openMenu();
+	}
 	
 
 	/*
@@ -253,8 +353,8 @@ public class Game {
 	private void makePauseMenu()
 	{
 		
-		int menuWidth = 300;
-		int menuHeigth = 400;
+		int menuWidth = 200;
+		int menuHeigth = 250;
 		
 		pauseMenu = new Menu(FixedPanel,new Dimension(menuWidth,menuHeigth),5);
  		JButton resumeButton = new JButton("Resume");
@@ -277,10 +377,6 @@ public class Game {
 		
  		pauseMenu.pack();	
  	
-         
-        
-		
-		
 	}
 	
 	
@@ -307,10 +403,8 @@ public class Game {
 			musicPlayer.restart();
 			gameEngine.restart();
 		}
-		
-		
-		
-		
+		firstGame = false;
+
 	}
 	
 
@@ -324,15 +418,23 @@ public class Game {
 		pauseMenu.close();
 		
 	}
+	private void closePauseMenu() {
+		musicPlayer.play();
+		pauseMenu.close();
+	}
 	
 	/*
 	 * Exits the current game and goes to the main menu
 	 */
 	private void toMainMenu() 
 	{	
-		pauseMenu.close();
+		if(pauseMenu !=null)
+			pauseMenu.close();
+		if(creditsMenu !=null)
+			creditsMenu.closeMenu();
+		
 		FixedPanel.remove(gamePanel);
-		firstGame = false;
+		
 		FixedPanel.validate();
 		FixedPanel.repaint();
 		
