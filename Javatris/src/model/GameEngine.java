@@ -54,7 +54,7 @@ public class GameEngine implements Runnable {
 	public final int TICKSPERSECOND = 60;
 	
 	private int timePassed = 0;
-	private Timer GameTime;
+	private Timer gameTime;
 	
 	private BoardView boardView;
 	
@@ -66,20 +66,24 @@ public class GameEngine implements Runnable {
 
 	private SfxManager sfxManager;
 	
+	private boolean firstStart = true;
+	
 	public GameEngine(Board board, BoardView boardView, SideInfo sideInfo, Boolean online) {
 		this.board = board;
 		this.boardView = boardView;
 		this.sideInfo = sideInfo;
 		this.online = online;
-		setFirstShape();
-		GameTime = new Timer();
+		this.gameTime = new Timer();
 		this.sfxManager = new SfxManager();
 	}
 	
 	TimerTask task = new TimerTask() {
 		public void run() {
-			timePassed++;
-			sideInfo.updateTime(timePassed);
+			if(!paused) {
+				timePassed++;
+				sideInfo.updateTime(timePassed);
+			}
+			
 		}
 		
 	};
@@ -314,6 +318,8 @@ public class GameEngine implements Runnable {
 
 	public synchronized void start() {
 		System.out.println("GAME START");
+		setFirstShape();
+		
 		boardView.setCurrentShape(currentShape);
 		if(running) {
 			return;
@@ -323,9 +329,15 @@ public class GameEngine implements Runnable {
 		
 		if(!online) 
 		{
-			GameTime.scheduleAtFixedRate(task, 0, 1000);
-			thread = new Thread(this);
-			thread.start(); //start thread
+			gameTime.scheduleAtFixedRate(task, 0, 1000);
+			if(firstStart) {
+				thread = new Thread(this);
+				thread.start(); //start thread
+			}else {
+				resume();
+			}
+			
+			
 		}else {
 			if(this.delegate != null) 
 			{
@@ -345,18 +357,37 @@ public class GameEngine implements Runnable {
 	public void pause() {
 		System.out.println("Games is paused");
 		paused = true;
-		if(this.delegate != null) 
+		if((this.delegate != null)) 
 		{
 			this.delegate.createPauseMenu();
 		}
+		
 	}
 	
 	public void resume() {
+		
+		
 		synchronized(thread) {
 			paused = false;
 			thread.notify();
 		}
 		
+	}
+	
+	public void restart() {
+		System.out.println("paused is: " + paused);
+		resume();
+		board.resetBoard();
+		sideInfo.resetInfo();
+		level = 1;
+		points = 0;
+		linesToClear = 10;
+		linesCleared = 0;
+		timePassed = 0;
+		gameOver = false;
+		firstStart = false;
+		start();
+	
 	}
 
 	private synchronized void stop() {

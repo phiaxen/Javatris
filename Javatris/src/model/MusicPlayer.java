@@ -27,14 +27,14 @@ public class MusicPlayer {
 	
 	public MusicPlayer (int choice) {		
 		switch(choice) {
-		case 1: playMusic("/songs/Tetris Game Theme1.wav"); break;
-		case 2: playMusic("/songs/Tetris99 Game Theme1.wav"); break;
-		case 3: playMusic("/songs/08 Dave Rodgers - Deja Vu.wav"); break;
+		case 1: loadMusic("/songs/Tetris Game Theme1.wav"); break;
+		case 2: loadMusic("/songs/Tetris99 Game Theme1.wav"); break;
+		case 3: loadMusic("/songs/08 Dave Rodgers - Deja Vu.wav"); break;
 		}	
 	}
 	
 	// funkar
-	public void playMusic(String fp) {
+	public void loadMusic(String fp) {
 		
 		if(fileLoaded){
 			audioClip.stop();
@@ -44,14 +44,13 @@ public class MusicPlayer {
 														
 		URL audioFile = SfxManager.class.getResource(fp);	
 		
+		
 		try {
 								
 			AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);				
 			
 			audioClip = AudioSystem.getClip();         
 			audioClip.open(audioStream);    
-			
-			audioClip.loop(Clip.LOOP_CONTINUOUSLY);  
 			fileLoaded = true;
 		}
 		catch(Exception e){
@@ -61,11 +60,14 @@ public class MusicPlayer {
 		setVolume(0.2f);
 	}
 	
+	public void play() {
+		audioClip.loop(Clip.LOOP_CONTINUOUSLY);  
+	}
 	/*	borde kanske sl� ihop denna med playMusic men det verkade jobbigare
 	 *  �n vad det var v�rt.
 	 * 
 	 */
-public void playMusicFile(File audioFile) {										 	
+	public void playMusicFile(File audioFile) {										 	
 	
 		if(fileLoaded){
 			audioClip.stop();
@@ -74,7 +76,7 @@ public void playMusicFile(File audioFile) {
 		
 		try {
 			
-								
+			
 			AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
 			
 			
@@ -91,7 +93,7 @@ public void playMusicFile(File audioFile) {
 		
 	}
 	
-	public void stopSong() {
+	public void stop() {
 		if(fileLoaded) {
 			this.restart = false;
 			try {
@@ -101,16 +103,9 @@ public void playMusicFile(File audioFile) {
 			}
 	}
 	
-	public void restartSong() {
-		if((restart == false) && fileLoaded)
-		{
-			this.restart = true;
-			try {
-				audioClip.loop(Clip.LOOP_CONTINUOUSLY);
-
-			}
-			catch(Exception e) {System.out.println("No musik running");}
-		}
+	public void restart() {
+		audioClip.setFramePosition(0);
+		play();
 	}
 	
 	private float getVolume() {

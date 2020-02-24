@@ -154,4 +154,12 @@ public class Board {
 	public int[][] getBoard() {
 		return board;
 	}
+	
+	public void resetBoard() {
+		for(int i=0; i<HEIGHT; i++) {
+			for(int j=0; j<WIDTH; j++) {
+				board[i][j] = 0;
+			}
+		}
+	}
 }

@@ -56,7 +56,7 @@ public class SideInfo extends JPanel {
 		scoreText = new JLabel("SCORE: 0");
 		scoreText.setFont(new Font("Arial", Font.BOLD, 30));
 		
-		timeLabel = new JLabel("TIME: 0");
+		timeLabel = new JLabel("TIME: 0s");
 		timeLabel.setFont(new Font("Arial",Font.PLAIN, 30));
 		
 		linesLabel = new JLabel("Lines: " + rowsRemoved);
@@ -117,7 +117,12 @@ public class SideInfo extends JPanel {
 //	}
 	
 	
-	
+	public void resetInfo() {
+		this.scoreText.setText("SCORE: 0" );
+		this.timeLabel.setText("TIME: 0s");
+		this.linesLabel.setText("Lines: 0");
+		this.levelLabel.setText("Level: 1");
+	}
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D)g;
