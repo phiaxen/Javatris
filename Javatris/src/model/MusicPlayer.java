@@ -215,4 +215,15 @@ public void playMusicFile(File audioFile) {
         	JOptionPane.showMessageDialog(null,"The user cancelled the operation"); 
 	}
 	
+	public void reset() {
+		if(fileLoaded) {
+			this.restart = true;
+			try {
+				audioClip.setFramePosition(0);
+				audioClip.loop(Clip.LOOP_CONTINUOUSLY);
+			}
+			catch(Exception e) {System.out.println("No musik running");}
+		}
+	}
+	
 }
