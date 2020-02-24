@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 
+import javax.imageio.IIOException;
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -80,7 +81,7 @@ public class Game {
 		
 		board = new Board();
 		gameEngine = new GameEngine(board, sfxManager, false);
-		controller = new Controller(gameEngine, musicPlayer, sfxManager, pauseMenu);//musicplayer ska inte vara i kontroller egentligen, men har den där för att testa
+		controller = new Controller(gameEngine, musicPlayer, sfxManager, pauseMenu);//musicplayer ska inte vara i kontroller egentligen, men har den dï¿½r fï¿½r att testa
 	}
 	
 	/*
@@ -93,7 +94,7 @@ public class Game {
 		
 		board = new Board();
 		gameEngine = new GameEngine(board, sfxManager, true);
-		controller = new Controller(gameEngine,musicPlayer, sfxManager, pauseMenu);//musicplayer ska inte vara i kontroller egentligen, men har den där för att testa
+		controller = new Controller(gameEngine,musicPlayer, sfxManager, pauseMenu);//musicplayer ska inte vara i kontroller egentligen, men har den dï¿½r fï¿½r att testa
 		client = new Client(gameEngine, ip, port);
 		
 		
@@ -140,10 +141,10 @@ public class Game {
 	 * Creates start-menu
 	 */
 	private void makeStartMenu() {
-		startMenu = new Menu(new Dimension(400,800), 4);
+		startMenu = new Menu(new Dimension(400,800), 5);
 
 		JButton startButton = new JButton("START");
-		
+		JButton loadButton = new JButton("LOAD");
 		JButton onlineButton = new JButton("ONLINE");
 		JButton exitButton = new JButton("EXIT");
 		
@@ -152,6 +153,15 @@ public class Game {
 		startButton.setFocusPainted(false);
 		startButton.addActionListener((ActionEvent e) -> {
 			startGame();
+		});
+		
+		
+		loadButton.setFont(new Font("Arial", Font.BOLD, 40));
+		loadButton.setBackground(Color.BLACK);
+		loadButton.setFocusPainted(false);
+		loadButton.addActionListener((ActionEvent e) -> {
+			startGame();
+			loadGame();
 		});
 		
 		onlineButton.setFont(new Font("Arial", Font.BOLD, 40));
@@ -170,7 +180,8 @@ public class Game {
 		});
 		
 		
-		startMenu.addElement(startButton); 
+		startMenu.addElement(startButton);
+		startMenu.addElement(loadButton); 
 		startMenu.addElement(onlineButton); 
 		startMenu.addElement(exitButton);
 		
@@ -202,6 +213,7 @@ public class Game {
 		saveButton.setBackground(Color.BLACK);
 		saveButton.setFocusPainted(false);
 		saveButton.addActionListener((ActionEvent e) -> {
+			saveGame();
 		});
 		
 		exitButton.setFont(new Font("Arial", Font.BOLD, 40));
@@ -233,6 +245,45 @@ public class Game {
 			gameEngine.start();
 			
 			madeGame = true;
+		}
+	}
+	
+	private void loadGame() 
+	{
+		try {
+			Savedata loadData = (Savedata) SaveManager.loadFile("saveFile.Save");
+			board.setBoard(loadData.getBoard());
+			gameEngine.setCurrentShape(loadData.getCurrentShape());
+			gameEngine.setNextShapes(loadData.getNextShapes());
+			gameEngine.setScore(loadData.getScore());
+			gameEngine.setLevel(loadData.getLevel());
+			gameEngine.setTime(loadData.getTime());
+			gameEngine.setClearedRows(loadData.getRemovedRows());
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	private void saveGame() 
+	{
+		Savedata saveData = new Savedata();
+		saveData.setBoard(board.getBoard());
+		saveData.setCurrentShape(gameEngine.getCurrentShape());
+		saveData.setNextShapes(gameEngine.GetNextShapes());
+		saveData.setScore(gameEngine.getPoints());
+		saveData.setLevel(gameEngine.getLevel());
+		saveData.setRemovedRows(gameEngine.getRemovedRows());
+		saveData.setTime(gameEngine.getTime());
+		
+		try 
+		{
+			SaveManager.saveFile(saveData, "saveFile.Save");
+		}
+		catch(IIOException e) {} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 	

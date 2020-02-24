@@ -199,4 +199,9 @@ public class Board implements Cloneable{
 		}
 		return false;
 	}
+	
+	public void setBoard(int board[][]) 
+	{
+		this.board = board;
+	}
 }

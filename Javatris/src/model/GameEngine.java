@@ -476,4 +476,55 @@ public class GameEngine extends AbstractModel implements Runnable{
 	{
 		System.exit(1);
 	}
+	
+	public LinkedList<Shape> GetNextShapes()
+	{
+		return nextShapes;
+	}
+	
+	public int getRemovedRows() 
+	{
+		return linesCleared;
+	}
+	
+	public long getTime() 
+	{
+		return time;
+	}
+	
+	public void setCurrentShape(Shape shape) 
+	{
+		
+		currentShape = shape;
+	}
+	
+	public void setNextShapes(LinkedList<Shape> shapes) 
+	{
+		
+		nextShapes = new LinkedList<Shape>();
+		for(Shape shape: shapes) 
+		{
+			nextShapes.addFirst(shape);
+		}
+	}
+
+	public void setScore(int score) 
+	{
+		this.points = score;
+	}
+	
+	public void setTime(long time) 
+	{
+		this.time = time;
+	}
+	
+	public void setLevel(int level) 
+	{
+		this.level = level;
+	}
+	
+	public void setClearedRows(int removedRows) 
+	{
+		this.linesCleared = removedRows;
+	}
 }
