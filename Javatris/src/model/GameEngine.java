@@ -34,6 +34,8 @@ public class GameEngine extends AbstractModel implements Runnable{
 	 */
 	public interface Delegate {
 		Client getClient();
+		void pause();
+		void resume();
 	}
 
 	private static Shape currentShape;	//The shape that is currently in action
@@ -370,6 +372,7 @@ public class GameEngine extends AbstractModel implements Runnable{
 		if(!online) {
 			paused = true;
 		}
+		delegate.pause();
 	}
 	
 	public void resume() {
@@ -377,7 +380,7 @@ public class GameEngine extends AbstractModel implements Runnable{
 			paused = false;
 			thread.notify();
 		}
-		
+		delegate.resume();
 	}
 
 	private synchronized void stop() {

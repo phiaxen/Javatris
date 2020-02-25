@@ -89,7 +89,6 @@ public class Game {
 		makeStartMenu();
 		
 		SetUpFrame();
-	
 	}
 	
 	public static void main(String[] args) {
@@ -111,7 +110,7 @@ public class Game {
 		
 		KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
         manager.addKeyEventDispatcher(controller);
-		/*
+		
 		gameEngine.delegate = new GameEngine.Delegate() 
 		{
 			@Override
@@ -121,10 +120,8 @@ public class Game {
 			}
 			
 			@Override
-			public void createPauseMenu()
+			public void pause()
 			{
-				System.out.println(this);
-				System.out.println("create the pause");
 				musicPlayer.stop();
 				makePauseMenu();
 			}
@@ -134,7 +131,7 @@ public class Game {
 				closePauseMenu();
 				
 			}
-		};*/
+		};
 	}
 	
 	/*
@@ -143,16 +140,7 @@ public class Game {
 	 * @Param port the port of the server
 	 */
 	private void init(String ip, int port) {
-		client = new Client(gameEngine, ip, port);	
-		
-		gameEngine.delegate = new GameEngine.Delegate() 
-		{
-			@Override
-			public Client getClient()
-			{
-				return client.getClient();
-			}
-		};		
+		client = new Client(gameEngine, ip, port);			
 	}
 	
 	/**
@@ -245,6 +233,7 @@ private void makeStartMenu() {
 		loadButton.addActionListener((ActionEvent e) -> {
 			startGame();
 			loadGame();
+			System.out.println("loaded");
 			boardView.validate();
 			boardView.repaint();
 			sideInfo.validate();
@@ -268,7 +257,9 @@ private void makeStartMenu() {
 		credits.setBackground(Color.BLACK);
 		credits.setBorderPainted(false);
 		credits.setFocusPainted(false); 
-		credits.addActionListener((ActionEvent e) -> {rollCredits();});
+		credits.addActionListener((ActionEvent e) -> {
+			rollCredits();
+		});
 		
 		
 		startMenu.addElementBot(startButton); 
@@ -374,32 +365,26 @@ private void makeStartMenu() {
 	/**
 	 * Starts game
 	 */
-	private void startGame() {
-		if(!madeGame) {
-			
-			gameEngine.addPropertyChangeListener(boardView);
-			gameEngine.addPropertyChangeListener(sideInfo);
-			startMenu.closeMenu();
-			
+	private void startGame() {		
+		gameEngine.addPropertyChangeListener(boardView);
+		gameEngine.addPropertyChangeListener(sideInfo);
+		startMenu.closeMenu();
+		
 //			FixedPanel.remove(startMenu);
-			FixedPanel.add(gamePanel);
-			FixedPanel.validate();
-			FixedPanel.repaint();
-			frame.add(FixedPanel);
-			
-			if(firstGame) {
-				musicPlayer.play();
-				gameEngine.start();
-			}else {
-			
-				musicPlayer.restart();
-				//gameEngine.restart();
-			}
-			firstGame = false;startMenu.closeMenu();
+		FixedPanel.add(gamePanel);
+		FixedPanel.validate();
+		FixedPanel.repaint();
+		frame.add(FixedPanel);
+		
+		if(firstGame) {
+			musicPlayer.play();
 			gameEngine.start();
-			
-			madeGame = true;
+		}else {
+		
+			musicPlayer.restart();
+			//gameEngine.restart();
 		}
+		firstGame = false;startMenu.closeMenu();
 	}
 	
 	private void loadGame() 
@@ -413,8 +398,6 @@ private void makeStartMenu() {
 			gameEngine.setLevel(loadData.getLevel());
 			gameEngine.setTime(loadData.getTime());
 			gameEngine.setClearedRows(loadData.getRemovedRows());
-			
-			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -435,6 +418,7 @@ private void makeStartMenu() {
 		try 
 		{
 			SaveManager.saveFile(saveData, "saveFile.Save");
+			System.out.println("saved");
 		}
 		catch(IIOException e) {} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -448,29 +432,27 @@ private void makeStartMenu() {
 	 * in other words ip:port
 	 */
 	private void startOnlineGame() {
-		if(!madeGame) {
-			String code = JOptionPane.showInputDialog
-			(
-		        frame, 
-		        "Enter the server ip and port, (IP:PORT)", 
-		        "Connect to server", 
-		        JOptionPane.PLAIN_MESSAGE
-			 );
+		String code = JOptionPane.showInputDialog
+		(
+	        frame, 
+	        "Enter the server ip and port, (IP:PORT)", 
+	        "Connect to server", 
+	        JOptionPane.PLAIN_MESSAGE
+		 );
+		
+		//Only starts if
+		if(code != null&&!code.isBlank() && !code.isEmpty()) 
+		{
+			String[] adress = code.split(":");
 			
-			//Only starts if
-			if(code != null&&!code.isBlank() && !code.isEmpty()) 
-			{
-				String[] adress = code.split(":");
-				
-				init(adress[0], Integer.parseInt(adress[1]));
-				
-				gameEngine.addPropertyChangeListener(boardView);
-				gameEngine.addPropertyChangeListener(sideInfo);
-				startMenu.closeMenu();
-				gameEngine.start();
-			}
-			madeGame = true;
+			init(adress[0], Integer.parseInt(adress[1]));
+			
+			gameEngine.addPropertyChangeListener(boardView);
+			gameEngine.addPropertyChangeListener(sideInfo);
+			startMenu.closeMenu();
+			gameEngine.start();
 		}
+
 	}
 	
 	/*
