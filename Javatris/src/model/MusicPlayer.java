@@ -35,6 +35,7 @@ public class MusicPlayer {
 		else if(choice == 3){
 			playMusic("/src/songs/08 Dave Rodgers - Deja Vu.wav");
 		}
+		else{}
 	}
 	
 	// funkar
@@ -182,7 +183,7 @@ public void playMusicFile(File audioFile) {
 		JFileChooser j = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory()); 
 		  
         // invoke the showsSaveDialog function to show the save dialog 
-        int r = j.showSaveDialog(null); 
+        int r = j.showOpenDialog(null); 
 
         // if the user selects a file 
         if(r == JFileChooser.APPROVE_OPTION){ 
