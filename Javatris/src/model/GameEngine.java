@@ -62,6 +62,7 @@ public class GameEngine extends AbstractModel implements Runnable{
 	private final int TICKSPERSECOND = 60;
 	
 	private int timePassed = 0;
+	private int oldTime = 0;
 	private Timer GameTime;
 	
 	private long time, lastTime;
@@ -86,7 +87,7 @@ public class GameEngine extends AbstractModel implements Runnable{
 	TimerTask task = new TimerTask() {
 		public void run() {
 			if(!paused && !gameOver) {
-				int oldTime = timePassed;
+				oldTime = timePassed;
 				timePassed++;
 				firePropertyChange("time", oldTime, timePassed);
 			}
@@ -340,10 +341,14 @@ public class GameEngine extends AbstractModel implements Runnable{
 		firePropertyChange("shape", oldShape, currentShape);
 		firePropertyChange("next shape", oldShapes, nextShapes);
 		
-		System.out.println("GAME START");
-		if(running) {
-			return;
+		if(paused) {
+			resume();
 		}
+		
+		System.out.println("GAME START");
+		/*if(running) {
+			return;
+		}*/
 	
 		running = true;
 		
@@ -371,16 +376,16 @@ public class GameEngine extends AbstractModel implements Runnable{
 	public void pause() {
 		if(!online) {
 			paused = true;
+			delegate.pause();
 		}
-		delegate.pause();
 	}
 	
 	public void resume() {
 		synchronized(thread) {
 			paused = false;
 			thread.notify();
+			delegate.resume();
 		}
-		delegate.resume();
 	}
 
 	private synchronized void stop() {
@@ -494,18 +499,18 @@ public class GameEngine extends AbstractModel implements Runnable{
 	
 	public void setCurrentShape(Shape shape) 
 	{
-		
 		currentShape = shape;
+		firePropertyChange("shape", oldShape, currentShape);
 	}
 	
 	public void setNextShapes(LinkedList<Shape> shapes) 
 	{
-		
 		nextShapes = new LinkedList<Shape>();
 		for(Shape shape: shapes) 
 		{
 			nextShapes.addFirst(shape);
 		}
+		firePropertyChange("next shape", oldShapes, nextShapes);
 	}
 
 	public void setScore(int score) 
@@ -517,6 +522,7 @@ public class GameEngine extends AbstractModel implements Runnable{
 	public void setTime(int time) 
 	{
 		this.timePassed = time;
+		firePropertyChange("time", oldTime, timePassed);
 	}
 	
 	public void setLevel(int level) 

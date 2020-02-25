@@ -233,11 +233,8 @@ private void makeStartMenu() {
 		loadButton.addActionListener((ActionEvent e) -> {
 			startGame();
 			loadGame();
-			System.out.println("loaded");
-			boardView.validate();
-			boardView.repaint();
-			sideInfo.validate();
-			sideInfo.repaint();
+			gamePanel.validate();
+			gamePanel.repaint();
 		});
 		
 		
@@ -379,12 +376,13 @@ private void makeStartMenu() {
 		if(firstGame) {
 			musicPlayer.play();
 			gameEngine.start();
-		}else {
+		}
+		else {
 		
 			musicPlayer.restart();
-			//gameEngine.restart();
+			gameEngine.start();
 		}
-		firstGame = false;startMenu.closeMenu();
+		firstGame = false;	
 	}
 	
 	private void loadGame() 
@@ -418,7 +416,6 @@ private void makeStartMenu() {
 		try 
 		{
 			SaveManager.saveFile(saveData, "saveFile.Save");
-			System.out.println("saved");
 		}
 		catch(IIOException e) {} catch (Exception e) {
 			// TODO Auto-generated catch block
