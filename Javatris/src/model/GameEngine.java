@@ -70,11 +70,9 @@ public class GameEngine extends AbstractModel implements Runnable{
 	private LinkedList<Shape> oldShapes = new LinkedList<Shape>();
 	  
 	private boolean GameStart = true;
-	private final SfxManager sfxManager;
 
-	public GameEngine(Board board, SfxManager sfxManager, Boolean online) {
+	public GameEngine(Board board, Boolean online) {
 		super();
-		this.sfxManager = sfxManager;
 		this.board = board;
 		this.online = online;
 		oldLevel = 1;
@@ -107,7 +105,6 @@ public class GameEngine extends AbstractModel implements Runnable{
 			CheckCollisionY();
 			
 			if(currentShape.hasCollidedY()) {
-				sfxManager.playSound2();
 				setStaticShapes();
 				
 				int rowsDeleted = 0;
@@ -128,7 +125,6 @@ public class GameEngine extends AbstractModel implements Runnable{
 				//uppdaterar score endast om rader har tagits bort
 				if(rowsDeleted > 0) {
 					levelUp();
-					sfxManager.playSound3();
 					int oldPoints = points;
 					points += scoreHandler(level,rowsDeleted);
 					
@@ -309,7 +305,6 @@ public class GameEngine extends AbstractModel implements Runnable{
 	
 	private void levelUp() {
 		if(linesCleared >= linesToClear) {
-			sfxManager.playSound4();
 			oldLevel = level;
 			level++;
 			linesToClear = linesToClear + 5;

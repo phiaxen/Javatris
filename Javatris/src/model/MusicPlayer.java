@@ -1,6 +1,7 @@
 package model;
 
 import java.io.File;
+import java.net.URL;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 
@@ -20,37 +21,53 @@ public class MusicPlayer {
 	private boolean restart;
 	private final float MaxSteps = 20; //Even numbers only
 	private final float steps = 1/MaxSteps;
-	private float volume;
+	
 	
 	private boolean fileLoaded = false;
-	private boolean muted = false;
 	
 	public MusicPlayer (int choice) {		
-		if(choice == 1) {
-			playMusic("/src/songs/Tetris Game Theme1.wav");
-		}
-		else if(choice == 2){
-			playMusic("/src/songs/Tetris99 Game Theme1.wav");
-		}
-		else if(choice == 3){
-			playMusic("/src/songs/08 Dave Rodgers - Deja Vu.wav");
-		}
-		else{}
+		switch(choice) {
+		case 1: loadMusic("/songs/Tetris Game Theme1.wav"); break;
+		case 2: loadMusic("/songs/Tetris99 Game Theme1.wav"); break;
+		case 3: loadMusic("/songs/08 Dave Rodgers - Deja Vu.wav"); break;
+		}	
 	}
 	
 	// funkar
-	public void playMusic(String fp) {
-
-		Path path = FileSystems.getDefault().getPath("").toAbsolutePath(); 
-		File audioFile = new File(path + fp);		
-		playMusicFile(audioFile);
+	public void loadMusic(String fp) {
+		
+		if(fileLoaded){
+			audioClip.stop();
+			audioClip.flush();
+		}
+		
+														
+		URL audioFile = SfxManager.class.getResource(fp);	
+		
+		
+		try {
+								
+			AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);				
+			
+			audioClip = AudioSystem.getClip();         
+			audioClip.open(audioStream);    
+			fileLoaded = true;
+		}
+		catch(Exception e){
+			
+			JOptionPane.showMessageDialog(null, "Error with audio loading");
+		}
+		setVolume(0.4f); //start volume
 	}
 	
+	public void play() {
+		audioClip.loop(Clip.LOOP_CONTINUOUSLY);  
+	}
 	/*	borde kanske slå ihop denna med playMusic men det verkade jobbigare
-	 *  än vad det var värt.
+	 *  än vad det var vårt.
 	 * 
 	 */
-public void playMusicFile(File audioFile) {										 	
+	public void playMusicFile(File audioFile) {										 	
 	
 		if(fileLoaded){
 			audioClip.stop();
@@ -59,7 +76,7 @@ public void playMusicFile(File audioFile) {
 		
 		try {
 			
-								
+			
 			AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
 			
 			
@@ -73,29 +90,22 @@ public void playMusicFile(File audioFile) {
 			
 			JOptionPane.showMessageDialog(null, "Error with audio loading");
 		}
-		setVolume(0.5f);
+		
 	}
 	
-	public void stopSong() {
+	public void stop() {
 		if(fileLoaded) {
 			this.restart = false;
 			try {
 				audioClip.stop();
 			}
-			catch(Exception e) {System.out.println("No music running");}
+			catch(Exception e) {System.out.println("No musik running");}
 			}
 	}
 	
-	public void restartSong() {
-		if((restart == false) && fileLoaded)
-		{
-			this.restart = true;
-			try {
-				audioClip.loop(Clip.LOOP_CONTINUOUSLY);
-
-			}
-			catch(Exception e) {System.out.println("No music running");}
-		}
+	public void restart() {
+		audioClip.setFramePosition(0);
+		play();
 	}
 	
 	private float getVolume() {
@@ -117,9 +127,9 @@ public void playMusicFile(File audioFile) {
 			else {
 				FloatControl gainControl = (FloatControl) audioClip.getControl(FloatControl.Type.MASTER_GAIN);        
 				gainControl.setValue(20f * (float) Math.log10(volume));
-				this.volume = volume;
 			}
-		}	
+		}
+		
 	}
 	
 	public void incVolume() {
@@ -130,11 +140,14 @@ public void playMusicFile(File audioFile) {
 			if(volume < 1.0f) {						
 				volume = (float)Math.round(volume*100)/100;
 				System.out.println(volume);
-				setVolume(volume);
+				FloatControl gainControl = (FloatControl) audioClip.getControl(FloatControl.Type.MASTER_GAIN);        
+			    gainControl.setValue(20f * (float) Math.log10(volume));
 			}
 			else {
 				volume = 1f;
-				setVolume(volume);
+				
+				FloatControl gainControl = (FloatControl) audioClip.getControl(FloatControl.Type.MASTER_GAIN);        
+			    gainControl.setValue(20f * (float) Math.log10(volume));
 			}
 		}
 
@@ -148,32 +161,28 @@ public void playMusicFile(File audioFile) {
 			if(volume > 0.0f) {				
 				volume = (float) Math.round(volume*100)/100;
 				System.out.println(volume);
-				setVolume(volume);
+				
+				FloatControl gainControl = (FloatControl) audioClip.getControl(FloatControl.Type.MASTER_GAIN);        
+			    gainControl.setValue(20f * (float) Math.log10(volume));
 			}
 			else {
-				volume = 0.0f;
-				setVolume(volume);
+				volume = 0f;
+				
+				FloatControl gainControl = (FloatControl) audioClip.getControl(FloatControl.Type.MASTER_GAIN);        
+			    gainControl.setValue(20f * (float) Math.log10(volume));
 			}
 		}
 	}
 	
-	/*
-	 * Mutes/unmutes the music
-	 */
 	public void mute() {
-		if(fileLoaded) {     
-			if(muted) {
-				setVolume(volume);
-				muted = false;
-			}
-			else {   
-				FloatControl gainControl = (FloatControl) audioClip.getControl(FloatControl.Type.MASTER_GAIN);
-			    gainControl.setValue(20f * (float) Math.log10(0f));
-				muted = true;
-			}
+		if(fileLoaded) {
+			float volume = 0.0f;			
+			FloatControl gainControl = (FloatControl) audioClip.getControl(FloatControl.Type.MASTER_GAIN);        
+			gainControl.setValue(20f * (float) Math.log10(volume));
 		}
+
 	}
-	
+
 	/*	Om du kallar på denna och har en pause eller breakpoint 
 	 * 	kommer rutan kanske öppnas i bakgrunden och man måste
 	 * 	minimera sina fönster
