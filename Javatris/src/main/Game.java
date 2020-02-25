@@ -380,7 +380,7 @@ private void makeStartMenu() {
 		else {
 		
 			musicPlayer.restart();
-			gameEngine.start();
+			gameEngine.restart();
 		}
 		firstGame = false;	
 	}
@@ -447,7 +447,7 @@ private void makeStartMenu() {
 			gameEngine.addPropertyChangeListener(boardView);
 			gameEngine.addPropertyChangeListener(sideInfo);
 			startMenu.closeMenu();
-			gameEngine.start();
+			gameEngine.restart();
 		}
 
 	}

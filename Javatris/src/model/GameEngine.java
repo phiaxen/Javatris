@@ -388,6 +388,21 @@ public class GameEngine extends AbstractModel implements Runnable{
 		}
 	}
 
+	public void restart() {
+		System.out.println("paused is: " + paused);
+		resume();
+		board.resetBoard();
+		level = 1;
+		points = 0;
+		linesToClear = 10;
+		linesCleared = 0;
+		timePassed = 0;
+		gameOver = false;
+		setFirstShape();
+		start();
+	
+	}
+	
 	private synchronized void stop() {
 		if(!running) {
 			return; 

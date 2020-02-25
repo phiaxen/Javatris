@@ -161,6 +161,14 @@ public class Board implements Cloneable, Serializable{
 		return board;
 	}
 	
+	public void resetBoard() {
+		for(int i=0; i<HEIGHT; i++) {
+			for(int j=0; j<WIDTH; j++) {
+				board[i][j] = 0;
+			}
+		}
+	}
+	
 	/**
 	 * Returns deep copy of Board object
 	 * @return Board : copy of this Board
