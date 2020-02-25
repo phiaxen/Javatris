@@ -47,7 +47,7 @@ public class Server
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 		
-		
+		frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
 		
 		sSocket = new ServerSocket(port);
 		BufferedReader keyboard = new BufferedReader(new InputStreamReader(System.in));
