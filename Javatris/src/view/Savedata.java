@@ -15,7 +15,7 @@ public class Savedata implements Serializable{
 	int board[][];
 	Shape currentShape;
 	LinkedList<Shape> nextShapes;
-	long time;
+	int time;
 	int score;
 	int level;
 	int removedRows;
@@ -106,7 +106,7 @@ public class Savedata implements Serializable{
 	 * sets the time to the inputed long
 	 * @param time the current time of the game
 	 */
-	public void setTime(long time) 
+	public void setTime(int time) 
 	{
 		this.time = time;
 	}
@@ -144,7 +144,7 @@ public class Savedata implements Serializable{
 		return removedRows;
 	}
 	
-	public long getTime() 
+	public int getTime() 
 	{
 		return time;
 	}

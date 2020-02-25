@@ -47,6 +47,8 @@ public class GameEngine extends AbstractModel implements Runnable{
 	private int level = 1;
 	private int oldLevel;
 	private int points = 0;
+	private int oldPoints = 0;
+	private int oldlinesC = 0;
 	private int linesToClear = 10;	//how many lines it takes to level up, increase by 5 for each level
 	
 	private int linesCleared = 0;	//how many lines the player has cleared
@@ -487,9 +489,9 @@ public class GameEngine extends AbstractModel implements Runnable{
 		return linesCleared;
 	}
 	
-	public long getTime() 
+	public int getTime() 
 	{
-		return time;
+		return timePassed;
 	}
 	
 	public void setCurrentShape(Shape shape) 
@@ -511,20 +513,23 @@ public class GameEngine extends AbstractModel implements Runnable{
 	public void setScore(int score) 
 	{
 		this.points = score;
+		firePropertyChange("points", oldPoints, points);
 	}
 	
-	public void setTime(long time) 
+	public void setTime(int time) 
 	{
-		this.time = time;
+		this.timePassed = time;
 	}
 	
 	public void setLevel(int level) 
 	{
 		this.level = level;
+		firePropertyChange("level", oldLevel, level);
 	}
 	
 	public void setClearedRows(int removedRows) 
 	{
 		this.linesCleared = removedRows;
+		firePropertyChange("lines cleared", oldlinesC, linesCleared);
 	}
 }

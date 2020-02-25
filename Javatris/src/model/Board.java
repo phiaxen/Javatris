@@ -1,5 +1,6 @@
 package model;
 
+import java.io.Serializable;
 import java.util.Arrays;
 
 /**
@@ -15,7 +16,7 @@ import java.util.Arrays;
  * @version 2.0
  */
 
-public class Board implements Cloneable{
+public class Board implements Cloneable, Serializable{
 	
 	private int[][] board; //2D-array of the board (standard: 20x10)
 	

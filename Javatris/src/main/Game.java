@@ -162,6 +162,10 @@ public class Game {
 		loadButton.addActionListener((ActionEvent e) -> {
 			startGame();
 			loadGame();
+			boardView.validate();
+			boardView.repaint();
+			sideInfo.validate();
+			sideInfo.repaint();
 		});
 		
 		onlineButton.setFont(new Font("Arial", Font.BOLD, 40));
@@ -259,6 +263,7 @@ public class Game {
 			gameEngine.setLevel(loadData.getLevel());
 			gameEngine.setTime(loadData.getTime());
 			gameEngine.setClearedRows(loadData.getRemovedRows());
+			
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

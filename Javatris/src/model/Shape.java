@@ -1,5 +1,6 @@
 package model;
 import java.awt.image.BufferedImage;
+import java.io.Serializable;
 import java.util.Arrays;
 
 /**
@@ -9,7 +10,7 @@ import java.util.Arrays;
  */
 
 
-public class Shape implements Cloneable{
+public class Shape implements Cloneable , Serializable{
 
 	private Board board;
 	private int[][] shape;
@@ -108,7 +109,7 @@ public class Shape implements Cloneable{
 		x+= deltaX;
 	}
 	
-	//provisorisk lösning:
+	//provisorisk lï¿½sning:
 	
 	//setters
 	public void collidedY() {
