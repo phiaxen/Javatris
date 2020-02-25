@@ -1,4 +1,6 @@
 package server;
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -11,6 +13,8 @@ import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import javax.swing.*;
+
 public class Server 
 {
  	private static final int port = 6969;
@@ -22,10 +26,28 @@ public class Server
 	//A varaible that is false before the game has started, when both clients are connected it's set to true
 	private static Boolean running = false;
 	
+	private static JFrame frame; 
+	private static JPanel buttonPanel; 
+	private static JButton exitButton;
 	
+
 	
 	public static void main(String[] args) throws IOException 
 	{
+		
+		frame = new JFrame();
+		buttonPanel = new JPanel();
+		exitButton = new JButton("Exit server");
+		exitButton.setPreferredSize(new Dimension(150,50));
+		exitButton.addActionListener((ActionEvent e) -> {System.exit(0);});
+		
+		buttonPanel.add(exitButton);
+		frame.add(buttonPanel);
+		frame.pack();
+		frame.setLocationRelativeTo(null);
+		frame.setVisible(true);
+		
+		
 		
 		sSocket = new ServerSocket(port);
 		BufferedReader keyboard = new BufferedReader(new InputStreamReader(System.in));
