@@ -46,6 +46,7 @@ public class Controller implements KeyEventDispatcher{
 		this.gameEngine = gameEngine;
 		this.musicPlayer = musicPlayer;
 		this.sfxManager = new SfxManager();
+		gameEngine.addPropertyChangeListener(sfxManager);
 	}
 	
 	@Override
@@ -77,7 +78,6 @@ public class Controller implements KeyEventDispatcher{
 			if(key == KeyEvent.VK_ESCAPE) {
 				if(gameEngine.running()) {
 					gameEngine.pause();
-					musicPlayer.stop();
 				}else {
 					gameEngine.resume();
 				}

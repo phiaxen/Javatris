@@ -1,5 +1,7 @@
 package model;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.FileSystems;
@@ -11,7 +13,7 @@ import javax.sound.sampled.FloatControl;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
-public class SfxManager {
+public class SfxManager implements PropertyChangeListener{
 
 	private Clip sfx1;
 	private Clip sfx2;
@@ -47,7 +49,7 @@ public class SfxManager {
 	private void getSound2() {
 		try {
 			Path path = FileSystems.getDefault().getPath("").toAbsolutePath(); 
-			File file2 = new File(path + "\\src\\soundEffects\\sfx2.wav");	
+			File file2 = new File(path + "\\src\\soundEffects\\sfx2.1.wav");	
 			sfx2 = AudioSystem.getClip();         
 			sfx2.open(AudioSystem.getAudioInputStream(file2)); 
 			
@@ -101,5 +103,25 @@ public class SfxManager {
 	public void playSound4() {
 		sfx4.start();
 		getSound4();
+	}
+
+	/**
+	 * Applies property-changes from observed objects
+	 * @param evt : the fired event
+	 */
+	@Override
+	public void propertyChange(PropertyChangeEvent evt) {
+		String property = evt.getPropertyName();
+		if(evt.getOldValue() != null) {
+			if(property.equals("level")) {
+				playSound4();
+			}
+			if(property.equals("lines cleared")) {
+				playSound3();
+			}
+			if(property.equals("collisionY")) {
+				playSound2();
+			}
+		}
 	}
 }

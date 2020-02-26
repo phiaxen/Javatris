@@ -127,6 +127,7 @@ public class Game {
 
 			@Override
 			public void resume() {
+				//resumeGame();
 				closePauseMenu();
 			}
 		};
@@ -225,6 +226,7 @@ private void makeStartMenu() {
 		loadButton.addActionListener((ActionEvent e) -> {
 			startGame();
 			loadGame();
+			gameEngine.fireGameField();
 			gamePanel.validate();
 			gamePanel.repaint();
 		});
@@ -447,10 +449,7 @@ private void makeStartMenu() {
 	 */
 	private void resumeGame() 
 	{
-		musicPlayer.play();
-		gameEngine.resume();
-		pauseMenu.close();
-		
+		gameEngine.resume();	
 	}
 	private void closePauseMenu() {
 		musicPlayer.play();

@@ -166,6 +166,7 @@ public class GameEngine extends AbstractModel implements Runnable{
 	}
 	
 	public void CheckCollisionY() {
+		boolean currentState = currentShape.hasCollidedY();
 		
 		if((currentShape.getY() + 1 + currentShape.getCoords().length > 20)) {
 			currentShape.collidedY();
@@ -180,6 +181,7 @@ public class GameEngine extends AbstractModel implements Runnable{
 				}
 			}
 		}
+		firePropertyChange("collisionY", currentState, currentShape.hasCollidedY());
 	}
 	
 	/*
@@ -303,13 +305,9 @@ public class GameEngine extends AbstractModel implements Runnable{
 	
 	
 	public synchronized void start() {
-		firePropertyChange("shape", oldShape, currentShape);
-		firePropertyChange("next shape", oldShapes, nextShapes);
-		
+		fireGameField();
 		System.out.println("GAME START");
-	
 		running = true;
-		
 		if(!online) 
 		{
 			if(GameStart) {
@@ -465,7 +463,6 @@ public class GameEngine extends AbstractModel implements Runnable{
 	public void setCurrentShape(Shape shape) 
 	{
 		currentShape = shape;
-		firePropertyChange("shape", null, currentShape);
 	}
 	
 	public void setNextShapes(LinkedList<Shape> shapes) 
@@ -475,31 +472,26 @@ public class GameEngine extends AbstractModel implements Runnable{
 		{
 			nextShapes.addFirst(shape);
 		}
-		firePropertyChange("next shape", null, nextShapes);
 	}
 
 	public void setScore(int score) 
 	{
 		this.points = score;
-		firePropertyChange("points", null, points);
 	}
 	
 	public void setTime(int time) 
 	{
 		this.timePassed = time;
-		firePropertyChange("time", null, timePassed);
 	}
 	
 	public void setLevel(int level) 
 	{
 		this.level = level;
-		firePropertyChange("level", null, level);
 	}
 	
 	public void setClearedRows(int removedRows) 
 	{
 		this.linesCleared = removedRows;
-		firePropertyChange("lines cleared", null, linesCleared);
 	}
 	
 	public void restart() {
@@ -511,8 +503,23 @@ public class GameEngine extends AbstractModel implements Runnable{
 		setTime(0);
 		gameOver = false;
 		setFirstShape();
+		fireGameField();
+		resume();
+	}
+	
+	/**
+	 * Forces Listeners to update
+	 */
+	public void fireGameField() {
+		firePropertyChange("shape", null, currentShape);
+		firePropertyChange("next shape", null, nextShapes);
+		firePropertyChange("points", null, points);
+		firePropertyChange("points", null, points);
+		firePropertyChange("time", null, timePassed);
+		firePropertyChange("level", null, level);
+		firePropertyChange("lines cleared", null, linesCleared);
+		firePropertyChange("board", null, board);
 		firePropertyChange("shape", oldShape, currentShape);
 		firePropertyChange("next shape", oldShapes, nextShapes);
-		resume();
 	}
 }
