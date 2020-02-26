@@ -507,9 +507,7 @@ public class GameEngine extends AbstractModel implements Runnable{
 		resume();
 	}
 	
-	/**
-	 * Forces Listeners to update
-	 */
+	
 	public void fireGameField() {
 		firePropertyChange("shape", null, currentShape);
 		firePropertyChange("next shape", null, nextShapes);
