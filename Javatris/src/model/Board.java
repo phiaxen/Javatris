@@ -180,4 +180,15 @@ public class Board implements Cloneable, Serializable{
 	{
 		this.board = board;
 	}
+	
+	/**
+	 * Resets board to init state
+	 */
+	public void resetBoard() {
+		for(int i=0; i<HEIGHT; i++) {
+			for(int j=0; j<WIDTH; j++) {
+				board[i][j] = 0;
+			}
+		}
+	}
 }

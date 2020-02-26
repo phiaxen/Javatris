@@ -43,10 +43,7 @@ public class GameEngine extends AbstractModel implements Runnable{
 	
 	//points and levelup things
 	private int level = 1;
-	private int oldLevel;
 	private int points = 0;
-	private int oldPoints = 0;
-	private int oldlinesC = 0;
 	private int linesToClear = 10;	//how many lines it takes to level up, increase by 5 for each level
 	
 	private int linesCleared = 0;	//how many lines the player has cleared
@@ -74,8 +71,6 @@ public class GameEngine extends AbstractModel implements Runnable{
 		super();
 		this.board = board;
 		this.online = online;
-		oldLevel = 1;
-		oldShape = new Shape(board, 1, new int[][] {{1}});//placeholder for start of game
 		GameTime = new Timer();
 		setFirstShape();
 	}
@@ -107,7 +102,6 @@ public class GameEngine extends AbstractModel implements Runnable{
 				setStaticShapes();
 				
 				int rowsDeleted = 0;
-				int column = 0;
 				int oldlinesC = linesCleared;
 				for(int i=0; i<board.getBoard().length; i++) {
 					if(board.checkFullRow(i)) {
@@ -119,8 +113,7 @@ public class GameEngine extends AbstractModel implements Runnable{
 							}
 					}
 				}
-				
-				
+
 				//uppdaterar score endast om rader har tagits bort
 				if(rowsDeleted > 0) {
 					levelUp();
@@ -129,7 +122,6 @@ public class GameEngine extends AbstractModel implements Runnable{
 					
 					firePropertyChange("points", oldPoints, points);
 					firePropertyChange("lines cleared", oldlinesC, linesCleared);
-					firePropertyChange("level", oldLevel, level);
 				}	
 				SpawnShape();
 			}
@@ -152,7 +144,9 @@ public class GameEngine extends AbstractModel implements Runnable{
 	}
 	
 	public void addRow(int column, int color) {
+		Board oldBoard = board.clone();
 		board.addRow(column, color);
+		firePropertyChange("board", oldBoard, board);
 	}
 	
 	//not bug free
@@ -180,13 +174,9 @@ public class GameEngine extends AbstractModel implements Runnable{
 				for(int j=0; j<currentShape.getCoords()[0].length; j++) {
 					if(currentShape.getCoords()[i][j] != 0) {
 						if(board.getBoard()[currentShape.getY()+i+1][j+currentShape.getX()] != 0) {
-				
 							currentShape.collidedY();
-							
 						}
-						
-					}
-					
+					}	
 				}
 			}
 		}
@@ -199,14 +189,10 @@ public class GameEngine extends AbstractModel implements Runnable{
 		int randomNum = ThreadLocalRandom.current().nextInt(0, shapes.length);
 		currentShape = getShape(randomNum);
 		
-		for(int i = 0; i < 3; i++) {
-			oldShapes.add(i, new Shape(board, 1, new int[][] {{1}})); //used in the start of the game
-		}
-		
 		//When the game starts, fill the list with 3 random shapes
 		for(int i = 0; i < 3; i++) {
 			randomNum = ThreadLocalRandom.current().nextInt(0, shapes.length);
-			nextShapes.add(getShape(randomNum));
+			nextShapes.add(i, getShape(randomNum));
 		}
 	}
 	
@@ -285,9 +271,10 @@ public class GameEngine extends AbstractModel implements Runnable{
 	
 	private void levelUp() {
 		if(linesCleared >= linesToClear) {
-			oldLevel = level;
+			int oldLevel = level;
 			level++;
 			linesToClear = linesToClear + 5;
+			firePropertyChange("level", oldLevel, level);
 		}
 	}
 	
@@ -317,8 +304,8 @@ public class GameEngine extends AbstractModel implements Runnable{
 	
 	public synchronized void start() {
 		firePropertyChange("shape", oldShape, currentShape);
-		
 		firePropertyChange("next shape", oldShapes, nextShapes);
+		
 		System.out.println("GAME START");
 	
 		running = true;
@@ -478,7 +465,7 @@ public class GameEngine extends AbstractModel implements Runnable{
 	public void setCurrentShape(Shape shape) 
 	{
 		currentShape = shape;
-		firePropertyChange("shape", oldShape, currentShape);
+		firePropertyChange("shape", null, currentShape);
 	}
 	
 	public void setNextShapes(LinkedList<Shape> shapes) 
@@ -488,30 +475,44 @@ public class GameEngine extends AbstractModel implements Runnable{
 		{
 			nextShapes.addFirst(shape);
 		}
-		firePropertyChange("next shape", oldShapes, nextShapes);
+		firePropertyChange("next shape", null, nextShapes);
 	}
 
 	public void setScore(int score) 
 	{
 		this.points = score;
-		firePropertyChange("points", oldPoints, points);
+		firePropertyChange("points", null, points);
 	}
 	
 	public void setTime(int time) 
 	{
 		this.timePassed = time;
-		firePropertyChange("time", oldTime, timePassed);
+		firePropertyChange("time", null, timePassed);
 	}
 	
 	public void setLevel(int level) 
 	{
 		this.level = level;
-		firePropertyChange("level", oldLevel, level);
+		firePropertyChange("level", null, level);
 	}
 	
 	public void setClearedRows(int removedRows) 
 	{
 		this.linesCleared = removedRows;
-		firePropertyChange("lines cleared", oldlinesC, linesCleared);
+		firePropertyChange("lines cleared", null, linesCleared);
+	}
+	
+	public void restart() {
+		board.resetBoard();
+		setLevel(1);
+		setScore(0);
+		linesToClear = 10;
+		setClearedRows(0);
+		setTime(0);
+		gameOver = false;
+		setFirstShape();
+		firePropertyChange("shape", oldShape, currentShape);
+		firePropertyChange("next shape", oldShapes, nextShapes);
+		resume();
 	}
 }

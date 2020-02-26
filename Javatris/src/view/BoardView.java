@@ -92,7 +92,7 @@ public class BoardView extends JPanel implements PropertyChangeListener{
 		if(withGrid) {
 			
 			g2.setColor(Color.DARK_GRAY); //set color 
-			g2.setStroke(new BasicStroke(1)); //set thickness
+			g2.setStroke(new BasicStroke(2)); //set thickness
 					
 			//horizontal
 			for(int i = 0; i <= HEIGHT; i++) {

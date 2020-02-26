@@ -128,7 +128,6 @@ public class Game {
 			@Override
 			public void resume() {
 				closePauseMenu();
-				
 			}
 		};
 	}
@@ -367,11 +366,12 @@ private void makeStartMenu() {
 		
 		if(firstGame) {
 			musicPlayer.play();
+			gameEngine.start();
 		}
 		else {
 			musicPlayer.restart();
+			gameEngine.restart();
 		}
-		gameEngine.start();
 		firstGame = false;	
 	}
 	

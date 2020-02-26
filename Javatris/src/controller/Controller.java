@@ -41,14 +41,10 @@ public class Controller implements KeyEventDispatcher{
 	private GameEngine gameEngine;
 	private MusicPlayer musicPlayer; //just for testing
 	private SfxManager sfxManager;
-	private Menu pauseMenu;
-	
-	
 	
 	public Controller(GameEngine gameEngine, MusicPlayer musicPlayer, Menu pauseMenu) {
 		this.gameEngine = gameEngine;
 		this.musicPlayer = musicPlayer;
-		this.pauseMenu = pauseMenu;
 		this.sfxManager = new SfxManager();
 	}
 	
