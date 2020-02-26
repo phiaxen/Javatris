@@ -79,8 +79,7 @@ public class Game {
 	private JPanel gamePanel;
 	private boolean firstGame = true;
 	private StartMenu creditsMenu;
-	
-	private boolean madeGame;
+
 	
 	public Game(JFrame frame) {
 		this.frame = frame;
@@ -193,13 +192,7 @@ private void makeStartMenu() {
 		
 		startMenu = new StartMenu(new Dimension(700,820),0,5,0.25f,0.75f,Color.BLACK);
 		startMenu.addTitle("/images/javatris1.png");
-//		ImageIcon startButtonImage = null;
-//		try {
-//			startButtonImage = new ImageIcon(ImageIO.read(new File("src/images/tiles.png")));
-//		} catch (IOException e1) {
-//			e1.printStackTrace();
-//		}
-		
+
 		JButton startButton = new JButton("PLAY");
 		JButton onlineButton = new JButton("ONLINE");
 		JButton loadButton = new JButton("LOAD");
@@ -314,7 +307,7 @@ private void makeStartMenu() {
 				"\r\n" + 
 				"Tobias Mauritzon\r\n" + 
 				"\r\n");
-		
+		textArea.setEditable(false);
 		creditsMenu.addElementTop(text1);
 		creditsMenu.addElementTop(textArea);
 
@@ -366,8 +359,7 @@ private void makeStartMenu() {
 		gameEngine.addPropertyChangeListener(boardView);
 		gameEngine.addPropertyChangeListener(sideInfo);
 		startMenu.closeMenu();
-		
-//			FixedPanel.remove(startMenu);
+	
 		FixedPanel.add(gamePanel);
 		FixedPanel.validate();
 		FixedPanel.repaint();
@@ -375,13 +367,11 @@ private void makeStartMenu() {
 		
 		if(firstGame) {
 			musicPlayer.play();
-			gameEngine.start();
 		}
 		else {
-		
 			musicPlayer.restart();
-			gameEngine.restart();
 		}
+		gameEngine.start();
 		firstGame = false;	
 	}
 	
@@ -447,7 +437,7 @@ private void makeStartMenu() {
 			gameEngine.addPropertyChangeListener(boardView);
 			gameEngine.addPropertyChangeListener(sideInfo);
 			startMenu.closeMenu();
-			gameEngine.restart();
+			gameEngine.start();
 		}
 
 	}

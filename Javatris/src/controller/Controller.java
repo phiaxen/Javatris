@@ -57,29 +57,29 @@ public class Controller implements KeyEventDispatcher{
 		int key = e.getKeyCode();   
 		
 		if (e.getID() == KeyEvent.KEY_PRESSED) {
-			if((key == KeyEvent.VK_RIGHT)&&!gameEngine.paused()) {	
+			if((key == KeyEvent.VK_RIGHT)&&gameEngine.running()) {	
 				if(!(gameEngine.getCurrentShape().getX() + gameEngine.getCurrentShape().getCoords()[0].length == 10)) {
 					gameEngine.getCurrentShape().setDeltaX(1);
 					sfxManager.playSound1();
 				}
 			}
 			
-			if((key == KeyEvent.VK_LEFT)&&!gameEngine.paused()) {
+			if((key == KeyEvent.VK_LEFT)&&gameEngine.running()) {
 				if(!(gameEngine.getCurrentShape().getX() == 0)){
 					gameEngine.getCurrentShape().setDeltaX(-1);
 					sfxManager.playSound1();
 				}
 			}
 			
-			if((key == KeyEvent.VK_UP)&&!gameEngine.paused()) {
+			if((key == KeyEvent.VK_UP)&&gameEngine.running()) {
 				gameEngine.getCurrentShape().rotate();
 			}
 			
-			if((key == KeyEvent.VK_DOWN)&&!gameEngine.paused()) {
+			if((key == KeyEvent.VK_DOWN)&&gameEngine.running()) {
 				gameEngine.getCurrentShape().fasterSpeedDown();
 			}
 			if(key == KeyEvent.VK_ESCAPE) {
-				if(!gameEngine.paused()) {
+				if(gameEngine.running()) {
 					gameEngine.pause();
 					musicPlayer.stop();
 				}else {
@@ -89,16 +89,16 @@ public class Controller implements KeyEventDispatcher{
 			}
 			
 			//Just for testing
-			if((key == KeyEvent.VK_0)&&!gameEngine.paused()) {
+			if((key == KeyEvent.VK_0)&&gameEngine.running()) {
 				gameEngine.addRow(0,1);
 			}
-			if((key == KeyEvent.VK_W)&&!gameEngine.paused()) {
+			if((key == KeyEvent.VK_W)&&gameEngine.running()) {
 				musicPlayer.incVolume();
 			}
-			if((key == KeyEvent.VK_S)&&!gameEngine.paused()) {
+			if((key == KeyEvent.VK_S)&&gameEngine.running()) {
 				musicPlayer.decVolume();
 			}
-			if((key == KeyEvent.VK_M)&&!gameEngine.paused()) {
+			if((key == KeyEvent.VK_M)&&gameEngine.running()) {
 				musicPlayer.mute();
 			}
 			

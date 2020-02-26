@@ -16,7 +16,8 @@ import java.beans.PropertyChangeEvent;
  * Abstract class to allow subclasses to use PropertyChangeSupport
  * 
  * @author Joachim Antfolk
- * @version 2020-02-20
+ * @version 1.0
+ * @since 2020-02-20
  */
 public abstract class AbstractModel implements PropertyChange{
 

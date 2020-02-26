@@ -4,20 +4,20 @@ import java.io.Serializable;
 import java.util.Arrays;
 
 /**
- * THIS CLASS IS A MODEL
- * Board is a class that creates the 20x10 board in the game.
- * 
- * @author Philip
- * @version 1.0
- * @since 2020-02-15
- * 
- * Added clone and equals methods
+ * Board is a class that creates a 2D-array and has functions that handles all changes to it
+ * @author Philip Axenhamn 
  * @author Joachim Antfolk
- * @version 2.0
+ * @since 2020-02-15
+ * @version 1.0
  */
 
 public class Board implements Cloneable, Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private int[][] board; //2D-array of the board (standard: 20x10)
 	
 	private final int HEIGHT = 20;	//Heigth of the game-board
@@ -102,39 +102,10 @@ public class Board implements Cloneable, Serializable{
 	}
 	
 	/**
-	 * Checks if the board contains a full row, if so, delete the row and return the amount of rows deleted.
-	 * @return rowsDeleted : This returns the amount of rows deleted
+	 * Checks if the board contains a full row, if so, delete the row
+	 * @param row : the row to be checked
+	 * @return deleted : True if a row was deleted, otherwise false
 	 */
-	public int checkFullRows() {
-		
-		int rows = board.length;
-		int cols = board[0].length;
-		int rowsDeleted = 0;
-		boolean fullRow = true;
-		
-		for(int i = 0; i <rows; i++ ) {
-			for(int j = 0; j < cols; j++) { 
-				if(board[i][j] == 0) {
-						
-						fullRow = false;
-				}
-			}
-			
-			if(fullRow) {
-				deleteRow(i);
-//					if(mulitplayer) 
-//					{
-//						client.sendInt(6);
-//					}
-				rowsDeleted++;
-			}
-			
-			fullRow= true;
-		}
-		return rowsDeleted;
-	}
-	
-	//check one row
 	public boolean checkFullRow(int row) {
 		int cols = board[0].length;
 		boolean fullRow = true;
@@ -155,18 +126,10 @@ public class Board implements Cloneable, Serializable{
 	}
 
 	/**
-	 * @return int[][] : This returns the board
+	 * @return board : returns this board
 	 */
 	public int[][] getBoard() {
 		return board;
-	}
-	
-	public void resetBoard() {
-		for(int i=0; i<HEIGHT; i++) {
-			for(int j=0; j<WIDTH; j++) {
-				board[i][j] = 0;
-			}
-		}
 	}
 	
 	/**
@@ -209,7 +172,11 @@ public class Board implements Cloneable, Serializable{
 		return false;
 	}
 	
-	public void setBoard(int board[][]) 
+	/**
+	 * Puts a board on this board
+	 * @param board : the board to be put on this board
+	 */
+	public void setBoard(int[][] board) 
 	{
 		this.board = board;
 	}

@@ -16,15 +16,11 @@ import java.util.LinkedList;
 import java.util.Timer;
 
 /**
- * THIS CLASS IS A MODEL
  * GameEngine is a class that handles all the calculations in the game.
- * 
  * @author Philip
- * @version 1.0
- * 
- * Implemented support for PropertyChange
  * @author Joachim Antfolk
- * @version 2.0
+ * @version 1.0
+ * @since 2020-02-10
  */
 public class GameEngine extends AbstractModel implements Runnable{
 	
@@ -57,7 +53,7 @@ public class GameEngine extends AbstractModel implements Runnable{
 	public Delegate delegate;
 
 	private boolean running = false;
-	private boolean paused = false; 
+	
 	private Thread thread;
 	private final int TICKSPERSECOND = 60;
 	
@@ -84,15 +80,15 @@ public class GameEngine extends AbstractModel implements Runnable{
 		setFirstShape();
 	}
 	
+	
 	TimerTask task = new TimerTask() {
 		public void run() {
-			if(!paused && !gameOver) {
+			if(running && !gameOver) {
 				oldTime = timePassed;
 				timePassed++;
 				firePropertyChange("time", oldTime, timePassed);
 			}
 		}
-		
 	};
 	
 	
@@ -242,9 +238,7 @@ public class GameEngine extends AbstractModel implements Runnable{
 	}
 	
 	public void SpawnShape() {
-
 		currentShape = nextShape();
-//		checkIfGameOver();
 	}
 	
 	private Shape nextShape() {
@@ -272,33 +266,16 @@ public class GameEngine extends AbstractModel implements Runnable{
 		
 		return nextShape;
 	}
-		
-//	public void checkIfGameOver() {
-//		int rows = currentShape.getCoords().length;
-//		int cols =  currentShape.getCoords()[0].length;
-//		int startPos = currentShape.getStartPos();
-//		
-//		for(int i = 0; i < rows; i++){
-//			for(int j = 0; j <cols; j++ ) {
-//				if(board.getBoard()[i][j + startPos] !=0) {
-//					gameOver = true;
-//					System.out.println("GAME OVER =(");
-//				}
-//			}
-//			
-//		}
-//	}
 
 	public void checkIfGameOver(){
 		for(int i = 0; i <10; i++ ) {
 			if(board.getBoard()[0][i] != 0) {
 				gameOver = true;
-				System.out.println("GAME OVER =(");
+				System.out.println("GAME OVER");
 			}
 		}
 	}
 	public void setStaticShapes() {
-	
 		board.setStaticShapeInBoard(currentShape.getCoords(),currentShape.getX(),currentShape.getY(),currentShape.getColor());
 	}
 	
@@ -322,8 +299,8 @@ public class GameEngine extends AbstractModel implements Runnable{
 		return points;
 	}
 	
-	public boolean paused() {
-		return paused;
+	public boolean running() {
+		return running;
 	}
 	
 	private int scoreHandler(int level, int rows) {
@@ -336,27 +313,26 @@ public class GameEngine extends AbstractModel implements Runnable{
 		}
 		
 	}
-
+	
+	
 	public synchronized void start() {
 		firePropertyChange("shape", oldShape, currentShape);
+		
 		firePropertyChange("next shape", oldShapes, nextShapes);
-		
-		if(paused) {
-			resume();
-		}
-		
 		System.out.println("GAME START");
-		/*if(running) {
-			return;
-		}*/
 	
 		running = true;
 		
 		if(!online) 
 		{
-			GameTime.scheduleAtFixedRate(task, 0, 1000);
-			thread = new Thread(this);
-			thread.start(); //start thread
+			if(GameStart) {
+				GameTime.scheduleAtFixedRate(task, 0, 1000);
+				thread = new Thread(this);
+				thread.start(); //start thread
+			}else {
+				thread.notify();
+			}
+			
 		}else {
 			if(this.delegate != null) 
 			{
@@ -375,39 +351,26 @@ public class GameEngine extends AbstractModel implements Runnable{
 	
 	public void pause() {
 		if(!online) {
-			paused = true;
+			running = false;
 			delegate.pause();
 		}
 	}
 	
 	public void resume() {
 		synchronized(thread) {
-			paused = false;
+			running = true;
 			thread.notify();
 			delegate.resume();
 		}
 	}
 
-	public void restart() {
-		System.out.println("paused is: " + paused);
-		resume();
-		board.resetBoard();
-		level = 1;
-		points = 0;
-		linesToClear = 10;
-		linesCleared = 0;
-		timePassed = 0;
-		gameOver = false;
-		setFirstShape();
-		start();
-	
-	}
-	
+	//kan tas bort kanske
 	private synchronized void stop() {
 		if(!running) {
 			return; 
 		} 
 		running = false;
+		
 		try {
 			thread.join();
 		} catch(InterruptedException e) {
@@ -430,7 +393,7 @@ public class GameEngine extends AbstractModel implements Runnable{
 		//gameloop, now the CPU-usage should not rise as much as before =)
 		while(!Thread.interrupted() ) {
 			
-			if(paused) {
+			if(!running) {
 				try {
 					synchronized(thread) {
 						thread.wait();
