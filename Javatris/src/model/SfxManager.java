@@ -113,10 +113,10 @@ public class SfxManager implements PropertyChangeListener{
 	public void propertyChange(PropertyChangeEvent evt) {
 		String property = evt.getPropertyName();
 		if(evt.getOldValue() != null) {
-			if(property.equals("level")) {
+			if(property.equals("level") && (int)evt.getOldValue() != 0) {
 				playSound4();
 			}
-			if(property.equals("lines cleared")) {
+			if(property.equals("lines cleared") && (int)evt.getOldValue() != 0) {
 				playSound3();
 			}
 			if(property.equals("collisionY")) {

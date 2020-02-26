@@ -436,10 +436,7 @@ private void makeStartMenu() {
 			
 			init(adress[0], Integer.parseInt(adress[1]));
 			
-			gameEngine.addPropertyChangeListener(boardView);
-			gameEngine.addPropertyChangeListener(sideInfo);
-			startMenu.closeMenu();
-			gameEngine.start();
+			startGame();
 		}
 
 	}

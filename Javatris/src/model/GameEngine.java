@@ -509,13 +509,11 @@ public class GameEngine extends AbstractModel implements Runnable{
 	
 	
 	public void fireGameField() {
-		firePropertyChange("shape", null, currentShape);
-		firePropertyChange("next shape", null, nextShapes);
-		firePropertyChange("points", null, points);
-		firePropertyChange("points", null, points);
-		firePropertyChange("time", null, timePassed);
-		firePropertyChange("level", null, level);
-		firePropertyChange("lines cleared", null, linesCleared);
+		firePropertyChange("points", 0, points);
+		firePropertyChange("points", 0, points);
+		firePropertyChange("time", 0, timePassed);
+		firePropertyChange("level", 0, level);
+		firePropertyChange("lines cleared", 0, linesCleared);
 		firePropertyChange("board", null, board);
 		firePropertyChange("shape", oldShape, currentShape);
 		firePropertyChange("next shape", oldShapes, nextShapes);
