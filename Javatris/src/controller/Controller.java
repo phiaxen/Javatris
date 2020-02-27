@@ -35,7 +35,6 @@ import view.DialogMenu;
  * @author Philip
  * @version 1.0
  */
-
 public class Controller implements KeyEventDispatcher{
 
 	private GameEngine gameEngine;
