@@ -260,6 +260,7 @@ public class MenuHandler {
 			gameOverMenu.close();
 		
 		game.removeGamePanel();
+		game.setOffline();
 		startMenu.open();
 	}
 

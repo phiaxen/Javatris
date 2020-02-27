@@ -89,7 +89,7 @@ public class GameEngine extends AbstractModel implements Runnable{
 	
 	public void update() {
 		Board oldBoard = board.clone();
-		
+		System.out.println("nu kör jag");
 		checkIfGameOver();
 		if(!gameOver) {
 			time += System.currentTimeMillis() - lastTime;
@@ -330,9 +330,14 @@ public class GameEngine extends AbstractModel implements Runnable{
 	
 	public synchronized void startOnline() 
 	{
-		GameTime.scheduleAtFixedRate(task, 0, 1000);
-		thread = new Thread(this);
-		thread.start();
+		running = true;
+		if(GameStart) {
+			GameTime.scheduleAtFixedRate(task, 0, 1000);
+			thread = new Thread(this);
+			thread.start(); //start thread
+		}else {
+			thread.notify();
+		}
 	}
 	
 	public void pause() {
@@ -497,6 +502,14 @@ public class GameEngine extends AbstractModel implements Runnable{
 	public void setClearedRows(int removedRows) 
 	{
 		this.linesCleared = removedRows;
+	}
+	
+	/**
+	 * Sets the online flag to true or false
+	 * @param online : true for online, false for offline
+	 */
+	public void setOnline(boolean online) {
+		this.online = online;
 	}
 	
 	public void restart() {

@@ -131,11 +131,11 @@ public class Game {
 	}
 	
 	/*
-	 * Initializes the game just like the other Init but also starts a client and connects to the server for an online session.
+	 * Starts a client and connects to the server for an online session.
 	 * @Param ip the ip of the server
 	 * @Param port the port of the server
 	 */
-	private void init(String ip, int port) {
+	private void initClient(String ip, int port) {
 		client = new Client(gameEngine, ip, port);			
 	}
 	
@@ -202,7 +202,7 @@ public class Game {
 		FixedPanel.add(gamePanel);
 		FixedPanel.validate();
 		FixedPanel.repaint();
-		frame.add(FixedPanel);
+		//frame.add(FixedPanel);
 		
 		if(firstGame) {
 			musicPlayer.play();
@@ -269,8 +269,8 @@ public class Game {
 		{
 			String[] adress = code.split(":");
 			
-			init(adress[0], Integer.parseInt(adress[1]));
-			
+			initClient(adress[0], Integer.parseInt(adress[1]));
+			gameEngine.setOnline(true);
 			startGame();
 		}
 
@@ -291,6 +291,13 @@ public class Game {
 		FixedPanel.remove(gamePanel);
 		FixedPanel.validate();
 		FixedPanel.repaint();
+	}
+	
+	/**
+	 * Returns the game Engine to offline state
+	 */
+	public void setOffline(){
+		gameEngine.setOnline(false);
 	}
 	
 }
