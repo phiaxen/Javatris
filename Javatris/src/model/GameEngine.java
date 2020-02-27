@@ -89,7 +89,6 @@ public class GameEngine extends AbstractModel implements Runnable{
 	
 	public void update() {
 		Board oldBoard = board.clone();
-		System.out.println("nu kör jag");
 		checkIfGameOver();
 		if(!gameOver) {
 			time += System.currentTimeMillis() - lastTime;
@@ -308,9 +307,10 @@ public class GameEngine extends AbstractModel implements Runnable{
 	public synchronized void start() {
 		fireGameField();
 		System.out.println("GAME START");
-		running = true;
+		
 		if(!online) 
 		{
+			running = true;
 			if(GameStart) {
 				GameTime.scheduleAtFixedRate(task, 0, 1000);
 				thread = new Thread(this);

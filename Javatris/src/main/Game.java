@@ -3,43 +3,12 @@ package main;
 import server.*;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.KeyboardFocusManager;
-import java.awt.Toolkit;
-import java.awt.Window;
-import java.awt.Dialog.ModalityType;
-import java.awt.event.ActionEvent;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.FileSystems;
-import java.nio.file.Path;
-
 import javax.imageio.IIOException;
-import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.JTextPane;
-import javax.swing.RootPaneContainer;
-import javax.swing.SwingConstants;
-import javax.swing.SwingUtilities;
-import javax.swing.border.AbstractBorder;
-import javax.swing.border.EmptyBorder;
-import javax.swing.text.SimpleAttributeSet;
-import javax.swing.text.StyleConstants;
-import javax.swing.text.StyledDocument;
-
 import model.*;
 import view.*;
 import controller.*;
@@ -59,13 +28,8 @@ public class Game {
 	private final  int BLOCKSIZE = 40; //resize game <=40 (standard is 40)
 	private final  int BOARDWIDTH = 10;
 	private final  int BOARDHEIGHT = 20;
-	
 	private final JFrame frame;
-	private int FrameWidth = 0;
-	private int FrameHeight = 0;
-	
 	private JPanel FixedPanel;
-	
 	private Board board;
 	private BoardView boardView;
 	private GameEngine gameEngine; 
@@ -75,7 +39,6 @@ public class Game {
 	private MusicPlayer musicPlayer;
 	private JPanel gamePanel;
 	private boolean firstGame = true;
-
 	private MenuHandler menuHandler;
 	
 	public Game(JFrame frame) {
