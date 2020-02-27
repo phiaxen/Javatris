@@ -132,14 +132,14 @@ public class Menu extends JPanel{
 	/**
 	 * Opens the menu
 	 */
-	public void openMenu() {
+	public void open() {
 		this.setVisible(true);
 	}
 	
 	/**
 	 * Closes the menu
 	 */
-	public void closeMenu() {
+	public void close() {
 		this.setVisible(false);
 	}	
 	

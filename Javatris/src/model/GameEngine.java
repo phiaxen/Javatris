@@ -31,7 +31,6 @@ public class GameEngine extends AbstractModel implements Runnable{
 	public interface Delegate {
 		Client getClient();
 		void pause();
-		void resume();
 		void gameOver();
 	}
 
@@ -347,7 +346,6 @@ public class GameEngine extends AbstractModel implements Runnable{
 		synchronized(thread) {
 			running = true;
 			thread.notify();
-			delegate.resume();
 		}
 	}
 	

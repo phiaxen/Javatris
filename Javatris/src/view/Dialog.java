@@ -39,7 +39,7 @@ public class Dialog {
 	private final int buttons;
 	private final int buttonsTextSize;
 	private final int titleSize;
-	
+	private JDialog dialog;
 	/**
 	 * Creates a dialog panel
 	 * @param com : the component to which the dialog box should be attached to
@@ -102,7 +102,8 @@ public class Dialog {
 		Window winn = SwingUtilities.getWindowAncestor(panel);
 		winn.dispose();
 	}
- 
+	
+	
 	public void addButton(JButton button) {
 		modifyButton(button);
 		buttonsPane.add(button);
@@ -144,13 +145,13 @@ public class Dialog {
      	darkPane.setVisible(true);  
      	
      	//make a JDialog containing the panel made in this class(panel) with the dark pane
-     	JDialog dialog = new JDialog((Window)window, "", ModalityType.APPLICATION_MODAL);
+     	dialog = new JDialog((Window)window, "", ModalityType.APPLICATION_MODAL);
      	dialog.getContentPane().add(panel); 
      	dialog.setUndecorated(true); // remove borders
      	dialog.pack(); 
      	dialog.setLocationRelativeTo((Window)window); //center dialog on panel
      	dialog.setVisible(true); 
-     	darkPane.setVisible(false);
+     	darkPane.setVisible(false); 	
 	}
 
 }

@@ -73,28 +73,24 @@ public class Game {
 	private SideInfo sideInfo;
 	private Client client;
 	private MusicPlayer musicPlayer;
-	private SfxManager sfxManager;
-	private Menu startMenu;
-	private Dialog pauseMenu;
-	private Dialog gameOverMenu;
 	private JPanel gamePanel;
 	private boolean firstGame = true;
-	private Menu creditsMenu;
 
+	private MenuHandler menuHandler;
 	
 	public Game(JFrame frame) {
 		this.frame = frame;
+		
 //		ResizeFrame();
 		init();
-		makeStartMenu();
-		
 		SetUpFrame();
+		menuHandler = new MenuHandler(this, frame, FixedPanel);
+		menuHandler.openStartMenu();
 	}
 	
 	public static void main(String[] args) {
 		new Game(new JFrame("JavaTris"));
 	}
-	
 	
 	/*
 	 * Initializes the game and creates all the nececcary components that are needed
@@ -105,7 +101,7 @@ public class Game {
 		board = new Board();
 		boardView = new BoardView(BOARDHEIGHT, BOARDWIDTH, BLOCKSIZE, true);
 		gameEngine = new GameEngine(board, false);
-		controller = new Controller(gameEngine, musicPlayer, pauseMenu);
+		controller = new Controller(gameEngine, musicPlayer);
 		sideInfo = new SideInfo();
 		
 		KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
@@ -123,19 +119,13 @@ public class Game {
 			public void pause()
 			{
 				musicPlayer.stop();
-				makePauseMenu();
+				openPauseMenu();
 			}
 
 			@Override
-			public void resume() {
-				//resumeGame();
-				closePauseMenu();
-			}
-			
-			@Override
 			public void gameOver() {
 				musicPlayer.stop();
-				makeGameOverMenu();
+				openGameOverMenu();
 			}
 		};
 	}
@@ -168,8 +158,6 @@ public class Game {
 		FixedPanel.setPreferredSize(frame.getSize());
 		FixedPanel.setBackground(Color.BLACK);
 		
-		FixedPanel.add(startMenu);
-		
 		frame.add(FixedPanel);
 		
 //		frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
@@ -184,6 +172,14 @@ public class Game {
 
 	}
 	
+	private void openPauseMenu() {
+		menuHandler.openPauseMenu();
+	}
+	
+	private void openGameOverMenu() {
+		menuHandler.openGameOverMenu();
+	}
+	
 	//Temporary solution with getters
 	public int getBoardWidth() {
 		return BOARDWIDTH;
@@ -196,201 +192,12 @@ public class Game {
 	}
 	
 	
-	private void makeStartMenu() {
-		
-		startMenu = new Menu(new Dimension(700,820),0,5,0.25f,0.75f,Color.BLACK);
-		startMenu.addTitle("/images/javatris1.png");
-
-		JButton startButton = new JButton("PLAY");
-		JButton onlineButton = new JButton("ONLINE");
-		JButton loadButton = new JButton("LOAD");
-		JButton exitButton = new JButton("EXIT");
-		JButton credits = new JButton("CREDITS");
-
-		
-		String font = "Arial";
-		startButton.setFont(new Font(font, Font.BOLD, 90));
-		startButton.setForeground(Color.WHITE);
-		startButton.setBackground(Color.BLACK);
-		startButton.setBorderPainted(false);
-		startButton.setFocusPainted(false); 
-		startButton.addActionListener((ActionEvent e) -> {
-			startGame();
-		});
-		
-		
-		onlineButton.setFont(new Font(font, Font.BOLD, 50));
-		onlineButton.setForeground(Color.WHITE);
-		onlineButton.setBackground(Color.BLACK);
-		onlineButton.setBorderPainted(false);
-		onlineButton.setFocusPainted(false); 
-		onlineButton.addActionListener((ActionEvent e) -> {
-			startOnlineGame();
-		});
-		
-		loadButton.setFont(new Font(font, Font.BOLD, 50));
-		loadButton.setForeground(Color.WHITE);
-		loadButton.setBackground(Color.BLACK);
-		loadButton.setBorderPainted(false);
-		loadButton.setFocusPainted(false); 
-		loadButton.addActionListener((ActionEvent e) -> {
-			startGame();
-			loadGame();
-			gameEngine.fireGameField();
-			gamePanel.validate();
-			gamePanel.repaint();
-		});
-		
-		
-		exitButton.setFont(new Font(font, Font.BOLD, 40));
-		exitButton.setForeground(Color.WHITE);
-		exitButton.setBackground(Color.BLACK);
-		exitButton.setBorderPainted(false);
-		exitButton.setFocusPainted(false); 
-		exitButton.addActionListener((ActionEvent e) -> {
-			System.exit(0);
-		});
-		
-		
-		
-		credits.setFont(new Font(font, Font.ITALIC, 20));
-		credits.setForeground(Color.GRAY);
-		credits.setBackground(Color.BLACK);
-		credits.setBorderPainted(false);
-		credits.setFocusPainted(false); 
-		credits.addActionListener((ActionEvent e) -> {
-			rollCredits();
-		});
-		
-		
-		startMenu.addElementBot(startButton); 
-		startMenu.addElementBot(onlineButton); 
-		startMenu.addElementBot(loadButton);
-		startMenu.addElementBot(exitButton);
-		startMenu.addElementBot(credits);
-		startMenu.openMenu();
-	}
-
-	/**
-	 * Rolls Credits
-	 */
-	private void rollCredits() {
-		startMenu.closeMenu();
-		makeCreditsMenu();
-		FixedPanel.add(creditsMenu);
-	}
-	/**
-	 * Makes the Credits screen
-	 */
-	private void makeCreditsMenu() {
-		creditsMenu = new Menu(new Dimension(700,820),2,1,0.8f,0.2f,Color.GREEN);
-		
-		JButton back = new JButton("Back");
-		back.setFont(new Font("Arial", Font.BOLD, 20));
-		back.setForeground(Color.WHITE);
-		back.setBackground(Color.BLACK);
-		back.setBorderPainted(false);
-		back.setFocusPainted(false); 
-		back.addActionListener((ActionEvent e) -> {
-			toMainMenu();
-		});
-		
-		JLabel text1 = new JLabel("CREATED BY",SwingConstants.CENTER);
-		text1.setForeground(Color.white);
-		text1.setFont(new Font("Arial", Font.BOLD, 50));
-	
-		
-		JTextPane textArea = new JTextPane();
-		textArea.setBackground(Color.BLACK);
-		textArea.setForeground(Color.WHITE);
-	
-		StyledDocument doc = textArea.getStyledDocument();
-		SimpleAttributeSet center = new SimpleAttributeSet();
-		StyleConstants.setAlignment(center, StyleConstants.ALIGN_CENTER);
-		doc.setParagraphAttributes(0, doc.getLength(), center, false);
-		
-		textArea.setFont(new Font("Arial", Font.PLAIN, 30));
-		textArea.setText("Joachim Antfolk\r\n" + 
-				"\r\n" + 
-				"Philip Axenhamn\r\n" + 
-				"\r\n" + 
-				"Andreas Greppe\r\n" + 
-				"\r\n" + 
-				"Tobias Mauritzon\r\n" + 
-				"\r\n");
-		textArea.setEditable(false);
-		creditsMenu.addElementTop(text1);
-		creditsMenu.addElementTop(textArea);
-		creditsMenu.addElementBot(back); 
-		creditsMenu.openMenu();
-	}
-	
-	/*
-	 * Creates a pause Menu
-	 */
-	private void makePauseMenu()
-	{
-		int menuWidth = 200;
-		int menuHeigth = 250;
-		int textSize = menuWidth/10;
-		
-		pauseMenu = new Dialog(FixedPanel,new Dimension(menuWidth,menuHeigth),3,5,textSize, "PAUSE",40);
- 		JButton resumeButton = new JButton("Resume");
- 		JButton saveButton = new JButton("Save");
- 		JButton exitButton = new JButton("Main Menu");
- 		
- 		
- 		resumeButton.addActionListener((ActionEvent e) -> {
- 			resumeGame();
- 		});
- 		
- 		saveButton.addActionListener((ActionEvent e) -> {
- 			saveGame();
- 		});
- 		
- 		exitButton.addActionListener((ActionEvent e) -> {
- 			toMainMenu();
- 		});
- 		
- 		pauseMenu.addButton(resumeButton); 
- 		pauseMenu.addButton(saveButton); 
- 		pauseMenu.addButton(exitButton); 
-		
- 		pauseMenu.pack();	
- 	
-	}
-	
-	private void makeGameOverMenu() {
-		int menuWidth = 300;
-		int menuHeigth = 200;
-		int textSize = 20;
-		
-		gameOverMenu = new Dialog(FixedPanel,new Dimension(menuWidth,menuHeigth),2,5,textSize,"GAME OVER",40);
-		JButton mainMenuButton = new JButton("Main Menu");
-		JButton exitButton = new JButton("Exit");
-		
-		
-		mainMenuButton.addActionListener((ActionEvent e) -> {
- 			toMainMenu();
- 		});
-		
-	
-		exitButton.addActionListener((ActionEvent e) -> {
-			System.exit(0);
-		});
-		
- 		gameOverMenu.addButton(mainMenuButton); 
- 		gameOverMenu.addButton(exitButton); 
- 		gameOverMenu.pack();	
-	}
-	
 	/**
 	 * Starts game
 	 */
-	private void startGame() {		
+	public void startGame() {		
 		gameEngine.addPropertyChangeListener(boardView);
 		gameEngine.addPropertyChangeListener(sideInfo);
-		startMenu.closeMenu();
 	
 		FixedPanel.add(gamePanel);
 		FixedPanel.validate();
@@ -408,7 +215,7 @@ public class Game {
 		firstGame = false;	
 	}
 	
-	private void loadGame() 
+	public void loadGame() 
 	{
 		try {
 			Savedata loadData = (Savedata) SaveManager.loadFile("saveFile.Save");
@@ -423,9 +230,12 @@ public class Game {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		gameEngine.fireGameField();
+		gamePanel.validate();
+		gamePanel.repaint();
 	}
 	
-	private void saveGame() 
+	public void saveGame() 
 	{
 		Savedata saveData = new Savedata();
 		saveData.setBoard(board.getBoard());
@@ -451,14 +261,8 @@ public class Game {
 	 * It should be inputed like this: 127.0.0.1:2525
 	 * in other words ip:port
 	 */
-	private void startOnlineGame() {
-		String code = JOptionPane.showInputDialog
-		(
-	        frame, 
-	        "Enter the server ip and port, (IP:PORT)", 
-	        "Connect to server", 
-	        JOptionPane.PLAIN_MESSAGE
-		 );
+	public void startOnlineGame() {
+		String code = menuHandler.showOnlineDialog();
 		
 		//Only starts if
 		if(code != null&&!code.isBlank() && !code.isEmpty()) 
@@ -475,37 +279,18 @@ public class Game {
 	/*
 	 * Resumes the paused game 
 	 */
-	private void resumeGame() 
-	{
-		gameEngine.resume();	
-	}
-	private void closePauseMenu() {
+	public void resumeGame() {
 		musicPlayer.play();
-		if(pauseMenu !=null)
-		pauseMenu.close();
+		gameEngine.resume();	
 	}
 	
 	/*
 	 * Exits the current game and goes to the main menu
 	 */
-	private void toMainMenu() 
-	{	
-		if(pauseMenu !=null)
-			pauseMenu.close();
-		if(creditsMenu !=null)
-			creditsMenu.closeMenu();
-		if(gameOverMenu !=null)
-			gameOverMenu.close();
-		
+	public void removeGamePanel() {	
 		FixedPanel.remove(gamePanel);
-		
 		FixedPanel.validate();
 		FixedPanel.repaint();
-		
-		FixedPanel.add(startMenu);
-		startMenu.openMenu();
-		System.out.println("exit pause menu");
-		
 	}
 	
 }
