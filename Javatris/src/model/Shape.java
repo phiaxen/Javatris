@@ -12,10 +12,11 @@ import java.util.Arrays;
 
 public class Shape implements Cloneable , Serializable{
 
+	private static final long serialVersionUID = 2L;
 	private Board board;
 	private int[][] shape;
 	private int x,y;
-	public int currentSpeed,normalSpeed = 600, fastSpeed = 60;
+	public int currentSpeed,normalSpeed = 700, fastSpeed = 40;
 	private int deltaX = 0;
 	private final int startPos = 4;
 
@@ -34,7 +35,6 @@ public class Shape implements Cloneable , Serializable{
 		this.shape = positions;
 		x = startPos;
 		currentSpeed = normalSpeed;
-		
 	}
 	
 
@@ -136,7 +136,10 @@ public class Shape implements Cloneable , Serializable{
 		currentSpeed = normalSpeed;
 	}
 	
-	
+	public void changeNormalSpeed(int speed) {
+		currentSpeed = speed;
+		normalSpeed = speed;
+	}
 	//getters
 	public int getX() {
 		return x;
