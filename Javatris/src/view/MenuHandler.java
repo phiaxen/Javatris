@@ -134,6 +134,10 @@ public class MenuHandler {
 		fixedPanel.repaint();
 	}
 	
+	public void closeStartMenu() {
+		startMenu.close();
+		
+	}
 	public void closePauseMenu() {
 		pauseMenu.close();
 	}

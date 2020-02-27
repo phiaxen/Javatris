@@ -199,6 +199,7 @@ public class Game {
 		gameEngine.addPropertyChangeListener(boardView);
 		gameEngine.addPropertyChangeListener(sideInfo);
 	
+		menuHandler.closeStartMenu();
 		FixedPanel.add(gamePanel);
 		FixedPanel.validate();
 		FixedPanel.repaint();
