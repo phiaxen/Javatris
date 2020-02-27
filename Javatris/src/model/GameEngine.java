@@ -251,14 +251,13 @@ public class GameEngine extends AbstractModel implements Runnable{
 	}	
 	
 	private void levelUp() {
-		linesToClear = 0;
 		if(linesCleared >= linesToClear) {
 			int oldLevel = level;
 			level++;
 			linesToClear += 5;
 			firePropertyChange("level", oldLevel, level);
 			if(speedDown > 100) {
-				speedDown = 100;
+				speedDown -= 20;
 			}
 		}
 	}
