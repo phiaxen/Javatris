@@ -34,8 +34,8 @@ public class GameEngine extends AbstractModel implements Runnable{
 		void gameOver();
 	}
 
-	private static Shape currentShape;	//The shape that is currently in action
-	private static Shape oldShape;
+	private Shape currentShape;	//The shape that is currently in action
+	private Shape oldShape;
 	private Shape shapes[] = new Shape[7];	//An array that contains 7 different shapes
 	private Board board;	
 	private Client client;
@@ -180,11 +180,28 @@ public class GameEngine extends AbstractModel implements Runnable{
 	public void setFirstShape() {
 		int randomNum = ThreadLocalRandom.current().nextInt(0, shapes.length);
 		currentShape = getShape(randomNum);
-		//When the game starts, fill the list with 3 random shapes
+		
 		for(int i = 0; i < 3; i++) {
 			randomNum = ThreadLocalRandom.current().nextInt(0, shapes.length);
 			nextShapes.add(i, getShape(randomNum));
 		}
+	}
+	
+	private Shape nextShape() {
+		Shape nextShape;
+		
+		nextShape = nextShapes.pollFirst();
+		int randomNum = ThreadLocalRandom.current().nextInt(0, shapes.length);
+		nextShapes.addLast(getShape(randomNum));
+
+		firePropertyChange("next shape", oldShapes, nextShapes);
+	
+		return nextShape;
+	}
+	
+	public void SpawnShape() {
+		currentShape = nextShape();
+		currentShape.changeNormalSpeed(speedDown);
 	}
 	
 	private Shape getShape(int shape) {
@@ -206,29 +223,14 @@ public class GameEngine extends AbstractModel implements Runnable{
 		case 5: return new Shape(board,7,new int[][] {
 			{1,1,1},
 			{0,1,0}}); //T
-		case 6: return shapes[6]= new Shape(board,8,new int[][] {
+		case 6: return new Shape(board,8,new int[][] {
 			{1,1},
 			{1,1}}); //Box 
 		default: return null;
 		}	
 	}
 	
-	public void SpawnShape() {
-		currentShape = nextShape();
-	}
 	
-	private Shape nextShape() {
-		Shape nextShape;
-		
-		nextShape = nextShapes.pollFirst();
-		int randomNum = ThreadLocalRandom.current().nextInt(0, shapes.length);
-		nextShapes.addLast(getShape(randomNum));
-
-		firePropertyChange("next shape", oldShapes, nextShapes);
-		
-		nextShape.changeNormalSpeed(speedDown);
-		return nextShape;
-	}
 
 	public void checkIfGameOver(){
 		for(int i = 0; i <10; i++ ) {
@@ -256,8 +258,8 @@ public class GameEngine extends AbstractModel implements Runnable{
 			level++;
 			linesToClear += 5;
 			firePropertyChange("level", oldLevel, level);
-			if(speedDown > 100) {
-				speedDown -= 20;
+			if(speedDown > 120) {
+				speedDown = 700-20*(level-1);
 			}
 		}
 	}
@@ -318,7 +320,7 @@ public class GameEngine extends AbstractModel implements Runnable{
 			thread = new Thread(this);
 			thread.start(); //start thread
 		}else {
-			thread.notify();
+			resume();
 		}
 	}
 	
@@ -404,6 +406,7 @@ public class GameEngine extends AbstractModel implements Runnable{
 		checkIfGameOver();
 		if(!gameOver)
 		update();
+		
 		
 	}
 	
