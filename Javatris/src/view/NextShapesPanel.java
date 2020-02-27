@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.util.LinkedList;
 
 import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
@@ -33,6 +34,7 @@ public class NextShapesPanel extends JPanel{
 		this.setLayout(new GridLayout(4,18,1,1));
 		this.setBackground(Color.black);
 		this.setBorder(new EmptyBorder(1, 1, 1, 1));
+		this.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY,2));
 	}
 	
 	private void loadImages() {

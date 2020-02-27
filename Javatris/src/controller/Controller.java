@@ -24,7 +24,7 @@ import javax.swing.SwingUtilities;
 import main.Game;
 import model.*;
 
-import view.Menu;
+import view.Dialog;
 
 
 /**
@@ -42,7 +42,7 @@ public class Controller implements KeyEventDispatcher{
 	private MusicPlayer musicPlayer; //just for testing
 	private SfxManager sfxManager;
 	
-	public Controller(GameEngine gameEngine, MusicPlayer musicPlayer, Menu pauseMenu) {
+	public Controller(GameEngine gameEngine, MusicPlayer musicPlayer, Dialog pauseMenu) {
 		this.gameEngine = gameEngine;
 		this.musicPlayer = musicPlayer;
 		this.sfxManager = new SfxManager();
@@ -53,29 +53,30 @@ public class Controller implements KeyEventDispatcher{
     public boolean dispatchKeyEvent(KeyEvent e) {
 		int key = e.getKeyCode();   
 		
-		if (e.getID() == KeyEvent.KEY_PRESSED) {
-			if((key == KeyEvent.VK_RIGHT)&&gameEngine.running()) {	
+		if ((e.getID() == KeyEvent.KEY_PRESSED)&&gameEngine.running()) {
+			if((key == KeyEvent.VK_RIGHT)) {	
 				if(!(gameEngine.getCurrentShape().getX() + gameEngine.getCurrentShape().getCoords()[0].length == 10)) {
 					gameEngine.getCurrentShape().setDeltaX(1);
 					sfxManager.playSound1();
 				}
 			}
 			
-			if((key == KeyEvent.VK_LEFT)&&gameEngine.running()) {
+			if((key == KeyEvent.VK_LEFT)) {
 				if(!(gameEngine.getCurrentShape().getX() == 0)){
 					gameEngine.getCurrentShape().setDeltaX(-1);
 					sfxManager.playSound1();
 				}
 			}
 			
-			if((key == KeyEvent.VK_UP)&&gameEngine.running()) {
+			if((key == KeyEvent.VK_UP)) {
 				gameEngine.getCurrentShape().rotate();
 			}
 			
-			if((key == KeyEvent.VK_DOWN)&&gameEngine.running()) {
+			if((key == KeyEvent.VK_DOWN)) {
 				gameEngine.getCurrentShape().fasterSpeedDown();
 			}
 			if(key == KeyEvent.VK_ESCAPE) {
+				
 				if(gameEngine.running()) {
 					gameEngine.pause();
 				}else {
@@ -85,16 +86,16 @@ public class Controller implements KeyEventDispatcher{
 			}
 			
 			//Just for testing
-			if((key == KeyEvent.VK_0)&&gameEngine.running()) {
+			if((key == KeyEvent.VK_0)) {
 				gameEngine.addRow(0,1);
 			}
-			if((key == KeyEvent.VK_W)&&gameEngine.running()) {
+			if((key == KeyEvent.VK_W)) {
 				musicPlayer.incVolume();
 			}
-			if((key == KeyEvent.VK_S)&&gameEngine.running()) {
+			if((key == KeyEvent.VK_S)) {
 				musicPlayer.decVolume();
 			}
-			if((key == KeyEvent.VK_M)&&gameEngine.running()) {
+			if((key == KeyEvent.VK_M)) {
 				musicPlayer.mute();
 			}
 			

@@ -52,23 +52,28 @@ public class SideInfo extends JPanel implements PropertyChangeListener{
 		this.setBorder(new EmptyBorder(20, 20, 20, 20));
 	
 		//this.setBackground(Color.LIGHT_GRAY);
-		this.setBackground(Color.LIGHT_GRAY);
+		this.setBackground(Color.DARK_GRAY);
 		this.setPreferredSize(new Dimension(280,800));
 		this.setLayout(box);
 		
 		scoreText = new JLabel("SCORE: 0");
+		scoreText.setForeground(Color.LIGHT_GRAY);
 		scoreText.setFont(new Font("Arial", Font.BOLD, 30));
 		
 		timeLabel = new JLabel("TIME: 0");
+		timeLabel.setForeground(Color.LIGHT_GRAY);
 		timeLabel.setFont(new Font("Arial",Font.PLAIN, 30));
 		
 		linesLabel = new JLabel("Lines: " + rowsRemoved);
+		linesLabel.setForeground(Color.LIGHT_GRAY);
 		linesLabel.setFont(new Font("Arial",Font.PLAIN, 30));
 		
 		levelLabel = new JLabel("Level: " + level);
+		levelLabel.setForeground(Color.LIGHT_GRAY);
 		levelLabel.setFont(new Font("Arial",Font.PLAIN, 30));
 		
 		nextLabel = new JLabel("NEXT SHAPE");
+		nextLabel.setForeground(Color.LIGHT_GRAY);
 		nextLabel.setFont(new Font("Arial", Font.PLAIN, 30));	
 		nextLabel.setBorder(new EmptyBorder(40, 30, 10, 10));
 		
@@ -88,7 +93,9 @@ public class SideInfo extends JPanel implements PropertyChangeListener{
 	
 	//Uppdaterar score när den kallas utifrån
 	public void updateScore(int score) {
+		System.out.println("SCOR IS: " + score);
 		this.scoreText.setText("SCORE: " + score);
+		
 		scoreText.repaint();
 	}
 	
@@ -145,6 +152,7 @@ public class SideInfo extends JPanel implements PropertyChangeListener{
 	 * Handles updating next-shape sequence after update in GameEngine
 	 * @param evt : event triggering update
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
 		String property = evt.getPropertyName();

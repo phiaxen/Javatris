@@ -61,6 +61,7 @@ public class MusicPlayer {
 	}
 	
 	public void play() {
+		System.out.println("PLAY SONG");
 		audioClip.loop(Clip.LOOP_CONTINUOUSLY);  
 	}
 	/*	borde kanske slå ihop denna med playMusic men det verkade jobbigare
@@ -94,6 +95,7 @@ public class MusicPlayer {
 	}
 	
 	public void stop() {
+		System.out.println("STOP SONG");
 		if(fileLoaded) {
 			this.restart = false;
 			try {

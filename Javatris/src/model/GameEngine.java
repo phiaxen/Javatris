@@ -32,6 +32,7 @@ public class GameEngine extends AbstractModel implements Runnable{
 		Client getClient();
 		void pause();
 		void resume();
+		void gameOver();
 	}
 
 	private static Shape currentShape;	//The shape that is currently in action
@@ -140,6 +141,8 @@ public class GameEngine extends AbstractModel implements Runnable{
 			currentShape.setDeltaX(0);
 			
 			firePropertyChange("board", oldBoard, board);
+		}else {
+			gameOver();
 		}
 	}
 	
@@ -259,7 +262,6 @@ public class GameEngine extends AbstractModel implements Runnable{
 		for(int i = 0; i <10; i++ ) {
 			if(board.getBoard()[0][i] != 0) {
 				gameOver = true;
-				System.out.println("GAME OVER");
 			}
 		}
 	}
@@ -347,6 +349,11 @@ public class GameEngine extends AbstractModel implements Runnable{
 			thread.notify();
 			delegate.resume();
 		}
+	}
+	
+	public void gameOver() {
+		running = false;
+		delegate.gameOver();
 	}
 
 	//kan tas bort kanske
@@ -509,11 +516,10 @@ public class GameEngine extends AbstractModel implements Runnable{
 	
 	
 	public void fireGameField() {
-		firePropertyChange("points", 0, points);
-		firePropertyChange("points", 0, points);
-		firePropertyChange("time", 0, timePassed);
-		firePropertyChange("level", 0, level);
-		firePropertyChange("lines cleared", 0, linesCleared);
+		firePropertyChange("points", null, points);
+		firePropertyChange("time", null, timePassed);
+		firePropertyChange("level", null, level);
+		firePropertyChange("lines cleared", null, linesCleared);
 		firePropertyChange("board", null, board);
 		firePropertyChange("shape", oldShape, currentShape);
 		firePropertyChange("next shape", oldShapes, nextShapes);

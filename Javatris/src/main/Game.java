@@ -74,11 +74,12 @@ public class Game {
 	private Client client;
 	private MusicPlayer musicPlayer;
 	private SfxManager sfxManager;
-	private StartMenu startMenu;
-	private Menu pauseMenu;
+	private Menu startMenu;
+	private Dialog pauseMenu;
+	private Dialog gameOverMenu;
 	private JPanel gamePanel;
 	private boolean firstGame = true;
-	private StartMenu creditsMenu;
+	private Menu creditsMenu;
 
 	
 	public Game(JFrame frame) {
@@ -130,6 +131,12 @@ public class Game {
 				//resumeGame();
 				closePauseMenu();
 			}
+			
+			@Override
+			public void gameOver() {
+				musicPlayer.stop();
+				makeGameOverMenu();
+			}
 		};
 	}
 	
@@ -151,8 +158,8 @@ public class Game {
 		
 		gamePanel = new JPanel();
 		gamePanel.setLayout(new GridBagLayout());
-		gamePanel.setPreferredSize(new Dimension(700,820));
-		gamePanel.setBorder(BorderFactory.createLineBorder(Color.GRAY,10));
+		gamePanel.setPreferredSize(new Dimension(684,804));
+		gamePanel.setBorder(BorderFactory.createLineBorder(Color.GRAY,2));
 		gamePanel.add(sideInfo);
 		gamePanel.add(boardView);
 		
@@ -165,8 +172,9 @@ public class Game {
 		
 		frame.add(FixedPanel);
 		
-		frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
-		frame.setUndecorated(true);
+//		frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+//		frame.setUndecorated(true);
+		
 		frame.setResizable(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	
@@ -188,9 +196,9 @@ public class Game {
 	}
 	
 	
-private void makeStartMenu() {
+	private void makeStartMenu() {
 		
-		startMenu = new StartMenu(new Dimension(700,820),0,5,0.25f,0.75f,Color.BLACK);
+		startMenu = new Menu(new Dimension(700,820),0,5,0.25f,0.75f,Color.BLACK);
 		startMenu.addTitle("/images/javatris1.png");
 
 		JButton startButton = new JButton("PLAY");
@@ -198,8 +206,10 @@ private void makeStartMenu() {
 		JButton loadButton = new JButton("LOAD");
 		JButton exitButton = new JButton("EXIT");
 		JButton credits = new JButton("CREDITS");
+
 		
-		startButton.setFont(new Font("Arial", Font.BOLD, 90));
+		String font = "Arial";
+		startButton.setFont(new Font(font, Font.BOLD, 90));
 		startButton.setForeground(Color.WHITE);
 		startButton.setBackground(Color.BLACK);
 		startButton.setBorderPainted(false);
@@ -209,7 +219,7 @@ private void makeStartMenu() {
 		});
 		
 		
-		onlineButton.setFont(new Font("Arial", Font.BOLD, 50));
+		onlineButton.setFont(new Font(font, Font.BOLD, 50));
 		onlineButton.setForeground(Color.WHITE);
 		onlineButton.setBackground(Color.BLACK);
 		onlineButton.setBorderPainted(false);
@@ -218,7 +228,7 @@ private void makeStartMenu() {
 			startOnlineGame();
 		});
 		
-		loadButton.setFont(new Font("Arial", Font.BOLD, 50));
+		loadButton.setFont(new Font(font, Font.BOLD, 50));
 		loadButton.setForeground(Color.WHITE);
 		loadButton.setBackground(Color.BLACK);
 		loadButton.setBorderPainted(false);
@@ -232,7 +242,7 @@ private void makeStartMenu() {
 		});
 		
 		
-		exitButton.setFont(new Font("Arial", Font.BOLD, 40));
+		exitButton.setFont(new Font(font, Font.BOLD, 40));
 		exitButton.setForeground(Color.WHITE);
 		exitButton.setBackground(Color.BLACK);
 		exitButton.setBorderPainted(false);
@@ -243,8 +253,8 @@ private void makeStartMenu() {
 		
 		
 		
-		credits.setFont(new Font("Arial", Font.ITALIC, 20));
-		credits.setForeground(Color.WHITE);
+		credits.setFont(new Font(font, Font.ITALIC, 20));
+		credits.setForeground(Color.GRAY);
 		credits.setBackground(Color.BLACK);
 		credits.setBorderPainted(false);
 		credits.setFocusPainted(false); 
@@ -273,7 +283,7 @@ private void makeStartMenu() {
 	 * Makes the Credits screen
 	 */
 	private void makeCreditsMenu() {
-		creditsMenu = new StartMenu(new Dimension(700,820),2,1,0.8f,0.2f,Color.GREEN);
+		creditsMenu = new Menu(new Dimension(700,820),2,1,0.8f,0.2f,Color.GREEN);
 		
 		JButton back = new JButton("Back");
 		back.setFont(new Font("Arial", Font.BOLD, 20));
@@ -311,7 +321,6 @@ private void makeStartMenu() {
 		textArea.setEditable(false);
 		creditsMenu.addElementTop(text1);
 		creditsMenu.addElementTop(textArea);
-
 		creditsMenu.addElementBot(back); 
 		creditsMenu.openMenu();
 	}
@@ -323,34 +332,56 @@ private void makeStartMenu() {
 	{
 		int menuWidth = 200;
 		int menuHeigth = 250;
+		int textSize = menuWidth/10;
 		
-		pauseMenu = new Menu(FixedPanel,new Dimension(menuWidth,menuHeigth),5);
+		pauseMenu = new Dialog(FixedPanel,new Dimension(menuWidth,menuHeigth),3,5,textSize, "PAUSE",40);
  		JButton resumeButton = new JButton("Resume");
  		JButton saveButton = new JButton("Save");
  		JButton exitButton = new JButton("Main Menu");
  		
- 		int tesxtSize = menuWidth/10;
- 		resumeButton.setFont(new Font("Arial", Font.BOLD, tesxtSize));
+ 		
  		resumeButton.addActionListener((ActionEvent e) -> {
  			resumeGame();
  		});
  		
- 		saveButton.setFont(new Font("Arial", Font.BOLD, tesxtSize));
  		saveButton.addActionListener((ActionEvent e) -> {
  			saveGame();
  		});
  		
- 		exitButton.setFont(new Font("Arial", Font.BOLD, tesxtSize));
  		exitButton.addActionListener((ActionEvent e) -> {
  			toMainMenu();
  		});
  		
- 		pauseMenu.addElement(resumeButton); 
- 		pauseMenu.addElement(saveButton); 
- 		pauseMenu.addElement(exitButton); 
+ 		pauseMenu.addButton(resumeButton); 
+ 		pauseMenu.addButton(saveButton); 
+ 		pauseMenu.addButton(exitButton); 
 		
  		pauseMenu.pack();	
  	
+	}
+	
+	private void makeGameOverMenu() {
+		int menuWidth = 300;
+		int menuHeigth = 200;
+		int textSize = 20;
+		
+		gameOverMenu = new Dialog(FixedPanel,new Dimension(menuWidth,menuHeigth),2,5,textSize,"GAME OVER",40);
+		JButton mainMenuButton = new JButton("Main Menu");
+		JButton exitButton = new JButton("Exit");
+		
+		
+		mainMenuButton.addActionListener((ActionEvent e) -> {
+ 			toMainMenu();
+ 		});
+		
+	
+		exitButton.addActionListener((ActionEvent e) -> {
+			System.exit(0);
+		});
+		
+ 		gameOverMenu.addButton(mainMenuButton); 
+ 		gameOverMenu.addButton(exitButton); 
+ 		gameOverMenu.pack();	
 	}
 	
 	/**
@@ -450,6 +481,7 @@ private void makeStartMenu() {
 	}
 	private void closePauseMenu() {
 		musicPlayer.play();
+		if(pauseMenu !=null)
 		pauseMenu.close();
 	}
 	
@@ -462,6 +494,8 @@ private void makeStartMenu() {
 			pauseMenu.close();
 		if(creditsMenu !=null)
 			creditsMenu.closeMenu();
+		if(gameOverMenu !=null)
+			gameOverMenu.close();
 		
 		FixedPanel.remove(gamePanel);
 		
@@ -473,4 +507,5 @@ private void makeStartMenu() {
 		System.out.println("exit pause menu");
 		
 	}
+	
 }
