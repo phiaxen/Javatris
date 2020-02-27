@@ -24,7 +24,7 @@ import javax.swing.SwingUtilities;
 import main.Game;
 import model.*;
 
-import view.Dialog;
+import view.DialogMenu;
 
 
 /**

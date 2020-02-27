@@ -31,8 +31,8 @@ public class MenuHandler {
 	private final JPanel fixedPanel;
 	private Menu startMenu;
 	private Menu creditsMenu;
-	private Dialog pauseMenu;
-	private Dialog gameOverMenu;
+	private DialogMenu pauseMenu;
+	private DialogMenu gameOverMenu;
 	
 	public MenuHandler(Game game,JFrame frame, JPanel fixedPanel) {
 		this.game = game;
@@ -146,7 +146,7 @@ public class MenuHandler {
 		int menuHeigth = 250;
 		int textSize = menuWidth/10;
 		
-		pauseMenu = new Dialog(fixedPanel,new Dimension(menuWidth,menuHeigth),3,5,textSize, "PAUSE",40);
+		pauseMenu = new DialogMenu(fixedPanel,new Dimension(menuWidth,menuHeigth),3,5,textSize, "PAUSE",40);
  		JButton resumeButton = new JButton("Resume");
  		JButton saveButton = new JButton("Save");
  		JButton mainMenuButton = new JButton("Main Menu");
@@ -179,7 +179,7 @@ public class MenuHandler {
 		int menuHeigth = 200;
 		int textSize = 20;
 		
-		gameOverMenu = new Dialog(fixedPanel,new Dimension(menuWidth,menuHeigth),2,5,textSize,"GAME OVER",40);
+		gameOverMenu = new DialogMenu(fixedPanel,new Dimension(menuWidth,menuHeigth),2,5,textSize,"GAME OVER",40);
 		JButton mainMenuButton = new JButton("Main Menu");
 		JButton exitButton = new JButton("Exit");
 		
@@ -199,7 +199,7 @@ public class MenuHandler {
 	}
 	
 	private void makeCreditsMenu() {
-		creditsMenu = new Menu(new Dimension(700,820),2,1,0.8f,0.2f,Color.GREEN);
+		creditsMenu = new Menu(new Dimension(700,820),2,1,0.8f,0.2f,Color.BLACK);
 		
 		JButton back = new JButton("Back");
 		back.setFont(new Font("Arial", Font.BOLD, 20));

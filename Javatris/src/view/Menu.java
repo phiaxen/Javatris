@@ -20,32 +20,31 @@ public class Menu extends JPanel{
 
 	private static final long serialVersionUID = 1L;
 	private JPanel topPanel;
-	private JPanel botPanel;
-	private final int borderThickness;
-	private Dimension size;
+	private JPanel bottomPanel;
+	private final int borderThickness = 10;
+	private final Dimension size;
 	private final float topSpace;
-	private final float botSpace;
+	private final float bottomSpace;
 	private final int topElements;
-	private final int botElements;
-	private Color color;
+	private final int bottomElements;
+	private final Color color;
 
 	/**
 	 * Creates a menu according to user specifications
 	 * @param size : size of the panel
 	 * @param topElements  : amount of elements on top pane
-	 * @param botElements : amount of elements on bottom pane
+	 * @param bottomElements : amount of elements on bottom pane
 	 * @param topSpace : space between pane height and top element on top pane
-	 * @param botSpace : space between pane height and top element on bottom pane
+	 * @param bottomSpace : space between pane height and top element on bottom pane
 	 * @param color : color of the whole panel
 	 */
-	public Menu(Dimension size, int topElements,int botElements,float topSpace,float botSpace,Color color) {
+	public Menu(Dimension size, int topElements,int bottomElements,float topSpace,float bottomSpace,Color color) {
 		this.size = size;
 		this.topElements = topElements;
-		this.botElements = botElements;
+		this.bottomElements = bottomElements;
 		this.topSpace = topSpace;
-		this.botSpace = botSpace;
-	
-		this.borderThickness = 10;
+		this.bottomSpace = bottomSpace;
+		this.color = color;
 		menuSetup();
 	}
 	
@@ -53,7 +52,7 @@ public class Menu extends JPanel{
 	 * Creates the main panel, top- and bottom panel according to user specifications
 	 */
 	private void menuSetup() {
-		int bpHeight = (int)(size.getHeight()*botSpace)-borderThickness*3;
+		int bpHeight = (int)(size.getHeight()*bottomSpace)-borderThickness*3;
 		
 		//main panel setup
 		this.setPreferredSize(size);
@@ -69,12 +68,12 @@ public class Menu extends JPanel{
 		this.add(topPanel);
 		
 		//bottom panel setup
-		botPanel = new JPanel();
-		botPanel.setBackground(color);
-		botPanel.setBorder(new EmptyBorder(50,10,10,10));
-		botPanel.setLayout(new GridLayout(botElements,1,1,20));
-		botPanel.setPreferredSize(new Dimension((int)size.getWidth()-borderThickness*2,(bpHeight)));
-		this.add(botPanel);
+		bottomPanel = new JPanel();
+		bottomPanel.setBackground(color);
+		bottomPanel.setBorder(new EmptyBorder(50,10,10,10));
+		bottomPanel.setLayout(new GridLayout(bottomElements,1,1,20));
+		bottomPanel.setPreferredSize(new Dimension((int)size.getWidth()-borderThickness*2,(bpHeight)));
+		this.add(bottomPanel);
 	}
 	
 	/**
@@ -90,7 +89,7 @@ public class Menu extends JPanel{
 	 * @param element : element to be added to the menu
 	 */
 	public void addElementBot(Container element) {
-		botPanel.add(element);
+		bottomPanel.add(element);
 	}
 	
 	/**

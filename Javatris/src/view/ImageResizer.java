@@ -8,10 +8,13 @@ import java.io.IOException;
 
 import javax.swing.ImageIcon;
 
-
+/**
+ * ImageResizer should be used to resize a BufferedImage 
+ * by width and height or by a percentage of its original size
+ * @author Philip Axenhamn
+ * @version 2020-02-08  
+ */
 public class ImageResizer {
-	
-
 	/**
      * Resizes an BufferedImage by width and height  
      * @param image: the image to be resized
@@ -39,7 +42,6 @@ public class ImageResizer {
      * @throws IOException
      */
     public static BufferedImage resize(BufferedImage image, double percent) throws IOException {
-      
         int scaledWidth = (int) (image.getWidth() * percent);
         int scaledHeight = (int) (image.getHeight() * percent);
         return resize(image, scaledWidth, scaledHeight);

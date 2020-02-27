@@ -21,22 +21,16 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 /**
- * THIS CLASS IS A VIEW
  * BoardView is a class that draws the 20x10 board on a JPanel.
  * It can also draw a grid. 
- * 
  * @author Philip
- * @version 1.0
- * 
- * Implemented PropertyChangeListener
  * @author Joachim Antfolk
- * @version 1.1
+ * @version 1.0
  */
 
 public class BoardView extends JPanel implements PropertyChangeListener{
 	
 	private static final long serialVersionUID = 1L;
-	
 	private BufferedImage tiles, background;
 	private int[][] boardCoords;
 	private final int HEIGHT,WIDTH, BLOCKSIZE;

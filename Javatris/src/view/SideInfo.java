@@ -1,65 +1,47 @@
 package view;
-
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
-import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.io.IOException;
 import java.util.LinkedList;
-
-import javax.imageio.ImageIO;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
-import model.Board;
 import model.Shape;
-
 import javax.swing.BoxLayout;
-import javax.swing.GroupLayout.Alignment;
+
+
 
 public class SideInfo extends JPanel implements PropertyChangeListener{
-	private static final long serialVersionUID = 1L;
 	
-//	private BufferedImage scoreTitle;
-	private JLabel scoreText;
+	private static final long serialVersionUID = 1L;
+	private JLabel scoreLabel;
 	private JLabel timeLabel;
 	private JLabel nextLabel;
 	private JLabel linesLabel;
 	private JLabel levelLabel;
-	
 	private NextShapesPanel nextShapesPanel;
-	
-	private BoxLayout box;
 	private int rowsRemoved = 0;
 	private int level = 1;
-	
-	
 	
 	public SideInfo() {
 		
 		nextShapesPanel = new NextShapesPanel();
 		
-		box = new BoxLayout(this, BoxLayout.Y_AXIS);
-		
 		this.setBorder(new EmptyBorder(20, 20, 20, 20));
-	
-		//this.setBackground(Color.LIGHT_GRAY);
 		this.setBackground(Color.DARK_GRAY);
 		this.setPreferredSize(new Dimension(280,800));
-		this.setLayout(box);
+		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		
-		scoreText = new JLabel("SCORE: 0");
-		scoreText.setForeground(Color.LIGHT_GRAY);
-		scoreText.setFont(new Font("Arial", Font.BOLD, 30));
+		//scoreText
+		scoreLabel = new JLabel("SCORE: 0");
+		scoreLabel.setForeground(Color.LIGHT_GRAY);
+		scoreLabel.setFont(new Font("Arial", Font.BOLD, 30));
 		
+		//scoreText
 		timeLabel = new JLabel("TIME: 0");
 		timeLabel.setForeground(Color.LIGHT_GRAY);
 		timeLabel.setFont(new Font("Arial",Font.PLAIN, 30));
@@ -79,7 +61,7 @@ public class SideInfo extends JPanel implements PropertyChangeListener{
 		
 		
 		
-		this.add(scoreText);
+		this.add(scoreLabel);
 		this.add(timeLabel);
 		this.add(linesLabel);
 		this.add(levelLabel);
@@ -94,9 +76,9 @@ public class SideInfo extends JPanel implements PropertyChangeListener{
 	//Uppdaterar score när den kallas utifrån
 	public void updateScore(int score) {
 		System.out.println("SCOR IS: " + score);
-		this.scoreText.setText("SCORE: " + score);
+		scoreLabel.setText("SCORE: " + score);
 		
-		scoreText.repaint();
+		scoreLabel.repaint();
 	}
 	
 	//Kanske borde hållas reda på i denna klass
