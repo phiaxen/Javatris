@@ -1,16 +1,7 @@
 package model;
 import server.*;
-import server.ConnectionHandler.Delegate;
-import java.awt.image.BufferedImage;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
-import java.io.IOException;
 import java.util.TimerTask;
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.concurrent.TimeUnit;
-
-import javax.imageio.ImageIO;
 
 import java.util.LinkedList;
 import java.util.Timer;
@@ -75,7 +66,6 @@ public class GameEngine extends AbstractModel implements Runnable{
 		this.online = online;
 		GameTime = new Timer();
 		setFirstShape();
-		
 	}
 	
 	TimerTask task = new TimerTask() {
@@ -362,10 +352,7 @@ public class GameEngine extends AbstractModel implements Runnable{
 		long lastTime = System.nanoTime();
 		double ns = 1000000000 / TICKSPERSECOND;
 		double deltaTime = 0;
-		int updates = 0;
-		int frames = 0;
-		long fpsTimer = System.currentTimeMillis();
-		
+	
 		while(!Thread.interrupted() ) {
 			
 			if(!running) {
@@ -390,11 +377,9 @@ public class GameEngine extends AbstractModel implements Runnable{
 				
 				if(deltaTime >= 1) {
 					tick();
-					updates++;
 					deltaTime--;
 					render();
 				}
-				frames++;
 			}
 		}
 		stop();
