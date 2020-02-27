@@ -5,20 +5,15 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.geom.AffineTransform;
-import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 import model.*;
-
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 
 /**
  * BoardView is a class that draws the 20x10 board on a JPanel.
@@ -47,15 +42,21 @@ public class BoardView extends JPanel implements PropertyChangeListener{
 		init();
 	}
 	
+	/**
+	 * Iniatiates the game board
+	 */
 	private void init() {
 		colors = new BufferedImage[8];
 		this.setBackground(Color.white); //om man vill ha en enfärgad bakgrund:
-		boardCoords = new int[HEIGHT][WIDTH]; //hämta spelplanen - använd för MVC 
+		boardCoords = new int[HEIGHT][WIDTH];
 		loadImages();
 		
 		setColors();
 	}
 	
+	/**
+	 * Loads the images to be used in the game board
+	 */
 	private void loadImages() {
 		try {
 			tiles = ImageIO.read(Board.class.getResource("/images/tiles4.png"));
@@ -65,13 +66,19 @@ public class BoardView extends JPanel implements PropertyChangeListener{
 		}
 	}
 	
+	/**
+	 * Sets the in-game tiles to loaded tile image 
+	 */
 	private void setColors() {
 		for(int i=0; i<colors.length; i++){
 			colors[i] = tiles.getSubimage(i*BLOCKSIZE,0, BLOCKSIZE, BLOCKSIZE);	
 		}
 	}
 	
-	
+	/**
+	 * Sets the current shape to parameter currentShape
+	 * @param currentShape: new shape
+	 */
 	public void setCurrentShape(Shape currentShape) {
 		this.currentShape = currentShape;
 	}

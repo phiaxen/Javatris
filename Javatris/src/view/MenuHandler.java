@@ -21,6 +21,7 @@ import main.Game;
 /**
  * MenuHandler handles every menu in the game
  * @author Philip Axenhamn 
+ * @author Joachim Antfolk
  * @since 2020-02-27
  * @version 1.0
  */
@@ -41,11 +42,17 @@ public class MenuHandler {
 		loadMenus();
 	}
 	
+	/**
+	 * Creates menus for initial start of game
+	 */
 	private void loadMenus() {
 		makeStartMenu();
 		makeCreditsMenu();
 	}
 	
+	/**
+	 * Creates the main menu
+	 */
 	private void makeStartMenu() {
 		
 		startMenu = new Menu(new Dimension(700,820),0,5,0.25f,0.75f,Color.BLACK);
@@ -59,54 +66,30 @@ public class MenuHandler {
 
 		
 		String font = "Arial";
-		startButton.setFont(new Font(font, Font.BOLD, 90));
-		startButton.setForeground(Color.WHITE);
-		startButton.setBackground(Color.BLACK);
-		startButton.setBorderPainted(false);
-		startButton.setFocusPainted(false); 
+		formatButton(startButton, Color.WHITE, Font.BOLD, 90);
 		startButton.addActionListener((ActionEvent e) -> {
 			startMenu.close();
 			game.startGame();
 		});
 		
-		
-		onlineButton.setFont(new Font(font, Font.BOLD, 50));
-		onlineButton.setForeground(Color.WHITE);
-		onlineButton.setBackground(Color.BLACK);
-		onlineButton.setBorderPainted(false);
-		onlineButton.setFocusPainted(false); 
+		formatButton(onlineButton, Color.WHITE, Font.BOLD, 50);
 		onlineButton.addActionListener((ActionEvent e) -> {
 			game.startOnlineGame();
 		});
 		
-		loadButton.setFont(new Font(font, Font.BOLD, 50));
-		loadButton.setForeground(Color.WHITE);
-		loadButton.setBackground(Color.BLACK);
-		loadButton.setBorderPainted(false);
-		loadButton.setFocusPainted(false); 
+		formatButton(loadButton, Color.WHITE, Font.BOLD, 50);
 		loadButton.addActionListener((ActionEvent e) -> {
 			startMenu.close();
 			game.startGame();
 			game.loadGame();
 		});
 		
-		
-		exitButton.setFont(new Font(font, Font.BOLD, 40));
-		exitButton.setForeground(Color.WHITE);
-		exitButton.setBackground(Color.BLACK);
-		exitButton.setBorderPainted(false);
-		exitButton.setFocusPainted(false); 
+		formatButton(exitButton, Color.WHITE, Font.BOLD, 40);
 		exitButton.addActionListener((ActionEvent e) -> {
 			System.exit(0);
 		});
 		
-		
-		
-		credits.setFont(new Font(font, Font.ITALIC, 20));
-		credits.setForeground(Color.GRAY);
-		credits.setBackground(Color.BLACK);
-		credits.setBorderPainted(false);
-		credits.setFocusPainted(false); 
+		formatButton(credits, Color.GRAY, Font.BOLD, 20);
 		credits.addActionListener((ActionEvent e) -> {
 			rollCredits();
 		});
@@ -128,19 +111,32 @@ public class MenuHandler {
 		creditsMenu.open();
 	}
 	
+	/**
+	 * Closes the main menu
+	 */
+	public void closeStartMenu() {
+		startMenu.close();
+	}
+	
+	/*
+	 * Opens the main menu
+	 */
 	public void openStartMenu() {
 		startMenu.open();
 		fixedPanel.validate();
 		fixedPanel.repaint();
 	}
 	
-	public void closeStartMenu() {
-		startMenu.close();
-		
-	}
+	/**
+	 * Closes the pause menu
+	 */
 	public void closePauseMenu() {
 		pauseMenu.close();
 	}
+	
+	/*
+	 * Opens the pause menu
+	 */
 	public void openPauseMenu(){
 		int menuWidth = 200;
 		int menuHeigth = 250;
@@ -151,16 +147,18 @@ public class MenuHandler {
  		JButton saveButton = new JButton("Save");
  		JButton mainMenuButton = new JButton("Main Menu");
  		
- 		
+ 		formatButton(resumeButton, Color.WHITE, Font.BOLD, 30);
  		resumeButton.addActionListener((ActionEvent e) -> {
  			pauseMenu.close();
  			game.resumeGame();
  		});
  		
+ 		formatButton(saveButton, Color.WHITE, Font.BOLD, 30);
  		saveButton.addActionListener((ActionEvent e) -> {
  			game.saveGame();
  		});
  		
+ 		formatButton(mainMenuButton, Color.WHITE, Font.BOLD, 30);
  		mainMenuButton.addActionListener((ActionEvent e) -> {
  			toMainMenu();
  		});
@@ -173,7 +171,9 @@ public class MenuHandler {
 	}
 	
 	
-	
+	/**
+	 * Opens the Game Over menu
+	 */
 	public void openGameOverMenu() {
 		int menuWidth = 300;
 		int menuHeigth = 200;
@@ -183,12 +183,12 @@ public class MenuHandler {
 		JButton mainMenuButton = new JButton("Main Menu");
 		JButton exitButton = new JButton("Exit");
 		
-		
+		formatButton(mainMenuButton, Color.WHITE, Font.BOLD, 30);
 		mainMenuButton.addActionListener((ActionEvent e) -> {
  			toMainMenu();
  		});
 		
-	
+		formatButton(exitButton, Color.WHITE, Font.BOLD, 30);
 		exitButton.addActionListener((ActionEvent e) -> {
 			System.exit(0);
 		});
@@ -198,6 +198,9 @@ public class MenuHandler {
  		gameOverMenu.pack();	
 	}
 	
+	/**
+	 * Creates the Credits screen
+	 */
 	private void makeCreditsMenu() {
 		creditsMenu = new Menu(new Dimension(700,820),2,1,0.8f,0.2f,Color.BLACK);
 		
@@ -243,7 +246,10 @@ public class MenuHandler {
 	}
 	
 	
-	
+	/**
+	 * Opens the dialog to get server info
+	 * @return : server IP and port
+	 */
 	public String showOnlineDialog() {
 		String code = JOptionPane.showInputDialog
 				(
@@ -255,6 +261,9 @@ public class MenuHandler {
 		return code;
 	}
 	
+	/**
+	 * Returns to the main menu
+	 */
 	private void toMainMenu() {
 		if(pauseMenu !=null)
 			pauseMenu.close();
@@ -266,6 +275,23 @@ public class MenuHandler {
 		game.removeGamePanel();
 		game.setOffline();
 		startMenu.open();
+	}
+	
+	/**
+	 * Formats button
+	 * @param button : button to be formated
+	 * @param foreground : foreground color
+	 * @param fontType : font type bold, italic, etc.
+	 * @param fontSize : size of the font
+	 */
+	private void formatButton(JButton button, Color foreground,int fontType, int fontSize) {
+		String font = "Arial";
+		
+		button.setFont(new Font(font, fontType, fontSize));
+		button.setForeground(foreground);
+		button.setBackground(Color.BLACK);
+		button.setBorderPainted(false);
+		button.setFocusPainted(false); 
 	}
 
 }
