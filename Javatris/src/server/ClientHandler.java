@@ -54,6 +54,7 @@ public class ClientHandler implements Runnable
 		}
 		catch( IOException e)
 		{
+			//h
 			exit();
 		}
 

@@ -56,7 +56,7 @@ public class Game {
 	}
 	
 	/*
-	 * Initializes the game and creates all the nececcary components that are needed
+	 * Initializes the game and creates all the neccecary components that are needed
 	 */
 	private void init() {
 		musicPlayer = new MusicPlayer(2);

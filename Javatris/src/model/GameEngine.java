@@ -330,7 +330,7 @@ public class GameEngine extends AbstractModel implements Runnable{
 			}else {
 				synchronized(thread) {
 					thread.notify();
-				}
+				} 
 			}
 			
 		}else {

@@ -110,7 +110,7 @@ public class ConnectionHandler implements Runnable
 	 */
 	public void start() 
 	{
-		System.out.println("Start game");
+		System.out.println("Start game"); 
 		if (delegate != null) {
 			delegate.start();
 		}

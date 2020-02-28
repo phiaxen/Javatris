@@ -49,9 +49,9 @@ public class MenuHandler {
 		this.musicPlayer = musicPlayer;
 		loadMenus();
 	}
-	
+	 
 	/**
-	 * Creates menus for initial start of game
+	 * Creates menus for initial start of game a
 	 */
 	private void loadMenus() {
 		makeStartMenu();
