@@ -17,7 +17,7 @@ import javax.swing.filechooser.FileSystemView;
  * MusicPlayer is a class that handles the background songs
  * @author Tobias Mauritzon
  * @version 2.0
- * @since 2020-02-18
+ * @since 2020-02-16
  */
 
 // datumet är inte rätt än
