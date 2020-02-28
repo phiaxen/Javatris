@@ -129,7 +129,7 @@ public class DialogMenu {
 		window = (RootPaneContainer) SwingUtilities.getWindowAncestor(com);
 	     
      	//make a JDialog containing the panel made in this class(panel) with the dark pane
-     	dialog = new JDialog((Window)window, "", ModalityType.APPLICATION_MODAL);
+     	dialog = new JDialog((Window)window, "", ModalityType.MODELESS);
      	dialog.getContentPane().add(panel); 
      	dialog.setUndecorated(true); // remove borders
      	dialog.pack(); 
@@ -168,5 +168,6 @@ public class DialogMenu {
 	public boolean isClosed() {
 		return isClosed;
 	}
+	
 	
 }

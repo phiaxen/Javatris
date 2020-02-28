@@ -14,11 +14,13 @@ import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
+import javax.swing.event.ChangeEvent;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 
 import main.Game;
+import model.MusicPlayer;
 
 /**
  * MenuHandler handles every menu in the game
@@ -38,11 +40,13 @@ public class MenuHandler {
 	private DialogMenu gameOverMenu;
 	private DialogMenu winMenu;
 	private DialogMenu optionsMenu;
+	private MusicPlayer musicPlayer;
 	
-	public MenuHandler(Game game,JFrame frame, JPanel fixedPanel) {
+	public MenuHandler(Game game,JFrame frame, JPanel fixedPanel,MusicPlayer musicPlayer) {
 		this.game = game;
 		this.frame = frame;
 		this.fixedPanel = fixedPanel;
+		this.musicPlayer = musicPlayer;
 		loadMenus();
 	}
 	
@@ -206,10 +210,9 @@ public class MenuHandler {
 		JLabel fullScreenLabel = new JLabel("Full Screen");
 		JButton fullScreenButton = new JButton("Off");
 		
-		
 		JPanel volumePanel = new JPanel(new BorderLayout());
 		JLabel sliderLabel = new JLabel("Music Volume",SwingConstants.CENTER);
-		JSlider volumeSlider = new JSlider(JSlider.HORIZONTAL, 0, 3, 1);
+		JSlider volumeSlider = new JSlider(JSlider.HORIZONTAL, 0, 20, 8);
 		
  		JButton backButton = new JButton("Back");
 
@@ -236,9 +239,7 @@ public class MenuHandler {
  		sliderLabel.setBackground(Color.BLACK);
  		
  		//volume slider
- 		volumeSlider.setMajorTickSpacing(10);
- 	   	volumeSlider.setMinorTickSpacing(1);
- 	 	volumeSlider.setPaintTicks(false);
+ 	
  		volumeSlider.setPaintLabels(false);
  		volumeSlider.setSnapToTicks(true);
  		volumeSlider.setBackground(Color.BLACK);
@@ -248,6 +249,10 @@ public class MenuHandler {
  		volumePanel.add(sliderLabel,BorderLayout.NORTH);
  		volumePanel.add(volumeSlider,BorderLayout.SOUTH);
  		
+ 		volumeSlider.addChangeListener((ChangeEvent e) -> {
+ 			float sliderValue = volumeSlider.getValue();
+ 			musicPlayer.setVolume(sliderValue/20);
+ 		});
  	
  		fullScreenButton.addActionListener((ActionEvent e) -> {
  			

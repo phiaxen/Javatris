@@ -47,7 +47,7 @@ public class Game {
 //		ResizeFrame();
 		init();
 		SetUpFrame();
-		menuHandler = new MenuHandler(this, frame, FixedPanel);
+		menuHandler = new MenuHandler(this, frame, FixedPanel,musicPlayer);
 		menuHandler.openStartMenu();
 	}
 	
