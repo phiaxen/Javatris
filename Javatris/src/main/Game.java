@@ -106,6 +106,10 @@ public class Game {
 					break;
 				}
 			}
+			@Override
+			public void connectionLost() {
+				menuHandler.openBasicMenu(4);
+			}
 		};
 	}
 	

@@ -22,6 +22,7 @@ public class ConnectionHandler implements Runnable
 		void start();
 		void pause();
 		void quit();
+		void connectionLost();
 	}
 	
 	private BufferedReader indata;
@@ -133,7 +134,7 @@ public class ConnectionHandler implements Runnable
 	public void connectionLost() 
 	{
 		if (delegate != null) {
-			delegate.gameOver(3);
+			delegate.connectionLost();
 		}
 	}
 	

@@ -51,6 +51,11 @@ public class Client
 				{
 					engine.quit();
 				}
+
+				@Override
+				public void connectionLost() {
+					engine.connectionLost();
+				}
 			};
 			
 			
@@ -72,15 +77,6 @@ public class Client
 	public void sendInt(int n)
 	{
 		output.println("msg " + n);
-	}
-	
-	/*
-	 *  Sends an integer to the other client via the server
-	 *  @param s the message string sent
-	 */
-	public void sendString(String s)
-	{
-		output.println(s);
 	}
 	
 	

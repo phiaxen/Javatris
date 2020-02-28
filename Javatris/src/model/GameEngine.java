@@ -24,6 +24,7 @@ public class GameEngine extends AbstractModel implements Runnable{
 		Client getClient();
 		void pause();
 		void gameOver(int type);
+		void connectionLost();
 	}
 
 	private Shape currentShape;	//The shape that is currently in action
@@ -252,16 +253,22 @@ public class GameEngine extends AbstractModel implements Runnable{
         }
 	}
 	
+	public void connectionLost() {
+		if(!gameOver)
+		delegate.gameOver(3);
+	}
 	/**
 	 * If loss has occured notify client and delegate
 	 * @param type : 0 if game over in solo game, 1 if player has lost, 2 for win
 	 */
 	public void gameOver(int type) {
 		running = false;
+		
 		if (online && type == 1) {
 			client.sendInt(10);
 		}
 		delegate.gameOver(type);
+		gameOver = true;
 	}
 	
 	public void setStaticShapes() {
