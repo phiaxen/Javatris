@@ -34,6 +34,7 @@ public class MenuHandler {
 	private Menu creditsMenu;
 	private DialogMenu pauseMenu;
 	private DialogMenu gameOverMenu;
+	private DialogMenu winMenu;
 	
 	public MenuHandler(Game game,JFrame frame, JPanel fixedPanel) {
 		this.game = game;
@@ -199,6 +200,33 @@ public class MenuHandler {
 	}
 	
 	/**
+	 * Opens the Game Over menu
+	 */
+	public void openVictoryMenu() {
+		int menuWidth = 300;
+		int menuHeigth = 200;
+		int textSize = 20;
+		
+		winMenu = new DialogMenu(fixedPanel,new Dimension(menuWidth,menuHeigth),2,5,textSize,"YOU WIN!",40);
+		JButton mainMenuButton = new JButton("Main Menu");
+		JButton exitButton = new JButton("Exit");
+		
+		formatButton(mainMenuButton, Color.WHITE, Font.BOLD, 30);
+		mainMenuButton.addActionListener((ActionEvent e) -> {
+ 			toMainMenu();
+ 		});
+		
+		formatButton(exitButton, Color.WHITE, Font.BOLD, 30);
+		exitButton.addActionListener((ActionEvent e) -> {
+			System.exit(0);
+		});
+		
+		winMenu.addButton(mainMenuButton); 
+		winMenu.addButton(exitButton); 
+		winMenu.pack();	
+	}
+	
+	/**
 	 * Creates the Credits screen
 	 */
 	private void makeCreditsMenu() {
@@ -271,6 +299,8 @@ public class MenuHandler {
 			creditsMenu.close();
 		if(gameOverMenu !=null)
 			gameOverMenu.close();
+		if(winMenu !=null)
+			winMenu.close();
 		
 		game.removeGamePanel();
 		game.setOffline();

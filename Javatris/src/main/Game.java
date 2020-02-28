@@ -63,7 +63,7 @@ public class Game {
 		
 		board = new Board();
 		boardView = new BoardView(BOARDHEIGHT, BOARDWIDTH, BLOCKSIZE, true);
-		gameEngine = new GameEngine(board, false);
+		gameEngine = new GameEngine(board,false);
 		controller = new Controller(gameEngine, musicPlayer);
 		sideInfo = new SideInfo();
 		
@@ -72,11 +72,11 @@ public class Game {
 		
 		gameEngine.delegate = new GameEngine.Delegate() 
 		{
-			@Override
-			public Client getClient()
-			{
-				return client.getClient();
-			}
+//			@Override
+//			public Client getClient()
+//			{
+//				return client.getClient();
+//			}
 			
 			@Override
 			public void pause()
@@ -86,9 +86,19 @@ public class Game {
 			}
 
 			@Override
-			public void gameOver() {
+			public void gameOver(int type) {
 				musicPlayer.stop();
-				openGameOverMenu();
+				
+				switch(type) {
+				case 1: // gameover - loss
+					openGameOverMenu();
+					break;
+				case 2: // gameover - win
+					openVictoryMenu();
+					break;
+				default:
+					break;
+				}
 			}
 		};
 	}
@@ -141,6 +151,10 @@ public class Game {
 	
 	private void openGameOverMenu() {
 		menuHandler.openGameOverMenu();
+	}
+	
+	private void openVictoryMenu() {
+		menuHandler.openVictoryMenu();
 	}
 	
 	//Temporary solution with getters
@@ -233,7 +247,7 @@ public class Game {
 		{
 			String[] adress = code.split(":");
 			
-			initClient(adress[0], Integer.parseInt(adress[1]));
+			gameEngine.client = new Client(gameEngine, adress[0], Integer.parseInt(adress[1]));//initClient(adress[0], Integer.parseInt(adress[1]));
 			gameEngine.setOnline(true);
 			startGame();
 		}

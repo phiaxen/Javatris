@@ -36,10 +36,14 @@ public class Server
 			//Sever looks for input if both the clients are connected
 			if(clients.size() == 2 && !running) 
 			{
-					System.out.println("Starting game");
-					//messages the clients to start running
-					messageClients(11);
-					running = true;
+
+				try{ Thread.sleep(1000); }
+				catch(InterruptedException e) { e.printStackTrace(); }
+
+				System.out.println("Starting game");
+				//messages the clients to start running
+				messageClients(11);
+				running = true;
 			}
 			else if (clients.size() < 2) 
 			{

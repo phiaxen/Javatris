@@ -18,7 +18,7 @@ public class ConnectionHandler implements Runnable
 	 */
 	public interface Delegate {
 		void addRow(int row);
-		void gameOver();
+		void gameOver(int type);
 		void start();
 		void pause();
 		void quit();
@@ -42,24 +42,26 @@ public class ConnectionHandler implements Runnable
 				String serverOutput = indata.readLine();	
 				//Kod som kommunicerar till gameEngine läggs till här
 				int code =  stringToInt(serverOutput);
-				
 				switch(code)
 				{
 					case 0: case 1: case 2: case 3: case 4: case 5: case 6: case 7: case 8: case 9:
-						System.out.println(code);
 						addRow(code); break;
 					case 10:
-						win(); break;
+						gameOver();
+						System.out.println("game over"); 
+						break;
 					case 11:
 						start();
-						System.out.println("Start");
 						break;
 					case 12:
 						quit();
 						System.out.println("stop");
 						break;
 					case 15:
-						System.out.println("Says " + serverOutput); break;
+						System.out.println("Says " + serverOutput); 
+						break;
+					default:
+						break;
 				}
 			}
 
@@ -138,10 +140,10 @@ public class ConnectionHandler implements Runnable
 	/*
 	 * Does nothing for now, Should communicate with the game engine to display a victory screen
 	 */
-	public void win() 
+	public void gameOver() 
 	{
 		System.out.println("You won");
-		//add code here
+		delegate.gameOver(2);
 	}
 	
 	/*

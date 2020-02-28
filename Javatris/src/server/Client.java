@@ -29,8 +29,9 @@ public class Client
 				}
 				
 				@Override
-				public void gameOver() {
+				public void gameOver(int type) {
 					System.out.println("Game Over! No");
+					engine.gameOver(type);
 				}
 				
 				@Override
@@ -50,7 +51,6 @@ public class Client
 				{
 					engine.quit();
 				}
-				
 			};
 			
 			
@@ -139,6 +139,7 @@ public class Client
 	 */
 	public Client getClient() 
 	{
+		System.out.println("getting client");
 		return this;
 	}
 

@@ -20,17 +20,17 @@ public class GameEngine extends AbstractModel implements Runnable{
 	 * Interface that handles the communication with the game engine.
 	 */
 	public interface Delegate {
-		Client getClient();
+		//Client getClient();
 		void pause();
-		void gameOver();
+		void gameOver(int type);
 	}
 
 	private Shape currentShape;	//The shape that is currently in action
 	private Shape oldShape;
 	private Shape shapes[] = new Shape[7];	//An array that contains 7 different shapes
 	private Board board;	
-	private Client client;
-	private Boolean online = false; //Change this to true for multiplayer 
+	public Client client;
+	private Boolean online; //Change this to true for multiplayer 
 	
 	//points and levelup things
 	private int level = 1;
@@ -64,6 +64,7 @@ public class GameEngine extends AbstractModel implements Runnable{
 		super();
 		this.board = board;
 		this.online = online;
+		client = null;
 		GameTime = new Timer();
 		setFirstShape();
 	}
@@ -78,8 +79,10 @@ public class GameEngine extends AbstractModel implements Runnable{
 		}
 	};
 	
-	
-	public void update() {
+	/**
+	 * 
+	 */
+	private void update() {
 		Board oldBoard = board.clone();
 		time += System.currentTimeMillis() - lastTime;
 		lastTime = System.currentTimeMillis();
@@ -102,7 +105,7 @@ public class GameEngine extends AbstractModel implements Runnable{
 				}
 			}
 
-			//uppdaterar score endast om rader har tagits bort
+			//Updates score if rows have been deleted
 			if(rowsDeleted > 0) {
 				levelUp();
 				int oldPoints = points;
@@ -123,16 +126,24 @@ public class GameEngine extends AbstractModel implements Runnable{
 		}
 		currentShape.setDeltaX(0);
 		firePropertyChange("board", oldBoard, board);
+		firePropertyChange("shape", oldShape, currentShape);
 	}
 	
+	/**
+	 * Adds a row with one open spot, used for versus-mode
+	 * @param column : Where the row should have an open spot
+	 * @param color : Color of the row
+	 */
 	public void addRow(int column, int color) {
 		Board oldBoard = board.clone();
 		board.addRow(column, color);
 		firePropertyChange("board", oldBoard, board);
 	}
 	
-	//not bug free
-	public void CheckCollisionX() {
+	/**
+	 * Check if the current shape has collided sideways
+	 */
+	private void CheckCollisionX() {
 		for(int i = 0; i<currentShape.getCoords().length; i++) {
 			for(int j = 0; j<currentShape.getCoords()[0].length; j++) {
 				if(currentShape.getCoords()[i][j] !=0) {
@@ -146,7 +157,10 @@ public class GameEngine extends AbstractModel implements Runnable{
 		currentShape.notCollidedX();
 	}
 	
-	public void CheckCollisionY() {
+	/**
+	 * Check if the current shape has collided downwards
+	 */
+	private void CheckCollisionY() {
 		boolean currentState = currentShape.hasCollidedY();
 		if((currentShape.getY() + 1 + currentShape.getCoords().length > 20)) {
 			currentShape.collidedY();
@@ -221,7 +235,9 @@ public class GameEngine extends AbstractModel implements Runnable{
 	}
 	
 	
-
+	/**
+	 * Check if the player has lost
+	 */
 	public void checkIfGameOver(){
 		for(int i = 0; i <10; i++ ) {
 			if(board.getBoard()[0][i] != 0) {
@@ -229,9 +245,20 @@ public class GameEngine extends AbstractModel implements Runnable{
 			}
 		}
 		if(gameOver) {
-			running = false;
-			delegate.gameOver();
+			gameOver(1);
 		}
+	}
+	
+	/**
+	 * If loss has occured notify client and delegate
+	 * @param type : 1 if player has lost, 2 for opponent loss
+	 */
+	public void gameOver(int type) {
+		running = false;
+		if (online && type == 1) {
+			client.sendInt(10);
+		}
+		delegate.gameOver(type);
 	}
 	
 	public void setStaticShapes() {
@@ -266,6 +293,14 @@ public class GameEngine extends AbstractModel implements Runnable{
 		return running;
 	}
 	
+	/**
+	 * Returns wheter or not the game is online
+	 * @return true if online. else false
+	 */
+	public boolean getOnline() {
+		return online;
+	}
+	
 	private int scoreHandler(int level, int rows) {
 		switch(rows) {
 			case 1: return 40*level;
@@ -280,37 +315,46 @@ public class GameEngine extends AbstractModel implements Runnable{
 	
 	public synchronized void start() {
 		fireGameField();
-		System.out.println("GAME START");
-		
 		if(!online) 
 		{
 			running = true;
 			if(GameStart) {
+				System.out.println("GAME START");
 				GameTime.scheduleAtFixedRate(task, 0, 1000);
 				thread = new Thread(this);
 				thread.start(); //start thread
+				GameStart = false;
 			}else {
-				thread.notify();
+				synchronized(thread) {
+					thread.notify();
+				}
 			}
 			
 		}else {
 			if(this.delegate != null) 
 			{
-				client = this.delegate.getClient();
-				
+				//client = this.delegate.getClient();	
 			}
+			//client = this.delegate.getClient();	
 		}
+
 	}
 	
 	public synchronized void startOnline() 
 	{
 		running = true;
 		if(GameStart) {
+			System.out.println("GAME ONLINE START1");
 			GameTime.scheduleAtFixedRate(task, 0, 1000);
 			thread = new Thread(this);
 			thread.start(); //start thread
+			GameStart = false;
 		}else {
-			resume();
+			System.out.println("GAME ONLINE START2");
+			synchronized(thread) {
+				thread.notify();
+			}
+
 		}
 	}
 	
@@ -378,7 +422,6 @@ public class GameEngine extends AbstractModel implements Runnable{
 				if(deltaTime >= 1) {
 					tick();
 					deltaTime--;
-					render();
 				}
 			}
 		}
@@ -395,14 +438,9 @@ public class GameEngine extends AbstractModel implements Runnable{
 		
 	}
 	
-	//everything in game that renders
-	private void render() {
-		firePropertyChange("shape", oldShape, currentShape);
-	}
-	
 	public void quit() 
 	{
-		System.exit(1);
+		System.exit(0);
 	}
 	
 	public LinkedList<Shape> GetNextShapes()
@@ -475,7 +513,9 @@ public class GameEngine extends AbstractModel implements Runnable{
 		resume();
 	}
 	
-	
+	/**
+	 * Forces all listeners to update
+	 */
 	public void fireGameField() {
 		firePropertyChange("points", null, points);
 		firePropertyChange("time", null, timePassed);
