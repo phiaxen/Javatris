@@ -133,9 +133,6 @@ public class Game {
 		
 		frame.add(FixedPanel);
 		
-//		frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
-//		frame.setUndecorated(true);
-		
 		frame.setResizable(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	

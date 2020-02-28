@@ -196,20 +196,44 @@ public class MenuHandler {
 	 * Makes the options menu
 	 */
 	public void makeOptionsMenu(){
-		int menuWidth = 200;
+		int menuWidth = 250;
 		int menuHeigth = 250;
 		int textSize = menuWidth/10;
 		
 		optionsMenu = new DialogMenu(fixedPanel,new Dimension(menuWidth,menuHeigth),3,5,"OPTIONS",40);
  		
-		JButton fullScreenButton = new JButton("Full Screen");
+		JPanel fullScreenPanel = new JPanel();
+		JLabel fullScreenLabel = new JLabel("Full Screen");
+		JButton fullScreenButton = new JButton("Off");
+		
+		
 		JPanel volumePanel = new JPanel(new BorderLayout());
 		JLabel sliderLabel = new JLabel("Music Volume",SwingConstants.CENTER);
 		JSlider volumeSlider = new JSlider(JSlider.HORIZONTAL, 0, 3, 1);
+		
  		JButton backButton = new JButton("Back");
 
- 		//volume panel
- 		volumePanel.setBackground(Color.BLACK);
+ 		//full screen panel 
+ 		fullScreenPanel.setBackground(Color.BLACK);
+ 		
+ 		//full screen button 
+ 		fullScreenButton.setFont(new Font("Arial", Font.BOLD, 20));
+ 		fullScreenButton.setForeground(Color.RED);
+ 		fullScreenButton.setBackground(Color.BLACK);
+ 		fullScreenButton.setBorderPainted(false);
+ 		fullScreenButton.setFocusPainted(false); 
+ 		
+ 		
+ 		//full screen label
+ 		fullScreenLabel.setFont(new Font("Arial", Font.BOLD, 20));
+ 		fullScreenLabel.setForeground(Color.WHITE);
+ 		fullScreenLabel.setBackground(Color.BLACK);
+ 	
+ 		
+ 		//slider label
+ 		sliderLabel.setFont(new Font("Arial", Font.BOLD, 20));
+ 		sliderLabel.setForeground(Color.WHITE);
+ 		sliderLabel.setBackground(Color.BLACK);
  		
  		//volume slider
  		volumeSlider.setMajorTickSpacing(10);
@@ -219,22 +243,36 @@ public class MenuHandler {
  		volumeSlider.setSnapToTicks(true);
  		volumeSlider.setBackground(Color.BLACK);
  		
- 		//slider label
- 		sliderLabel.setFont(new Font("Arial", Font.BOLD, 15));
- 		sliderLabel.setForeground(Color.WHITE);
- 		sliderLabel.setBackground(Color.BLACK);
- 		
+ 		//volume panel
+ 		volumePanel.setBackground(Color.BLACK);
  		volumePanel.add(sliderLabel,BorderLayout.NORTH);
  		volumePanel.add(volumeSlider,BorderLayout.SOUTH);
  		
- 		formatButton(fullScreenButton, Color.WHITE, Font.BOLD, textSize);
+ 	
  		fullScreenButton.addActionListener((ActionEvent e) -> {
- 			frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
- 			frame.dispose();
- 			frame.setUndecorated(true);
+ 			
+ 			if(frame.getExtendedState() != JFrame.MAXIMIZED_BOTH) {
+ 				
+ 				frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+ 	 			frame.dispose();
+ 	 			frame.setUndecorated(true);
+ 	 			fullScreenButton.setText("ON");
+ 	 			fullScreenButton.setForeground(Color.GREEN);
+ 			}else {
+ 				frame.setExtendedState(JFrame.NORMAL);
+ 				frame.setSize(715,860);
+ 				frame.setLocationRelativeTo(null);
+ 	 			frame.dispose();
+ 	 			frame.setUndecorated(false);
+ 	 			fullScreenButton.setText("OFF");
+ 	 			fullScreenButton.setForeground(Color.RED);
+ 			}
  			frame.setVisible(true);
  			optionsMenu.open();
  		});
+ 		
+ 		fullScreenPanel.add(fullScreenLabel,BorderLayout.WEST);
+ 		fullScreenPanel.add(fullScreenButton,BorderLayout.EAST);
  		
  		formatButton(backButton, Color.WHITE, Font.BOLD, textSize);
  		backButton.addActionListener((ActionEvent e) -> {
@@ -242,7 +280,7 @@ public class MenuHandler {
  			pauseMenu.open();
  		});
  		
- 		optionsMenu.addElement(fullScreenButton);
+ 		optionsMenu.addElement(fullScreenPanel);
  		optionsMenu.addElement(volumePanel); 
  		optionsMenu.addElement(backButton); 
 	}
