@@ -246,13 +246,13 @@ public class GameEngine extends AbstractModel implements Runnable{
 			}
 		}
 		if(gameOver) {
-			gameOver(1);
+			gameOver(0);
 		}
 	}
 	
 	/**
 	 * If loss has occured notify client and delegate
-	 * @param type : 1 if player has lost, 2 for opponent loss
+	 * @param type : 0 if game over in solo game, 1 if player has lost, 2 for win
 	 */
 	public void gameOver(int type) {
 		running = false;

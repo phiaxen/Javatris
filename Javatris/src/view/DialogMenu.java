@@ -40,7 +40,6 @@ public class DialogMenu {
 	private final int borderThickness;	
 	private final int elements;
 	private final int titleSize;
-	private boolean isClosed = true;
 	private RootPaneContainer window;
 	
 	/**
@@ -51,6 +50,7 @@ public class DialogMenu {
 	 * @param borderThickness : the border thickness of the dialog panel
 	 * @param title : the title name
 	 * @param titleSize : the size of the title
+	 * @param menuId : used for menues with common elements, set to 0 if the menu is unique
 	 */
 	public DialogMenu(Component com,Dimension panelSize,int elements,int borderThickness,String title, int titleSize) {
 		this.com = com; 
@@ -147,27 +147,21 @@ public class DialogMenu {
 	 * open the menu
 	 */
 	public void open() {
-		isClosed = false;
 		dialog.setLocationRelativeTo((Window)window);
 		window.setGlassPane(darkPane);
 		darkPane.setVisible(true); 
 		dialog.setVisible(true);
 	}
+
 	
 	/**
 	 * Closes the menu
 	 */
 	public void close() {
-		isClosed = true;
 		dialog.setLocationRelativeTo((Window)window);
 		window.setGlassPane(darkPane);
 		darkPane.setVisible(false);
 		dialog.setVisible(false); 
 	}
-	
-	public boolean isClosed() {
-		return isClosed;
-	}
-	
 	
 }

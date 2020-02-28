@@ -82,7 +82,7 @@ public class Game {
 			public void pause()
 			{
 				musicPlayer.stop();
-				openPauseMenu();
+				menuHandler.openPauseMenu();
 			}
 
 			@Override
@@ -90,11 +90,13 @@ public class Game {
 				musicPlayer.stop();
 				
 				switch(type) {
-				case 1: // gameover - loss
-					openGameOverMenu();
+				case 0:	// game over
+					menuHandler.openBasicMenu(0);
+				case 1: // loss
+					menuHandler.openBasicMenu(1);
 					break;
-				case 2: // gameover - win
-					openVictoryMenu();
+				case 2: // win
+					menuHandler.openBasicMenu(2);
 					break;
 				default:
 					break;
@@ -140,18 +142,6 @@ public class Game {
 		
 		frame.setVisible(true);
 
-	}
-	
-	private void openPauseMenu() {
-		menuHandler.openPauseMenu();
-	}
-	
-	private void openGameOverMenu() {
-		menuHandler.openGameOverMenu();
-	}
-	
-	private void openVictoryMenu() {
-		menuHandler.openVictoryMenu();
 	}
 	
 	//Temporary solution with getters

@@ -37,7 +37,7 @@ public class MenuHandler {
 	private Menu startMenu;
 	private Menu creditsMenu;
 	private DialogMenu pauseMenu;
-	private DialogMenu gameOverMenu;
+	private DialogMenu[] basicMenus = new DialogMenu[3];
 	private DialogMenu winMenu;
 	private DialogMenu optionsMenu;
 	private MusicPlayer musicPlayer;
@@ -58,8 +58,10 @@ public class MenuHandler {
 		makeCreditsMenu();
 		makePauseMenu();
 		makeOptionsMenu();
-		makeGameOverMenu();
-		makeVictoryMenu();
+		makeBasicMenu("GAME OVER",0);
+		makeBasicMenu("YOU LOOSE!",1);
+		makeBasicMenu("YOU WIN!",2);
+		
 	}
 	
 	/**
@@ -293,18 +295,18 @@ public class MenuHandler {
 	/**
 	 * Makes the game over menu
 	 */
-	private void makeGameOverMenu() {
+	private void makeBasicMenu(String title,int menuId) {
 		int menuWidth = 300;
 		int menuHeigth = 200;
 		int textSize = 20;
 		
-		gameOverMenu = new DialogMenu(fixedPanel,new Dimension(menuWidth,menuHeigth),2,5,"GAME OVER",40);
+		basicMenus[menuId] = new DialogMenu(fixedPanel,new Dimension(menuWidth,menuHeigth),2,5,title,40);
 		JButton mainMenuButton = new JButton("Main Menu");
 		JButton exitButton = new JButton("Exit");
 		
 		formatButton(mainMenuButton, Color.WHITE, Font.BOLD, textSize);
 		mainMenuButton.addActionListener((ActionEvent e) -> {
-			gameOverMenu.close();
+			basicMenus[menuId].close();
  			toMainMenu();
  		});
 		
@@ -313,51 +315,16 @@ public class MenuHandler {
 			System.exit(0);
 		});
 		
- 		gameOverMenu.addElement(mainMenuButton); 
- 		gameOverMenu.addElement(exitButton); 
+		basicMenus[menuId].addElement(mainMenuButton); 
+		basicMenus[menuId].addElement(exitButton); 
 	}
-	
-	
 	
 	/**
 	 * Opens the Game Over menu
 	 */
-	public void openGameOverMenu() {
-		gameOverMenu.open();
-	}
-	
-	/**
-	 * Makes the game over victory menu
-	 */
-	private void makeVictoryMenu() {
-		int menuWidth = 300;
-		int menuHeigth = 200;
-		int textSize = 20;
-		
-		winMenu = new DialogMenu(fixedPanel,new Dimension(menuWidth,menuHeigth),2,5,"YOU WIN",40);
-		JButton mainMenuButton = new JButton("Main Menu");
-		JButton exitButton = new JButton("Exit");
-		
-		formatButton(mainMenuButton, Color.WHITE, Font.BOLD, textSize);
-		mainMenuButton.addActionListener((ActionEvent e) -> {
-			winMenu.close();
- 			toMainMenu();
- 		});
-		
-		formatButton(exitButton, Color.WHITE, Font.BOLD, textSize);
-		exitButton.addActionListener((ActionEvent e) -> {
-			System.exit(0);
-		});
-		
-		winMenu.addElement(mainMenuButton); 
-		winMenu.addElement(exitButton); 
-	}
-	
-	/**
-	 * Opens the Game Over victory menu
-	 */
-	public void openVictoryMenu() {
-		winMenu.open();
+	public void openBasicMenu(int menuId) {
+		System.out.println("menuID: " + menuId);
+		basicMenus[menuId].open();
 	}
 
 	
