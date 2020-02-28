@@ -245,9 +245,11 @@ public class GameEngine extends AbstractModel implements Runnable{
 				gameOver = true;
 			}
 		}
-		if(gameOver) {
-			gameOver(0);
-		}
+		if(gameOver&&!online) {
+            gameOver(0);
+        }else if(gameOver&&online) {
+            gameOver(1);
+        }
 	}
 	
 	/**
@@ -441,7 +443,10 @@ public class GameEngine extends AbstractModel implements Runnable{
 	
 	public void quit() 
 	{
-		System.exit(0);
+		if(delegate !=null && !running) 
+		{
+			delegate.gameOver(3);
+		}
 	}
 	
 	public LinkedList<Shape> GetNextShapes()

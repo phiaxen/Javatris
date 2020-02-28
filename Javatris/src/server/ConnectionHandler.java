@@ -54,8 +54,8 @@ public class ConnectionHandler implements Runnable
 						start();
 						break;
 					case 12:
-						quit();
-						System.out.println("stop");
+						connectionLost();
+						System.out.println("connection lost");
 						break;
 					case 15:
 						System.out.println("Says " + serverOutput); 
@@ -130,10 +130,10 @@ public class ConnectionHandler implements Runnable
 	/*
 	 *  Uses the delegate interface to call the quit function from game engine and exits the application.
 	 */
-	public void quit() 
+	public void connectionLost() 
 	{
 		if (delegate != null) {
-			delegate.quit();
+			delegate.gameOver(3);
 		}
 	}
 	

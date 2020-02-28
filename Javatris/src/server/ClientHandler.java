@@ -34,8 +34,15 @@ public class ClientHandler implements Runnable
 			while(true) 
 			{
 				String message = reader.readLine();
-				//writer.println("client says:" + message);
-				if (message.startsWith("msg"))
+				writer.println("client says:" + message);
+				if(message.contentEquals("end")) 
+				{
+					exit();
+				}
+					
+					
+
+				else if (message.startsWith("msg"))
 				{
 					int firstSpace = message.indexOf(" ");
 					if (firstSpace != -1) 
@@ -47,15 +54,12 @@ public class ClientHandler implements Runnable
 		}
 		catch( IOException e)
 		{
-			System.out.println("Client disconnected");
-			clients.remove(this);
-			toOther("12");
-			System.out.println("Clients" + clients.size());
+			exit();
 		}
 
 	}
 	
-	/*
+	/**
 	 * Sends a message to all other clients connected to the server
 	 * @param message the message string that is sent
 	 */
@@ -70,7 +74,33 @@ public class ClientHandler implements Runnable
 		}
 	}
 	
-	/*
+	/**
+	 * Removes the ClientHandler from the clients list, and messages the other client that to interrupt the online match,
+	 * then puts the thread to sleep.
+	 */
+	private void exit() 
+	{
+		System.out.println("Client disconnected");
+		clients.remove(this);
+		toOther("12");
+		System.out.println("Clients" + clients.size());
+		
+		try 
+		{
+			while(true) 
+			{
+				Thread.sleep(10000);
+			}
+		}
+		catch (InterruptedException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	/**
 	 * gets the writer of the client handler, is used if the server should directly communication with the clients
 	 * @return returns the clients handlers writer.
 	 */

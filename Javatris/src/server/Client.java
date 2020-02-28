@@ -74,6 +74,15 @@ public class Client
 		output.println("msg " + n);
 	}
 	
+	/*
+	 *  Sends an integer to the other client via the server
+	 *  @param s the message string sent
+	 */
+	public void sendString(String s)
+	{
+		output.println(s);
+	}
+	
 	
 	/*
 	 * returns this instance of the client

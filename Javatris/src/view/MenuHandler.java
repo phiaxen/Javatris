@@ -37,7 +37,7 @@ public class MenuHandler {
 	private Menu startMenu;
 	private Menu creditsMenu;
 	private DialogMenu pauseMenu;
-	private DialogMenu[] basicMenus = new DialogMenu[3];
+	private DialogMenu[] basicMenus = new DialogMenu[4];
 	private DialogMenu winMenu;
 	private DialogMenu optionsMenu;
 	private MusicPlayer musicPlayer;
@@ -61,6 +61,7 @@ public class MenuHandler {
 		makeBasicMenu("GAME OVER",0);
 		makeBasicMenu("YOU LOOSE!",1);
 		makeBasicMenu("YOU WIN!",2);
+		makeBasicMenu("Connection Lost",3);
 		
 	}
 	

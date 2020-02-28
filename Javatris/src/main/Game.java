@@ -98,6 +98,9 @@ public class Game {
 				case 2: // win
 					menuHandler.openBasicMenu(2);
 					break;
+				case 3: //connection error
+					menuHandler.openBasicMenu(3);
+					break;
 				default:
 					break;
 				}
