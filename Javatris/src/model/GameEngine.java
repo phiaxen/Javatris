@@ -510,8 +510,7 @@ public class GameEngine extends AbstractModel implements Runnable{
 		setTime(0);
 		gameOver = false;
 		setFirstShape();
-		fireGameField();
-		resume();
+		start();
 	}
 	
 	/**
