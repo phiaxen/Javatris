@@ -13,7 +13,14 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileSystemView;
 
+/**
+ * MusicPlayer is a class that handles the background songs
+ * @author Tobias Mauritzon
+ * @version 2.0
+ * @since 2020-02-18
+ */
 
+// datumet är inte rätt än
 
 public class MusicPlayer {
 	
@@ -25,15 +32,27 @@ public class MusicPlayer {
 	
 	private boolean fileLoaded = false;
 	
+	/**
+	 * This is the constructor for MusicPlayer.
+	 * @param choice 1-3 for prepared songs else you get an empty constructor and 
+	 * you need to use playFile
+	 * @return Nothing.
+	*/
 	public MusicPlayer (int choice) {		
 		switch(choice) {
 		case 1: loadMusic("/songs/Tetris Game Theme1.wav"); break;
 		case 2: loadMusic("/songs/Tetris99 Game Theme1.wav"); break;
 		case 3: loadMusic("/songs/08 Dave Rodgers - Deja Vu.wav"); break;
+		default: break;
 		}	
 	}
 	
-	// funkar
+	 /**
+	 * loadMusic loads and starts the song.
+	 * @param fp is the file path to the song as a string
+	 * @return Nothing.
+	 * @exception if file path is incorrect
+	 */
 	public void loadMusic(String fp) {
 		
 		if(fileLoaded){
@@ -60,14 +79,24 @@ public class MusicPlayer {
 		setVolume(0.4f); //start volume
 	}
 	
+		
+	/**
+	 * play restarts the currently playing song from the stopped point.
+	 * @param Empty
+	 * @return Nothing.
+	 * @exception if no clip has been created
+	 */	
 	public void play() {
 		System.out.println("PLAY SONG");
 		audioClip.loop(Clip.LOOP_CONTINUOUSLY);  
 	}
-	/*	borde kanske slå ihop denna med playMusic men det verkade jobbigare
-	 *  än vad det var vårt.
-	 * 
-	 */
+
+
+	 /**
+	 * playMusicFile loads and starts the song.
+	 * @param audioFile is the File you want to load
+	 * @return Nothing.
+	 */	
 	public void playMusicFile(File audioFile) {										 	
 	
 		if(fileLoaded){
@@ -94,6 +123,12 @@ public class MusicPlayer {
 		
 	}
 	
+	/**
+	* stop stops the currently playing song.
+	* @param Empty
+	* @return Nothing.
+	* @exception if no clip has been created
+	*/
 	public void stop() {
 		System.out.println("STOP SONG");
 		if(fileLoaded) {
@@ -105,11 +140,21 @@ public class MusicPlayer {
 			}
 	}
 	
+	/**
+	 * restart starts the current song over from the beginning
+	 * @param Empty
+	 * @return Nothing
+	 */	
 	public void restart() {
 		audioClip.setFramePosition(0);
 		play();
 	}
 	
+	/**
+	 * getVolume gets the volume of the current song
+	 * @param Empty
+	 * @return type float volume between 0 and 1 in floating as point.
+	 */
 	private float getVolume() {
 		if(fileLoaded) {
 	    
@@ -121,7 +166,12 @@ public class MusicPlayer {
 	    }
 		return 0f;
 	}
-	
+		
+	/**
+	 * setVolume sets the volume of the current song
+	 * @param Empty
+	 * @return volume is a floating point between 0 and 1.
+	 */
 	public void setVolume(float volume){
 		if(fileLoaded) {
 			if (volume < 0f || volume > 1f) {
@@ -134,6 +184,11 @@ public class MusicPlayer {
 		
 	}
 	
+	/**
+	 * incVolume increases the volume of the current song in 0.05 steps
+	 * @param Empty
+	 * @return Nothing
+	 */
 	public void incVolume() {
 		if(fileLoaded) {
 			float volume = getVolume();
@@ -155,6 +210,11 @@ public class MusicPlayer {
 
 	}
 	
+	/**
+	 * decVolume decreases the volume of the current song in 0.05 steps
+	 * @param Empty
+	 * @return Nothing
+	 */
 	public void decVolume() {
 		if(fileLoaded) {
 			float volume = getVolume();
@@ -176,6 +236,11 @@ public class MusicPlayer {
 		}
 	}
 	
+	/**
+	 * mute mutes the current song
+	 * @param Empty
+	 * @return Nothing
+	 */
 	public void mute() {
 		if(fileLoaded) {
 			float volume = 0.0f;			
@@ -185,10 +250,12 @@ public class MusicPlayer {
 
 	}
 
-	/*	Om du kallar på denna och har en pause eller breakpoint 
-	 * 	kommer rutan kanske öppnas i bakgrunden och man måste
-	 * 	minimera sina fönster
-	 */
+	/**
+	 * playFile Opens a JFileChooser and sends your selected .wav file to playMusicFile
+	 * this is a way to lad local sound files in to the game
+	 * @param Empty
+	 * @return Nothing
+	 */	
 	public void playFile() {
 		
 		JFileChooser j = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory()); 
