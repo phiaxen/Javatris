@@ -154,7 +154,7 @@ public class Game {
 	}
 	
 	private void openVictoryMenu() {
-		menuHandler.openVictoryMenu();
+//		menuHandler.openVictoryMenu();
 	}
 	
 	//Temporary solution with getters

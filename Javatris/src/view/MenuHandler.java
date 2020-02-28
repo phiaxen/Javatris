@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -10,6 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JSlider;
 import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
 import javax.swing.text.SimpleAttributeSet;
@@ -34,7 +36,7 @@ public class MenuHandler {
 	private Menu creditsMenu;
 	private DialogMenu pauseMenu;
 	private DialogMenu gameOverMenu;
-	private DialogMenu winMenu;
+	private DialogMenu optionsMenu;
 	
 	public MenuHandler(Game game,JFrame frame, JPanel fixedPanel) {
 		this.game = game;
@@ -49,6 +51,9 @@ public class MenuHandler {
 	private void loadMenus() {
 		makeStartMenu();
 		makeCreditsMenu();
+		makePauseMenu();
+		makeOptionsMenu();
+		makeGameOverMenu();
 	}
 	
 	/**
@@ -59,25 +64,26 @@ public class MenuHandler {
 		startMenu = new Menu(new Dimension(700,820),0,5,0.25f,0.75f,Color.BLACK);
 		startMenu.addTitle("/images/javatris1.png");
 
-		JButton startButton = new JButton("PLAY");
+		JButton playButton = new JButton("PLAY");
 		JButton onlineButton = new JButton("ONLINE");
 		JButton loadButton = new JButton("LOAD");
 		JButton exitButton = new JButton("EXIT");
 		JButton credits = new JButton("CREDITS");
 
-		
-		String font = "Arial";
-		formatButton(startButton, Color.WHITE, Font.BOLD, 90);
-		startButton.addActionListener((ActionEvent e) -> {
+		//play
+		formatButton(playButton, Color.WHITE, Font.BOLD, 90);
+		playButton.addActionListener((ActionEvent e) -> {
 			startMenu.close();
 			game.startGame();
 		});
 		
+		//online
 		formatButton(onlineButton, Color.WHITE, Font.BOLD, 50);
 		onlineButton.addActionListener((ActionEvent e) -> {
 			game.startOnlineGame();
 		});
 		
+		//load
 		formatButton(loadButton, Color.WHITE, Font.BOLD, 50);
 		loadButton.addActionListener((ActionEvent e) -> {
 			startMenu.close();
@@ -85,38 +91,26 @@ public class MenuHandler {
 			game.loadGame();
 		});
 		
+		//exit
 		formatButton(exitButton, Color.WHITE, Font.BOLD, 40);
 		exitButton.addActionListener((ActionEvent e) -> {
 			System.exit(0);
 		});
 		
+		//credits
 		formatButton(credits, Color.GRAY, Font.BOLD, 20);
 		credits.addActionListener((ActionEvent e) -> {
-			rollCredits();
+			startMenu.close();
+			openCreditsMenu();
 		});
 		
 		
-		startMenu.addElementBot(startButton); 
+		startMenu.addElementBot(playButton); 
 		startMenu.addElementBot(onlineButton); 
 		startMenu.addElementBot(loadButton);
 		startMenu.addElementBot(exitButton);
 		startMenu.addElementBot(credits);
 		fixedPanel.add(startMenu);
-	}
-	
-	/**
-	 * Rolls Credits
-	 */
-	private void rollCredits() {
-		startMenu.close();
-		creditsMenu.open();
-	}
-	
-	/**
-	 * Closes the main menu
-	 */
-	public void closeStartMenu() {
-		startMenu.close();
 	}
 	
 	/*
@@ -129,105 +123,164 @@ public class MenuHandler {
 	}
 	
 	/**
+	 * Closes the main menu
+	 */
+	public void closeStartMenu() {
+		startMenu.close();
+	}
+	
+	/*
+	 * Makes the pause menu
+	 */
+	private void makePauseMenu(){
+		int menuWidth = 200;
+		int menuHeigth = 250;
+		int textSize = menuWidth/10;
+		
+		pauseMenu = new DialogMenu(fixedPanel,new Dimension(menuWidth,menuHeigth),4,5,"PAUSE",40);
+ 		JButton resumeButton = new JButton("Resume");
+ 		JButton optionsButton = new JButton("Options");
+ 		JButton saveButton = new JButton("Save");
+ 		JButton mainMenuButton = new JButton("Main Menu");
+ 		
+ 		//resume
+ 		formatButton(resumeButton, Color.WHITE, Font.BOLD, textSize);
+ 		resumeButton.addActionListener((ActionEvent e) -> {
+ 			pauseMenu.close();
+ 			game.resumeGame();
+ 		});
+ 		
+ 		//options
+ 		formatButton(optionsButton, Color.WHITE, Font.BOLD, textSize);
+ 		optionsButton.addActionListener((ActionEvent e) -> {
+ 			pauseMenu.close();
+ 			optionsMenu.open();
+ 		});
+ 		
+ 		//save
+ 		formatButton(saveButton, Color.WHITE, Font.BOLD, textSize);
+ 		saveButton.addActionListener((ActionEvent e) -> {
+ 			game.saveGame();
+ 		});
+ 		
+ 		//main menu
+ 		formatButton(mainMenuButton, Color.WHITE, Font.BOLD, textSize);
+ 		mainMenuButton.addActionListener((ActionEvent e) -> {
+ 			toMainMenu();
+ 			pauseMenu.close();
+ 		});
+ 		
+ 		pauseMenu.addElement(resumeButton); 
+ 		pauseMenu.addElement(optionsButton); 
+ 		pauseMenu.addElement(saveButton); 
+ 		pauseMenu.addElement(mainMenuButton); 
+	}
+	
+	/**
+	 * Opens the pause menu
+	 */
+	public void openPauseMenu() {
+		pauseMenu.open();
+	}
+	
+	/**
 	 * Closes the pause menu
 	 */
 	public void closePauseMenu() {
 		pauseMenu.close();
 	}
 	
-	/*
-	 * Opens the pause menu
+	/**
+	 * Makes the options menu
 	 */
-	public void openPauseMenu(){
+	public void makeOptionsMenu(){
 		int menuWidth = 200;
 		int menuHeigth = 250;
 		int textSize = menuWidth/10;
 		
-		pauseMenu = new DialogMenu(fixedPanel,new Dimension(menuWidth,menuHeigth),3,5,textSize, "PAUSE",40);
- 		JButton resumeButton = new JButton("Resume");
- 		JButton saveButton = new JButton("Save");
- 		JButton mainMenuButton = new JButton("Main Menu");
+		optionsMenu = new DialogMenu(fixedPanel,new Dimension(menuWidth,menuHeigth),3,5,"OPTIONS",40);
  		
- 		formatButton(resumeButton, Color.WHITE, Font.BOLD, 30);
- 		resumeButton.addActionListener((ActionEvent e) -> {
- 			pauseMenu.close();
- 			game.resumeGame();
+		JButton fullScreenButton = new JButton("Full Screen");
+		JPanel volumePanel = new JPanel(new BorderLayout());
+		JLabel sliderLabel = new JLabel("Music Volume",SwingConstants.CENTER);
+		JSlider volumeSlider = new JSlider(JSlider.HORIZONTAL, 0, 3, 1);
+ 		JButton backButton = new JButton("Back");
+
+ 		//volume panel
+ 		volumePanel.setBackground(Color.BLACK);
+ 		
+ 		//volume slider
+ 		volumeSlider.setMajorTickSpacing(10);
+ 	   	volumeSlider.setMinorTickSpacing(1);
+ 	 	volumeSlider.setPaintTicks(false);
+ 		volumeSlider.setPaintLabels(false);
+ 		volumeSlider.setSnapToTicks(true);
+ 		volumeSlider.setBackground(Color.BLACK);
+ 		
+ 		//slider label
+ 		sliderLabel.setFont(new Font("Arial", Font.BOLD, 15));
+ 		sliderLabel.setForeground(Color.WHITE);
+ 		sliderLabel.setBackground(Color.BLACK);
+ 		
+ 		volumePanel.add(sliderLabel,BorderLayout.NORTH);
+ 		volumePanel.add(volumeSlider,BorderLayout.SOUTH);
+ 		
+ 		formatButton(fullScreenButton, Color.WHITE, Font.BOLD, textSize);
+ 		fullScreenButton.addActionListener((ActionEvent e) -> {
+ 			frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+ 			frame.dispose();
+ 			frame.setUndecorated(true);
+ 			frame.setVisible(true);
+ 			optionsMenu.open();
  		});
  		
- 		formatButton(saveButton, Color.WHITE, Font.BOLD, 30);
- 		saveButton.addActionListener((ActionEvent e) -> {
- 			game.saveGame();
+ 		formatButton(backButton, Color.WHITE, Font.BOLD, textSize);
+ 		backButton.addActionListener((ActionEvent e) -> {
+ 			optionsMenu.close();
+ 			pauseMenu.open();
  		});
  		
- 		formatButton(mainMenuButton, Color.WHITE, Font.BOLD, 30);
- 		mainMenuButton.addActionListener((ActionEvent e) -> {
- 			toMainMenu();
- 		});
- 		
- 		pauseMenu.addButton(resumeButton); 
- 		pauseMenu.addButton(saveButton); 
- 		pauseMenu.addButton(mainMenuButton); 
- 		pauseMenu.pack();	
- 	
+ 		optionsMenu.addElement(fullScreenButton);
+ 		optionsMenu.addElement(volumePanel); 
+ 		optionsMenu.addElement(backButton); 
 	}
 	
+	/**
+	 * Makes the game over menu
+	 */
+	private void makeGameOverMenu() {
+		int menuWidth = 300;
+		int menuHeigth = 200;
+		int textSize = 20;
+		
+		gameOverMenu = new DialogMenu(fixedPanel,new Dimension(menuWidth,menuHeigth),2,5,"GAME OVER",40);
+		JButton mainMenuButton = new JButton("Main Menu");
+		JButton exitButton = new JButton("Exit");
+		
+		formatButton(mainMenuButton, Color.WHITE, Font.BOLD, textSize);
+		mainMenuButton.addActionListener((ActionEvent e) -> {
+			gameOverMenu.close();
+ 			toMainMenu();
+ 		});
+		
+		formatButton(exitButton, Color.WHITE, Font.BOLD, textSize);
+		exitButton.addActionListener((ActionEvent e) -> {
+			System.exit(0);
+		});
+		
+ 		gameOverMenu.addElement(mainMenuButton); 
+ 		gameOverMenu.addElement(exitButton); 
+	}
 	
 	/**
 	 * Opens the Game Over menu
 	 */
 	public void openGameOverMenu() {
-		int menuWidth = 300;
-		int menuHeigth = 200;
-		int textSize = 20;
-		
-		gameOverMenu = new DialogMenu(fixedPanel,new Dimension(menuWidth,menuHeigth),2,5,textSize,"GAME OVER",40);
-		JButton mainMenuButton = new JButton("Main Menu");
-		JButton exitButton = new JButton("Exit");
-		
-		formatButton(mainMenuButton, Color.WHITE, Font.BOLD, 30);
-		mainMenuButton.addActionListener((ActionEvent e) -> {
- 			toMainMenu();
- 		});
-		
-		formatButton(exitButton, Color.WHITE, Font.BOLD, 30);
-		exitButton.addActionListener((ActionEvent e) -> {
-			System.exit(0);
-		});
-		
- 		gameOverMenu.addButton(mainMenuButton); 
- 		gameOverMenu.addButton(exitButton); 
- 		gameOverMenu.pack();	
+		gameOverMenu.open();
 	}
 	
 	/**
-	 * Opens the Game Over menu
-	 */
-	public void openVictoryMenu() {
-		int menuWidth = 300;
-		int menuHeigth = 200;
-		int textSize = 20;
-		
-		winMenu = new DialogMenu(fixedPanel,new Dimension(menuWidth,menuHeigth),2,5,textSize,"YOU WIN!",40);
-		JButton mainMenuButton = new JButton("Main Menu");
-		JButton exitButton = new JButton("Exit");
-		
-		formatButton(mainMenuButton, Color.WHITE, Font.BOLD, 30);
-		mainMenuButton.addActionListener((ActionEvent e) -> {
- 			toMainMenu();
- 		});
-		
-		formatButton(exitButton, Color.WHITE, Font.BOLD, 30);
-		exitButton.addActionListener((ActionEvent e) -> {
-			System.exit(0);
-		});
-		
-		winMenu.addButton(mainMenuButton); 
-		winMenu.addButton(exitButton); 
-		winMenu.pack();	
-	}
-	
-	/**
-	 * Creates the Credits screen
+	 * Creates the credits screen
 	 */
 	private void makeCreditsMenu() {
 		creditsMenu = new Menu(new Dimension(700,820),2,1,0.8f,0.2f,Color.BLACK);
@@ -238,7 +291,9 @@ public class MenuHandler {
 		back.setBackground(Color.BLACK);
 		back.setBorderPainted(false);
 		back.setFocusPainted(false); 
+		
 		back.addActionListener((ActionEvent e) -> {
+			creditsMenu.close();
 			toMainMenu();
 		});
 		
@@ -273,6 +328,12 @@ public class MenuHandler {
 		fixedPanel.add(creditsMenu);
 	}
 	
+	/**
+	 * Opens credits menu
+	 */
+	private void openCreditsMenu() {
+		creditsMenu.open();
+	}
 	
 	/**
 	 * Opens the dialog to get server info
@@ -293,15 +354,6 @@ public class MenuHandler {
 	 * Returns to the main menu
 	 */
 	private void toMainMenu() {
-		if(pauseMenu !=null)
-			pauseMenu.close();
-		if(creditsMenu !=null)
-			creditsMenu.close();
-		if(gameOverMenu !=null)
-			gameOverMenu.close();
-		if(winMenu !=null)
-			winMenu.close();
-		
 		game.removeGamePanel();
 		game.setOffline();
 		startMenu.open();

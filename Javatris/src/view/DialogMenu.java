@@ -30,38 +30,34 @@ public class DialogMenu {
 	private static final int ALPHA = 180; //0-255
 	private static final Color GP_BG = new Color(0, 0, 0, ALPHA); //for glassPane 
 	private JPanel panel;	
-	private JPanel titlePanel;
-	private JPanel buttonsPanel;
+	private JPanel topPanel;
+	private JPanel bottomPanel;
+	private JPanel darkPane;
 	private JDialog dialog;
 	private Component com;
 	private final Dimension panelSize;
 	private final String title;
-	private final int bThickness;	//border thickness
-	private final int buttons;
-	private final int buttonsTextSize;
+	private final int borderThickness;	
+	private final int elements;
 	private final int titleSize;
+	private boolean isClosed = true;
+	private RootPaneContainer window;
 	
 	/**
-	 * Creates a dialog menu. 
-	 * After adding buttons to this menu, use the pack function of this class.
-	 * When this class is instantiated, the menu will appear. 
-	 * This means that the menu will open when an object of this class created.
-	 * To close the menu, use the close function of this class.
+	 * Creates a dialog menu.
 	 * @param com : the component to which the dialog box should be attached to
 	 * @param panelSize : the dimensions of the dialog panel
-	 * @param buttons : the amount of buttons 
-	 * @param bThickness : the border thickness of the dialog panel
-	 * @param buttonsTextSize : the size of the text for each button
+	 * @param elements : the amount of elements on the menu 
+	 * @param borderThickness : the border thickness of the dialog panel
 	 * @param title : the title name
 	 * @param titleSize : the size of the title
 	 */
-	public DialogMenu(Component com,Dimension panelSize,int buttons,int bThickness,int buttonsTextSize,String title, int titleSize) {
-		this.bThickness = bThickness;
-		this.panelSize = panelSize;
+	public DialogMenu(Component com,Dimension panelSize,int elements,int borderThickness,String title, int titleSize) {
 		this.com = com; 
+		this.panelSize = panelSize;
+		this.elements = elements;
+		this.borderThickness = borderThickness;
 		this.title = title;
-		this.buttons = buttons;
-		this.buttonsTextSize = buttonsTextSize;
 		this.titleSize = titleSize;
 		init();
 	}
@@ -75,76 +71,40 @@ public class DialogMenu {
 		panel = new JPanel();
 		panel.setBackground(panelColor);
 		panel.setPreferredSize(panelSize);
-		panel.setBorder(BorderFactory.createLineBorder(Color.GRAY,bThickness));
+		panel.setBorder(BorderFactory.createLineBorder(Color.GRAY,borderThickness));
 		
 		// a panel for title(1/4 of whole panel)
-		titlePanel = new JPanel();
-		int tpw = (int)panelSize.getWidth()-bThickness*2;	//title panel width
+		topPanel = new JPanel();
+		int tpw = (int)panelSize.getWidth()-borderThickness*2;	//title panel width
 		int tph = (int)panelSize.getHeight()/4;				//title panel height
 		int tpbt = 10;										//title panel border thickness
-		titlePanel.setBackground(panelColor);
-		titlePanel.setBorder(new EmptyBorder(tpbt,tpbt,tpbt,tpbt));
-		titlePanel.setLayout(new GridBagLayout());
-		titlePanel.setPreferredSize(new Dimension(tpw,tph));
+		topPanel.setBackground(panelColor);
+		topPanel.setBorder(new EmptyBorder(tpbt,tpbt,tpbt,tpbt));
+		topPanel.setLayout(new GridBagLayout());
+		topPanel.setPreferredSize(new Dimension(tpw,tph));
 		
 		// the title on the dialog menu
 		JLabel Lbl = new JLabel(title);
 		Lbl.setForeground(Color.WHITE);
 		Lbl.setFont(new Font("Arial", Font.BOLD,titleSize));
-		titlePanel.add(Lbl);
+		topPanel.add(Lbl);
 		
-		// a panel for buttons(3/4 of whole panel)
-		buttonsPanel = new JPanel();
+		// a panel for elements(3/4 of whole panel)
+		bottomPanel = new JPanel();
 		int bpbt = 10;	//buttons pane border thickness
 		int vgap = (int)panelSize.getHeight()/40;	//vertical gap
 		int bpw = tpw;	//buttons pane width
-		int bph = (int)panelSize.getHeight()*3/4 -bThickness*2 -bpbt;	//buttons pane height
-		buttonsPanel.setPreferredSize(new Dimension(bpw,bph));
-		buttonsPanel.setBackground(panelColor);
-		buttonsPanel.setBorder(new EmptyBorder(bpbt,bpbt,bpbt,bpbt));
-		buttonsPanel.setLayout(new GridLayout(buttons,1,1,vgap));
-	}
- 
-	/**
-	 * Closes the menu
-	 */
-	public void close() {
-		Window winn = SwingUtilities.getWindowAncestor(panel);
-		winn.dispose();
-	}
-	
-	/**
-	 * Adds a button to the menu
-	 * @param button : the button to be added to this menu
-	 */
-	public void addButton(JButton button) {
-		modifyButton(button);
-		buttonsPanel.add(button);
-	}
-	
-	/**
-	 * Modifies a button to fit the overall design of the menu.
-	 * @param button : the button to be modified
-	 */
-	private void modifyButton(JButton button) {
-		button.setFont(new Font("Arial", Font.BOLD, buttonsTextSize));
-		button.setForeground(Color.WHITE);
-		button.setBackground(panelColor);
-		button.setBorderPainted(false);
-		button.setFocusPainted(false); 
-	}
-	
-	
-	/**
-	 * Adds the subPanels to the main panel and creates a JDialog with a glass pane
-	 */
-	public void pack() {
+		int bph = (int)panelSize.getHeight()*3/4 -borderThickness*2 -bpbt;	//buttons pane height
+		bottomPanel.setPreferredSize(new Dimension(bpw,bph));
+		bottomPanel.setBackground(panelColor);
+		bottomPanel.setBorder(new EmptyBorder(bpbt,bpbt,bpbt,bpbt));
+		bottomPanel.setLayout(new GridLayout(elements,1,1,vgap));
 		
-		panel.add(titlePanel);
-		panel.add(buttonsPanel);
+		panel.add(topPanel);
+		panel.add(bottomPanel);
 		
 		// create glass pane
-		JPanel darkPane = new JPanel() {
+		darkPane = new JPanel() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -158,19 +118,55 @@ public class DialogMenu {
      
      	darkPane.setOpaque(false); 
      	darkPane.setBackground(GP_BG); 
-     
-     	// a root pane container containing the JPanel(com) in the main frame
-     	RootPaneContainer window = (RootPaneContainer) SwingUtilities.getWindowAncestor(com);
-     	window.setGlassPane(darkPane);  
-     	darkPane.setVisible(true);  
      	
+     	dialogSetup();
+	}
+	
+	/**
+	 * Create a dialog
+	 */
+	private void dialogSetup() {
+		window = (RootPaneContainer) SwingUtilities.getWindowAncestor(com);
+	     
      	//make a JDialog containing the panel made in this class(panel) with the dark pane
      	dialog = new JDialog((Window)window, "", ModalityType.APPLICATION_MODAL);
      	dialog.getContentPane().add(panel); 
      	dialog.setUndecorated(true); // remove borders
      	dialog.pack(); 
-     	dialog.setLocationRelativeTo((Window)window); //center dialog on panel
-     	dialog.setVisible(true); 
-     	darkPane.setVisible(false); 	
 	}
+ 
+	/**
+	 * Adds an element to the menu
+	 * @param element : the element to be added to this menu
+	 */
+	public void addElement(Component element) {
+		bottomPanel.add(element);
+	}
+	
+	/**
+	 * open the menu
+	 */
+	public void open() {
+		isClosed = false;
+		dialog.setLocationRelativeTo((Window)window);
+		window.setGlassPane(darkPane);
+		darkPane.setVisible(true); 
+		dialog.setVisible(true);
+	}
+	
+	/**
+	 * Closes the menu
+	 */
+	public void close() {
+		isClosed = true;
+		dialog.setLocationRelativeTo((Window)window);
+		window.setGlassPane(darkPane);
+		darkPane.setVisible(false);
+		dialog.setVisible(false); 
+	}
+	
+	public boolean isClosed() {
+		return isClosed;
+	}
+	
 }
