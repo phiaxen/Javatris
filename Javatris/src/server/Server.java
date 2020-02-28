@@ -24,7 +24,7 @@ public class Server
 	//Listan med de olika ClientHandlers så att server kan komma åt dem enkelt
 	private static ArrayList<ClientHandler> clients = new ArrayList<>();
 	//Begränsar antalet uppkopplade Clienter till 2
-	private static ExecutorService pool = Executors.newFixedThreadPool(2);
+	//private static ExecutorService pool = Executors.newFixedThreadPool(2);
 	//A varaible that is false before the game has started, when both clients are connected it's set to true
 	private static Boolean running = false;
 	
@@ -72,6 +72,7 @@ public class Server
 			}
 			else if (clients.size() < 2) 
 			{
+				running = false;
 				System.out.println("Waiting for Client");
 				//Server get a new client connection
 				Socket client = sSocket.accept();
@@ -82,8 +83,9 @@ public class Server
 				clients.add(clientThread);
 				
 				//Starts the thread with the new client
-				pool.execute(clientThread);
+				new Thread(clientThread).start();
 			}
+			System.out.println("Clients" + clients.size());
 		}
 
 	}

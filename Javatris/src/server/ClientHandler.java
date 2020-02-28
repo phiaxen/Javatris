@@ -50,6 +50,7 @@ public class ClientHandler implements Runnable
 			System.out.println("Client disconnected");
 			clients.remove(this);
 			toOther("12");
+			System.out.println("Clients" + clients.size());
 		}
 
 	}

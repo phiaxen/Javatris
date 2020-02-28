@@ -64,52 +64,6 @@ public class Client
 			e.printStackTrace();
 		}
 	}
-
-	/*
-	public static void main(String[] args) throws UnknownHostException, IOException 
-	{
-		Socket cSocket = new Socket(IP, PORT);
-
-		BufferedReader keyboard = new BufferedReader(new InputStreamReader(System.in));
-
-		
-
-		
-		while (true) 
-		{
-			System.out.println("--");
-			String cmd = keyboard.readLine();
-			
-			if (cmd.equals("exit"))
-			{
-				 break;
-			}
-			else if (cmd.equals("ready")) 
-			{
-				sendInt(11);
-			}
-			else if (cmd.equals("lose")) 
-			{
-				sendInt(10);
-			}
-			else if (cmd.startsWith("add")) 
-			{
-				int firstSpace = cmd.indexOf(" ");
-				if (firstSpace != -1) 
-				{
-					sendInt(Integer.parseInt(cmd.substring(firstSpace+1)));
-				}
-			}
-			else 
-			{
-				output.println(cmd);
-			}
-
-		}
-		
-
-		
-	}
 	
 	/*
 	 *  Sends an integer to the other client via the server
@@ -120,18 +74,6 @@ public class Client
 		output.println("msg " + n);
 	}
 	
-	/*
-	 * Closes the socket for server communcation
-	 */
-	private void exit() 
-	{
-		try {
-			socket.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
 	
 	/*
 	 * returns this instance of the client
