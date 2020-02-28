@@ -247,7 +247,7 @@ public class Game {
 		{
 			String[] adress = code.split(":");
 			
-			gameEngine.client = new Client(gameEngine, adress[0], Integer.parseInt(adress[1]));//initClient(adress[0], Integer.parseInt(adress[1]));
+			initClient(adress[0], Integer.parseInt(adress[1]));
 			gameEngine.setOnline(true);
 			startGame();
 		}

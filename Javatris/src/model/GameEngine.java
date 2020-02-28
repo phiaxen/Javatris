@@ -30,7 +30,7 @@ public class GameEngine extends AbstractModel implements Runnable{
 	private Shape oldShape;
 	private Shape shapes[] = new Shape[7];	//An array that contains 7 different shapes
 	private Board board;	
-	public Client client;
+	private Client client;
 	private Boolean online; //Change this to true for multiplayer 
 	
 	//points and levelup things
