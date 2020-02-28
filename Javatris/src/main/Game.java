@@ -72,11 +72,11 @@ public class Game {
 		
 		gameEngine.delegate = new GameEngine.Delegate() 
 		{
-//			@Override
-//			public Client getClient()
-//			{
-//				return client.getClient();
-//			}
+			@Override
+			public Client getClient()
+			{
+				return client.getClient();
+			}
 			
 			@Override
 			public void pause()
@@ -154,7 +154,7 @@ public class Game {
 	}
 	
 	private void openVictoryMenu() {
-//		menuHandler.openVictoryMenu();
+		menuHandler.openVictoryMenu();
 	}
 	
 	//Temporary solution with getters

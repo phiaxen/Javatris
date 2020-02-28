@@ -1,3 +1,4 @@
+
 package model;
 import server.*;
 import java.util.TimerTask;
@@ -20,7 +21,7 @@ public class GameEngine extends AbstractModel implements Runnable{
 	 * Interface that handles the communication with the game engine.
 	 */
 	public interface Delegate {
-		//Client getClient();
+		Client getClient();
 		void pause();
 		void gameOver(int type);
 	}
@@ -332,12 +333,10 @@ public class GameEngine extends AbstractModel implements Runnable{
 			
 		}else {
 			if(this.delegate != null) 
-			{
-				//client = this.delegate.getClient();	
+			{	System.out.println("got client");
+				client = this.delegate.getClient();	
 			}
-			//client = this.delegate.getClient();	
 		}
-
 	}
 	
 	public synchronized void startOnline() 
@@ -366,9 +365,11 @@ public class GameEngine extends AbstractModel implements Runnable{
 	}
 	
 	public void resume() {
-		synchronized(thread) {
-			running = true;
-			thread.notify();
+		if(!online) {
+			synchronized(thread) {
+				running = true;
+				thread.notify();
+			}
 		}
 	}
 	
@@ -526,3 +527,4 @@ public class GameEngine extends AbstractModel implements Runnable{
 		firePropertyChange("next shape", oldShapes, nextShapes);
 	}
 }
+

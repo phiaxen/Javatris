@@ -36,6 +36,7 @@ public class MenuHandler {
 	private Menu creditsMenu;
 	private DialogMenu pauseMenu;
 	private DialogMenu gameOverMenu;
+	private DialogMenu winMenu;
 	private DialogMenu optionsMenu;
 	
 	public MenuHandler(Game game,JFrame frame, JPanel fixedPanel) {
@@ -54,6 +55,7 @@ public class MenuHandler {
 		makePauseMenu();
 		makeOptionsMenu();
 		makeGameOverMenu();
+		makeVictoryMenu();
 	}
 	
 	/**
@@ -272,12 +274,49 @@ public class MenuHandler {
  		gameOverMenu.addElement(exitButton); 
 	}
 	
+	
+	
 	/**
 	 * Opens the Game Over menu
 	 */
 	public void openGameOverMenu() {
 		gameOverMenu.open();
 	}
+	
+	/**
+	 * Makes the game over victory menu
+	 */
+	private void makeVictoryMenu() {
+		int menuWidth = 300;
+		int menuHeigth = 200;
+		int textSize = 20;
+		
+		winMenu = new DialogMenu(fixedPanel,new Dimension(menuWidth,menuHeigth),2,5,"YOU WIN",40);
+		JButton mainMenuButton = new JButton("Main Menu");
+		JButton exitButton = new JButton("Exit");
+		
+		formatButton(mainMenuButton, Color.WHITE, Font.BOLD, textSize);
+		mainMenuButton.addActionListener((ActionEvent e) -> {
+			winMenu.close();
+ 			toMainMenu();
+ 		});
+		
+		formatButton(exitButton, Color.WHITE, Font.BOLD, textSize);
+		exitButton.addActionListener((ActionEvent e) -> {
+			System.exit(0);
+		});
+		
+		winMenu.addElement(mainMenuButton); 
+		winMenu.addElement(exitButton); 
+	}
+	
+	/**
+	 * Opens the Game Over victory menu
+	 */
+	public void openVictoryMenu() {
+		winMenu.open();
+	}
+
 	
 	/**
 	 * Creates the credits screen
