@@ -92,6 +92,7 @@ public class Game {
 				switch(type) {
 				case 0:	// game over
 					menuHandler.openBasicMenu(0);
+					break;
 				case 1: // loss
 					menuHandler.openBasicMenu(1);
 					break;
