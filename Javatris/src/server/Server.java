@@ -33,7 +33,7 @@ public class Server
 	private static JPanel buttonPanel; 
 	private static JButton exitButton;
 	
-
+	private static Boolean redo = false;
 	
 	public static void main(String[] args) throws IOException 
 	{
@@ -58,6 +58,10 @@ public class Server
 		//O�ndlig Loop som k�r servern
 		while(true) 
 		{
+			
+			if(redo) {
+				clients = new ArrayList<>();
+			}
 			//Sever looks for input if both the clients are connected
 			if(clients.size() == 2 && !running) 
 			{
@@ -69,9 +73,11 @@ public class Server
 				//messages the clients to start running
 				messageClients(11);
 				running = true;
+				redo = true;
 			}
 			else if (clients.size() < 2) 
 			{
+				redo = false;
 				running = false;
 				System.out.println("Waiting for Client");
 				//Server get a new client connection
