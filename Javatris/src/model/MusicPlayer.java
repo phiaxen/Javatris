@@ -206,14 +206,15 @@ public class MusicPlayer {
 	 * @return volume is a floating point between 0 and 1.
 	 */
 	public void setVolume(float volume){
-		if(fileLoaded) {
+		
 			if (volume < 0f || volume > 1f) {
 				throw new IllegalArgumentException("Volume not valid: " + volume);}
 			else {
 				FloatControl gainControl = (FloatControl) audioClip.getControl(FloatControl.Type.MASTER_GAIN);        
 				gainControl.setValue(20f * (float) Math.log10(volume));
+				gobalVolume = volume;
 			}
-		}
+		
 		
 	}
 	
