@@ -5,6 +5,9 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.awt.KeyboardFocusManager;
+import java.io.IOException;
+import java.net.Socket;
+
 import javax.imageio.IIOException;
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
@@ -245,13 +248,18 @@ public class Game {
 		{
 			try {
 			String[] adress = code.split(":");
+				try {
+					Socket socket = new Socket(adress[0], Integer.parseInt(adress[1]));
+					initClient(adress[0], Integer.parseInt(adress[1]));
+					gameEngine.setOnline(true);
+					startGame();
+				}catch(IOException e){
+					JOptionPane.showMessageDialog(null, "Wrong ip or port type"); 
+				}
 			
-			initClient(adress[0], Integer.parseInt(adress[1]));
-			gameEngine.setOnline(true);
-			startGame();
 			}
 			catch(ArrayIndexOutOfBoundsException | NumberFormatException e) {
-				JOptionPane.showMessageDialog(null, "Wrong type");
+				JOptionPane.showMessageDialog(null, "Wrong format");
 			}
 		}
 

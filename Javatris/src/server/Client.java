@@ -69,7 +69,7 @@ public class Client
 			e.printStackTrace();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			JOptionPane.showMessageDialog(null, "Wrong type"); 			//här kan man kanske quitta
+			JOptionPane.showMessageDialog(null, "Wrong type Client"); 			//här kan man kanske quitta
 			e.printStackTrace();
 		} 
 	}
