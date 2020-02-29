@@ -199,10 +199,10 @@ public class MenuHandler {
 		pauseMenu.close();
 	}
 	
-	private void musiceButtonsCSS(JButton b, Color c) {
+	private void musiceButtonsCSS(JButton b, Color fore,Color back) {
 		b.setFont(new Font("Arial", Font.BOLD, 15));
- 		b.setForeground(c);
- 		b.setBackground(Color.BLACK);
+ 		b.setForeground(fore);
+ 		b.setBackground(back);
  		b.setBorderPainted(false);
  		b.setFocusPainted(false);
 	}
@@ -214,6 +214,7 @@ public class MenuHandler {
 		int menuWidth = 350;  	//250
 		int menuHeigth = 400;	//250
 		int textSize = menuWidth/10;
+		Color color = new Color(30,30,30);
 		
 		optionsMenu = new DialogMenu(fixedPanel,new Dimension(menuWidth,menuHeigth),5,5,"OPTIONS",40);
  		
@@ -237,72 +238,65 @@ public class MenuHandler {
  		JButton backButton = new JButton("Back");
 
  		//full screen panel 
- 		fullScreenPanel.setBackground(Color.BLACK);
+ 		fullScreenPanel.setBackground(color);
  		
  		//full screen button 
 		fullScreenButton.setFont(new Font("Arial", Font.BOLD, 20));
  		fullScreenButton.setForeground(Color.RED);
- 		fullScreenButton.setBackground(Color.BLACK);
+ 		fullScreenButton.setBackground(color);
  		fullScreenButton.setBorderPainted(false);
  		fullScreenButton.setFocusPainted(false); 
- 		
  		
  		//full screen label
  		fullScreenLabel.setFont(new Font("Arial", Font.BOLD, 20));
  		fullScreenLabel.setForeground(Color.WHITE);
- 		fullScreenLabel.setBackground(Color.BLACK);
- 	
+ 		fullScreenLabel.setBackground(color);
  		
  		//slider label
  		sliderLabel.setFont(new Font("Arial", Font.BOLD, 20));
  		sliderLabel.setForeground(Color.WHITE);
- 		sliderLabel.setBackground(Color.BLACK);
+ 		sliderLabel.setBackground(color);
  		
  		//volume slider
- 	
  		volumeSlider.setPaintLabels(false);
  		volumeSlider.setSnapToTicks(true);
- 		volumeSlider.setBackground(Color.BLACK);
+ 		volumeSlider.setBackground(color);
  		
  		//volume panel
- 		volumePanel.setBackground(Color.BLACK);
+ 		volumePanel.setBackground(color);
  		volumePanel.add(sliderLabel,BorderLayout.NORTH);
  		volumePanel.add(volumeSlider,BorderLayout.SOUTH);
  		
  		//music label	
  		musicChangeLabel.setFont(new Font("Arial", Font.BOLD, 20));
  		musicChangeLabel.setForeground(Color.WHITE);
- 		musicChangeLabel.setBackground(Color.BLACK);
+ 		musicChangeLabel.setBackground(color);
  		musicChangeLabel.setHorizontalAlignment(JLabel.CENTER);
  		
  		//music buttons
- 		
- 		musiceButtonsCSS(musicTrack1, Color.WHITE);
- 		musiceButtonsCSS(musicTrack2, Color.WHITE);
- 		musiceButtonsCSS(musicTrack3, Color.WHITE);
- 		
+ 		musiceButtonsCSS(musicTrack1, Color.WHITE,color);
+ 		musiceButtonsCSS(musicTrack2, Color.WHITE,color);
+ 		musiceButtonsCSS(musicTrack3, Color.WHITE,color);
  		
  		//music panel
- 		musicChangePanel.setBackground(Color.BLACK);
+ 		musicChangePanel.setBackground(color);
  		musicChangePanel.add(musicChangeLabel,BorderLayout.NORTH);
  		musicChangePanel.add(musicTrack1,BorderLayout.WEST);
  		musicChangePanel.add(musicTrack2,BorderLayout.CENTER);
  		musicChangePanel.add(musicTrack3,BorderLayout.EAST);
  		
  		//music loading button
- 		
  		loadMusicButton.setFont(new Font("Arial", Font.BOLD, 20));
  		loadMusicButton.setForeground(Color.WHITE);
- 		loadMusicButton.setBackground(Color.BLACK);
+ 		loadMusicButton.setBackground(color);
  		loadMusicButton.setBorderPainted(false);
  		loadMusicButton.setFocusPainted(false);
  		
  		//music loading panel
- 		musicLoadPanel.setBackground(Color.BLACK);
+ 		musicLoadPanel.setBackground(color);
  		musicLoadPanel.add(loadMusicButton);
  		
  		//music loading button listener
- 		
  		loadMusicButton.addActionListener(e->{
  			musicPlayer.playFile();
  			musicPlayer.stop();
