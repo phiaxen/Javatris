@@ -72,10 +72,13 @@ public class Shape implements Cloneable , Serializable{
 				tempx--;
 			}
 		}
+		
 			for(int i=0; i<Transposed.length; i++) {
 				for(int j=0; j<Transposed[0].length; j++) {
 					if(Transposed[i][j] != 0) {
-						
+						if((y+i)>19) {
+							return;
+						}
 						if((board.getBoard()[y+i][j+tempx+deltaX] != 0)) { 
 							return;
 						}

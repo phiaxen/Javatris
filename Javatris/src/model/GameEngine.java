@@ -92,6 +92,7 @@ public class GameEngine extends AbstractModel implements Runnable{
 		CheckCollisionY();
 		
 		if(currentShape.hasCollidedY()) {
+			checkIfGameOver();
 			setStaticShapes();
 			int rowsDeleted = 0;
 			int oldlinesC = linesCleared;
@@ -240,7 +241,7 @@ public class GameEngine extends AbstractModel implements Runnable{
 	/**
 	 * Check if the player has lost
 	 */
-	public void checkIfGameOver(){
+	private void checkIfGameOver(){
 		for(int i = 0; i <10; i++ ) {
 			if(board.getBoard()[0][i] != 0) {
 				gameOver = true;
@@ -254,8 +255,10 @@ public class GameEngine extends AbstractModel implements Runnable{
 	}
 	
 	public void connectionLost() {
-		if(!gameOver)
-		delegate.gameOver(3);
+		System.out.println("GAMEOVER IS: " + gameOver);
+		if(!gameOver) {
+			delegate.gameOver(3);
+		}
 	}
 	/**
 	 * If loss has occured notify client and delegate
@@ -263,12 +266,15 @@ public class GameEngine extends AbstractModel implements Runnable{
 	 */
 	public void gameOver(int type) {
 		running = false;
-		
-		if (online && type == 1) {
-			client.sendInt(10);
+		if(online) {
+			if(type == 1) {
+				client.sendInt(10);
+			}else if(type == 2) {
+				gameOver = true;
+			}
+			
 		}
 		delegate.gameOver(type);
-		gameOver = true;
 	}
 	
 	public void setStaticShapes() {
@@ -441,11 +447,8 @@ public class GameEngine extends AbstractModel implements Runnable{
 	
 	//everything in game that updates
 	private void tick() {
-		checkIfGameOver();
 		if(!gameOver)
 		update();
-		
-		
 	}
 	
 	public void quit() 
