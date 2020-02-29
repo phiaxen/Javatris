@@ -49,35 +49,33 @@ public class Controller implements KeyEventDispatcher{
     public boolean dispatchKeyEvent(KeyEvent e) {
 		int key = e.getKeyCode();   
 		
-		if ((e.getID() == KeyEvent.KEY_PRESSED)&&gameEngine.running()) {
-			if((key == KeyEvent.VK_RIGHT)) {	
-				if(!(gameEngine.getCurrentShape().getX() + gameEngine.getCurrentShape().getCoords()[0].length == 10)) {
-					gameEngine.setDeltaX(1);
+		if ((e.getID() == KeyEvent.KEY_PRESSED)) {
+			
+			if(gameEngine.running()) {
+				if((key == KeyEvent.VK_RIGHT)) {	
+					if(!(gameEngine.getCurrentShape().getX() + gameEngine.getCurrentShape().getCoords()[0].length == 10)) {
+						gameEngine.setDeltaX(1);
+					}
 				}
-			}
-			
-			if((key == KeyEvent.VK_LEFT)) {
-				if(!(gameEngine.getCurrentShape().getX() == 0)){
-					gameEngine.setDeltaX(-1);
-				}
-			}
-			
-			if((key == KeyEvent.VK_UP)) {
-				gameEngine.getCurrentShape().rotate();
-			}
-			
-			if((key == KeyEvent.VK_DOWN)) {
-				gameEngine.getCurrentShape().fasterSpeedDown();
-			}
-			if(key == KeyEvent.VK_ESCAPE) {
 				
-				if(gameEngine.running()) {
+				if((key == KeyEvent.VK_LEFT)) {
+					if(!(gameEngine.getCurrentShape().getX() == 0)){
+						gameEngine.setDeltaX(-1);
+					}
+				}
+				
+				if((key == KeyEvent.VK_UP)) {
+					gameEngine.getCurrentShape().rotate();
+				}
+				
+				if((key == KeyEvent.VK_DOWN)) {
+					gameEngine.getCurrentShape().fasterSpeedDown();
+				}
+				if(key == KeyEvent.VK_ESCAPE) {
 					gameEngine.pause();
-				}else {
-					gameEngine.resume();
 				}
-				
 			}
+			
 			
 			//Just for testing
 			if((key == KeyEvent.VK_0)) {
