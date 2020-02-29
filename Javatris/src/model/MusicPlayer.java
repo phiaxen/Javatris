@@ -28,11 +28,10 @@ import javax.swing.filechooser.FileSystemView;
 public class MusicPlayer {
 	
 	private Clip audioClip;
-	private boolean restart;
 	private final float MaxSteps = 20; //Even numbers only
 	private final float steps = 1/MaxSteps;
 	private boolean muted;
-	private float volume;
+	private float gobalVolume;
 	
 	
 	private boolean fileLoaded = false;
@@ -86,14 +85,24 @@ public class MusicPlayer {
 			AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);				
 			
 			audioClip = AudioSystem.getClip();         
-			audioClip.open(audioStream);    
+			audioClip.open(audioStream);   
+			
+			if(fileLoaded) {
+				setVolume(gobalVolume);
+			}
+			
+			if(!fileLoaded){
+				setVolume(0.4f);	//start volume
+			}
+			
 			fileLoaded = true;
 		}
 		catch(Exception e){
 			
 			JOptionPane.showMessageDialog(null, "Error with audio loading");
 		}
-		setVolume(0.4f); //start volume
+		setVolume(0.4f);
+		 
 	}
 	
 		
@@ -131,6 +140,15 @@ public class MusicPlayer {
 			audioClip.open(audioStream);    
 			
 			audioClip.loop(Clip.LOOP_CONTINUOUSLY);  
+			
+			if(fileLoaded) {
+				setVolume(gobalVolume);
+			}
+
+			if(!fileLoaded){
+				setVolume(0.4f);	//start volume
+			}
+			
 			fileLoaded = true;
 		}
 		catch(Exception e){
@@ -149,7 +167,6 @@ public class MusicPlayer {
 	public void stop() {
 		System.out.println("STOP SONG");
 		if(fileLoaded) {
-			this.restart = false;
 			try {
 				audioClip.stop();
 			}
@@ -172,7 +189,7 @@ public class MusicPlayer {
 	 * @param Empty
 	 * @return type float volume between 0 and 1 in floating as point.
 	 */
-	private float getVolume() {
+	public float getVolume() {
 		if(fileLoaded) {
 	    
 			FloatControl gainControl = (FloatControl) audioClip.getControl(FloatControl.Type.MASTER_GAIN);        
@@ -216,12 +233,14 @@ public class MusicPlayer {
 				System.out.println(volume);
 				FloatControl gainControl = (FloatControl) audioClip.getControl(FloatControl.Type.MASTER_GAIN);        
 			    gainControl.setValue(20f * (float) Math.log10(volume));
+			    gobalVolume = getVolume();
 			}
 			else {
 				volume = 1f;
 				
 				FloatControl gainControl = (FloatControl) audioClip.getControl(FloatControl.Type.MASTER_GAIN);        
 			    gainControl.setValue(20f * (float) Math.log10(volume));
+			    gobalVolume = getVolume();
 			}
 		}
 
@@ -243,12 +262,14 @@ public class MusicPlayer {
 				
 				FloatControl gainControl = (FloatControl) audioClip.getControl(FloatControl.Type.MASTER_GAIN);        
 			    gainControl.setValue(20f * (float) Math.log10(volume));
+			    gobalVolume = getVolume();
 			}
 			else {
 				volume = 0f;
 				
 				FloatControl gainControl = (FloatControl) audioClip.getControl(FloatControl.Type.MASTER_GAIN);        
 			    gainControl.setValue(20f * (float) Math.log10(volume));
+			    gobalVolume = getVolume();
 			}
 		}
 	}
@@ -261,11 +282,11 @@ public class MusicPlayer {
 	public void mute() {
 		if(fileLoaded) {
 			if(muted) {
-				setVolume(this.volume);
+				setVolume(this.gobalVolume);
 				muted = false;
 			}
 			else {
-				volume = getVolume();
+				gobalVolume = getVolume();
 				FloatControl gainControl = (FloatControl) audioClip.getControl(FloatControl.Type.MASTER_GAIN);        
 				gainControl.setValue(20f * (float) Math.log10(0.0f));
 				muted = true;

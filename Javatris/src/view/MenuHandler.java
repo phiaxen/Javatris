@@ -42,6 +42,7 @@ public class MenuHandler {
 	private DialogMenu optionsMenu;
 	private final MusicPlayer musicPlayer;
 	private final SfxManager sfxManager;
+	private JSlider volumeSlider; 
 	
 	public MenuHandler(Game game,JFrame frame, JPanel fixedPanel,MusicPlayer musicPlayer, SfxManager sfxManager) {
 		this.game = game;
@@ -193,6 +194,7 @@ public class MenuHandler {
 	 */
 	public void openPauseMenu() {
 		pauseMenu.open();
+		volumeSlider.setValue(Math.round(musicPlayer.getVolume()*20));
 	}
 	
 	/**
@@ -231,7 +233,7 @@ public class MenuHandler {
 		
 		JPanel volumePanel = new JPanel(new BorderLayout());
 		JLabel sliderLabel = new JLabel("Music Volume",SwingConstants.CENTER);
-		JSlider volumeSlider = new JSlider(JSlider.HORIZONTAL, 0, 20, 8);
+		volumeSlider = new JSlider(JSlider.HORIZONTAL, 0, 20, Math.round(musicPlayer.getVolume()*20));
 		
 		JPanel musicChangePanel = new JPanel(new BorderLayout());
 		JLabel musicChangeLabel = new JLabel("Change Music");
