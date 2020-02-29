@@ -7,6 +7,7 @@ import java.awt.GridBagLayout;
 import java.awt.KeyboardFocusManager;
 import java.io.IOException;
 import java.net.Socket;
+import java.net.UnknownHostException;
 
 import javax.imageio.IIOException;
 import javax.swing.BorderFactory;
@@ -117,15 +118,6 @@ public class Game {
 				menuHandler.openBasicMenu(4);
 			}
 		};
-	}
-	
-	/*
-	 * Starts a client and connects to the server for an online session.
-	 * @Param ip the ip of the server
-	 * @Param port the port of the server
-	 */
-	private void initClient(String ip, int port) {
-		client = new Client(gameEngine, ip, port);			
 	}
 	
 	/**
@@ -242,27 +234,34 @@ public class Game {
 	 */
 	public void startOnlineGame() {
 		String code = menuHandler.showOnlineDialog();
+		boolean connected = false;
 		
 		//Only starts if
 		if(code != null&&!code.isBlank() && !code.isEmpty()) 
 		{
 			try {
-			String[] adress = code.split(":");
-				try {
-					Socket socket = new Socket(adress[0], Integer.parseInt(adress[1]));
-					initClient(adress[0], Integer.parseInt(adress[1]));
-					gameEngine.setOnline(true);
-					startGame();
-				}catch(IOException e){
-					JOptionPane.showMessageDialog(null, "Wrong ip or port type"); 
-				}
-			
+				String[] adress = code.split(":");
+
+				client = new Client(gameEngine, adress[0], Integer.parseInt(adress[1]));	
+				connected = true;
 			}
 			catch(ArrayIndexOutOfBoundsException | NumberFormatException e) {
+				connected = false;
 				JOptionPane.showMessageDialog(null, "Wrong format");
+			} 
+			catch (UnknownHostException e) {
+				connected = false;
+				JOptionPane.showMessageDialog(null, "Not a valid host");
+			} 
+			catch (IOException e) {
+				connected = false;
+				JOptionPane.showMessageDialog(null, "Wrong type Client");
+			}
+			if(connected) {
+				gameEngine.setOnline(true);
+				startGame();
 			}
 		}
-
 	}
 	
 	/*

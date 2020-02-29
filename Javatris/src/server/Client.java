@@ -15,7 +15,7 @@ public class Client
 	private Socket socket;
 	static PrintWriter output;
 	
-	public Client(GameEngine engine, String ip, int port) 
+	public Client(GameEngine engine, String ip, int port) throws UnknownHostException, IOException
 	{
 		try {
 			socket = new Socket(ip, port);
@@ -64,13 +64,9 @@ public class Client
 			output =  new PrintWriter(socket.getOutputStream(), true);
 			new Thread(handler).start();
 		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
-			JOptionPane.showMessageDialog(null, "Not a valid host");  	//här kan man kanske quitta
-			e.printStackTrace();
+			throw e;
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			JOptionPane.showMessageDialog(null, "Wrong type Client"); 			//här kan man kanske quitta
-			e.printStackTrace();
+			throw e;
 		} 
 	}
 	
