@@ -6,8 +6,13 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
 
-/*
- * A Separate thread of the server that handles a specific client
+/**
+ * The Server Creates one ClienterHandler for each client connected.
+ * It reads the input the server receives from each client on their on thread.
+ * It uses the clients list to communicate with the other active ClientHandler threads.
+ * @author Andreas Greppe
+ * @since 2020-02-29
+ *
  */
 public class ClientHandler implements Runnable
 {
@@ -35,14 +40,7 @@ public class ClientHandler implements Runnable
 			{
 				String message = reader.readLine();
 				writer.println("client says:" + message);
-				if(message.contentEquals("end")) 
-				{
-					exit();
-				}
-					
-					
-
-				else if (message.startsWith("msg"))
+				if (message.startsWith("msg"))
 				{
 					int firstSpace = message.indexOf(" ");
 					if (firstSpace != -1) 

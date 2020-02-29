@@ -9,6 +9,14 @@ import model.GameEngine;
 
 import java.io.*;
 
+/**
+ * The Client class is used so the game can communicate with the server,
+ * it uses a delegate so the connection Handler can communicate with the gameEngine,
+ * and also has functions so the rest of the game send messages to the server with the sendInt Method
+ * @author Andreas Greppe
+ * @since 2020-02-29
+ *
+ */
 public class Client 
 {
 

@@ -17,6 +17,16 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 
+/**
+ * The Server class for the Javatriss game, it uses the clienthandler to handle each connection to a client.
+ * Therefore a ClientHandler is created for each Client connected. 
+ * The Server waits until two Clients are connected and then starts a game,
+ * afterwards the clients list is reset so another pair of clients can start a game aswell.
+ * The server also has a Gui displaying some information and also contains a exit button to shutdown the server
+ * @author Andreas Greppe
+ * @since 2020-02-29
+ *
+ */
 public class Server 
 {
  	private static final int port = 6969;
@@ -104,6 +114,11 @@ public class Server
 		}
 	}
 	
+	/**
+	 * This Method is used to setup the basic GUI for the server.
+	 * It created the exit button and two Jlabels, one to display the wating clients 
+	 * and the other one to display the amount of matches.
+	 */
 	private static void setupGUI() {
 		frame = new JFrame();
 		
@@ -132,11 +147,17 @@ public class Server
 		frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
 	}
 	
+	/**
+	 * Is called when a match i started, increments matches and sets the jlabels to the new value
+	 */
 	private static void newMatch(){
 		matches++;
 		matchesStarted.setText(matches+" Matches started");
 	}
 	
+	/**
+	 * Sets the text of the ClientWating Jlabel depending on if a client is waiting or not.
+	 */
 	private static void clientConnected() {
 		if(redo) {
 			clientWaiting.setText("No clients waiting");

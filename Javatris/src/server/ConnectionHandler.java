@@ -9,7 +9,8 @@ import java.net.SocketException;
 /**
  * Handles the input from the server to the client in a separate thread so it can both receive and
  * output data without either processes blocking each other.
- * @author adde_
+ * @author Andreas Greppe
+ * @since 2020-02-29
  *
  */
 public class ConnectionHandler implements Runnable
@@ -88,7 +89,7 @@ public class ConnectionHandler implements Runnable
 		
 	}
 	
-	/*
+	/**
 	 * Converts a string cotaining number to a integer,
 	 * if the string does not contain any numbers the number 15 is instead returned
 	 * @param s the string that is converted to a int
@@ -107,7 +108,7 @@ public class ConnectionHandler implements Runnable
 		return num;	
 	}
 	
-	/*
+	/**
 	 * Uses the delegate interaface to call the start function from game engine and starts game.
 	 */
 	public void start() 
@@ -118,7 +119,7 @@ public class ConnectionHandler implements Runnable
 		}
 	}
 	
-	/*
+	/**
 	 *  Uses the delegate interface to call the stop function from game engine and stops the game.
 	 */
 	public void stop() 
@@ -129,7 +130,7 @@ public class ConnectionHandler implements Runnable
 		}
 	}
 	
-	/*
+	/**
 	 *  Uses the delegate interface to call the quit function from game engine and exits the application.
 	 */
 	public void connectionLost() 
@@ -139,7 +140,7 @@ public class ConnectionHandler implements Runnable
 		}
 	}
 	
-	/*
+	/**
 	 * Does nothing for now, Should communicate with the game engine to display a victory screen
 	 */
 	public void gameOver() 
@@ -148,7 +149,7 @@ public class ConnectionHandler implements Runnable
 		delegate.gameOver(2);
 	}
 	
-	/*
+	/**
 	 * Uses the delagate interface to communication with game engine adding a row to the board with a oppening a the postion n
 	 * @param n the position with a opening in the added row
 	 */
