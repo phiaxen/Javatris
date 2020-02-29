@@ -101,7 +101,6 @@ public class MusicPlayer {
 			
 			JOptionPane.showMessageDialog(null, "Error with audio loading");
 		}
-		setVolume(0.4f);
 		 
 	}
 	
