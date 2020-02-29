@@ -2,6 +2,8 @@ package server;
 
 import java.net.*;
 
+import javax.swing.JOptionPane;
+
 import model.Board;
 import model.GameEngine;
 
@@ -63,11 +65,13 @@ public class Client
 			new Thread(handler).start();
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block
+			JOptionPane.showMessageDialog(null, "Not a valid host");  	//här kan man kanske quitta
 			e.printStackTrace();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
+			JOptionPane.showMessageDialog(null, "Wrong type"); 			//här kan man kanske quitta
 			e.printStackTrace();
-		}
+		} 
 	}
 	
 	/*

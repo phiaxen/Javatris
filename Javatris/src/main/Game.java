@@ -8,6 +8,7 @@ import java.awt.KeyboardFocusManager;
 import javax.imageio.IIOException;
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import model.*;
 import view.*;
@@ -240,11 +241,16 @@ public class Game {
 		//Only starts if
 		if(code != null&&!code.isBlank() && !code.isEmpty()) 
 		{
+			try {
 			String[] adress = code.split(":");
 			
 			initClient(adress[0], Integer.parseInt(adress[1]));
 			gameEngine.setOnline(true);
 			startGame();
+			}
+			catch(ArrayIndexOutOfBoundsException | NumberFormatException e) {
+				JOptionPane.showMessageDialog(null, "Wrong type");
+			}
 		}
 
 	}
