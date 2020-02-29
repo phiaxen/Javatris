@@ -19,6 +19,7 @@ public class SfxManager implements PropertyChangeListener{
 	private Clip sfx2;
 	private Clip sfx3;
 	private Clip sfx4;
+	private boolean muted;
 	
 	public SfxManager() {
 		init();
@@ -29,6 +30,7 @@ public class SfxManager implements PropertyChangeListener{
 		getSound2();
 		getSound3();
 		getSound4();
+		muted = false;
 	}
 	
 	private void getSound1() {
@@ -84,25 +86,51 @@ public class SfxManager implements PropertyChangeListener{
 			e1.printStackTrace();
 		} 
 	}
-	//move
 	public void playSound1() {
-		sfx1.start();
-		getSound1();
+		if(!muted) {
+			sfx1.start();
+			getSound1();
+		}
 	}
 	//hit
 	public void playSound2() {
-		sfx2.start();
-		getSound2();
+		if(!muted) {
+			sfx2.start();
+			getSound2();
+		}
 	}
 	//line cleared
 	public void playSound3() {
-		sfx3.start();
-		getSound3();
+		if(!muted) {
+			sfx3.start();
+			getSound3();
+		};
 	}
 	//level up
 	public void playSound4() {
-		sfx4.start();
-		getSound4();
+		if(!muted) {
+			sfx4.start();
+			getSound4();
+		}
+		
+	}
+	
+	/**
+	 * setMute sets the if the sounds should play or not
+	 * @param mute : boolean  
+	 */
+	public void setMuted(boolean mute){
+		this.muted = mute;
+		
+	}
+	
+	/**
+	 * getMute returns if sfx are muted or not
+	 * @return : value of muted  
+	 */
+	public boolean getMuted(){
+		return this.muted;
+		
 	}
 
 	/**
@@ -121,6 +149,9 @@ public class SfxManager implements PropertyChangeListener{
 			}
 			if(property.equals("collisionY")) {
 				playSound2();
+			}
+			if(property.equals("movedX")) {
+				playSound1();
 			}
 		}
 	}

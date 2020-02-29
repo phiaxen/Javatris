@@ -38,6 +38,7 @@ public class Game {
 	private SideInfo sideInfo;
 	private Client client;
 	private MusicPlayer musicPlayer;
+	private SfxManager sfxManager;
 	private JPanel gamePanel;
 	private boolean firstGame = true;
 	private MenuHandler menuHandler;
@@ -48,7 +49,8 @@ public class Game {
 //		ResizeFrame();
 		init();
 		SetUpFrame();
-		menuHandler = new MenuHandler(this, frame, FixedPanel,musicPlayer);
+		sfxManager = new SfxManager();
+		menuHandler = new MenuHandler(this, frame, FixedPanel,musicPlayer, sfxManager);
 		menuHandler.openStartMenu();
 	}
 	
@@ -169,9 +171,6 @@ public class Game {
 	 * Starts game
 	 */
 	public void startGame() {		
-		gameEngine.addPropertyChangeListener(boardView);
-		gameEngine.addPropertyChangeListener(sideInfo);
-	
 		menuHandler.closeStartMenu();
 		FixedPanel.add(gamePanel);
 		FixedPanel.validate();
@@ -179,6 +178,9 @@ public class Game {
 		//frame.add(FixedPanel);
 		
 		if(firstGame) {
+			gameEngine.addPropertyChangeListener(boardView);
+			gameEngine.addPropertyChangeListener(sideInfo);
+			gameEngine.addPropertyChangeListener(sfxManager);
 			musicPlayer.play();
 			gameEngine.start();
 		}

@@ -21,6 +21,7 @@ import javax.swing.text.StyledDocument;
 
 import main.Game;
 import model.MusicPlayer;
+import model.SfxManager;
 
 /**
  * MenuHandler handles every menu in the game
@@ -37,16 +38,18 @@ public class MenuHandler {
 	private Menu startMenu;
 	private Menu creditsMenu;
 	private DialogMenu pauseMenu;
-	private DialogMenu[] basicMenus = new DialogMenu[4];
-	private DialogMenu winMenu;
+	private DialogMenu[] basicMenus;
 	private DialogMenu optionsMenu;
-	private MusicPlayer musicPlayer;
+	private final MusicPlayer musicPlayer;
+	private final SfxManager sfxManager;
 	
-	public MenuHandler(Game game,JFrame frame, JPanel fixedPanel,MusicPlayer musicPlayer) {
+	public MenuHandler(Game game,JFrame frame, JPanel fixedPanel,MusicPlayer musicPlayer, SfxManager sfxManager) {
 		this.game = game;
 		this.frame = frame;
+		this.basicMenus = new DialogMenu[4];
 		this.fixedPanel = fixedPanel;
 		this.musicPlayer = musicPlayer;
+		this.sfxManager = sfxManager;
 		loadMenus();
 	}
 	 
@@ -212,15 +215,19 @@ public class MenuHandler {
 	 */
 	public void makeOptionsMenu(){
 		int menuWidth = 350;  	//250
-		int menuHeigth = 400;	//250
+		int menuHeigth = 500;	//250
 		int textSize = menuWidth/10;
 		Color color = new Color(30,30,30);
 		
-		optionsMenu = new DialogMenu(fixedPanel,new Dimension(menuWidth,menuHeigth),5,5,"OPTIONS",40);
+		optionsMenu = new DialogMenu(fixedPanel,new Dimension(menuWidth,menuHeigth),6,5,"OPTIONS",40);
  		
 		JPanel fullScreenPanel = new JPanel();
 		JLabel fullScreenLabel = new JLabel("Full Screen");
 		JButton fullScreenButton = new JButton("Off");
+		
+		JPanel sfxPanel = new JPanel();
+		JLabel sfxLabel = new JLabel("SFX");
+		JButton sfxButton = new JButton("ON");
 		
 		JPanel volumePanel = new JPanel(new BorderLayout());
 		JLabel sliderLabel = new JLabel("Music Volume",SwingConstants.CENTER);
@@ -251,6 +258,22 @@ public class MenuHandler {
  		fullScreenLabel.setFont(new Font("Arial", Font.BOLD, 20));
  		fullScreenLabel.setForeground(Color.WHITE);
  		fullScreenLabel.setBackground(color);
+ 		
+ 		//sfx panel 
+ 		sfxPanel.setBackground(color);
+ 		
+ 		//sfx button 
+		sfxButton.setFont(new Font("Arial", Font.BOLD, 20));
+		sfxButton.setForeground(Color.GREEN);
+		sfxButton.setBackground(color);
+		sfxButton.setBorderPainted(false);
+		sfxButton.setFocusPainted(false); 
+ 		
+ 		//sfx label
+ 		sfxLabel.setFont(new Font("Arial", Font.BOLD, 20));
+ 		sfxLabel.setForeground(Color.WHITE);
+ 		sfxLabel.setBackground(color);
+ 		
  		
  		//slider label
  		sliderLabel.setFont(new Font("Arial", Font.BOLD, 20));
@@ -322,6 +345,19 @@ public class MenuHandler {
  			musicPlayer.setVolume(sliderValue/20);
  		});
  	
+ 		sfxButton.addActionListener((ActionEvent e) -> {
+ 			
+ 			if(sfxManager.getMuted() == true) {
+ 				sfxManager.setMuted(false);
+ 	 			sfxButton.setText("ON");
+ 	 			sfxButton.setForeground(Color.GREEN);
+ 			}else {
+ 				sfxManager.setMuted(true);
+ 	 			sfxButton.setText("OFF");
+ 	 			sfxButton.setForeground(Color.RED);
+ 			}
+ 		});
+ 		
  		fullScreenButton.addActionListener((ActionEvent e) -> {
  			frame.setResizable(true);
  			
@@ -349,6 +385,9 @@ public class MenuHandler {
  		fullScreenPanel.add(fullScreenLabel,BorderLayout.WEST);
  		fullScreenPanel.add(fullScreenButton,BorderLayout.EAST);
  		
+ 		sfxPanel.add(sfxLabel,BorderLayout.WEST);
+ 		sfxPanel.add(sfxButton,BorderLayout.EAST);
+ 		
  		formatButton(backButton, Color.WHITE, Font.BOLD, textSize);
  		backButton.addActionListener((ActionEvent e) -> {
  			optionsMenu.close();
@@ -360,7 +399,8 @@ public class MenuHandler {
  		optionsMenu.addElement(fullScreenPanel);
  		optionsMenu.addElement(musicChangePanel);
  		optionsMenu.addElement(musicLoadPanel);
- 		optionsMenu.addElement(volumePanel);	
+ 		optionsMenu.addElement(volumePanel);
+ 		optionsMenu.addElement(sfxPanel);
  		optionsMenu.addElement(backButton); 
 	}
 	

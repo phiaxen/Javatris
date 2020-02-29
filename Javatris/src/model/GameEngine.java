@@ -144,6 +144,14 @@ public class GameEngine extends AbstractModel implements Runnable{
 	}
 	
 	/**
+	 * Moves the current block sideways
+	 */
+	public void setDeltaX(int direction) {
+		currentShape.setDeltaX(direction);
+		firePropertyChange("movedX", 0, direction);
+	}
+	
+	/**
 	 * Check if the current shape has collided sideways
 	 */
 	private void CheckCollisionX() {

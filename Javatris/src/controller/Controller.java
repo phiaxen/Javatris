@@ -39,13 +39,10 @@ public class Controller implements KeyEventDispatcher{
 
 	private GameEngine gameEngine;
 	private MusicPlayer musicPlayer; //just for testing
-	private SfxManager sfxManager;
 	
 	public Controller(GameEngine gameEngine, MusicPlayer musicPlayer) {
 		this.gameEngine = gameEngine;
 		this.musicPlayer = musicPlayer;
-		this.sfxManager = new SfxManager();
-		gameEngine.addPropertyChangeListener(sfxManager);
 	}
 	
 	@Override
@@ -55,15 +52,13 @@ public class Controller implements KeyEventDispatcher{
 		if ((e.getID() == KeyEvent.KEY_PRESSED)&&gameEngine.running()) {
 			if((key == KeyEvent.VK_RIGHT)) {	
 				if(!(gameEngine.getCurrentShape().getX() + gameEngine.getCurrentShape().getCoords()[0].length == 10)) {
-					gameEngine.getCurrentShape().setDeltaX(1);
-					sfxManager.playSound1();
+					gameEngine.setDeltaX(1);
 				}
 			}
 			
 			if((key == KeyEvent.VK_LEFT)) {
 				if(!(gameEngine.getCurrentShape().getX() == 0)){
-					gameEngine.getCurrentShape().setDeltaX(-1);
-					sfxManager.playSound1();
+					gameEngine.setDeltaX(-1);
 				}
 			}
 			
