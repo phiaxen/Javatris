@@ -36,14 +36,12 @@ public class SideInfo extends JPanel implements PropertyChangeListener{
 	private Color color;
 	
 	public SideInfo() {
-		color = new Color(30,30,30);
+		color = new Color(20,20,20);
 		panels = new JPanel[3];
 		
 		nextShapesPanel = new NextShapesPanel();
 		JPanel bottomPanel = new JPanel();
 		JPanel topPanel = new JPanel();
-		
-		
 		
 		topPanel.setPreferredSize(new Dimension(240,300));
 		topPanel.setLayout(new GridLayout(3,1,0,20));
@@ -63,15 +61,18 @@ public class SideInfo extends JPanel implements PropertyChangeListener{
 		JPanel timePanel = new JPanel();
 		timePanel.setLayout(new BorderLayout());
 		timePanel.setBackground(color);
-		timeLabel = new JLabel("TIME: 0");
+		timeLabel = new JLabel("Time: 0");
 		timeLabel.setForeground(Color.WHITE);
-		timeLabel.setFont(new Font("Arial",Font.PLAIN, 15));
+		timeLabel.setFont(new Font("Arial",Font.PLAIN, 18));
 		timePanel.add(timeLabel, BorderLayout.WEST);
 
+		JPanel nextPanel = new JPanel();
+		nextPanel.setLayout(new BorderLayout());
+		nextPanel.setBackground(Color.DARK_GRAY);
 		nextLabel = new JLabel("NEXT",SwingConstants.CENTER);
 		nextLabel.setForeground(Color.WHITE);
-		nextLabel.setFont(new Font("Arial", Font.BOLD, 30));	
-		nextLabel.setBorder(new EmptyBorder(0, 65, 0, 0));
+		nextLabel.setFont(new Font("Arial", Font.BOLD, 30));
+		nextPanel.add(nextLabel,BorderLayout.CENTER);
 
 		
 		scoreLabel = new JLabel("0",SwingConstants.CENTER);
@@ -81,7 +82,7 @@ public class SideInfo extends JPanel implements PropertyChangeListener{
 		topPanel.add(makePanel(0,"SCORE",scoreLabel));
 		topPanel.add(makePanel(1,"LINES",linesLabel));
 		topPanel.add(makePanel(2,"LEVEL",levelLabel));
-		bottomPanel.add(nextLabel);
+		bottomPanel.add(nextPanel);
 		bottomPanel.add(nextShapesPanel);
 		
 		this.add(timePanel);
@@ -121,7 +122,7 @@ public class SideInfo extends JPanel implements PropertyChangeListener{
 	//Kanske borde hållas reda på i denna klass
 	//Borde kanske inte vara en int som inparameter
 	public void updateTime(int time) {
-		this.timeLabel.setText("TIME: " + time + "s");
+		this.timeLabel.setText("Time: " + time + "s");
 		timeLabel.repaint();
 
 	}
