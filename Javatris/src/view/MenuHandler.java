@@ -199,15 +199,23 @@ public class MenuHandler {
 		pauseMenu.close();
 	}
 	
+	private void musiceButtonsCSS(JButton b, Color c) {
+		b.setFont(new Font("Arial", Font.BOLD, 15));
+ 		b.setForeground(c);
+ 		b.setBackground(Color.BLACK);
+ 		b.setBorderPainted(false);
+ 		b.setFocusPainted(false);
+	}
+	
 	/**
 	 * Makes the options menu
 	 */
 	public void makeOptionsMenu(){
-		int menuWidth = 250;
-		int menuHeigth = 250;
+		int menuWidth = 350;  	//250
+		int menuHeigth = 400;	//250
 		int textSize = menuWidth/10;
 		
-		optionsMenu = new DialogMenu(fixedPanel,new Dimension(menuWidth,menuHeigth),3,5,"OPTIONS",40);
+		optionsMenu = new DialogMenu(fixedPanel,new Dimension(menuWidth,menuHeigth),5,5,"OPTIONS",40);
  		
 		JPanel fullScreenPanel = new JPanel();
 		JLabel fullScreenLabel = new JLabel("Full Screen");
@@ -217,13 +225,22 @@ public class MenuHandler {
 		JLabel sliderLabel = new JLabel("Music Volume",SwingConstants.CENTER);
 		JSlider volumeSlider = new JSlider(JSlider.HORIZONTAL, 0, 20, 8);
 		
+		JPanel musicChangePanel = new JPanel(new BorderLayout());
+		JLabel musicChangeLabel = new JLabel("Change Music");
+		JButton musicTrack1 = new JButton("Tetris99");
+		JButton musicTrack2 = new JButton("Tetris");
+		JButton musicTrack3 = new JButton("Deja Vu");
+		
+		JPanel musicLoadPanel = new JPanel();
+		JButton loadMusicButton = new JButton("Load Local Music");
+		
  		JButton backButton = new JButton("Back");
 
  		//full screen panel 
  		fullScreenPanel.setBackground(Color.BLACK);
  		
  		//full screen button 
- 		fullScreenButton.setFont(new Font("Arial", Font.BOLD, 20));
+		fullScreenButton.setFont(new Font("Arial", Font.BOLD, 20));
  		fullScreenButton.setForeground(Color.RED);
  		fullScreenButton.setBackground(Color.BLACK);
  		fullScreenButton.setBorderPainted(false);
@@ -251,6 +268,60 @@ public class MenuHandler {
  		volumePanel.setBackground(Color.BLACK);
  		volumePanel.add(sliderLabel,BorderLayout.NORTH);
  		volumePanel.add(volumeSlider,BorderLayout.SOUTH);
+ 		
+ 		//music label	
+ 		musicChangeLabel.setFont(new Font("Arial", Font.BOLD, 20));
+ 		musicChangeLabel.setForeground(Color.WHITE);
+ 		musicChangeLabel.setBackground(Color.BLACK);
+ 		musicChangeLabel.setHorizontalAlignment(JLabel.CENTER);
+ 		
+ 		//music buttons
+ 		
+ 		musiceButtonsCSS(musicTrack1, Color.WHITE);
+ 		musiceButtonsCSS(musicTrack2, Color.WHITE);
+ 		musiceButtonsCSS(musicTrack3, Color.WHITE);
+ 		
+ 		
+ 		//music panel
+ 		musicChangePanel.setBackground(Color.BLACK);
+ 		musicChangePanel.add(musicChangeLabel,BorderLayout.NORTH);
+ 		musicChangePanel.add(musicTrack1,BorderLayout.WEST);
+ 		musicChangePanel.add(musicTrack2,BorderLayout.CENTER);
+ 		musicChangePanel.add(musicTrack3,BorderLayout.EAST);
+ 		
+ 		//music loading button
+ 		
+ 		loadMusicButton.setFont(new Font("Arial", Font.BOLD, 20));
+ 		loadMusicButton.setForeground(Color.WHITE);
+ 		loadMusicButton.setBackground(Color.BLACK);
+ 		loadMusicButton.setBorderPainted(false);
+ 		loadMusicButton.setFocusPainted(false);
+ 		
+ 		//music loading panel
+ 		musicLoadPanel.setBackground(Color.BLACK);
+ 		musicLoadPanel.add(loadMusicButton);
+ 		
+ 		//music loading button listener
+ 		
+ 		loadMusicButton.addActionListener(e->{
+ 			musicPlayer.playFile();
+ 			musicPlayer.stop();
+ 		});
+ 		
+ 		//music track button listener
+ 		musicTrack1.addActionListener(e->{
+ 			musicPlayer.preparedMusic(1);
+ 			musicPlayer.stop();
+ 		});
+ 		musicTrack2.addActionListener(e->{
+ 			musicPlayer.preparedMusic(2);
+ 			musicPlayer.stop();
+ 		});
+ 		musicTrack3.addActionListener(e->{
+ 			musicPlayer.preparedMusic(3);
+ 			musicPlayer.stop();
+ 		});
+ 		
  		
  		volumeSlider.addChangeListener((ChangeEvent e) -> {
  			float sliderValue = volumeSlider.getValue();
@@ -288,8 +359,12 @@ public class MenuHandler {
  			pauseMenu.open();
  		});
  		
+ 		
+ 		
  		optionsMenu.addElement(fullScreenPanel);
- 		optionsMenu.addElement(volumePanel); 
+ 		optionsMenu.addElement(musicChangePanel);
+ 		optionsMenu.addElement(musicLoadPanel);
+ 		optionsMenu.addElement(volumePanel);	
  		optionsMenu.addElement(backButton); 
 	}
 	

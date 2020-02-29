@@ -1,5 +1,7 @@
 package model;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.io.File;
 import java.net.URL;
 import java.nio.file.FileSystems;
@@ -33,7 +35,7 @@ public class MusicPlayer {
 	private boolean fileLoaded = false;
 	
 	/**
-	 * This is the constructor for MusicPlayer.
+	 * MusicPlayer is the constructor for MusicPlayer.
 	 * @param choice 1-3 for prepared songs else you get an empty constructor and 
 	 * you need to use playFile
 	 * @return Nothing.
@@ -47,6 +49,18 @@ public class MusicPlayer {
 		}	
 	}
 	
+	/**
+	 * preparedMusic starts one of the prepared tacks
+	 * @param choice 1-3 for prepared songs
+	 */
+	public void preparedMusic(int choice) {
+		switch(choice) {
+		case 1: loadMusic("/songs/Tetris Game Theme1.wav"); break;
+		case 2: loadMusic("/songs/Tetris99 Game Theme1.wav"); break;
+		case 3: loadMusic("/songs/08 Dave Rodgers - Deja Vu.wav"); break;
+		}
+	}
+	
 	 /**
 	 * loadMusic loads and starts the song.
 	 * @param fp is the file path to the song as a string
@@ -58,8 +72,7 @@ public class MusicPlayer {
 		if(fileLoaded){
 			audioClip.stop();
 			audioClip.flush();
-		}
-		
+		}		
 														
 		URL audioFile = SfxManager.class.getResource(fp);	
 		
@@ -259,7 +272,9 @@ public class MusicPlayer {
 	public void playFile() {
 		
 		JFileChooser j = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory()); 
-		  
+		j.setFont(new Font("Arial", Font.BOLD, 20));
+		j.setForeground(Color.WHITE);
+		j.setBackground(Color.BLACK);
         // invoke the showsSaveDialog function to show the save dialog 
         int r = j.showOpenDialog(null); 
 
