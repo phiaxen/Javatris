@@ -150,7 +150,7 @@ public class MenuHandler {
 		int menuHeigth = 250;
 		int textSize = menuWidth/10;
 		
-		pauseMenu = new DialogMenu(fixedPanel,new Dimension(menuWidth,menuHeigth),4,5,"PAUSE",40);
+		pauseMenu = new DialogMenu(fixedPanel,new Dimension(menuWidth,menuHeigth),4,"PAUSE",40);
  		JButton resumeButton = new JButton("Resume");
  		JButton optionsButton = new JButton("Options");
  		JButton saveButton = new JButton("Save");
@@ -221,7 +221,7 @@ public class MenuHandler {
 		int textSize = menuWidth/10;
 		Color color = new Color(30,30,30);
 		
-		optionsMenu = new DialogMenu(fixedPanel,new Dimension(menuWidth,menuHeigth),6,5,"OPTIONS",40);
+		optionsMenu = new DialogMenu(fixedPanel,new Dimension(menuWidth,menuHeigth),6,"OPTIONS",40);
  		
 		JPanel fullScreenPanel = new JPanel();
 		JLabel fullScreenLabel = new JLabel("Full Screen");
@@ -417,7 +417,7 @@ public class MenuHandler {
 		int titleLength = titleText.length();
 		int titleTextSize = (menuWidth + 100)/titleLength;
 		
-		basicMenus[menuId] = new DialogMenu(fixedPanel,new Dimension(menuWidth,menuHeigth),2,5,title,titleTextSize);
+		basicMenus[menuId] = new DialogMenu(fixedPanel,new Dimension(menuWidth,menuHeigth),2,title,titleTextSize);
 		JButton mainMenuButton = new JButton("Main Menu");
 		JButton exitButton = new JButton("Exit");
 		

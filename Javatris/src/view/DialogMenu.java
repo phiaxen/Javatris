@@ -47,17 +47,16 @@ public class DialogMenu {
 	 * @param com : the component to which the dialog box should be attached to
 	 * @param panelSize : the dimensions of the dialog panel
 	 * @param elements : the amount of elements on the menu 
-	 * @param borderThickness : the border thickness of the dialog panel
 	 * @param title : the title name
 	 * @param titleSize : the size of the title
 	 */
-	public DialogMenu(Component com,Dimension panelSize,int elements,int borderThickness,String title, int titleSize) {
+	public DialogMenu(Component com,Dimension panelSize,int elements,String title, int titleSize) {
 		this.com = com; 
 		this.panelSize = panelSize;
 		this.elements = elements;
-		this.borderThickness = borderThickness;
 		this.title = title;
 		this.titleSize = titleSize;
+		borderThickness = 2;
 		init();
 	}
 	
