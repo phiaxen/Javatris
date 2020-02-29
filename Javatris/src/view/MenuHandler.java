@@ -329,6 +329,7 @@ public class MenuHandler {
  		});
  	
  		fullScreenButton.addActionListener((ActionEvent e) -> {
+ 			frame.setResizable(true);
  			
  			if(frame.getExtendedState() != JFrame.MAXIMIZED_BOTH) {
  				
@@ -339,13 +340,14 @@ public class MenuHandler {
  	 			fullScreenButton.setForeground(Color.GREEN);
  			}else {
  				frame.setExtendedState(JFrame.NORMAL);
- 				frame.setSize(715,860);
+ 				frame.setSize(740,885);
  				frame.setLocationRelativeTo(null);
  	 			frame.dispose();
  	 			frame.setUndecorated(false);
  	 			fullScreenButton.setText("OFF");
  	 			fullScreenButton.setForeground(Color.RED);
  			}
+ 			frame.setResizable(false);
  			frame.setVisible(true);
  			optionsMenu.open();
  		});

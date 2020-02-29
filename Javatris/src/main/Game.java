@@ -128,7 +128,7 @@ public class Game {
 	 */
 	public void SetUpFrame() {	
 //		frame.setSize(FrameWidth + 300,FrameHeight);	//add 300 on width if sideInfo is included
-		frame.setSize(715,860);
+		frame.setSize(740,885);
 		
 		gamePanel = new JPanel();
 		gamePanel.setLayout(new GridBagLayout());
@@ -144,9 +144,9 @@ public class Game {
 		
 		frame.add(FixedPanel);
 		
-		frame.setResizable(true);
+		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	
+		
 		frame.setLocationRelativeTo(null); //set frame in the middle of the screen
 		
 		frame.setVisible(true);
