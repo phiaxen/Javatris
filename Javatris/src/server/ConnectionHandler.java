@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
+import java.net.SocketException;
 
 /**
  * Handles the input from the server to the client in a separate thread so it can both receive and
@@ -69,8 +70,8 @@ public class ConnectionHandler implements Runnable
 		}
 		catch (IOException e) 
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			connectionLost();
+			//e.printStackTrace();
 		}
 		finally 
 		{
