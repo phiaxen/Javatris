@@ -13,9 +13,9 @@ import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+
 
 public class Server 
 {
@@ -32,25 +32,16 @@ public class Server
 	private static JFrame frame; 
 	private static JPanel buttonPanel; 
 	private static JButton exitButton;
+	private static JLabel matchesStarted;
+	private static JLabel clientWaiting;
+	private static int matches = 0;
 	
 	private static Boolean redo = false;
 	
 	public static void main(String[] args) throws IOException 
 	{
+		setupGUI();
 		
-		frame = new JFrame();
-		buttonPanel = new JPanel();
-		exitButton = new JButton("Exit server");
-		exitButton.setPreferredSize(new Dimension(150,50));
-		exitButton.addActionListener((ActionEvent e) -> {System.exit(0);});
-		
-		buttonPanel.add(exitButton);
-		frame.add(buttonPanel);
-		frame.pack();
-		frame.setLocationRelativeTo(null);
-		frame.setVisible(true);
-		
-		frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
 		
 		sSocket = new ServerSocket(port);
 		BufferedReader keyboard = new BufferedReader(new InputStreamReader(System.in));
@@ -61,6 +52,7 @@ public class Server
 			
 			if(redo) {
 				clients = new ArrayList<>();
+				clientConnected();
 			}
 			//Sever looks for input if both the clients are connected
 			if(clients.size() == 2 && !running) 
@@ -74,6 +66,8 @@ public class Server
 				messageClients(11);
 				running = true;
 				redo = true;
+				//Uppdateing GUI
+				newMatch();
 			}
 			else if (clients.size() < 2) 
 			{
@@ -83,6 +77,8 @@ public class Server
 				//Server get a new client connection
 				Socket client = sSocket.accept();
 				System.out.println("Client connected");
+				//Uppdateing GUI
+				clientConnected();
 				// Createds a new instance of Clienthandler with it's own thread to handle the connected client
 				ClientHandler clientThread = new ClientHandler(client, clients);
 				//Adds the client to the list of all connected clients
@@ -108,4 +104,45 @@ public class Server
 		}
 	}
 	
+	private static void setupGUI() {
+		frame = new JFrame();
+		
+		clientWaiting = new JLabel("No clients waiting");
+		
+		matchesStarted = new JLabel(matches+" Matches started");
+		
+		buttonPanel = new JPanel();
+		exitButton = new JButton("Exit server");
+		//exitButton.setPreferredSize(new Dimension(150,50));
+		exitButton.addActionListener((ActionEvent e) -> {System.exit(0);});
+		
+		
+		buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
+		buttonPanel.setBorder(new EmptyBorder(10, 20, 10, 20));
+		
+		buttonPanel.add(clientWaiting);
+		buttonPanel.add(matchesStarted);
+		buttonPanel.add(exitButton);
+		frame.add(buttonPanel);
+		
+		frame.pack();
+		frame.setLocationRelativeTo(null);
+		frame.setResizable(false);
+		frame.setVisible(true);
+		frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
+	}
+	
+	private static void newMatch(){
+		matches++;
+		matchesStarted.setText(matches+" Matches started");
+	}
+	
+	private static void clientConnected() {
+		if(redo) {
+			clientWaiting.setText("No clients waiting");
+		}
+		else {
+			clientWaiting.setText("1 client waiting");			
+		}
+	}
 }
