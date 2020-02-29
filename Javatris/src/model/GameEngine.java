@@ -255,8 +255,8 @@ public class GameEngine extends AbstractModel implements Runnable{
 	}
 	
 	public void connectionLost() {
-		System.out.println("GAMEOVER IS: " + gameOver);
 		if(!gameOver) {
+			running = false;
 			delegate.gameOver(3);
 		}
 	}

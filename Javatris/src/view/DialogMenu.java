@@ -50,7 +50,6 @@ public class DialogMenu {
 	 * @param borderThickness : the border thickness of the dialog panel
 	 * @param title : the title name
 	 * @param titleSize : the size of the title
-	 * @param menuId : used for menues with common elements, set to 0 if the menu is unique
 	 */
 	public DialogMenu(Component com,Dimension panelSize,int elements,int borderThickness,String title, int titleSize) {
 		this.com = com; 

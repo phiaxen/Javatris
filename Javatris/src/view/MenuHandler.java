@@ -374,19 +374,22 @@ public class MenuHandler {
 	private void makeBasicMenu(String title,int menuId) {
 		int menuWidth = 300;
 		int menuHeigth = 200;
-		int textSize = 20;
+		int buttonTextSize = 20;
+		String titleText = title;
+		int titleLength = titleText.length();
+		int titleTextSize = (menuWidth + 100)/titleLength;
 		
-		basicMenus[menuId] = new DialogMenu(fixedPanel,new Dimension(menuWidth,menuHeigth),2,5,title,40);
+		basicMenus[menuId] = new DialogMenu(fixedPanel,new Dimension(menuWidth,menuHeigth),2,5,title,titleTextSize);
 		JButton mainMenuButton = new JButton("Main Menu");
 		JButton exitButton = new JButton("Exit");
 		
-		formatButton(mainMenuButton, Color.WHITE, Font.BOLD, textSize);
+		formatButton(mainMenuButton, Color.WHITE, Font.BOLD, buttonTextSize);
 		mainMenuButton.addActionListener((ActionEvent e) -> {
 			basicMenus[menuId].close();
  			toMainMenu();
  		});
 		
-		formatButton(exitButton, Color.WHITE, Font.BOLD, textSize);
+		formatButton(exitButton, Color.WHITE, Font.BOLD, buttonTextSize);
 		exitButton.addActionListener((ActionEvent e) -> {
 			System.exit(0);
 		});
