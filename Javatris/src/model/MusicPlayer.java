@@ -31,6 +31,8 @@ public class MusicPlayer {
 	private boolean restart;
 	private final float MaxSteps = 20; //Even numbers only
 	private final float steps = 1/MaxSteps;
+	private boolean muted;
+	private float volume;
 	
 	
 	private boolean fileLoaded = false;
@@ -47,7 +49,8 @@ public class MusicPlayer {
 		case 2: loadMusic("/songs/Tetris99 Game Theme1.wav"); break;
 		case 3: loadMusic("/songs/08 Dave Rodgers - Deja Vu.wav"); break;
 		default: break;
-		}	
+		}
+		muted = false;
 	}
 	
 	/**
@@ -257,11 +260,18 @@ public class MusicPlayer {
 	 */
 	public void mute() {
 		if(fileLoaded) {
-			float volume = 0.0f;			
-			FloatControl gainControl = (FloatControl) audioClip.getControl(FloatControl.Type.MASTER_GAIN);        
-			gainControl.setValue(20f * (float) Math.log10(volume));
+			if(muted) {
+				setVolume(this.volume);
+				muted = false;
+			}
+			else {
+				volume = getVolume();
+				FloatControl gainControl = (FloatControl) audioClip.getControl(FloatControl.Type.MASTER_GAIN);        
+				gainControl.setValue(20f * (float) Math.log10(0.0f));
+				muted = true;
+			}
 		}
-
+		
 	}
 
 	/**
