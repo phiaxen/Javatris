@@ -11,8 +11,8 @@ import java.util.Timer;
  * GameEngine is a class that handles all the calculations in the game.
  * @author Philip
  * @author Joachim Antfolk
- * @version 1.0
- * @since 2020-02-10
+ * @version 2.0
+ * @since 2020-03-01
  */
 public class GameEngine extends AbstractModel implements Runnable{
 	
@@ -489,6 +489,14 @@ public class GameEngine extends AbstractModel implements Runnable{
 		return timePassed;
 	}
 	
+	/**
+	 * Gets the lines to clear for next level
+	 * @return LinesToClear
+	 */
+	public int getLinesToClear(){
+		return this.linesToClear;
+	}
+	
 	public void setCurrentShape(Shape shape) 
 	{
 		currentShape = shape;
@@ -521,6 +529,14 @@ public class GameEngine extends AbstractModel implements Runnable{
 	public void setClearedRows(int removedRows) 
 	{
 		this.linesCleared = removedRows;
+	}
+	
+	/**
+	 * Sets the lines to clear for next level
+	 * @param lines : new LinesToClear
+	 */
+	public void setLinesToClear(int lines){
+		this.linesToClear = lines;
 	}
 	
 	/**
