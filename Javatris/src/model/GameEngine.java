@@ -92,6 +92,8 @@ public class GameEngine extends AbstractModel implements Runnable{
 		CheckCollisionY();
 		
 		if(currentShape.hasCollidedY()) {
+			System.out.println("speed is" + speedDown);
+			System.out.println("linesToClear is " + linesToClear);
 			checkIfGameOver();
 			setStaticShapes();
 			int rowsDeleted = 0;
@@ -110,7 +112,9 @@ public class GameEngine extends AbstractModel implements Runnable{
 
 			//Updates score if rows have been deleted
 			if(rowsDeleted > 0) {
-				levelUp();
+				if(linesCleared >= linesToClear) {
+					levelUp();
+				}
 				int oldPoints = points;
 				points += scoreHandler(level,rowsDeleted);
 				
@@ -294,14 +298,16 @@ public class GameEngine extends AbstractModel implements Runnable{
 	}	
 	
 	private void levelUp() {
-		if(linesCleared >= linesToClear) {
 			int oldLevel = level;
 			level++;
 			linesToClear += 5;
 			firePropertyChange("level", oldLevel, level);
-			if(speedDown > 120) {
-				speedDown = 700-20*(level-1);
-			}
+			updateSpeedDown();
+	}
+	
+	private void updateSpeedDown() {
+		if(speedDown > 120) {
+			speedDown = 700-20*(level-1);
 		}
 	}
 	
@@ -339,6 +345,7 @@ public class GameEngine extends AbstractModel implements Runnable{
 	
 	public synchronized void start() {
 		fireGameField();
+		updateSpeedDown();
 		if(!online) 
 		{
 			running = true;

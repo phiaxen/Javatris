@@ -407,7 +407,7 @@ public class MenuHandler {
 	}
 	
 	/**
-	 * Makes the game over menu
+	 * Makes basic menu
 	 */
 	private void makeBasicMenu(String title,int menuId) {
 		int menuWidth = 300;
