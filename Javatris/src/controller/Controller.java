@@ -54,21 +54,21 @@ public class Controller implements KeyEventDispatcher{
 			if(gameEngine.running()) {
 				if((key == KeyEvent.VK_RIGHT)) {	
 					if(!(gameEngine.getCurrentShape().getX() + gameEngine.getCurrentShape().getCoords()[0].length == 10)) {
-						gameEngine.setDeltaX(1);
-						gameEngine.setWaitBeforeStatic();
+						gameEngine.getCurrentShape().setDeltaX(1);
+						gameEngine.setDelayBeforeStatic();
 					}
 				}
 				
 				if((key == KeyEvent.VK_LEFT)) {
 					if(!(gameEngine.getCurrentShape().getX() == 0)){
-						gameEngine.setDeltaX(-1);
-						gameEngine.setWaitBeforeStatic();
+						gameEngine.getCurrentShape().setDeltaX(-1);
+						gameEngine.setDelayBeforeStatic();
 					}
 				}
 				
 				if((key == KeyEvent.VK_UP)) {
 					gameEngine.getCurrentShape().rotate();
-					gameEngine.setWaitBeforeStatic();
+					gameEngine.setDelayBeforeStatic();
 				}
 				
 				if((key == KeyEvent.VK_DOWN)) {

@@ -66,6 +66,9 @@ public class GameEngine extends AbstractModel implements Runnable{
 	private Timer delayTimer;
 	private boolean waitBeforeStatic;
 	
+	private final int delaysAllowed = 10;
+	private int delaysCalled = 0;
+	
 	public GameEngine(Board board, Boolean online) {
 		super();
 		this.board = board;
@@ -86,17 +89,25 @@ public class GameEngine extends AbstractModel implements Runnable{
 		}
 	};
 	
-	public void setWaitBeforeStatic() {
-		delayTimer.cancel();
-		delayTimer = new Timer();
-		waitBeforeStatic = true;
-		delayTimer.schedule( 
-		        new java.util.TimerTask() {
-		            @Override
-		            public void run() {
-		            	waitBeforeStatic = false;
-		            }
-		        },300);
+	public void setDelayBeforeStatic() {
+		System.out.println("wait");
+		delaysCalled++;
+		if(delaysCalled <= delaysAllowed) {
+			delayTimer.cancel();
+			delayTimer = new Timer();
+			waitBeforeStatic = true;
+			delayTimer.schedule( 
+			        new java.util.TimerTask() {
+			            @Override
+			            public void run() {
+			            	waitBeforeStatic = false;
+			            }
+			        },400);
+		}else {
+			waitBeforeStatic = false;
+			delaysCalled = 0;
+		}
+		
 	}
 	
 	/**
@@ -167,13 +178,6 @@ public class GameEngine extends AbstractModel implements Runnable{
 		Board oldBoard = board.clone();
 		board.addRow(column, color);
 		firePropertyChange("board", oldBoard, board);
-	}
-	
-	/**
-	 * Moves the current block sideways
-	 */
-	public void setDeltaX(int direction) {
-		currentShape.setDeltaX(direction);
 	}
 	
 	/**
