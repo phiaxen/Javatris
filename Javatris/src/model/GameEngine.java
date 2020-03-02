@@ -96,9 +96,7 @@ public class GameEngine extends AbstractModel implements Runnable{
 		            public void run() {
 		            	waitBeforeStatic = false;
 		            }
-		        }, 
-		        400 
-		);
+		        },300);
 	}
 	
 	/**
@@ -106,6 +104,7 @@ public class GameEngine extends AbstractModel implements Runnable{
 	 */
 	private void update() {
 		Board oldBoard = board.clone();
+		boolean currentState = currentShape.hasCollidedY();
 		time += System.currentTimeMillis() - lastTime;
 		lastTime = System.currentTimeMillis();
 		
@@ -115,6 +114,7 @@ public class GameEngine extends AbstractModel implements Runnable{
 			setStaticShapes();
 			int rowsDeleted = 0;
 			int oldlinesC = linesCleared;
+			firePropertyChange("collisionY", currentState, currentShape.hasCollidedY());
 			
 			for(int i=0; i<board.getBoard().length; i++) {
 				if(board.checkFullRow(i)) {
@@ -195,7 +195,6 @@ public class GameEngine extends AbstractModel implements Runnable{
 	 * Check if the current shape has collided downwards
 	 */
 	private void CheckCollisionY() {
-		boolean currentState = currentShape.hasCollidedY();
 		if((currentShape.getY() + currentShape.getCoords().length > 19)) {
 			currentShape.setCollidedY(true);
 		}else {
@@ -209,7 +208,6 @@ public class GameEngine extends AbstractModel implements Runnable{
 				}
 			}
 		}
-		firePropertyChange("collisionY", currentState, currentShape.hasCollidedY());
 	}
 	
 	/*
