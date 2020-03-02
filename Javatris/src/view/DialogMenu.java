@@ -130,7 +130,7 @@ public class DialogMenu {
      	dialog = new JDialog((Window)window);
      	dialog.getContentPane().add(panel); 
      	dialog.setUndecorated(true); // remove borders
-     	dialog.setModal(false);
+     	dialog.setModal(true);
      	dialog.pack(); 
 	}
  
