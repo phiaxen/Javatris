@@ -62,24 +62,6 @@ public class Savedata implements Serializable{
 	}
 	
 	/*
-	 * sets the linesToClear to lines
-	 * @param lines the current linesToClear of the game
-	 */
-	public void setLinesToClear(int lines) 
-	{
-		this.linesToClear = lines;
-	}
-	
-	/*
-	 * Returns the saved linesToClear
-	 * @Return the saved linesToClear
-	 */
-	public int getLinesToClear() 
-	{
-		return this.linesToClear;
-	}
-	
-	/*
 	 * sets the currentShape to the inputed shape
 	 * @param shape the current controllable Shape of the game
 	 */

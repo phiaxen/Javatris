@@ -61,6 +61,7 @@ public class GameEngine extends AbstractModel implements Runnable{
 	private boolean GameStart = true;
 
 	private int speedDown = 700;
+	private boolean isLoading = false;
 	
 	public GameEngine(Board board, Boolean online) {
 		super();
@@ -90,7 +91,6 @@ public class GameEngine extends AbstractModel implements Runnable{
 		lastTime = System.currentTimeMillis();
 		CheckCollisionX();
 		CheckCollisionY();
-		
 		if(currentShape.hasCollidedY()) {
 			System.out.println("speed is" + speedDown);
 			System.out.println("linesToClear is " + linesToClear);
@@ -177,7 +177,7 @@ public class GameEngine extends AbstractModel implements Runnable{
 	 */
 	private void CheckCollisionY() {
 		boolean currentState = currentShape.hasCollidedY();
-		if((currentShape.getY() + 1 + currentShape.getCoords().length > 20)) {
+		if((currentShape.getY() + currentShape.getCoords().length > 19)) {
 			currentShape.collidedY();
 		}else {
 			for(int i=0; i<currentShape.getCoords().length; i++) {
@@ -300,9 +300,13 @@ public class GameEngine extends AbstractModel implements Runnable{
 	private void levelUp() {
 			int oldLevel = level;
 			level++;
-			linesToClear += 5;
 			firePropertyChange("level", oldLevel, level);
+			updateLinesToClear();
 			updateSpeedDown();
+	}
+	
+	private void updateLinesToClear() {
+		linesToClear = 10 + (level - 1)*5;
 	}
 	
 	private void updateSpeedDown() {
@@ -342,10 +346,15 @@ public class GameEngine extends AbstractModel implements Runnable{
 		
 	}
 	
+	public void setIsLoading() {
+		isLoading = true;
+	}
 	
 	public synchronized void start() {
 		fireGameField();
+		updateLinesToClear();
 		updateSpeedDown();
+		isLoading = false;
 		if(!online) 
 		{
 			running = true;
@@ -489,14 +498,6 @@ public class GameEngine extends AbstractModel implements Runnable{
 		return timePassed;
 	}
 	
-	/**
-	 * Gets the lines to clear for next level
-	 * @return LinesToClear
-	 */
-	public int getLinesToClear(){
-		return this.linesToClear;
-	}
-	
 	public void setCurrentShape(Shape shape) 
 	{
 		currentShape = shape;
@@ -532,14 +533,6 @@ public class GameEngine extends AbstractModel implements Runnable{
 	}
 	
 	/**
-	 * Sets the lines to clear for next level
-	 * @param lines : new LinesToClear
-	 */
-	public void setLinesToClear(int lines){
-		this.linesToClear = lines;
-	}
-	
-	/**
 	 * Sets the online flag to true or false
 	 * @param online : true for online, false for offline
 	 */
@@ -548,14 +541,16 @@ public class GameEngine extends AbstractModel implements Runnable{
 	}
 	
 	public void restart() {
-		board.resetBoard();
-		setLevel(1);
-		setScore(0);
-		linesToClear = 10;
-		setClearedRows(0);
-		setTime(0);
+		if(!isLoading) {
+			board.resetBoard();
+			setLevel(1);
+			setScore(0);
+			linesToClear = 10;
+			setClearedRows(0);
+			setTime(0);
+			setFirstShape();
+		}
 		gameOver = false;
-		setFirstShape();
 		start();
 	}
 	

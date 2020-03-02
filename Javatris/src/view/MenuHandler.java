@@ -100,8 +100,9 @@ public class MenuHandler {
 		formatButton(loadButton, Color.WHITE, Font.BOLD, 50);
 		loadButton.addActionListener((ActionEvent e) -> {
 			startMenu.close();
-			game.startGame();
 			game.loadGame();
+			game.startGame();
+			
 		});
 		
 		//exit

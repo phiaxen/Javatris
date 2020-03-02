@@ -197,7 +197,7 @@ public class Game {
 			gameEngine.setLevel(loadData.getLevel());
 			gameEngine.setTime(loadData.getTime());
 			gameEngine.setClearedRows(loadData.getRemovedRows());
-			gameEngine.setLinesToClear(loadData.getLinesToClear());
+			gameEngine.setIsLoading();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -217,7 +217,6 @@ public class Game {
 		saveData.setLevel(gameEngine.getLevel());
 		saveData.setRemovedRows(gameEngine.getRemovedRows());
 		saveData.setTime(gameEngine.getTime());
-		saveData.setLinesToClear(gameEngine.getLinesToClear());
 		
 		try 
 		{
