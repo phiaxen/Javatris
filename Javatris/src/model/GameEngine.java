@@ -147,7 +147,8 @@ public class GameEngine extends AbstractModel implements Runnable{
 		}
 		CheckCollisionX();
 		if(!currentShape.hasCollidedX()) {
-			currentShape.moveDeltaX();	
+			currentShape.moveDeltaX();
+			firePropertyChange("movedX", 0, currentShape.getDeltaX());
 			currentShape.setDeltaX(0);
 		}
 		currentShape.setCollidedY(false);
@@ -173,7 +174,6 @@ public class GameEngine extends AbstractModel implements Runnable{
 	 */
 	public void setDeltaX(int direction) {
 		currentShape.setDeltaX(direction);
-		firePropertyChange("movedX", 0, direction);
 	}
 	
 	/**
