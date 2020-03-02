@@ -28,7 +28,7 @@ public class DialogMenu {
 	
 	private static final Color panelColor = new Color(0,0,0);
 	private static final int ALPHA = 180; //0-255
-	private static final Color GP_BG = new Color(0, 0, 0, ALPHA); //for glassPane 
+	private static final Color GP_Color = new Color(0, 0, 0, ALPHA); //for glassPane 
 	private JPanel panel;	
 	private JPanel topPanel;
 	private JPanel bottomPanel;
@@ -115,7 +115,7 @@ public class DialogMenu {
 		};
      
      	darkPane.setOpaque(false); 
-     	darkPane.setBackground(GP_BG); 
+     	darkPane.setBackground(GP_Color); 
      	
      	dialogSetup();
 	}

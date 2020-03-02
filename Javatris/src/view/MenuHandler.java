@@ -74,7 +74,7 @@ public class MenuHandler {
 	 */
 	private void makeStartMenu() {
 		
-		startMenu = new Menu(new Dimension(700,820),0,5,0.25f,0.75f,Color.BLACK);
+		startMenu = new Menu(new Dimension(700,820),0,5,0.25f,Color.BLACK);
 		startMenu.addTitle("/images/javatris1.png");
 
 		JButton playButton = new JButton("PLAY");
@@ -119,11 +119,11 @@ public class MenuHandler {
 		});
 		
 		
-		startMenu.addElementBot(playButton); 
-		startMenu.addElementBot(onlineButton); 
-		startMenu.addElementBot(loadButton);
-		startMenu.addElementBot(exitButton);
-		startMenu.addElementBot(credits);
+		startMenu.addElementBottom(playButton); 
+		startMenu.addElementBottom(onlineButton); 
+		startMenu.addElementBottom(loadButton);
+		startMenu.addElementBottom(exitButton);
+		startMenu.addElementBottom(credits);
 		fixedPanel.add(startMenu);
 	}
 	
@@ -277,7 +277,6 @@ public class MenuHandler {
  		sfxLabel.setForeground(Color.WHITE);
  		sfxLabel.setBackground(color);
  		
- 		
  		//slider label
  		sliderLabel.setFont(new Font("Arial", Font.BOLD, 20));
  		sliderLabel.setForeground(Color.WHITE);
@@ -409,6 +408,8 @@ public class MenuHandler {
 	
 	/**
 	 * Makes basic menu
+	 * @param title : the title of the menu
+	 * @param menuId : the id of the menu
 	 */
 	private void makeBasicMenu(String title,int menuId) {
 		int menuWidth = 300;
@@ -450,7 +451,7 @@ public class MenuHandler {
 	 * Creates the credits screen
 	 */
 	private void makeCreditsMenu() {
-		creditsMenu = new Menu(new Dimension(700,820),2,1,0.8f,0.2f,Color.BLACK);
+		creditsMenu = new Menu(new Dimension(700,820),2,1,0.75f,Color.BLACK);
 		
 		JButton back = new JButton("Back");
 		back.setFont(new Font("Arial", Font.BOLD, 20));
@@ -468,7 +469,6 @@ public class MenuHandler {
 		text1.setForeground(Color.white);
 		text1.setFont(new Font("Arial", Font.BOLD, 50));
 	
-		
 		JTextPane textArea = new JTextPane();
 		textArea.setBackground(Color.BLACK);
 		textArea.setForeground(Color.WHITE);
@@ -490,7 +490,7 @@ public class MenuHandler {
 		textArea.setEditable(false);
 		creditsMenu.addElementTop(text1);
 		creditsMenu.addElementTop(textArea);
-		creditsMenu.addElementBot(back); 
+		creditsMenu.addElementBottom(back); 
 		creditsMenu.close();
 		fixedPanel.add(creditsMenu);
 	}
