@@ -5,7 +5,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.GridBagLayout;
+
 import java.awt.GridLayout;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -16,10 +16,16 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import model.Shape;
 
-import javax.swing.BorderFactory;
+
 import javax.swing.BoxLayout;
 
-
+/**
+ * SideInfo displays information related to the game
+ * @author Tobias Mauritzon
+ * @author Philip Axenhamn
+ * @version 2.0
+ * @since 2020-03-01
+ */
 
 public class SideInfo extends JPanel implements PropertyChangeListener{
 	
@@ -34,6 +40,7 @@ public class SideInfo extends JPanel implements PropertyChangeListener{
 	private int rowsRemoved = 0;
 	private int level = 1;
 	private Color color;
+	
 	
 	public SideInfo() {
 		color = new Color(20,20,20);
@@ -89,10 +96,14 @@ public class SideInfo extends JPanel implements PropertyChangeListener{
 		this.add(topPanel);
 		this.add(bottomPanel);
 		
-		
-//		next.setAlignmentX(CENTER_ALIGNMENT);
 	}
 	
+	/**makePanel standardizes the GUI for "Final" JLabes and gathers them in one Array
+	 * @param id 
+	 * @param title	sets the displayed text
+	 * @param label the Jlabel you want to standardize
+	 * @return
+	 */
 	private JPanel makePanel(int id,String title,JLabel label) {
 		panels[id] = new JPanel();
 		
@@ -113,32 +124,43 @@ public class SideInfo extends JPanel implements PropertyChangeListener{
 	}
 	
 	//Uppdaterar score när den kallas utifrån
+	/**Displayes the score you send
+	 * @param score sets the score JLabel in sideinfo
+	 */
 	public void updateScore(int score) {
-		scoreLabel.setText(""+score);
-		
+		scoreLabel.setText(""+score);		
 		scoreLabel.repaint();
 	}
 	
 	//Kanske borde hållas reda på i denna klass
 	//Borde kanske inte vara en int som inparameter
+	/**Send the time you want to be displayed
+	 * @param time sets the time JLabel in sideinfo
+	 */
 	public void updateTime(int time) {
 		this.timeLabel.setText("Time: " + time + "s");
 		timeLabel.repaint();
-
 	}
 	
+	/**Send how many cleared rows you want to be displayed
+	 * @param lines sets the cleared lines JLabel in sideinfo
+	 */
 	public void updateLines(int lines) {
 		this.linesLabel.setText(""+lines);
 		linesLabel.repaint();
-
-
 	}
 	
+	/**Send the level you want to be displayed
+	 * @param level sets value of the level JLabel in sideinfo
+	 */
 	public void updateLevel(int level) {
 		this.levelLabel.setText("" + level);
 		levelLabel.repaint();
 	}
 
+	/**Updates the next shape window in SideInfo
+	 * @param shapes is the Array of the shapes you want to be displayed
+	 */
 	public void updateNextShape(LinkedList<Shape> shapes) {
 		for(int i = 0; i < shapes.size(); i++) {
 			nextShapesPanel.updateNextShape(shapes);
@@ -146,26 +168,15 @@ public class SideInfo extends JPanel implements PropertyChangeListener{
 		nextShapesPanel.repaint();
 	}
 
-
 	
-//	private void init() {
-//		
-//		try {
-//			scoreTitle = ImageIO.read(Board.class.getResource("/images/scoreTitle.png"));
-//			
-//		}catch(IOException e) {
-//			e.printStackTrace();
-//		}
-//	}
-	
-	
+	/**Used if you want to update the background of SideInfo
+	 *
+	 */
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D)g;
-//		g.drawImage(scoreTitle,0,0,200,50,null);
-		
-		
+//		g.drawImage(scoreTitle,0,0,200,50,null);	
 	}
 
 	/**
