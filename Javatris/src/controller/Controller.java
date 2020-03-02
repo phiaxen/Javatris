@@ -55,12 +55,14 @@ public class Controller implements KeyEventDispatcher{
 				if((key == KeyEvent.VK_RIGHT)) {	
 					if(!(gameEngine.getCurrentShape().getX() + gameEngine.getCurrentShape().getCoords()[0].length == 10)) {
 						gameEngine.setDeltaX(1);
+						gameEngine.setWaitBeforeStatic();
 					}
 				}
 				
 				if((key == KeyEvent.VK_LEFT)) {
 					if(!(gameEngine.getCurrentShape().getX() == 0)){
 						gameEngine.setDeltaX(-1);
+						gameEngine.setWaitBeforeStatic();
 					}
 				}
 				

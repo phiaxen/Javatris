@@ -63,12 +63,16 @@ public class GameEngine extends AbstractModel implements Runnable{
 	private int speedDown = 700;
 	private boolean isLoading = false;
 	
+	private Timer delayTimer;
+	private boolean waitBeforeStatic;
+	
 	public GameEngine(Board board, Boolean online) {
 		super();
 		this.board = board;
 		this.online = online;
 		client = null;
 		GameTime = new Timer();
+		delayTimer = new Timer();
 		setFirstShape();
 	}
 	
@@ -82,6 +86,21 @@ public class GameEngine extends AbstractModel implements Runnable{
 		}
 	};
 	
+	public void setWaitBeforeStatic() {
+		delayTimer.cancel();
+		delayTimer = new Timer();
+		waitBeforeStatic = true;
+		delayTimer.schedule( 
+		        new java.util.TimerTask() {
+		            @Override
+		            public void run() {
+		            	waitBeforeStatic = false;
+		            }
+		        }, 
+		        400 
+		);
+	}
+	
 	/**
 	 * 
 	 */
@@ -89,11 +108,9 @@ public class GameEngine extends AbstractModel implements Runnable{
 		Board oldBoard = board.clone();
 		time += System.currentTimeMillis() - lastTime;
 		lastTime = System.currentTimeMillis();
-		CheckCollisionX();
+		
 		CheckCollisionY();
-		if(currentShape.hasCollidedY()) {
-			System.out.println("speed is" + speedDown);
-			System.out.println("linesToClear is " + linesToClear);
+		if(currentShape.hasCollidedY()&& !waitBeforeStatic) {
 			checkIfGameOver();
 			setStaticShapes();
 			int rowsDeleted = 0;
@@ -128,10 +145,14 @@ public class GameEngine extends AbstractModel implements Runnable{
 			currentShape.moveDown();
 			time = 0;
 		}
+		CheckCollisionX();
 		if(!currentShape.hasCollidedX()) {
 			currentShape.moveDeltaX();	
+			currentShape.setDeltaX(0);
 		}
-		currentShape.setDeltaX(0);
+		currentShape.setCollidedY(false);
+		currentShape.setCollidedX(false);
+		
 		firePropertyChange("board", oldBoard, board);
 		firePropertyChange("shape", oldShape, currentShape);
 	}
@@ -163,13 +184,11 @@ public class GameEngine extends AbstractModel implements Runnable{
 			for(int j = 0; j<currentShape.getCoords()[0].length; j++) {
 				if(currentShape.getCoords()[i][j] !=0) {
 					if(board.getBoard()[currentShape.getY()+i][currentShape.getX()+j+currentShape.getDeltaX()] !=0) {
-						currentShape.collidedX();
-						return;
+						currentShape.setCollidedX(true);
 					}	
 				}
 			}
 		}
-		currentShape.notCollidedX();
 	}
 	
 	/**
@@ -178,13 +197,13 @@ public class GameEngine extends AbstractModel implements Runnable{
 	private void CheckCollisionY() {
 		boolean currentState = currentShape.hasCollidedY();
 		if((currentShape.getY() + currentShape.getCoords().length > 19)) {
-			currentShape.collidedY();
+			currentShape.setCollidedY(true);
 		}else {
 			for(int i=0; i<currentShape.getCoords().length; i++) {
 				for(int j=0; j<currentShape.getCoords()[0].length; j++) {
 					if(currentShape.getCoords()[i][j] != 0) {
 						if(board.getBoard()[currentShape.getY()+i+1][j+currentShape.getX()] != 0) {
-							currentShape.collidedY();
+							currentShape.setCollidedY(true);
 						}
 					}	
 				}

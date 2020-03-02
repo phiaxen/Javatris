@@ -37,7 +37,6 @@ public class Shape implements Cloneable , Serializable{
 		currentSpeed = normalSpeed;
 	}
 	
-
 	//Rotate the shape anti-clockwise.
 	public void rotate() {
 		if(!CanRotate) {
@@ -115,16 +114,14 @@ public class Shape implements Cloneable , Serializable{
 	//provisorisk l�sning:
 	
 	//setters
-	public void collidedY() {
-		hasCollidedY = true;
+	public void setCollidedY(boolean y) {
+		hasCollidedY = y;
 	}
 	
-	public void collidedX() {
-		hasCollidedX = true;
+	public void setCollidedX(boolean x) {
+		hasCollidedX = x;
 	}
-	public void notCollidedX() {
-		hasCollidedX = false;
-	}
+	
 	public void setDeltaX(int deltaX) {
 		this.deltaX = deltaX;
 	}
