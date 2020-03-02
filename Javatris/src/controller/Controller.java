@@ -68,6 +68,7 @@ public class Controller implements KeyEventDispatcher{
 				
 				if((key == KeyEvent.VK_UP)) {
 					gameEngine.getCurrentShape().rotate();
+					gameEngine.setWaitBeforeStatic();
 				}
 				
 				if((key == KeyEvent.VK_DOWN)) {
