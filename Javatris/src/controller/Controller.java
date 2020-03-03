@@ -1,39 +1,21 @@
 package controller;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Graphics;
+
 import java.awt.KeyEventDispatcher;
-import java.awt.Window;
-import java.awt.Dialog.ModalityType;
+
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.FileSystems;
-import java.nio.file.Path;
 
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
-import javax.swing.JDialog;
-import javax.swing.JPanel;
-import javax.swing.RootPaneContainer;
-import javax.swing.SwingUtilities;
-
-import main.Game;
 import model.*;
-
-import view.DialogMenu;
 
 
 /**
  * THIS CLASS IS A CONTROLLER
  * Controller is a class that handles all user inputs.
- * 
- * 
- * @author Philip
- * @version 1.0
+ * @author Philip Axenhamn
+ * @author Tobias Mauritzon
+ * @author Tobias Mauritzon
+ * @author Joachim Antfolk
+ * @since 2020-03-01
+ * @version 2.0
  */
 public class Controller implements KeyEventDispatcher{
 
@@ -44,7 +26,10 @@ public class Controller implements KeyEventDispatcher{
 		this.gameEngine = gameEngine;
 		this.musicPlayer = musicPlayer;
 	}
-	
+	/**When a key is pressed on the keyboard a KeyEvent is sent here
+	 * @param e is the key event thats handled
+	 * @return not used right now
+	 */
 	@Override
     public boolean dispatchKeyEvent(KeyEvent e) {
 		int key = e.getKeyCode();   
