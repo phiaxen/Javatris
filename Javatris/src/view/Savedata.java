@@ -5,7 +5,7 @@ import java.util.LinkedList;
 
 import model.Shape;
 
-/*
+/**
  * Serializable class containing all the game data that is needed to save the current gamestate.
  * @author Andreas Greppe
  * @version 1.0
@@ -43,7 +43,7 @@ public class Savedata implements Serializable{
 //	}
 //	
 	
-	/*
+	/**
 	 * sets the board to the inputed board
 	 * @param board the current board of the game
 	 */
@@ -52,7 +52,7 @@ public class Savedata implements Serializable{
 		this.board = board;
 	}
 	
-	/*
+	/**
 	 * Returns the saved board
 	 * @Return the saved Board
 	 */
@@ -61,7 +61,7 @@ public class Savedata implements Serializable{
 		return board;
 	}
 	
-	/*
+	/**
 	 * sets the currentShape to the inputed shape
 	 * @param shape the current controllable Shape of the game
 	 */
@@ -71,7 +71,7 @@ public class Savedata implements Serializable{
 		currentShape = shape;
 	}
 	
-	/*
+	/**
 	 * Returns the saved currentShape
 	 * @return the currentShape
 	 */
@@ -81,7 +81,7 @@ public class Savedata implements Serializable{
 		return currentShape;
 	}
 	
-	/*
+	/**
 	 * sets the NextShapes list to the games current NextShapes list
 	 * @param shapes the current list of the next shapes in game
 	 */
@@ -99,7 +99,7 @@ public class Savedata implements Serializable{
 		return nextShapes;
 	}
 	
-	/*
+	/**
 	 * sets the score to the inputed int
 	 * @param score the current score of the game
 	 */
@@ -108,7 +108,7 @@ public class Savedata implements Serializable{
 		this.score = score;
 	}
 	
-	/*
+	/**
 	 * sets the time to the inputed long
 	 * @param time the current time of the game
 	 */
@@ -117,7 +117,7 @@ public class Savedata implements Serializable{
 		this.time = time;
 	}
 	
-	/*
+	/**
 	 * sets the level to the inputed int
 	 * @param level the current level of the game
 	 */
@@ -126,7 +126,7 @@ public class Savedata implements Serializable{
 		this.level = level;
 	}
 	
-	/*
+	/**
 	 * sets the removedRows to the inputed int
 	 * @param removedRows the current removedRows of the game
 	 */
@@ -135,21 +135,33 @@ public class Savedata implements Serializable{
 		this.removedRows = removedRows;
 	}
 
+	/**Gets the saved score
+	 * @return the score of saved game
+	 */
 	public int getScore() {
 
 		return score;
 	}
 	
+	/**Gets the saved difficulty level
+	 * @return the level of saved game
+	 */
 	public int getLevel() {
 
 		return level;
 	}
 	
+	/**Gets the saved removed rows
+	 * @return the removed rows of saved game
+	 */
 	public int getRemovedRows() {
 
 		return removedRows;
 	}
 	
+	/**Gets the saved time
+	 * @return the time of saved game
+	 */
 	public int getTime() 
 	{
 		return time;
