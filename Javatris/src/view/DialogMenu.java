@@ -21,7 +21,7 @@ import javax.swing.border.EmptyBorder;
 
 /**
  * A Dialog combined with a glassPane and panels
- * @author Philip
+ * @author Philip Axenhamn
  * @version 1.0
  */
 public class DialogMenu {

@@ -18,7 +18,7 @@ import model.*;
 /**
  * BoardView is a class that draws the 20x10 board on a JPanel.
  * It can also draw a grid. 
- * @author Philip
+ * @author Philip Axenhamn
  * @author Joachim Antfolk
  * @version 1.0
  */
