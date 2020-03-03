@@ -1,14 +1,13 @@
 package model;
-import java.awt.image.BufferedImage;
 import java.io.Serializable;
 import java.util.Arrays;
 
 /**
- * 
- * @author Philip
+ * The shape class contains all the information of shape, such as it's shape in an array, it's color and it's position.
+ * It also has functions to modify and control the shape, such as rotating it or moving it left or right.
+ * @author Philip Axenhamn
  * @version 1.0
  */
-
 
 public class Shape implements Cloneable , Serializable{
 
@@ -37,7 +36,9 @@ public class Shape implements Cloneable , Serializable{
 		currentSpeed = normalSpeed;
 	}
 	
-	//Rotate the shape anti-clockwise.
+	/**
+	 * If the CanRotate flag is true shape rotates anti-clockwise in 90 degrees.
+	 */
 	public void rotate() {
 		if(!CanRotate) {
 			return;
@@ -89,6 +90,9 @@ public class Shape implements Cloneable , Serializable{
 		shape = Transposed;
 	}
 	
+	/**
+	 * Controls that the shape is not outside of the board on the right side
+	 */
 	public boolean rightBound() {
 		if(x + shape[0].length == 10) {
 			return true;
@@ -96,6 +100,9 @@ public class Shape implements Cloneable , Serializable{
 		return false;
 	}
 	
+	/**
+	 * Controls that the shape is not outside of the board on the left side
+	 */
 	public boolean leftBound() {
 		if(x == 0) {
 			return true;
@@ -103,68 +110,135 @@ public class Shape implements Cloneable , Serializable{
 		return false;
 	}
 	
+	/**
+	 * Moves the shape one unit down
+	 */
 	public void moveDown() {
 		y++;
 	}
 	
+	/**
+	 * Moves the shape one unit either left or right
+	 */
 	public void moveDeltaX() {
 		x+= deltaX;
 	}
 	
-	//provisorisk l�sning:
-	
-	//setters
+	/**
+	 * Sets the boolean variable hasCollidedY to the value of the parameter
+	 * @param y : the new value of hasCollidedY
+	 */
 	public void setCollidedY(boolean y) {
 		hasCollidedY = y;
 	}
 	
+	/**
+	 * Sets the boolean variable hasCollidedX to the value of the parameter
+	 * @param x : the new value of hasCollidedX
+	 */
 	public void setCollidedX(boolean x) {
 		hasCollidedX = x;
 	}
 	
+	/**
+	 * Sets the int variable deltaX to the value of the parameter
+	 * @param deltaX the horizontal direction the shape is moving in
+	 */
 	public void setDeltaX(int deltaX) {
 		this.deltaX = deltaX;
 	}
 	
-	
+	/**
+	 * Sets the currentSpeed to the value of fastSpeed, used to make the blocks fall faster when pressing down arrow.
+	 */
 	public void fasterSpeedDown() {
 		currentSpeed = fastSpeed;
 	}
 		
-	
+	/**
+	 * Sets the currentSpeed back to the value of normalSpeed is used when the player releases the arrow down.
+	 */
 	public void normalSpeedDown() {
 		currentSpeed = normalSpeed;
 	}
 	
+	/**
+	 * Changes the normalSpeed to the value of the parameter is used to increase the speed of the game.
+	 * @param speed: the new value of normalSpeed;
+	 */
 	public void changeNormalSpeed(int speed) {
 		currentSpeed = speed;
 		normalSpeed = speed;
 	}
-	//getters
+	
+	/**
+	 * Returns the value of x, which is the horizontal position of the shape
+	 * @return x horizontal position of the shape
+	 */
 	public int getX() {
 		return x;
 	}
+	
+	/**
+	 * Returns the value of y, which is the vertical position of the shape
+	 * @return y vertical position of the shape
+	 */
 	public int getY() {
 		return y;
 	}
+	
+	/**
+	 * Returns the value of DeltaX which is the horizontal direction the shape currently moves in
+	 * @return deltaX : the current horizontal movement of the shape
+	 */
 	public int getDeltaX() {
 		return deltaX;
 	}
+	
+	/**
+	 * Returns the value of hasCollidedY which checks if the shape is colliding vertically with the board.
+	 * @return hasCollidedY : the value of the hasCollidedY flag
+	 */
 	public boolean hasCollidedY() {
 		return hasCollidedY;
 	}
+	
+	/**
+	 * Returns the value of hasCollidedX which checks if the shape is colliding horizontally with the board.
+	 * @return hasCollidedX : the value of the hasCollidedX flag
+	 */
 	public boolean hasCollidedX() {
 		return hasCollidedX;
 	}
+	
+	/**
+	 * return the int that represents the colour of the shape
+	 * @return colour: the int value that represents the colour of the shape
+	 */
 	public int getColor() {
 		return color;
 	}
+	
+	/**
+	 * Returns the 2D array that contains the shape's shape
+	 * @return shape the 2D array with the positions of the shape
+	 */
 	public int[][] getCoords() {
 		return shape;
 	}
+	
+	/**
+	 * Returns the currentSpeed of the shape
+	 * @return currentSpeed: the current speed of tha game
+	 */
 	public int getCurrentSpeed() {
 		return currentSpeed;
 	}
+	
+	/**
+	 * Returns the startPos which is the horizontal position in board that shape is spawned in
+	 * @return startPos : the horizontal starting coordinate that shape is spawned in.
+	 */
 	public int getStartPos() {
 		return startPos;
 	}
@@ -189,6 +263,7 @@ public class Shape implements Cloneable , Serializable{
 	
 	/**
 	 * Returns deep clone of shape
+	 * @return copy : the deep clone of the shape
 	 */
 	@Override
 	public Shape clone() {
