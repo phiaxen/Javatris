@@ -127,7 +127,7 @@ public class MenuHandler {
 		fixedPanel.add(startMenu);
 	}
 	
-	/*
+	/**
 	 * Opens the main menu
 	 */
 	public void openStartMenu() {
@@ -143,7 +143,7 @@ public class MenuHandler {
 		startMenu.close();
 	}
 	
-	/*
+	/**
 	 * Makes the pause menu
 	 */
 	private void makePauseMenu(){
