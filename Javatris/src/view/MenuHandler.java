@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -40,6 +41,7 @@ public class MenuHandler {
 	private final JPanel fixedPanel;
 	private Menu startMenu;
 	private Menu creditsMenu;
+	private Menu controllsMenu;
 	private DialogMenu pauseMenu;
 	private DialogMenu[] basicMenus;
 	private DialogMenu optionsMenu;
@@ -65,6 +67,7 @@ public class MenuHandler {
 		makeCreditsMenu();
 		makePauseMenu();
 		makeOptionsMenu();
+		makeControllsMenu();
 		makeBasicMenu("GAME OVER", 0);
 		makeBasicMenu("YOU LOOSE!", 1);
 		makeBasicMenu("YOU WIN!", 2);
@@ -96,7 +99,7 @@ public class MenuHandler {
 	 */
 	private void makeStartMenu() {
 
-		startMenu = new Menu(new Dimension(700, 820), 0, 5, 0.25f, Color.BLACK);
+		startMenu = new Menu(new Dimension(700, 820), 0, 6, 0.25f, Color.BLACK);
 		startMenu.addTitle("/images/javatris1.png");
 
 		JButton playButton = new JButton("PLAY");
@@ -104,6 +107,7 @@ public class MenuHandler {
 		JButton loadButton = new JButton("LOAD");
 		JButton exitButton = new JButton("EXIT");
 		JButton credits = new JButton("CREDITS");
+		JButton controlls = new JButton("CONTROLLS");
 
 		// play
 		formatButton(playButton, Color.WHITE, Font.BOLD, 90);
@@ -139,11 +143,19 @@ public class MenuHandler {
 			startMenu.close();
 			openCreditsMenu();
 		});
+		
+		// credits
+		formatButton(controlls, Color.GRAY, Font.BOLD, 20);
+		controlls.addActionListener((ActionEvent e) -> {
+			startMenu.close();
+			openControllsMenu();
+		});
 
 		startMenu.addElementBottom(playButton);
 		startMenu.addElementBottom(onlineButton);
 		startMenu.addElementBottom(loadButton);
 		startMenu.addElementBottom(exitButton);
+		startMenu.addElementBottom(controlls);
 		startMenu.addElementBottom(credits);
 		fixedPanel.add(startMenu);
 	}
@@ -512,6 +524,45 @@ public class MenuHandler {
 	 */
 	private void openCreditsMenu() {
 		creditsMenu.open();
+	}
+	
+	/**
+	 * Creates the controlls screen
+	 */
+	private void makeControllsMenu() {
+		controllsMenu = new Menu(new Dimension(700, 820), 2, 1, 0.75f, Color.BLACK);
+		JButton back = new JButton("Back");
+		JLabel text = new JLabel("CONTROLLS", SwingConstants.CENTER);
+		JLabel image;
+		
+		back.setFont(new Font("Arial", Font.BOLD, 20));
+		back.setForeground(Color.WHITE);
+		back.setBackground(Color.BLACK);
+		back.setBorderPainted(false);
+		back.setFocusPainted(false);
+
+		back.addActionListener((ActionEvent e) -> {
+			controllsMenu.close();
+			toMainMenu();
+		});
+
+		text.setForeground(Color.white);
+		text.setFont(new Font("Arial", Font.BOLD, 50));
+			
+		image = new JLabel(new ImageIcon("src/images/how-to-play.png"));
+		
+		controllsMenu.addElementTop(text);
+		controllsMenu.addElementTop(image);
+		controllsMenu.addElementBottom(back);
+		controllsMenu.close();
+		fixedPanel.add(controllsMenu);
+	}
+	
+	/**
+	 * Opens controlls menu
+	 */
+	private void openControllsMenu() {
+		controllsMenu.open();
 	}
 
 	/**
