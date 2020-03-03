@@ -24,10 +24,14 @@ public class NextShapesPanel extends JPanel{
 	private BufferedImage[] colors;
 	private LinkedList<Shape> shapes = new LinkedList<Shape>();
 	
+
 	public NextShapesPanel() {
 		init();
 	}
 	
+	/**Creates the Next shape panel used
+	 * in SideInfo
+	 */
 	private void init() {
 		loadImages();
 		colors = new BufferedImage[8];
@@ -39,6 +43,9 @@ public class NextShapesPanel extends JPanel{
 		this.setPreferredSize(new Dimension(240,500));
 	}
 	
+	/** Loads the square image used for the Tetris shapes
+	 * 
+	 */
 	private void loadImages() {
 		try {
 			tiles = ImageIO.read(Board.class.getResource("/images/tiles4.png"));
@@ -48,6 +55,9 @@ public class NextShapesPanel extends JPanel{
 		}
 	}
 	
+	/**Sets the color of the Tetris square
+	 * 
+	 */
 	private void setColors() {
 	
 		for(int i=0; i<colors.length; i++){
@@ -55,10 +65,17 @@ public class NextShapesPanel extends JPanel{
 		}
 	}
 	
+	/**updateNextShape updates all shapes in side info at once
+	 * @param shape the new list of shapes you want to display
+	 */
 	public void updateNextShape(LinkedList<Shape> shape) {
 		shapes = shape;
 	}
 	
+	/**Repaints the NextShapePanel
+	 *g the graphic you want to be repainted
+	 */
+	@Override
 	protected void paintComponent(Graphics g) {
 		
 		super.paintComponent(g);
