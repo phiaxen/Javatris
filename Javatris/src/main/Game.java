@@ -186,6 +186,7 @@ public class Game {
 		if(firstGame) {
 			gameEngine.addPropertyChangeListener(boardView);
 			gameEngine.addPropertyChangeListener(sideInfo);
+			gameEngine.getShapeHandler().addPropertyChangeListener(sideInfo);
 			gameEngine.addPropertyChangeListener(sfxManager);
 			musicPlayer.play();
 			gameEngine.start();

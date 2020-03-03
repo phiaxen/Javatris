@@ -29,7 +29,6 @@ public class GameEngine extends AbstractModel implements Runnable{
 
 	private Shape currentShape;	//The shape that is currently in action
 	private Shape oldShape;
-	private Shape shapes[] = new Shape[7];	//An array that contains 7 different shapes
 	private Board board;	
 	private Client client;
 	private Boolean online; //Change this to true for multiplayer 
@@ -55,8 +54,7 @@ public class GameEngine extends AbstractModel implements Runnable{
 	
 	private boolean gameOver = false;
 	
-	private LinkedList<Shape> nextShapes = new LinkedList<Shape>();
-	private LinkedList<Shape> oldShapes = new LinkedList<Shape>();
+	private final ShapeHandler shapeHandler;
 	  
 	private boolean GameStart = true;
 
@@ -73,9 +71,10 @@ public class GameEngine extends AbstractModel implements Runnable{
 		super();
 		this.board = board;
 		this.online = online;
-		client = null;
-		GameTime = new Timer();
-		delayTimer = new Timer();
+		this.client = null;
+		this.GameTime = new Timer();
+		this.delayTimer = new Timer();
+		this.shapeHandler = new ShapeHandler(board);
 		setFirstShape();
 	}
 	
@@ -218,58 +217,13 @@ public class GameEngine extends AbstractModel implements Runnable{
 	 * this function is called only when the game starts, only once
 	 */
 	public void setFirstShape() {
-		int randomNum = ThreadLocalRandom.current().nextInt(0, shapes.length);
-		currentShape = getShape(randomNum);
-		
-		for(int i = 0; i < 3; i++) {
-			randomNum = ThreadLocalRandom.current().nextInt(0, shapes.length);
-			nextShapes.add(i, getShape(randomNum));
-		}
-	}
-	
-	private Shape nextShape() {
-		Shape nextShape;
-		
-		nextShape = nextShapes.pollFirst();
-		int randomNum = ThreadLocalRandom.current().nextInt(0, shapes.length);
-		nextShapes.addLast(getShape(randomNum));
-
-		firePropertyChange("next shape", oldShapes, nextShapes);
-	
-		return nextShape;
+		currentShape = shapeHandler.nextShape();
 	}
 	
 	public void SpawnShape() {
-		currentShape = nextShape();
+		currentShape = shapeHandler.nextShape();
 		currentShape.changeNormalSpeed(speedDown);
 	}
-	
-	private Shape getShape(int shape) {
-		switch(shape){
-		case 0: return new Shape(board,2, new int[][] {
-			{1,1,1,1}}); //I
-		case 1: return new Shape(board,3,new int[][] {
-			{1,1,0},
-			{0,1,1}}); //Z
-		case 2: return new Shape(board,4,new int[][] {
-			{0,1,1},
-			{1,1,0}}); //S
-		case 3: return new Shape(board,5,new int[][] {
-			{0,0,1},
-			{1,1,1}}); //L
-		case 4: return new Shape(board,6,new int[][] {
-			{1,1,1},
-			{0,0,1}}); //J
-		case 5: return new Shape(board,7,new int[][] {
-			{1,1,1},
-			{0,1,0}}); //T
-		case 6: return new Shape(board,8,new int[][] {
-			{1,1},
-			{1,1}}); //Box 
-		default: return null;
-		}	
-	}
-	
 	
 	/**
 	 * Check if the player has lost
@@ -505,7 +459,8 @@ public class GameEngine extends AbstractModel implements Runnable{
 	
 	public LinkedList<Shape> GetNextShapes()
 	{
-		return nextShapes;
+		//return nextShapes;
+		return shapeHandler.getNextShapes();
 	}
 	
 	public int getRemovedRows() 
@@ -518,18 +473,26 @@ public class GameEngine extends AbstractModel implements Runnable{
 		return timePassed;
 	}
 	
+	/**
+	 * Gets the GameEngines shapeHandler
+	 * @return : the  GameEngines shapeHandler
+	 */
+	public ShapeHandler getShapeHandler() {
+		return shapeHandler;
+	}
+	
 	public void setCurrentShape(Shape shape) 
 	{
 		currentShape = shape;
 	}
 	
+	/**
+	 * Sets the list of shapes in shapehandler
+	 * @param shapes : new list of shapes
+	 */
 	public void setNextShapes(LinkedList<Shape> shapes) 
 	{
-		nextShapes = new LinkedList<Shape>();
-		for(Shape shape: shapes) 
-		{
-			nextShapes.addFirst(shape);
-		}
+		shapeHandler.setNextShapes(shapes);
 	}
 
 	public void setScore(int score) 
@@ -584,7 +547,7 @@ public class GameEngine extends AbstractModel implements Runnable{
 		firePropertyChange("lines cleared", null, linesCleared);
 		firePropertyChange("board", null, board);
 		firePropertyChange("shape", oldShape, currentShape);
-		firePropertyChange("next shape", oldShapes, nextShapes);
+		shapeHandler.updateListeners();
 	}
 }
 
