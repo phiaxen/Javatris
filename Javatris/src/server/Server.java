@@ -1,17 +1,9 @@
 package server;
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
-import java.util.Scanner;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -24,12 +16,14 @@ import javax.swing.border.EmptyBorder;
  * afterwards the clients list is reset so another pair of clients can start a game aswell.
  * The server also has a Gui displaying some information and also contains a exit button to shutdown the server
  * @author Andreas Greppe
- * @since 2020-02-29
+ * @author Tobias Mauritzon
+ * @since 2020-03-03
  *
  */
 public class Server 
 {
- 	private static final int port = 6969;
+	
+ 	private static int port;
 	private static ServerSocket sSocket;
 	//Listan med de olika ClientHandlers så att server kan komma åt dem enkelt
 	private static ArrayList<ClientHandler> clients = new ArrayList<>();
@@ -48,13 +42,24 @@ public class Server
 	
 	private static Boolean redo = false;
 	
-	public static void main(String[] args) throws IOException 
+	public static void main(String[] args) throws IOException, InterruptedException 
 	{
 		setupGUI();
+		try {
+			frame.setVisible(false);
+			port = Integer.parseInt(JOptionPane.showInputDialog(frame,"Enter the server port",
+			"Tillfallig",JOptionPane.PLAIN_MESSAGE));
+			sSocket = new ServerSocket(port);
+			frame.setVisible(true);
+		}
+		catch(Exception e) {
+			JOptionPane.showMessageDialog(frame, "BAD PORT");
+			Thread.sleep(5000);
+			System.exit(0);
+			
+		}
 		
 		
-		sSocket = new ServerSocket(port);
-		BufferedReader keyboard = new BufferedReader(new InputStreamReader(System.in));
 		
 		//O�ndlig Loop som k�r servern
 		while(true) 
