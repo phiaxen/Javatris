@@ -24,7 +24,14 @@ public class NextShapesPanel extends JPanel{
 	private BufferedImage[] colors;
 	private LinkedList<Shape> shapes = new LinkedList<Shape>();
 	
-
+	/**
+	 * NextShapePanel is the panel used to 
+	 * display the next shapes in SideInfo
+	 * @author Philip Axenhamn 
+	 * @since 2020-02-25
+	 * @version 1.0
+	 */
+	
 	public NextShapesPanel() {
 		init();
 	}

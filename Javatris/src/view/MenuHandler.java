@@ -27,8 +27,10 @@ import model.SfxManager;
  * MenuHandler handles every menu in the game
  * @author Philip Axenhamn 
  * @author Joachim Antfolk
- * @since 2020-02-27
- * @version 1.0
+ * @author Andreas Greppe
+ * @author Tobias Mauritzon
+ * @since 2020-03-02
+ * @version 3.0
  */
 public class MenuHandler {
 
