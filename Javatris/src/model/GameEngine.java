@@ -144,7 +144,7 @@ public class GameEngine extends AbstractModel implements Runnable{
 					levelUp();
 				}
 				int oldPoints = points;
-				points += scoreHandler(level,rowsDeleted);
+				points += getScore(level,rowsDeleted);
 				
 				firePropertyChange("points", oldPoints, points);
 				firePropertyChange("lines cleared", oldlinesC, linesCleared);
@@ -356,7 +356,7 @@ public class GameEngine extends AbstractModel implements Runnable{
 		return online;
 	}
 	
-	private int scoreHandler(int level, int rows) {
+	private int getScore(int level, int rows) {
 		switch(rows) {
 			case 1: return 40*level;
 			case 2: return 100*level;
