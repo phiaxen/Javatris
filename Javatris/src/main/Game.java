@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.awt.KeyboardFocusManager;
+import java.awt.Toolkit;
 import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -56,9 +57,18 @@ public class Game {
 		sfxManager = new SfxManager();
 		menuHandler = new MenuHandler(this, frame, FixedPanel,musicPlayer, sfxManager);
 		menuHandler.openStartMenu();
+		
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		double width = screenSize.getWidth();
+		double height = screenSize.getHeight();
+		
+		if(width <= 1366 && height <= 768) {
+			menuHandler.screenSizeToSmallMenu();
+		}
 	}
 	
 	public static void main(String[] args) {
+		
 		new Game(new JFrame("JavaTris"));
 	}
 	
@@ -165,7 +175,8 @@ public class Game {
 	/**
 	 * Starts game
 	 */
-	public void startGame() {		
+	public void startGame() {
+		
 		menuHandler.closeStartMenu();
 		FixedPanel.add(gamePanel);
 		FixedPanel.validate();
