@@ -364,7 +364,6 @@ public class GameEngine extends AbstractModel implements Runnable{
 			case 4: return 1200*level;
 			default: return 0;
 		}
-		
 	}
 	
 	public void setIsLoading() {
