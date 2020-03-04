@@ -41,7 +41,7 @@ public class MenuHandler {
 	private final JPanel fixedPanel;
 	private Menu startMenu;
 	private Menu creditsMenu;
-	private Menu controllsMenu;
+	private Menu controlsMenu;
 	private DialogMenu pauseMenu;
 	private DialogMenu[] basicMenus;
 	private DialogMenu optionsMenu;
@@ -67,7 +67,7 @@ public class MenuHandler {
 		makeCreditsMenu();
 		makePauseMenu();
 		makeOptionsMenu();
-		makeControllsMenu();
+		makeControlsMenu();
 		makeBasicMenu("GAME OVER", 0);
 		makeBasicMenu("YOU LOOSE!", 1);
 		makeBasicMenu("YOU WIN!", 2);
@@ -100,7 +100,7 @@ public class MenuHandler {
 	 */
 	private void makeStartMenu() {
 
-		startMenu = new Menu(new Dimension(700, 820), 0, 6, 0.25f, Color.BLACK);
+		startMenu = new Menu(new Dimension(700, 820), 0, 6, 0.20f, Color.BLACK);
 		startMenu.addTitle("/images/javatris1.png");
 
 		JButton playButton = new JButton("PLAY");
@@ -108,20 +108,29 @@ public class MenuHandler {
 		JButton loadButton = new JButton("LOAD");
 		JButton exitButton = new JButton("EXIT");
 		JButton credits = new JButton("CREDITS");
-		JButton controlls = new JButton("CONTROLLS");
+		JButton controls = new JButton("CONTROLS");
 
 		// play
-		formatButton(playButton, Color.WHITE, Font.BOLD, 90);
+		formatButton(playButton, Color.WHITE, Font.BOLD, 95);
 		playButton.addActionListener((ActionEvent e) -> {
 			startMenu.close();
 			game.startGame();
 		});
-
+		
+		// controls
+		formatButton(controls, Color.WHITE, Font.BOLD, 40);
+		controls.addActionListener((ActionEvent e) -> {
+			startMenu.close();
+			openControlsMenu();
+		});
+		
 		// online
 		formatButton(onlineButton, Color.WHITE, Font.BOLD, 50);
 		onlineButton.addActionListener((ActionEvent e) -> {
 			game.startOnlineGame();
 		});
+		
+		
 
 		// load
 		formatButton(loadButton, Color.WHITE, Font.BOLD, 50);
@@ -131,12 +140,14 @@ public class MenuHandler {
 			game.startGame();
 
 		});
+		
 
 		// exit
 		formatButton(exitButton, Color.WHITE, Font.BOLD, 40);
 		exitButton.addActionListener((ActionEvent e) -> {
 			System.exit(0);
 		});
+		
 
 		// credits
 		formatButton(credits, Color.GRAY, Font.BOLD, 20);
@@ -145,18 +156,13 @@ public class MenuHandler {
 			openCreditsMenu();
 		});
 
-		// credits
-		formatButton(controlls, Color.GRAY, Font.BOLD, 20);
-		controlls.addActionListener((ActionEvent e) -> {
-			startMenu.close();
-			openControllsMenu();
-		});
 
 		startMenu.addElementBottom(playButton);
+		startMenu.addElementBottom(controls);
 		startMenu.addElementBottom(onlineButton);
 		startMenu.addElementBottom(loadButton);
 		startMenu.addElementBottom(exitButton);
-		startMenu.addElementBottom(controlls);
+		
 		startMenu.addElementBottom(credits);
 		fixedPanel.add(startMenu);
 	}
@@ -528,12 +534,12 @@ public class MenuHandler {
 	}
 
 	/**
-	 * Creates the controlls screen
+	 * Creates the controls screen
 	 */
-	private void makeControllsMenu() {
-		controllsMenu = new Menu(new Dimension(700, 820), 2, 1, 0.75f, Color.BLACK);
+	private void makeControlsMenu() {
+		controlsMenu = new Menu(new Dimension(700, 820), 2, 1, 0.75f, Color.BLACK);
 		JButton back = new JButton("Back");
-		JLabel text = new JLabel("CONTROLLS", SwingConstants.CENTER);
+		JLabel text = new JLabel("CONTROLS", SwingConstants.CENTER);
 		JLabel image;
 
 		back.setFont(new Font("Arial", Font.BOLD, 20));
@@ -543,7 +549,7 @@ public class MenuHandler {
 		back.setFocusPainted(false);
 
 		back.addActionListener((ActionEvent e) -> {
-			controllsMenu.close();
+			controlsMenu.close();
 			toMainMenu();
 		});
 
@@ -552,18 +558,18 @@ public class MenuHandler {
 
 		image = new JLabel(new ImageIcon("src/images/how-to-play.png"));
 
-		controllsMenu.addElementTop(text);
-		controllsMenu.addElementTop(image);
-		controllsMenu.addElementBottom(back);
-		controllsMenu.close();
-		fixedPanel.add(controllsMenu);
+		controlsMenu.addElementTop(text);
+		controlsMenu.addElementTop(image);
+		controlsMenu.addElementBottom(back);
+		controlsMenu.close();
+		fixedPanel.add(controlsMenu);
 	}
 
 	/**
-	 * Opens controlls menu
+	 * Opens controls menu
 	 */
-	private void openControllsMenu() {
-		controllsMenu.open();
+	private void openControlsMenu() {
+		controlsMenu.open();
 	}
 
 	/**
