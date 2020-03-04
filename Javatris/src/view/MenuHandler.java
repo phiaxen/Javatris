@@ -444,9 +444,9 @@ public class MenuHandler {
 	 * Makes basic menu
 	 * 
 	 * @param title  : the title of the menu
-	 * @param menuId : the id of the menu
+	 * @param index : the id of the menu
 	 */
-	private void makeBasicMenu(String title, int menuId) {
+	private void makeBasicMenu(String title, int index) {
 		int menuWidth = 300;
 		int menuHeigth = 200;
 		int buttonTextSize = 20;
@@ -454,13 +454,13 @@ public class MenuHandler {
 		int titleLength = titleText.length();
 		int titleTextSize = (menuWidth + 100) / titleLength;
 
-		basicMenus[menuId] = new DialogMenu(fixedPanel, new Dimension(menuWidth, menuHeigth), 2, title, titleTextSize);
+		basicMenus[index] = new DialogMenu(fixedPanel, new Dimension(menuWidth, menuHeigth), 2, title, titleTextSize);
 		JButton mainMenuButton = new JButton("Main Menu");
 		JButton exitButton = new JButton("Exit");
 
 		formatButton(mainMenuButton, Color.WHITE, Font.BOLD, buttonTextSize);
 		mainMenuButton.addActionListener((ActionEvent e) -> {
-			basicMenus[menuId].close();
+			basicMenus[index].close();
 			toMainMenu();
 		});
 
@@ -469,8 +469,8 @@ public class MenuHandler {
 			System.exit(0);
 		});
 
-		basicMenus[menuId].addElement(mainMenuButton);
-		basicMenus[menuId].addElement(exitButton);
+		basicMenus[index].addElement(mainMenuButton);
+		basicMenus[index].addElement(exitButton);
 	}
 
 	/**
