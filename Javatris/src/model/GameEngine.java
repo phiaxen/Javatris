@@ -53,14 +53,14 @@ public class GameEngine extends AbstractModel implements Runnable {
 	private int speedDown = 700;
 
 	// timers
-	private Timer GameTime;
+	private Timer gameTime;
 	private Timer delayTimer;
 	private boolean waitBeforeStatic;
 	private final int delaysAllowed = 10;
 	private int delaysCalled = 0;
 
 	// game state
-	private boolean GameStart = true;
+	private boolean gameStart = true;
 	private boolean gameOver = false;
 	private boolean isLoading = false;
 	private boolean online = false;
@@ -75,7 +75,7 @@ public class GameEngine extends AbstractModel implements Runnable {
 		this.board = board;
 		this.online = online;
 		this.client = null;
-		this.GameTime = new Timer();
+		this.gameTime = new Timer();
 		this.delayTimer = new Timer();
 		this.shapeHandler = new ShapeHandler(board);
 		setCurrentShape();
@@ -375,11 +375,11 @@ public class GameEngine extends AbstractModel implements Runnable {
 		isLoading = false;
 		if (!online) {
 			running = true;
-			if (GameStart) {
-				GameTime.scheduleAtFixedRate(task, 0, 1000);
+			if (gameStart) {
+				gameTime.scheduleAtFixedRate(task, 0, 1000);
 				thread = new Thread(this);
 				thread.start(); // start thread
-				GameStart = false;
+				gameStart = false;
 			} else {
 				synchronized (thread) {
 					thread.notify();
@@ -397,11 +397,11 @@ public class GameEngine extends AbstractModel implements Runnable {
 	 */
 	public synchronized void startOnline() {
 		running = true;
-		if (GameStart) {
-			GameTime.scheduleAtFixedRate(task, 0, 1000);
+		if (gameStart) {
+			gameTime.scheduleAtFixedRate(task, 0, 1000);
 			thread = new Thread(this);
 			thread.start(); // start thread
-			GameStart = false;
+			gameStart = false;
 		} else {
 			synchronized (thread) {
 				thread.notify();

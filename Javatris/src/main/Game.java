@@ -35,7 +35,7 @@ public class Game {
 	private final int BOARDWIDTH = 10;
 	private final int BOARDHEIGHT = 20;
 	private final JFrame frame;
-	private JPanel FixedPanel;
+	private JPanel fixedPanel;
 	private Board board;
 	private BoardView boardView;
 	private GameEngine gameEngine;
@@ -54,7 +54,7 @@ public class Game {
 		SetUpFrame();
 
 		sfxManager = new SfxManager();
-		menuHandler = new MenuHandler(this, frame, FixedPanel, musicPlayer, sfxManager);
+		menuHandler = new MenuHandler(this, frame, fixedPanel, musicPlayer, sfxManager);
 		menuHandler.openStartMenu();
 
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -138,13 +138,13 @@ public class Game {
 		gamePanel.add(sideInfo);
 		gamePanel.add(boardView);
 
-		FixedPanel = new JPanel();
-		FixedPanel.setLayout(new GridBagLayout());
-		FixedPanel.setPreferredSize(frame.getSize());
-		FixedPanel.setBackground(Color.BLACK);
+		fixedPanel = new JPanel();
+		fixedPanel.setLayout(new GridBagLayout());
+		fixedPanel.setPreferredSize(frame.getSize());
+		fixedPanel.setBackground(Color.BLACK);
 
 		frame.setSize(740, 885);
-		frame.add(FixedPanel);
+		frame.add(fixedPanel);
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLocationRelativeTo(null);
@@ -156,9 +156,9 @@ public class Game {
 	 */
 	public void startGame() {
 		menuHandler.closeStartMenu();
-		FixedPanel.add(gamePanel);
-		FixedPanel.validate();
-		FixedPanel.repaint();
+		fixedPanel.add(gamePanel);
+		fixedPanel.validate();
+		fixedPanel.repaint();
 
 		if (firstGame) {
 			gameEngine.addPropertyChangeListener(boardView);
@@ -264,9 +264,9 @@ public class Game {
 	 * Exits the current game and goes to the main menu
 	 */
 	public void removeGamePanel() {
-		FixedPanel.remove(gamePanel);
-		FixedPanel.validate();
-		FixedPanel.repaint();
+		fixedPanel.remove(gamePanel);
+		fixedPanel.validate();
+		fixedPanel.repaint();
 	}
 
 	/**
