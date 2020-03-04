@@ -42,6 +42,9 @@ public class SideInfo extends JPanel implements PropertyChangeListener {
 	private int level = 1;
 	private Color color;
 
+	/**
+	 * The constructor of this class initializes this panel.
+	 */
 	public SideInfo() {
 		color = new Color(20, 20, 20);
 		panels = new JPanel[3];
@@ -72,6 +75,7 @@ public class SideInfo extends JPanel implements PropertyChangeListener {
 		timeLabel.setFont(new Font("Arial", Font.PLAIN, 18));
 		timePanel.add(timeLabel, BorderLayout.WEST);
 
+		// nextshape
 		JPanel nextPanel = new JPanel();
 		nextPanel.setLayout(new BorderLayout());
 		nextPanel.setBackground(Color.DARK_GRAY);
@@ -79,7 +83,7 @@ public class SideInfo extends JPanel implements PropertyChangeListener {
 		nextLabel.setForeground(Color.WHITE);
 		nextLabel.setFont(new Font("Arial", Font.BOLD, 30));
 		nextPanel.add(nextLabel, BorderLayout.CENTER);
-
+		
 		scoreLabel = new JLabel("0", SwingConstants.CENTER);
 		linesLabel = new JLabel("" + rowsRemoved, SwingConstants.CENTER);
 		levelLabel = new JLabel("" + level, SwingConstants.CENTER);
@@ -97,16 +101,15 @@ public class SideInfo extends JPanel implements PropertyChangeListener {
 	}
 
 	/**
-	 * makePanel standardizes the GUI for "Final" JLabes and gathers them in one
-	 * Array
+	 * Standardizes the GUI for "Final" JLabes and gathers them in one array
 	 * 
 	 * @param id
 	 * @param title sets the displayed text
 	 * @param label the Jlabel you want to standardize
-	 * @return
+	 * @return this function returns a customized JPanel from the array
 	 */
-	private JPanel makePanel(int id, String title, JLabel label) {
-		panels[id] = new JPanel();
+	private JPanel makePanel(int index, String title, JLabel label) {
+		panels[index] = new JPanel();
 
 		JLabel titleLabel = new JLabel(title, SwingConstants.CENTER);
 
@@ -116,31 +119,29 @@ public class SideInfo extends JPanel implements PropertyChangeListener {
 		label.setForeground(Color.WHITE);
 		label.setFont(new Font("Arial", Font.BOLD, 40));
 
-		panels[id].setLayout(new BorderLayout());
-		panels[id].setBackground(color);
+		panels[index].setLayout(new BorderLayout());
+		panels[index].setBackground(color);
 
-		panels[id].add(titleLabel, BorderLayout.NORTH);
-		panels[id].add(label, BorderLayout.CENTER);
-		return panels[id];
+		panels[index].add(titleLabel, BorderLayout.NORTH);
+		panels[index].add(label, BorderLayout.CENTER);
+		return panels[index];
 	}
 
-	// Uppdaterar score när den kallas utifrån
+
 	/**
-	 * Displayes the score you send
+	 * Update the scoreLabel with new score
 	 * 
-	 * @param score sets the score JLabel in sideinfo
+	 * @param score : the score to be displayed
 	 */
 	public void updateScore(int score) {
 		scoreLabel.setText("" + score);
 		scoreLabel.repaint();
 	}
 
-	// Kanske borde hållas reda på i denna klass
-	// Borde kanske inte vara en int som inparameter
 	/**
-	 * Send the time you want to be displayed
+	 * Update the timeLabel with new time
 	 * 
-	 * @param time sets the time JLabel in sideinfo
+	 * @param time : the time to be displayed
 	 */
 	public void updateTime(int time) {
 		this.timeLabel.setText("Time: " + time + "s");
@@ -148,9 +149,9 @@ public class SideInfo extends JPanel implements PropertyChangeListener {
 	}
 
 	/**
-	 * Send how many cleared rows you want to be displayed
+	 * Updates lines cleared with a new value
 	 * 
-	 * @param lines sets the cleared lines JLabel in sideinfo
+	 * @param lines : the amount of cleared lines to be displayed
 	 */
 	public void updateLines(int lines) {
 		this.linesLabel.setText("" + lines);
@@ -158,9 +159,9 @@ public class SideInfo extends JPanel implements PropertyChangeListener {
 	}
 
 	/**
-	 * Send the level you want to be displayed
+	 * Updates the level with a new value
 	 * 
-	 * @param level sets value of the level JLabel in sideinfo
+	 * @param level : the value of the level to be displayed
 	 */
 	public void updateLevel(int level) {
 		this.levelLabel.setText("" + level);
@@ -168,26 +169,15 @@ public class SideInfo extends JPanel implements PropertyChangeListener {
 	}
 
 	/**
-	 * Updates the next shape window in SideInfo
+	 * Updates the next shape panel in SideInfo
 	 * 
-	 * @param shapes is the Array of the shapes you want to be displayed
+	 * @param shapes : the list of the shapes to be displayed
 	 */
 	public void updateNextShape(LinkedList<Shape> shapes) {
 		for (int i = 0; i < shapes.size(); i++) {
 			nextShapesPanel.updateNextShape(shapes);
 		}
 		nextShapesPanel.repaint();
-	}
-
-	/**
-	 * Used if you want to update the background of SideInfo
-	 *
-	 */
-	@Override
-	protected void paintComponent(Graphics g) {
-		super.paintComponent(g);
-		Graphics2D g2 = (Graphics2D) g;
-//		g.drawImage(scoreTitle,0,0,200,50,null);	
 	}
 
 	/**

@@ -17,6 +17,13 @@ import javax.swing.border.EmptyBorder;
 import model.Board;
 import model.Shape;
 
+/**
+ * NextShapePanel is the panel used to display the next shapes in SideInfo
+ * 
+ * @author Philip Axenhamn
+ * @since 2020-02-25
+ * @version 1.0
+ */
 public class NextShapesPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
@@ -25,19 +32,14 @@ public class NextShapesPanel extends JPanel {
 	private LinkedList<Shape> shapes = new LinkedList<Shape>();
 
 	/**
-	 * NextShapePanel is the panel used to display the next shapes in SideInfo
-	 * 
-	 * @author Philip Axenhamn
-	 * @since 2020-02-25
-	 * @version 1.0
+	 * This is the constructor of the class which calls the init function.
 	 */
-
 	public NextShapesPanel() {
 		init();
 	}
 
 	/**
-	 * Creates the Next shape panel used in SideInfo
+	 * Loads tiles, sets colors, and initializes the panel.
 	 */
 	private void init() {
 		loadImages();
@@ -51,8 +53,7 @@ public class NextShapesPanel extends JPanel {
 	}
 
 	/**
-	 * Loads the square image used for the Tetris shapes
-	 * 
+	 * Loads the tiles and decreases the size of the image to 75% of its origanal size.
 	 */
 	private void loadImages() {
 		try {
@@ -64,7 +65,7 @@ public class NextShapesPanel extends JPanel {
 	}
 
 	/**
-	 * Sets the color of the Tetris square
+	 * Sets the color in the colors array.
 	 * 
 	 */
 	private void setColors() {
@@ -75,16 +76,16 @@ public class NextShapesPanel extends JPanel {
 	}
 
 	/**
-	 * updateNextShape updates all shapes in side info at once
+	 * Updates all shapes in side info at once
 	 * 
-	 * @param shape the new list of shapes you want to display
+	 * @param shapeList : the new list of shapes you want to display
 	 */
-	public void updateNextShape(LinkedList<Shape> shape) {
-		shapes = shape;
+	public void updateNextShape(LinkedList<Shape> shapeList) {
+		shapes = shapeList;
 	}
 
 	/**
-	 * Repaints the NextShapePanel g the graphic you want to be repainted
+	 * Repaints the NextShapePanel.
 	 */
 	@Override
 	protected void paintComponent(Graphics g) {

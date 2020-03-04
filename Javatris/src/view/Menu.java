@@ -30,13 +30,13 @@ public class Menu extends JPanel {
 	/**
 	 * Creates a menu according to user specifications. Has a top- and bottom panel.
 	 * 
-	 * @param size           : size of the panel
-	 * @param topElements    : amount of elements on top pane
+	 * @param size : size of the panel
+	 * @param topElements : amount of elements on top pane
 	 * @param bottomElements : amount of elements on bottom pane
-	 * @param topSpace       : how much of the panel that should consist of the top
-	 *                       panel. A number between 0 and 1, where 1 = 100%. The
-	 *                       bottom panel will take the space that is left.
-	 * @param color          : color of the whole panel
+	 * @param topSpace : how much of the panel that should consist of the top panel. 
+	 * A number between 0 and 1, where 1 = 100%. 
+	 * The bottom panel will take the space that is left.
+	 * @param color : color of the whole panel
 	 */
 	public Menu(Dimension size, int topElements, int bottomElements, float topSpace, Color color) {
 		this.size = size;

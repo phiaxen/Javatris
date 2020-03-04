@@ -23,7 +23,6 @@ import model.*;
  * @author Joachim Antfolk
  * @version 1.0
  */
-
 public class BoardView extends JPanel implements PropertyChangeListener {
 
 	private static final long serialVersionUID = 1L;

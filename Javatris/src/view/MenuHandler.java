@@ -72,9 +72,11 @@ public class MenuHandler {
 		makeBasicMenu("YOU LOOSE!", 1);
 		makeBasicMenu("YOU WIN!", 2);
 		makeBasicMenu("Connection Lost", 3);
-
 	}
 
+	/**
+	 * Creates and opens an error message for users with a low resolution screen.
+	 */
 	public void screenSizeToSmallMenu() {
 		int menuWidth = 350;
 		int menuHeigth = 120;
@@ -116,21 +118,19 @@ public class MenuHandler {
 			startMenu.close();
 			game.startGame();
 		});
-		
+
 		// controls
 		formatButton(controls, Color.WHITE, Font.BOLD, 40);
 		controls.addActionListener((ActionEvent e) -> {
 			startMenu.close();
 			openControlsMenu();
 		});
-		
+
 		// online
 		formatButton(onlineButton, Color.WHITE, Font.BOLD, 50);
 		onlineButton.addActionListener((ActionEvent e) -> {
 			game.startOnlineGame();
 		});
-		
-		
 
 		// load
 		formatButton(loadButton, Color.WHITE, Font.BOLD, 50);
@@ -140,14 +140,12 @@ public class MenuHandler {
 			game.startGame();
 
 		});
-		
 
 		// exit
 		formatButton(exitButton, Color.WHITE, Font.BOLD, 40);
 		exitButton.addActionListener((ActionEvent e) -> {
 			System.exit(0);
 		});
-		
 
 		// credits
 		formatButton(credits, Color.GRAY, Font.BOLD, 20);
@@ -156,13 +154,12 @@ public class MenuHandler {
 			openCreditsMenu();
 		});
 
-
 		startMenu.addElementBottom(playButton);
 		startMenu.addElementBottom(controls);
 		startMenu.addElementBottom(onlineButton);
 		startMenu.addElementBottom(loadButton);
 		startMenu.addElementBottom(exitButton);
-		
+
 		startMenu.addElementBottom(credits);
 		fixedPanel.add(startMenu);
 	}
@@ -478,10 +475,11 @@ public class MenuHandler {
 
 	/**
 	 * Opens the Game Over menu
+	 * @param index : the menu that should be opened.
 	 */
-	public void openBasicMenu(int menuId) {
-		System.out.println("menuID: " + menuId);
-		basicMenus[menuId].open();
+	public void openBasicMenu(int index) {
+		System.out.println("menuID: " + index);
+		basicMenus[index].open();
 	}
 
 	/**

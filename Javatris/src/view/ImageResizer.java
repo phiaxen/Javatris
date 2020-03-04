@@ -9,7 +9,8 @@ import java.io.IOException;
  * by a percentage of its original size
  * 
  * @author Philip Axenhamn
- * @version 2020-02-08
+ * @version since
+ * @since 2020-02-08
  */
 public class ImageResizer {
 	/**
@@ -44,5 +45,5 @@ public class ImageResizer {
 		int scaledHeight = (int) (image.getHeight() * percent);
 		return resize(image, scaledWidth, scaledHeight);
 	}
-
+	
 }

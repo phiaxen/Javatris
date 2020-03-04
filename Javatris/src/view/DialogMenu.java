@@ -44,8 +44,7 @@ public class DialogMenu {
 	/**
 	 * Creates a dialog menu.
 	 * 
-	 * @param com       : the component to which the dialog box should be attached
-	 *                  to
+	 * @param com       : the component to which the dialog box should be attached to
 	 * @param panelSize : the dimensions of the dialog panel
 	 * @param elements  : the amount of elements on the menu
 	 * @param title     : the title name
@@ -127,8 +126,7 @@ public class DialogMenu {
 	private void dialogSetup() {
 		window = (RootPaneContainer) SwingUtilities.getWindowAncestor(com);
 
-		// make a JDialog containing the panel made in this class(panel) with the dark
-		// pane
+		// make a JDialog containing the panel made in this class(panel) with the dark pane
 		dialog = new JDialog((Window) window);
 		dialog.getContentPane().add(panel);
 		dialog.setUndecorated(true); // remove borders
@@ -146,7 +144,7 @@ public class DialogMenu {
 	}
 
 	/**
-	 * open the menu
+	 * opens the menu
 	 */
 	public void open() {
 		dialog.setLocationRelativeTo((Window) window);
