@@ -9,7 +9,7 @@ import java.io.IOException;
  * by a percentage of its original size
  * 
  * @author Philip Axenhamn
- * @version since
+ * @version 1.0
  * @since 2020-02-08
  */
 public abstract class ImageResizer {
