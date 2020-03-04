@@ -32,45 +32,43 @@ public class GameEngine extends AbstractModel implements Runnable {
 		void connectionLost();
 	}
 
+	// shape and board
 	private Shape currentShape; // The shape that is currently in action
 	private Shape oldShape;
 	private Board board;
-	private Client client;
-	private Boolean online; // Change this to true for multiplayer
 
-	// points and levelup things
+	// points and levelup
 	private int level = 1;
 	private int points = 0;
-	private int linesToClear = 10; // how many lines it takes to level up, increase by 5 for each level
+	private int linesToClear = 10;
+	private int linesCleared = 0;
 
-	private int linesCleared = 0; // how many lines the player has cleared
-	public Delegate delegate;
-
-	private boolean running = false;
-
+	// thread and update
 	private Thread thread;
+	private boolean running = false;
 	private final int TICKSPERSECOND = 60;
-
 	private int timePassed = 0;
 	private int oldTime = 0;
-	private Timer GameTime;
-
 	private long time = 0, lastTime = 0;
-
-	private boolean gameOver = false;
-
-	private final ShapeHandler shapeHandler;
-
-	private boolean GameStart = true;
-
 	private int speedDown = 700;
-	private boolean isLoading = false;
 
+	// timers
+	private Timer GameTime;
 	private Timer delayTimer;
 	private boolean waitBeforeStatic;
-
 	private final int delaysAllowed = 10;
 	private int delaysCalled = 0;
+
+	// game state
+	private boolean GameStart = true;
+	private boolean gameOver = false;
+	private boolean isLoading = false;
+	private boolean online = false;
+
+	private Client client;
+
+	private final ShapeHandler shapeHandler;
+	public Delegate delegate;
 
 	public GameEngine(Board board, Boolean online) {
 		super();
@@ -80,7 +78,7 @@ public class GameEngine extends AbstractModel implements Runnable {
 		this.GameTime = new Timer();
 		this.delayTimer = new Timer();
 		this.shapeHandler = new ShapeHandler(board);
-		setFirstShape();
+		setCurrentShape();
 	}
 
 	TimerTask task = new TimerTask() {
@@ -93,6 +91,10 @@ public class GameEngine extends AbstractModel implements Runnable {
 		}
 	};
 
+	/**
+	 * Sets a flag to true, starts a timer and when the timer has finnished, the
+	 * flag is set to false.
+	 */
 	public void setDelayBeforeStatic() {
 		delaysCalled++;
 		if (delaysCalled <= delaysAllowed) {
@@ -113,6 +115,7 @@ public class GameEngine extends AbstractModel implements Runnable {
 	}
 
 	/**
+	 * Updates the state of the current shape.
 	 * 
 	 */
 	private void update() {
@@ -150,7 +153,7 @@ public class GameEngine extends AbstractModel implements Runnable {
 				firePropertyChange("points", oldPoints, points);
 				firePropertyChange("lines cleared", oldlinesC, linesCleared);
 			}
-			SpawnShape();
+			setCurrentShape();
 		}
 
 		if ((time > currentShape.getCurrentSpeed()) && (!currentShape.hasCollidedY())) {
@@ -217,14 +220,11 @@ public class GameEngine extends AbstractModel implements Runnable {
 		}
 	}
 
-	/*
-	 * this function is called only when the game starts, only once
+	/**
+	 * Sets the current shape and change the speed down to be the right speed for
+	 * the current level.
 	 */
-	public void setFirstShape() {
-		currentShape = shapeHandler.nextShape();
-	}
-
-	public void SpawnShape() {
+	private void setCurrentShape() {
 		currentShape = shapeHandler.nextShape();
 		currentShape.changeNormalSpeed(speedDown);
 	}
@@ -245,6 +245,9 @@ public class GameEngine extends AbstractModel implements Runnable {
 		}
 	}
 
+	/**
+	 * tells the game to stop and display an error message.
+	 */
 	public void connectionLost() {
 		if (!gameOver) {
 			running = false;
@@ -270,15 +273,27 @@ public class GameEngine extends AbstractModel implements Runnable {
 		delegate.gameOver(type);
 	}
 
-	public void setStaticShapes() {
+	/**
+	 * When the current shape has collided, this function is called to store the
+	 * shape in the board.
+	 */
+	private void setStaticShapes() {
 		board.setStaticShapeInBoard(currentShape.getCoords(), currentShape.getX(), currentShape.getY(),
 				currentShape.getColor());
 	}
 
+	/**
+	 * Returns the current shape
+	 * 
+	 * @return currentShape the shape in action
+	 */
 	public Shape getCurrentShape() {
 		return currentShape;
 	}
 
+	/**
+	 * Increases level by one, updates the speed and lines to clear.
+	 */
 	private void levelUp() {
 		int oldLevel = level;
 		level++;
@@ -287,37 +302,45 @@ public class GameEngine extends AbstractModel implements Runnable {
 		updateSpeedDown();
 	}
 
+	/**
+	 * Updates how many lines that the player needs to clear in order to level up.
+	 */
 	private void updateLinesToClear() {
 		linesToClear = 10 + (level - 1) * 5;
 	}
 
+	/**
+	 * Updates the speed the shape travels downwards. Based on the current level.
+	 */
 	private void updateSpeedDown() {
 		if (speedDown > 120) {
 			speedDown = 700 - 20 * (level - 1);
 		}
 	}
 
+	/**
+	 * Returns the current level
+	 * 
+	 * @return level the current level
+	 */
 	public int getLevel() {
 		return level;
 	}
 
+	/**
+	 * Returns the current score
+	 * 
+	 * @return points the current scor
+	 */
 	public int getPoints() {
 		return points;
 	}
 
-	public boolean running() {
-		return running;
-	}
-
 	/**
-	 * Returns wheter or not the game is online
+	 * Calculates the score based on current level and the amount of lines cleared
 	 * 
-	 * @return true if online. else false
+	 * @return this function returns the calculated score
 	 */
-	public boolean getOnline() {
-		return online;
-	}
-
 	private int getScore(int level, int rows) {
 		switch (rows) {
 		case 1:
@@ -333,10 +356,18 @@ public class GameEngine extends AbstractModel implements Runnable {
 		}
 	}
 
+	/**
+	 * Sets the isLoading flag to true.
+	 */
 	public void setIsLoading() {
 		isLoading = true;
 	}
 
+	/**
+	 * Starts the game. If it is the first time,a timer starts and a thread is
+	 * created and started. Otherwise the thread is notified. If the flag online is
+	 * true, the client is recieved.
+	 */
 	public synchronized void start() {
 		fireGameField();
 		updateLinesToClear();
@@ -345,7 +376,6 @@ public class GameEngine extends AbstractModel implements Runnable {
 		if (!online) {
 			running = true;
 			if (GameStart) {
-				System.out.println("GAME START");
 				GameTime.scheduleAtFixedRate(task, 0, 1000);
 				thread = new Thread(this);
 				thread.start(); // start thread
@@ -355,25 +385,24 @@ public class GameEngine extends AbstractModel implements Runnable {
 					thread.notify();
 				}
 			}
-
 		} else {
 			if (this.delegate != null) {
-				System.out.println("got client");
 				client = this.delegate.getClient();
 			}
 		}
 	}
 
+	/**
+	 * Starts a game for multiplayer.
+	 */
 	public synchronized void startOnline() {
 		running = true;
 		if (GameStart) {
-			System.out.println("GAME ONLINE START1");
 			GameTime.scheduleAtFixedRate(task, 0, 1000);
 			thread = new Thread(this);
 			thread.start(); // start thread
 			GameStart = false;
 		} else {
-			System.out.println("GAME ONLINE START2");
 			synchronized (thread) {
 				thread.notify();
 			}
@@ -381,6 +410,9 @@ public class GameEngine extends AbstractModel implements Runnable {
 		}
 	}
 
+	/**
+	 * Pauses the game
+	 */
 	public void pause() {
 		if (!online) {
 			running = false;
@@ -388,6 +420,9 @@ public class GameEngine extends AbstractModel implements Runnable {
 		}
 	}
 
+	/**
+	 * Pauses the game
+	 */
 	public void resume() {
 		if (!online) {
 			synchronized (thread) {
@@ -397,7 +432,9 @@ public class GameEngine extends AbstractModel implements Runnable {
 		}
 	}
 
-	// kan tas bort kanske
+	/**
+	 * Kills the thread and exits the game.
+	 */
 	private synchronized void stop() {
 		if (!running) {
 			return;
@@ -412,7 +449,7 @@ public class GameEngine extends AbstractModel implements Runnable {
 		System.exit(1);
 	}
 
-	// This function gets called when we start the thread.
+	// This function gets called when the thread starts.
 	@Override
 	public void run() {
 
@@ -452,27 +489,38 @@ public class GameEngine extends AbstractModel implements Runnable {
 		stop();
 	}
 
+	/**
+	 * Tells the game to display a gameover menu.
+	 */
 	public void quit() {
 		if (delegate != null && !running) {
 			delegate.gameOver(3);
 		}
 	}
 
+	/**
+	 * @return Returns a list of the next 3 shapes.
+	 */
 	public LinkedList<Shape> GetNextShapes() {
-		// return nextShapes;
 		return shapeHandler.getNextShapes();
 	}
 
+	/**
+	 * @return Returns the amount of row cleared.
+	 */
 	public int getRemovedRows() {
 		return linesCleared;
 	}
 
+	/**
+	 * @return Returns the time passed.
+	 */
 	public int getTime() {
 		return timePassed;
 	}
 
 	/**
-	 * Gets the GameEngines shapeHandler
+	 * Gets the GameEngines shapeHandler.
 	 * 
 	 * @return : the GameEngines shapeHandler
 	 */
@@ -480,6 +528,11 @@ public class GameEngine extends AbstractModel implements Runnable {
 		return shapeHandler;
 	}
 
+	/**
+	 * Sets a saved shape to the current shape.
+	 * 
+	 * @param shape : the shape to be the current shape
+	 */
 	public void setCurrentShape(Shape shape) {
 		currentShape = shape;
 	}
@@ -493,18 +546,38 @@ public class GameEngine extends AbstractModel implements Runnable {
 		shapeHandler.setNextShapes(shapes);
 	}
 
+	/**
+	 * Sets the current score.
+	 * 
+	 * @param score : the score-value 
+	 */
 	public void setScore(int score) {
 		this.points = score;
 	}
-
+	
+	/**
+	 * Sets the current time.
+	 * 
+	 * @param time : the time. 
+	 */
 	public void setTime(int time) {
 		this.timePassed = time;
 	}
 
+	/**
+	 * Sets the level.
+	 * 
+	 * @param level : the level. 
+	 */
 	public void setLevel(int level) {
 		this.level = level;
 	}
 
+	/**
+	 * Sets the amount of lines that has been removed.
+	 * 
+	 * @param removedRows : the amount of rows removed. 
+	 */
 	public void setClearedRows(int removedRows) {
 		this.linesCleared = removedRows;
 	}
@@ -518,6 +591,9 @@ public class GameEngine extends AbstractModel implements Runnable {
 		this.online = online;
 	}
 
+	/**
+	 * Resets all game values and restarts the game.
+	 */
 	public void restart() {
 		if (!isLoading) {
 			board.resetBoard();
@@ -526,7 +602,7 @@ public class GameEngine extends AbstractModel implements Runnable {
 			linesToClear = 10;
 			setClearedRows(0);
 			setTime(0);
-			setFirstShape();
+			setCurrentShape();
 		}
 		gameOver = false;
 		start();

@@ -17,7 +17,7 @@ import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileSystemView;
 
 /**
- * MusicPlayer is a class that handles the background songs
+ * MusicPlayer is a class that handles the background music
  * 
  * @author Tobias Mauritzon
  * @author Philip Axenhamn
@@ -25,25 +25,20 @@ import javax.swing.filechooser.FileSystemView;
  * @version 3.0
  * @since 2020-02-29
  */
-
-// datumet är inte rätt än
-
 public class MusicPlayer {
 
 	private Clip audioClip;
 	private final float MaxSteps = 20; // Even numbers only
 	private final float steps = 1 / MaxSteps;
-	private boolean muted;
 	private float gobalVolume;
-
 	private boolean fileLoaded = false;
+	private boolean muted;
 
 	/**
 	 * MusicPlayer is the constructor for MusicPlayer.
 	 * 
 	 * @param choice 1-3 for prepared songs else you get an empty constructor and
 	 *               you need to use playFile
-	 * @return Nothing.
 	 */
 	public MusicPlayer(int choice) {
 		switch (choice) {
@@ -63,7 +58,7 @@ public class MusicPlayer {
 	}
 
 	/**
-	 * preparedMusic starts one of the prepared tacks
+	 * Starts one of the prepared tacks.
 	 * 
 	 * @param choice 1-3 for prepared songs
 	 */
@@ -82,10 +77,9 @@ public class MusicPlayer {
 	}
 
 	/**
-	 * loadMusic loads and starts the song.
+	 * Loads a choosen song.
 	 * 
 	 * @param fp is the file path to the song as a string
-	 * @return Nothing.
 	 * @exception if file path is incorrect
 	 */
 	public void loadMusic(String fp) {
@@ -121,17 +115,14 @@ public class MusicPlayer {
 	}
 
 	/**
-	 * play restarts the currently playing song from the stopped point.
-	 * 
-	 * @param Empty
-	 * @return Nothing.
+	 * Starts the choosen song.
 	 */
 	public void play() {
 		audioClip.loop(Clip.LOOP_CONTINUOUSLY);
 	}
 
 	/**
-	 * playMusicFile loads and starts the song.
+	 * Loads and starts the song.
 	 * 
 	 * @param audioFile is the File you want to load
 	 * @return Nothing.
@@ -169,27 +160,23 @@ public class MusicPlayer {
 	}
 
 	/**
-	 * stop stops the currently playing song.
+	 * Stops the currently playing song.
 	 * 
-	 * @param Empty
-	 * @return Nothing.
 	 * @exception if no clip has been created
 	 */
 	public void stop() {
+		System.out.println("STOP SONG");
 		if (fileLoaded) {
 			try {
 				audioClip.stop();
 			} catch (Exception e) {
-				JOptionPane.showMessageDialog(null, "No musik running");
+				System.out.println("No musik running");
 			}
 		}
 	}
 
 	/**
-	 * restart starts the current song over from the beginning
-	 * 
-	 * @param Empty
-	 * @return Nothing
+	 * Starts the current song over from the beginning
 	 */
 	public void restart() {
 		audioClip.setFramePosition(0);
@@ -197,9 +184,8 @@ public class MusicPlayer {
 	}
 
 	/**
-	 * getVolume gets the volume of the current song
+	 * Gets the volume of the current song
 	 * 
-	 * @param Empty
 	 * @return type float volume between 0 and 1 in floating as point.
 	 */
 	public float getVolume() {
@@ -215,10 +201,9 @@ public class MusicPlayer {
 	}
 
 	/**
-	 * setVolume sets the volume of the current song
+	 * Sets the volume of the current song
 	 * 
-	 * @param Empty
-	 * @return volume is a floating point between 0 and 1.
+	 * @param volume is a floating point between 0 and 1.
 	 */
 	public void setVolume(float volume) {
 
@@ -233,10 +218,7 @@ public class MusicPlayer {
 	}
 
 	/**
-	 * incVolume increases the volume of the current song in 0.05 steps
-	 * 
-	 * @param Empty
-	 * @return Nothing
+	 * Increases the volume of the current song in 0.05 steps
 	 */
 	public void incVolume() {
 		if (fileLoaded) {
@@ -245,6 +227,7 @@ public class MusicPlayer {
 
 			if (volume < 1.0f) {
 				volume = (float) Math.round(volume * 100) / 100;
+				System.out.println(volume);
 				FloatControl gainControl = (FloatControl) audioClip.getControl(FloatControl.Type.MASTER_GAIN);
 				gainControl.setValue(20f * (float) Math.log10(volume));
 				gobalVolume = getVolume();
@@ -260,10 +243,7 @@ public class MusicPlayer {
 	}
 
 	/**
-	 * decVolume decreases the volume of the current song in 0.05 steps
-	 * 
-	 * @param Empty
-	 * @return Nothing
+	 * Decreases the volume of the current song in 0.05 steps
 	 */
 	public void decVolume() {
 		if (fileLoaded) {
@@ -272,6 +252,8 @@ public class MusicPlayer {
 
 			if (volume > 0.0f) {
 				volume = (float) Math.round(volume * 100) / 100;
+				System.out.println(volume);
+
 				FloatControl gainControl = (FloatControl) audioClip.getControl(FloatControl.Type.MASTER_GAIN);
 				gainControl.setValue(20f * (float) Math.log10(volume));
 				gobalVolume = getVolume();
@@ -286,10 +268,7 @@ public class MusicPlayer {
 	}
 
 	/**
-	 * mute mutes the current song
-	 * 
-	 * @param Empty
-	 * @return Nothing
+	 * Mutes the current song
 	 */
 	public void mute() {
 		if (fileLoaded) {
@@ -307,11 +286,8 @@ public class MusicPlayer {
 	}
 
 	/**
-	 * playFile Opens a JFileChooser and sends your selected .wav file to
-	 * playMusicFile this is a way to lad local sound files in to the game
-	 * 
-	 * @param Empty
-	 * @return Nothing
+	 * Opens a JFileChooser and sends your selected .wav file to playMusicFile this
+	 * is a way to lad local sound files in to the game
 	 */
 	public void playFile() {
 
@@ -329,7 +305,7 @@ public class MusicPlayer {
 			if (path.getName().endsWith((".wav"))) {
 				playMusicFile(j.getSelectedFile());
 			} else {
-				JOptionPane.showMessageDialog(null, "Wrong file type " + j.getSelectedFile().getAbsolutePath()); 
+				JOptionPane.showMessageDialog(null, "Wrong file type " + j.getSelectedFile().getAbsolutePath()); // System.out.println();
 			}
 		}
 		// if the user cancelled the operation

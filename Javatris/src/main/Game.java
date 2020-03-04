@@ -19,7 +19,7 @@ import view.*;
 import controller.*;
 
 /**
- * MAIN CLASS
+ * This class has the main funtion. It makes a frame and starts the game.
  * 
  * @author Philip
  * @version 1.0
@@ -31,7 +31,7 @@ import controller.*;
 
 public class Game {
 
-	private final int BLOCKSIZE = 40; // resize game <=40 (standard is 40)
+	private final int BLOCKSIZE = 40;
 	private final int BOARDWIDTH = 10;
 	private final int BOARDHEIGHT = 20;
 	private final JFrame frame;
@@ -43,17 +43,16 @@ public class Game {
 	private SideInfo sideInfo;
 	private Client client;
 	private MusicPlayer musicPlayer;
-	private SfxManager sfxManager;
+	private final SfxManager sfxManager;
 	private JPanel gamePanel;
 	private boolean firstGame = true;
-	private MenuHandler menuHandler;
+	private final MenuHandler menuHandler;
 
 	public Game(JFrame frame) {
 		this.frame = frame;
-
-//		ResizeFrame();
 		init();
 		SetUpFrame();
+
 		sfxManager = new SfxManager();
 		menuHandler = new MenuHandler(this, frame, FixedPanel, musicPlayer, sfxManager);
 		menuHandler.openStartMenu();
@@ -68,7 +67,6 @@ public class Game {
 	}
 
 	public static void main(String[] args) {
-
 		new Game(new JFrame("JavaTris"));
 	}
 
@@ -129,12 +127,10 @@ public class Game {
 	}
 
 	/**
-	 * 
+	 * Initializes the frame and makes a game panel and a panel to center everything
+	 * to the frame.
 	 */
 	public void SetUpFrame() {
-//		frame.setSize(FrameWidth + 300,FrameHeight);	//add 300 on width if sideInfo is included
-		frame.setSize(740, 885);
-
 		gamePanel = new JPanel();
 		gamePanel.setLayout(new GridBagLayout());
 		gamePanel.setPreferredSize(new Dimension(684, 804));
@@ -147,40 +143,22 @@ public class Game {
 		FixedPanel.setPreferredSize(frame.getSize());
 		FixedPanel.setBackground(Color.BLACK);
 
+		frame.setSize(740, 885);
 		frame.add(FixedPanel);
-
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-		frame.setLocationRelativeTo(null); // set frame in the middle of the screen
-
+		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
-
-	}
-
-	// Temporary solution with getters
-	public int getBoardWidth() {
-		return BOARDWIDTH;
-	}
-
-	public int getBoardHeight() {
-		return BOARDHEIGHT;
-	}
-
-	public int getBlockSize() {
-		return BLOCKSIZE;
 	}
 
 	/**
-	 * Starts game
+	 * Starts the game
 	 */
 	public void startGame() {
-
 		menuHandler.closeStartMenu();
 		FixedPanel.add(gamePanel);
 		FixedPanel.validate();
 		FixedPanel.repaint();
-		// frame.add(FixedPanel);
 
 		if (firstGame) {
 			gameEngine.addPropertyChangeListener(boardView);
@@ -196,6 +174,9 @@ public class Game {
 		firstGame = false;
 	}
 
+	/**
+	 * Loads a saved game
+	 */
 	public void loadGame() {
 		try {
 			Savedata loadData = (Savedata) SaveManager.loadFile("saveFile.Save");
@@ -216,6 +197,9 @@ public class Game {
 		gamePanel.repaint();
 	}
 
+	/**
+	 * Save a game
+	 */
 	public void saveGame() {
 		Savedata saveData = new Savedata();
 		saveData.setBoard(board.getBoard());
