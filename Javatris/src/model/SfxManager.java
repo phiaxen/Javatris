@@ -13,115 +13,113 @@ import javax.sound.sampled.FloatControl;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
+/**
+ * SfxManager is a class that handles all sound effects.
+ * 
+ * @author Philip Axenhamn
+ * @version 1.0
+ * @since 2020-02-29
+ */
 public class SfxManager implements PropertyChangeListener {
 
-	private Clip sfx1;
-	private Clip sfx2;
-	private Clip sfx3;
-	private Clip sfx4;
+	private Clip[] sfx;
 	private boolean muted;
 
+	/**
+	 * Constructor of this class calls the function init.
+	 */
 	public SfxManager() {
+		sfx = new Clip[4];
 		init();
 	}
 
+	/**
+	 * Loads each soundeffect from source file.
+	 * Sets mute to false.
+	 */
 	private void init() {
-		getSound1();
-		getSound2();
-		getSound3();
-		getSound4();
+		loadSound(0, "\\src\\soundEffects\\sfx1.wav", 0.1f); // soundeffect 1
+		loadSound(1, "\\src\\soundEffects\\sfx2.1.wav", 1f); // soundeffect 2
+		loadSound(2, "\\src\\soundEffects\\sfx3.wav", 1f); // soundeffect 3
+		loadSound(3, "\\src\\soundEffects\\sfx4.wav", 0.3f); // soundeffect 4
 		muted = false;
 	}
 
-	private void getSound1() {
+	/**
+	 * Loads a sound effect to the Clip array.
+	 * 
+	 * @param index : the index of the array where this sound effect should be placed.
+	 * @param filePath : the file path ocf the sound effect
+	 * @param volume : the volume of the sound effect(0-1)
+	 * @exception IOException
+	 * @exception LineUnavailableException
+	 * @exception UnsupportedAudioFileException
+	 */
+	private void loadSound(int index, String filePath, float volume) {
 		try {
 			Path path = FileSystems.getDefault().getPath("").toAbsolutePath();
-			File file1 = new File(path + "\\src\\soundEffects\\sfx1.wav");
-			sfx1 = AudioSystem.getClip();
-			sfx1.open(AudioSystem.getAudioInputStream(file1));
-			float volume = 0.1f;
-			FloatControl gainControl = (FloatControl) sfx1.getControl(FloatControl.Type.MASTER_GAIN);
+			File file1 = new File(path + filePath);
+			sfx[index] = AudioSystem.getClip();
+			sfx[index].open(AudioSystem.getAudioInputStream(file1));
+			FloatControl gainControl = (FloatControl) sfx[index].getControl(FloatControl.Type.MASTER_GAIN);
 			gainControl.setValue(20f * (float) Math.log10(volume));
-
-		} catch (Exception e1) {
+		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
-	}
-
-	private void getSound2() {
-		try {
-			Path path = FileSystems.getDefault().getPath("").toAbsolutePath();
-			File file2 = new File(path + "\\src\\soundEffects\\sfx2.1.wav");
-			sfx2 = AudioSystem.getClip();
-			sfx2.open(AudioSystem.getAudioInputStream(file2));
-
-		} catch (Exception e1) {
-			e1.printStackTrace();
+		catch (LineUnavailableException e2) {
+			e2.printStackTrace();
 		}
-	}
-
-	private void getSound3() {
-		try {
-			Path path = FileSystems.getDefault().getPath("").toAbsolutePath();
-			File file3 = new File(path + "\\src\\soundEffects\\sfx3.wav");
-			sfx3 = AudioSystem.getClip();
-			sfx3.open(AudioSystem.getAudioInputStream(file3));
-
-		} catch (Exception e1) {
-			e1.printStackTrace();
+		catch (UnsupportedAudioFileException e3) {
+			e3.printStackTrace();
 		}
-	}
-
-	private void getSound4() {
-		try {
-			Path path = FileSystems.getDefault().getPath("").toAbsolutePath();
-			File file4 = new File(path + "\\src\\soundEffects\\sfx4.wav");
-			sfx4 = AudioSystem.getClip();
-			sfx4.open(AudioSystem.getAudioInputStream(file4));
-			float volume = 0.3f;
-			FloatControl gainControl = (FloatControl) sfx4.getControl(FloatControl.Type.MASTER_GAIN);
-			gainControl.setValue(20f * (float) Math.log10(volume));
-
-		} catch (Exception e1) {
-			e1.printStackTrace();
-		}
-	}
-
-	public void playSound1() {
-		if (!muted) {
-			sfx1.start();
-			getSound1();
-		}
-	}
-
-	// hit
-	public void playSound2() {
-		if (!muted) {
-			sfx2.start();
-			getSound2();
-		}
-	}
-
-	// line cleared
-	public void playSound3() {
-		if (!muted) {
-			sfx3.start();
-			getSound3();
-		}
-		;
-	}
-
-	// level up
-	public void playSound4() {
-		if (!muted) {
-			sfx4.start();
-			getSound4();
-		}
-
 	}
 
 	/**
-	 * setMute sets the if the sounds should play or not
+	 * Plays sound effect 1 if not muted and loads it again.
+	 * Sound effect for movement.
+	 */
+	public void playSound1() {
+		if (!muted) {
+			sfx[0].start();
+			loadSound(0, "\\src\\soundEffects\\sfx1.wav", 0.1f);
+		}
+	}
+
+	/**
+	 * Plays sound effect 2 if not muted and loads it again.
+	 * Sound effect for hit.
+	 */
+	public void playSound2() {
+		if (!muted) {
+			sfx[1].start();
+			loadSound(1, "\\src\\soundEffects\\sfx2.1.wav", 1f);
+		}
+	}
+
+	/**
+	 * Plays sound effect 3 if not muted and loads it again.
+	 * Sound effect for lines cleared.
+	 */
+	public void playSound3() {
+		if (!muted) {
+			sfx[2].start();
+			loadSound(2, "\\src\\soundEffects\\sfx3.wav", 1f);
+		}
+	}
+
+	/**
+	 * Plays sound effect 4 if not muted and loads it again.
+	 * Sound effect for level up.
+	 */
+	public void playSound4() {
+		if (!muted) {
+			sfx[3].start();
+			loadSound(3, "\\src\\soundEffects\\sfx4.wav", 0.3f);
+		}
+	}
+
+	/**
+	 * Sets if the sounds should play or not
 	 * 
 	 * @param mute : boolean
 	 */
@@ -131,7 +129,7 @@ public class SfxManager implements PropertyChangeListener {
 	}
 
 	/**
-	 * getMute returns if sfx are muted or not
+	 * Returns if sound effects are muted or not
 	 * 
 	 * @return : value of muted
 	 */

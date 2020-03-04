@@ -12,6 +12,8 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.FloatControl;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileSystemView;
@@ -80,7 +82,9 @@ public class MusicPlayer {
 	 * Loads a choosen song.
 	 * 
 	 * @param fp is the file path to the song as a string
-	 * @exception if file path is incorrect
+	 * @exception IOException
+	 * @exception LineUnavailableException
+	 * @exception UnsupportedAudioFileException
 	 */
 	public void loadMusic(String fp) {
 
@@ -107,9 +111,14 @@ public class MusicPlayer {
 			}
 
 			fileLoaded = true;
-		} catch (Exception e) {
-
-			JOptionPane.showMessageDialog(null, "Error with audio loading");
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		catch (LineUnavailableException e2) {
+			e2.printStackTrace();
+		}
+		catch (UnsupportedAudioFileException e3) {
+			e3.printStackTrace();
 		}
 
 	}
