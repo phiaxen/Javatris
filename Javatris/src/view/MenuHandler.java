@@ -83,14 +83,15 @@ public class MenuHandler {
 		int titleLength = titleText.length();
 		int titleTextSize = (menuWidth + 300) / titleLength;
 
-		DialogMenu screenSizeToSmallMenu = new DialogMenu(fixedPanel, new Dimension(menuWidth, menuHeigth), 1, titleText, titleTextSize);
+		DialogMenu screenSizeToSmallMenu = new DialogMenu(fixedPanel, new Dimension(menuWidth, menuHeigth), 1,
+				titleText, titleTextSize);
 		JButton exitButton = new JButton("EXIT");
-		
+
 		formatButton(exitButton, Color.WHITE, Font.BOLD, buttonTextSize);
 		exitButton.addActionListener((ActionEvent e) -> {
 			System.exit(0);
 		});
-		screenSizeToSmallMenu.addElement(exitButton);	
+		screenSizeToSmallMenu.addElement(exitButton);
 		screenSizeToSmallMenu.open();
 	}
 
@@ -143,7 +144,7 @@ public class MenuHandler {
 			startMenu.close();
 			openCreditsMenu();
 		});
-		
+
 		// credits
 		formatButton(controlls, Color.GRAY, Font.BOLD, 20);
 		controlls.addActionListener((ActionEvent e) -> {
@@ -525,7 +526,7 @@ public class MenuHandler {
 	private void openCreditsMenu() {
 		creditsMenu.open();
 	}
-	
+
 	/**
 	 * Creates the controlls screen
 	 */
@@ -534,7 +535,7 @@ public class MenuHandler {
 		JButton back = new JButton("Back");
 		JLabel text = new JLabel("CONTROLLS", SwingConstants.CENTER);
 		JLabel image;
-		
+
 		back.setFont(new Font("Arial", Font.BOLD, 20));
 		back.setForeground(Color.WHITE);
 		back.setBackground(Color.BLACK);
@@ -548,16 +549,16 @@ public class MenuHandler {
 
 		text.setForeground(Color.white);
 		text.setFont(new Font("Arial", Font.BOLD, 50));
-			
+
 		image = new JLabel(new ImageIcon("src/images/how-to-play.png"));
-		
+
 		controllsMenu.addElementTop(text);
 		controllsMenu.addElementTop(image);
 		controllsMenu.addElementBottom(back);
 		controllsMenu.close();
 		fixedPanel.add(controllsMenu);
 	}
-	
+
 	/**
 	 * Opens controlls menu
 	 */

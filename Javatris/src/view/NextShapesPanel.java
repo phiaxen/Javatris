@@ -17,95 +17,99 @@ import javax.swing.border.EmptyBorder;
 import model.Board;
 import model.Shape;
 
-public class NextShapesPanel extends JPanel{
+public class NextShapesPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	private BufferedImage tiles;
 	private BufferedImage[] colors;
 	private LinkedList<Shape> shapes = new LinkedList<Shape>();
-	
+
 	/**
-	 * NextShapePanel is the panel used to 
-	 * display the next shapes in SideInfo
-	 * @author Philip Axenhamn 
+	 * NextShapePanel is the panel used to display the next shapes in SideInfo
+	 * 
+	 * @author Philip Axenhamn
 	 * @since 2020-02-25
 	 * @version 1.0
 	 */
-	
+
 	public NextShapesPanel() {
 		init();
 	}
-	
-	/**Creates the Next shape panel used
-	 * in SideInfo
+
+	/**
+	 * Creates the Next shape panel used in SideInfo
 	 */
 	private void init() {
 		loadImages();
 		colors = new BufferedImage[8];
 		setColors();
-		this.setLayout(new GridLayout(4,18,1,1));
+		this.setLayout(new GridLayout(4, 18, 1, 1));
 		this.setBackground(Color.black);
 		this.setBorder(new EmptyBorder(10, 10, 10, 10));
-		this.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY,2));
-		this.setPreferredSize(new Dimension(240,500));
+		this.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 2));
+		this.setPreferredSize(new Dimension(240, 500));
 	}
-	
-	/** Loads the square image used for the Tetris shapes
+
+	/**
+	 * Loads the square image used for the Tetris shapes
 	 * 
 	 */
 	private void loadImages() {
 		try {
 			tiles = ImageIO.read(Board.class.getResource("/images/tiles4.png"));
-			tiles = ImageResizer.resize(tiles,0.75);
-		}catch(IOException e) {
+			tiles = ImageResizer.resize(tiles, 0.75);
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-	
-	/**Sets the color of the Tetris square
+
+	/**
+	 * Sets the color of the Tetris square
 	 * 
 	 */
 	private void setColors() {
-	
-		for(int i=0; i<colors.length; i++){
-			colors[i] = tiles.getSubimage(i*30,0, 30, 30);	
+
+		for (int i = 0; i < colors.length; i++) {
+			colors[i] = tiles.getSubimage(i * 30, 0, 30, 30);
 		}
 	}
-	
-	/**updateNextShape updates all shapes in side info at once
+
+	/**
+	 * updateNextShape updates all shapes in side info at once
+	 * 
 	 * @param shape the new list of shapes you want to display
 	 */
 	public void updateNextShape(LinkedList<Shape> shape) {
 		shapes = shape;
 	}
-	
-	/**Repaints the NextShapePanel
-	 *g the graphic you want to be repainted
+
+	/**
+	 * Repaints the NextShapePanel g the graphic you want to be repainted
 	 */
 	@Override
 	protected void paintComponent(Graphics g) {
-		
+
 		super.paintComponent(g);
-		if(shapes==null|| shapes.size() == 0) {
+		if (shapes == null || shapes.size() == 0) {
 			return;
 		}
-		Graphics2D g2 = (Graphics2D)g;
+		Graphics2D g2 = (Graphics2D) g;
 		int row = 1;
-		for(int k = 0; k<3; k++) {
-			if(shapes!=null&& shapes.size() != 0) {
+		for (int k = 0; k < 3; k++) {
+			if (shapes != null && shapes.size() != 0) {
 				Shape shape = shapes.get(k);
-				for(int i = 0; i < shape.getCoords().length; i++) {
-					for(int j = 0; j < shape.getCoords()[i].length; j++) {
-						if(shape.getCoords()[i][j] == 1) {
-							g2.drawImage(colors[shape.getColor()-1],j*30 + 2*30,i*30 + row*35,null);
-							
+				for (int i = 0; i < shape.getCoords().length; i++) {
+					for (int j = 0; j < shape.getCoords()[i].length; j++) {
+						if (shape.getCoords()[i][j] == 1) {
+							g2.drawImage(colors[shape.getColor() - 1], j * 30 + 2 * 30, i * 30 + row * 35, null);
+
 						}
 					}
 				}
-				
+
 			}
 			row = row + 4;
 		}
-		
+
 	}
 }
