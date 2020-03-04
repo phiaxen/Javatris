@@ -12,7 +12,7 @@ import java.io.IOException;
  * @version since
  * @since 2020-02-08
  */
-public class ImageResizer {
+public abstract class ImageResizer {
 	/**
 	 * Resizes an BufferedImage by width and height
 	 * 
