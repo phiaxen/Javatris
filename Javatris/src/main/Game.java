@@ -130,7 +130,7 @@ public class Game {
 	 * Initializes the frame and makes a game panel and a panel to center everything
 	 * to the frame.
 	 */
-	public void SetUpFrame() {
+	private void SetUpFrame() {
 		gamePanel = new JPanel();
 		gamePanel.setLayout(new GridBagLayout());
 		gamePanel.setPreferredSize(new Dimension(684, 804));
