@@ -7,7 +7,6 @@ import java.awt.GridBagLayout;
 import java.awt.KeyboardFocusManager;
 import java.awt.Toolkit;
 import java.io.IOException;
-import java.net.Socket;
 import java.net.UnknownHostException;
 
 import javax.imageio.IIOException;
@@ -21,24 +20,25 @@ import controller.*;
 
 /**
  * MAIN CLASS
+ * 
  * @author Philip
  * @version 1.0
  * 
- * Added a simple start-menu
+ *          Added a simple start-menu
  * @author Joachim Antfolk
  * @version 1.1
  */
 
 public class Game {
-	
-	private final  int BLOCKSIZE = 40; //resize game <=40 (standard is 40)
-	private final  int BOARDWIDTH = 10;
-	private final  int BOARDHEIGHT = 20;
+
+	private final int BLOCKSIZE = 40; // resize game <=40 (standard is 40)
+	private final int BOARDWIDTH = 10;
+	private final int BOARDHEIGHT = 20;
 	private final JFrame frame;
 	private JPanel FixedPanel;
 	private Board board;
 	private BoardView boardView;
-	private GameEngine gameEngine; 
+	private GameEngine gameEngine;
 	private Controller controller;
 	private SideInfo sideInfo;
 	private Client client;
@@ -47,57 +47,54 @@ public class Game {
 	private JPanel gamePanel;
 	private boolean firstGame = true;
 	private MenuHandler menuHandler;
-	
+
 	public Game(JFrame frame) {
 		this.frame = frame;
-		
+
 //		ResizeFrame();
 		init();
 		SetUpFrame();
 		sfxManager = new SfxManager();
-		menuHandler = new MenuHandler(this, frame, FixedPanel,musicPlayer, sfxManager);
+		menuHandler = new MenuHandler(this, frame, FixedPanel, musicPlayer, sfxManager);
 		menuHandler.openStartMenu();
-		
+
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		double width = screenSize.getWidth();
 		double height = screenSize.getHeight();
-		
-		if(width <= 1366 && height <= 768) {
+
+		if (width <= 1366 && height <= 768) {
 			menuHandler.screenSizeToSmallMenu();
 		}
 	}
-	
+
 	public static void main(String[] args) {
-		
+
 		new Game(new JFrame("JavaTris"));
 	}
-	
-	/*
+
+	/**
 	 * Initializes the game and creates all the neccecary components that are needed
 	 */
 	private void init() {
 		musicPlayer = new MusicPlayer(2);
-		
+
 		board = new Board();
 		boardView = new BoardView(BOARDHEIGHT, BOARDWIDTH, BLOCKSIZE, true);
-		gameEngine = new GameEngine(board,false);
+		gameEngine = new GameEngine(board, false);
 		controller = new Controller(gameEngine, musicPlayer);
 		sideInfo = new SideInfo();
-		
+
 		KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
-        manager.addKeyEventDispatcher(controller);
-		
-		gameEngine.delegate = new GameEngine.Delegate() 
-		{
+		manager.addKeyEventDispatcher(controller);
+
+		gameEngine.delegate = new GameEngine.Delegate() {
 			@Override
-			public Client getClient()
-			{
+			public Client getClient() {
 				return client.getClient();
 			}
-			
+
 			@Override
-			public void pause()
-			{
+			public void pause() {
 				musicPlayer.stop();
 				menuHandler.openPauseMenu();
 			}
@@ -105,9 +102,9 @@ public class Game {
 			@Override
 			public void gameOver(int type) {
 				musicPlayer.stop();
-				
-				switch(type) {
-				case 0:	// game over
+
+				switch (type) {
+				case 0: // game over
 					menuHandler.openBasicMenu(0);
 					break;
 				case 1: // loss
@@ -116,90 +113,90 @@ public class Game {
 				case 2: // win
 					menuHandler.openBasicMenu(2);
 					break;
-				case 3: //connection error
+				case 3: // connection error
 					menuHandler.openBasicMenu(3);
 					break;
 				default:
 					break;
 				}
 			}
+
 			@Override
 			public void connectionLost() {
 				menuHandler.openBasicMenu(4);
 			}
 		};
 	}
-	
+
 	/**
 	 * 
 	 */
-	public void SetUpFrame() {	
+	public void SetUpFrame() {
 //		frame.setSize(FrameWidth + 300,FrameHeight);	//add 300 on width if sideInfo is included
-		frame.setSize(740,885);
-		
+		frame.setSize(740, 885);
+
 		gamePanel = new JPanel();
 		gamePanel.setLayout(new GridBagLayout());
-		gamePanel.setPreferredSize(new Dimension(684,804));
-		gamePanel.setBorder(BorderFactory.createLineBorder(Color.GRAY,2));
+		gamePanel.setPreferredSize(new Dimension(684, 804));
+		gamePanel.setBorder(BorderFactory.createLineBorder(Color.GRAY, 2));
 		gamePanel.add(sideInfo);
 		gamePanel.add(boardView);
-		
+
 		FixedPanel = new JPanel();
 		FixedPanel.setLayout(new GridBagLayout());
 		FixedPanel.setPreferredSize(frame.getSize());
 		FixedPanel.setBackground(Color.BLACK);
-		
+
 		frame.add(FixedPanel);
-		
+
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
-		frame.setLocationRelativeTo(null); //set frame in the middle of the screen
-		
+
+		frame.setLocationRelativeTo(null); // set frame in the middle of the screen
+
 		frame.setVisible(true);
 
 	}
-	
-	//Temporary solution with getters
+
+	// Temporary solution with getters
 	public int getBoardWidth() {
 		return BOARDWIDTH;
 	}
+
 	public int getBoardHeight() {
-		return BOARDHEIGHT; 
+		return BOARDHEIGHT;
 	}
+
 	public int getBlockSize() {
 		return BLOCKSIZE;
 	}
-	
-	
+
 	/**
 	 * Starts game
 	 */
 	public void startGame() {
-		
+
 		menuHandler.closeStartMenu();
 		FixedPanel.add(gamePanel);
 		FixedPanel.validate();
 		FixedPanel.repaint();
-		//frame.add(FixedPanel);
-		
-		if(firstGame) {
+		// frame.add(FixedPanel);
+
+		if (firstGame) {
 			gameEngine.addPropertyChangeListener(boardView);
 			gameEngine.addPropertyChangeListener(sideInfo);
 			gameEngine.getShapeHandler().addPropertyChangeListener(sideInfo);
 			gameEngine.addPropertyChangeListener(sfxManager);
 			musicPlayer.play();
 			gameEngine.start();
-		}
-		else {
+		} else {
 			musicPlayer.restart();
 			gameEngine.restart();
 		}
-		firstGame = false;	
+		firstGame = false;
 	}
-	
-	public void loadGame() 
-	{
+
+	public void loadGame() {
 		try {
 			Savedata loadData = (Savedata) SaveManager.loadFile("saveFile.Save");
 			board.setBoard(loadData.getBoard());
@@ -218,9 +215,8 @@ public class Game {
 		gamePanel.validate();
 		gamePanel.repaint();
 	}
-	
-	public void saveGame() 
-	{
+
+	public void saveGame() {
 		Savedata saveData = new Savedata();
 		saveData.setBoard(board.getBoard());
 		saveData.setCurrentShape(gameEngine.getCurrentShape());
@@ -229,76 +225,71 @@ public class Game {
 		saveData.setLevel(gameEngine.getLevel());
 		saveData.setRemovedRows(gameEngine.getRemovedRows());
 		saveData.setTime(gameEngine.getTime());
-		
-		try 
-		{
+
+		try {
 			SaveManager.saveFile(saveData, "saveFile.Save");
-		}
-		catch(IIOException e) {} catch (Exception e) {
+		} catch (IIOException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	
-	/*
-	 * Starts a multiplayer Session of the game, opens up a prompt so the user can enter the ip and port to the server
-	 * It should be inputed like this: 127.0.0.1:2525
-	 * in other words ip:port
+
+	/**
+	 * Starts a multiplayer Session of the game, opens up a prompt so the user can
+	 * enter the ip and port to the server It should be inputed like this:
+	 * 127.0.0.1:2525 in other words ip:port
 	 */
 	public void startOnlineGame() {
 		String code = menuHandler.showOnlineDialog();
 		boolean connected = false;
-		
-		//Only starts if
-		if(code != null&&!code.isBlank() && !code.isEmpty()) 
-		{
+
+		// Only starts if
+		if (code != null && !code.isBlank() && !code.isEmpty()) {
 			try {
 				String[] adress = code.split(":");
 
-				client = new Client(gameEngine, adress[0], Integer.parseInt(adress[1]));	
+				client = new Client(gameEngine, adress[0], Integer.parseInt(adress[1]));
 				connected = true;
-			}
-			catch(ArrayIndexOutOfBoundsException | NumberFormatException e) {
+			} catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
 				connected = false;
 				JOptionPane.showMessageDialog(null, "Wrong format");
-			} 
-			catch (UnknownHostException e) {
+			} catch (UnknownHostException e) {
 				connected = false;
 				JOptionPane.showMessageDialog(null, "Not a valid host");
-			} 
-			catch (IOException e) {
+			} catch (IOException e) {
 				connected = false;
 				JOptionPane.showMessageDialog(null, "Wrong type Client");
 			}
-			if(connected) {
+			if (connected) {
 				gameEngine.setOnline(true);
 				startGame();
 			}
 		}
 	}
-	
-	/*
-	 * Resumes the paused game 
+
+	/**
+	 * Resumes the paused game
 	 */
 	public void resumeGame() {
 		musicPlayer.play();
-		gameEngine.resume();	
+		gameEngine.resume();
 	}
-	
-	/*
+
+	/**
 	 * Exits the current game and goes to the main menu
 	 */
-	public void removeGamePanel() {	
+	public void removeGamePanel() {
 		FixedPanel.remove(gamePanel);
 		FixedPanel.validate();
 		FixedPanel.repaint();
 	}
-	
+
 	/**
 	 * Returns the game Engine to offline state
 	 */
-	public void setOffline(){
+	public void setOffline() {
 		gameEngine.setOnline(false);
 	}
-	
+
 }
