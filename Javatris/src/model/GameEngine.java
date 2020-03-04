@@ -442,18 +442,14 @@ public class GameEngine extends AbstractModel implements Runnable {
 				lastTime = now;
 
 				if (deltaTime >= 1) {
-					tick();
+					if (!gameOver) {
+						update();
+					}
 					deltaTime--;
 				}
 			}
 		}
 		stop();
-	}
-
-	// everything in game that updates
-	private void tick() {
-		if (!gameOver)
-			update();
 	}
 
 	public void quit() {
