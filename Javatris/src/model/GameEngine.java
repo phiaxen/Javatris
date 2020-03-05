@@ -23,13 +23,14 @@ public class GameEngine extends AbstractModel implements Runnable {
 	 * Interface that handles the communication with the game engine.
 	 */
 	public interface Delegate {
-		Client getClient();
 
 		void pause();
 
 		void gameOver(int type);
 
 		void connectionLost();
+		
+		void sendInt(int number);
 	}
 
 	// shape and board
@@ -65,8 +66,6 @@ public class GameEngine extends AbstractModel implements Runnable {
 	private boolean isLoading = false;
 	private boolean online = false;
 
-	private Client client;
-
 	private final ShapeHandler shapeHandler;
 	public Delegate delegate;
 
@@ -74,7 +73,6 @@ public class GameEngine extends AbstractModel implements Runnable {
 		super();
 		this.board = board;
 		this.online = online;
-		this.client = null;
 		this.gameTime = new Timer();
 		this.delayTimer = new Timer();
 		this.shapeHandler = new ShapeHandler(board);
@@ -137,7 +135,7 @@ public class GameEngine extends AbstractModel implements Runnable {
 					rowsDeleted++;
 					linesCleared++;
 					if (online) {
-						client.sendInt(currentShape.getX());
+						delegate.sendInt(currentShape.getX());
 					}
 				}
 			}
@@ -264,7 +262,7 @@ public class GameEngine extends AbstractModel implements Runnable {
 		running = false;
 		if (online) {
 			if (type == 1) {
-				client.sendInt(10);
+				delegate.sendInt(10);
 			} else if (type == 2) {
 				gameOver = true;
 			}
@@ -384,10 +382,6 @@ public class GameEngine extends AbstractModel implements Runnable {
 				synchronized (thread) {
 					thread.notify();
 				}
-			}
-		} else {
-			if (this.delegate != null) {
-				client = this.delegate.getClient();
 			}
 		}
 	}

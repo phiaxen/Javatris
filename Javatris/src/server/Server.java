@@ -70,7 +70,6 @@ public class Server {
 					e.printStackTrace();
 				}
 
-				System.out.println("Starting game");
 				// messages the clients to start running
 				messageClients(11);
 				running = true;
@@ -93,7 +92,6 @@ public class Server {
 				// Starts the thread with the new client
 				new Thread(clientThread).start();
 			}
-			System.out.println("Clients" + clients.size());
 		}
 
 	}
@@ -139,7 +137,7 @@ public class Server {
 		frame.setLocationRelativeTo(null);
 		frame.setResizable(false);
 		frame.setVisible(true);
-		frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
 	/**

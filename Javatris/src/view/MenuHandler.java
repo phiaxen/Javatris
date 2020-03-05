@@ -476,7 +476,6 @@ public class MenuHandler {
 	 * @param index : the menu that should be opened.
 	 */
 	public void openBasicMenu(int index) {
-		System.out.println("menuID: " + index);
 		basicMenus[index].open();
 	}
 

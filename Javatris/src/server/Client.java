@@ -33,13 +33,11 @@ public class Client {
 
 				@Override
 				public void addRow(int column) {
-					System.out.println("test");
 					engine.addRow(column, 1);
 				}
 
 				@Override
 				public void gameOver(int type) {
-					System.out.println("Game Over! No");
 					engine.gameOver(type);
 				}
 
@@ -88,7 +86,6 @@ public class Client {
 	 * @Return Returns this client
 	 */
 	public Client getClient() {
-		System.out.println("getting client");
 		return this;
 	}
 

@@ -86,10 +86,6 @@ public class Game {
 		manager.addKeyEventDispatcher(controller);
 
 		gameEngine.delegate = new GameEngine.Delegate() {
-			@Override
-			public Client getClient() {
-				return client.getClient();
-			}
 
 			@Override
 			public void pause() {
@@ -122,6 +118,11 @@ public class Game {
 			@Override
 			public void connectionLost() {
 				menuHandler.openBasicMenu(4);
+			}
+			
+			@Override
+			public void sendInt(int number) {
+				client.sendInt(number);
 			}
 		};
 	}

@@ -111,7 +111,6 @@ public class Menu extends JPanel {
 			topPanel.add(title);
 		} catch (IOException e) {
 			e.printStackTrace();
-			System.out.println("ERROR: File not found!");
 		}
 	}
 

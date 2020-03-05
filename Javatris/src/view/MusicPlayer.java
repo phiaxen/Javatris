@@ -308,7 +308,7 @@ public class MusicPlayer {
 			if (path.getName().endsWith((".wav"))) {
 				playMusicFile(j.getSelectedFile());
 			} else {
-				JOptionPane.showMessageDialog(null, "Wrong file type " + j.getSelectedFile().getAbsolutePath()); // System.out.println();
+				JOptionPane.showMessageDialog(null, "Wrong file type " + j.getSelectedFile().getAbsolutePath());
 			}
 		}
 		// if the user cancelled the operation

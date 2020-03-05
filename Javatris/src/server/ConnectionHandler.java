@@ -61,17 +61,14 @@ public class ConnectionHandler implements Runnable {
 					break;
 				case 10:
 					gameOver();
-					System.out.println("game over");
 					break;
 				case 11:
 					start();
 					break;
 				case 12:
 					connectionLost();
-					System.out.println("connection lost");
 					break;
 				case 15:
-					System.out.println("Says " + serverOutput);
 					break;
 				default:
 					break;
@@ -114,7 +111,6 @@ public class ConnectionHandler implements Runnable {
 	 * starts game.
 	 */
 	public void start() {
-		System.out.println("Start game");
 		if (delegate != null) {
 			delegate.start();
 		}
@@ -125,7 +121,6 @@ public class ConnectionHandler implements Runnable {
 	 * stops the game.
 	 */
 	public void stop() {
-		System.out.println("stop game");
 		if (delegate != null) {
 			delegate.pause();
 		}
@@ -146,7 +141,6 @@ public class ConnectionHandler implements Runnable {
 	 * victory screen
 	 */
 	public void gameOver() {
-		System.out.println("You won");
 		delegate.gameOver(2);
 	}
 
@@ -157,7 +151,6 @@ public class ConnectionHandler implements Runnable {
 	 * @param n the position with a opening in the added row
 	 */
 	public void addRow(int n) {
-		System.out.println("Add row with opening " + n);
 		if (delegate != null) {
 			delegate.addRow(n);
 		}

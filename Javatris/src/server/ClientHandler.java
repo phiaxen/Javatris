@@ -79,11 +79,8 @@ public class ClientHandler implements Runnable
 	 */
 	private void exit() 
 	{
-		System.out.println("Client disconnected");
 		clients.remove(this);
 		toOther("12");
-		System.out.println("Clients" + clients.size());
-		
 		try 
 		{
 			while(true) 
