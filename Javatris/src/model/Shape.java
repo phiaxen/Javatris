@@ -21,10 +21,6 @@ public class Shape implements Cloneable, Serializable {
 	private int deltaX = 0;
 	private final int startPos = 4;
 	private int color;
-
-	public boolean CanMoveX = true;
-	public boolean CanRotate = true;
-	public boolean atBottom = false;
 	private boolean hasCollidedY = false;
 	private boolean hasCollidedX = false;
 
@@ -40,9 +36,7 @@ public class Shape implements Cloneable, Serializable {
 	 * If the CanRotate flag is true shape rotates anti-clockwise in 90 degrees.
 	 */
 	public void rotate() {
-		if (!CanRotate) {
-			return;
-		}
+		
 		int rows = shape.length;
 		int cols = shape[0].length;
 		int[][] Transposed = new int[cols][rows];
