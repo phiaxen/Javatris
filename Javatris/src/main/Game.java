@@ -199,6 +199,9 @@ public class Game {
 			gameEngine.fireGameField();
 			gamePanel.validate();
 			gamePanel.repaint();
+			startGame();
+		} else {
+			menuHandler.openStartMenu();
 		}
 	}
 

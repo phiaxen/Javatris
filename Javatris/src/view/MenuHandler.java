@@ -135,8 +135,6 @@ public class MenuHandler {
 		loadButton.addActionListener((ActionEvent e) -> {
 			startMenu.close();
 			game.loadGame();
-			game.startGame();
-
 		});
 
 		// exit
