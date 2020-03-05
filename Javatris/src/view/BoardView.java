@@ -108,7 +108,6 @@ public class BoardView extends JPanel implements PropertyChangeListener {
 			}
 		}
 
-		// not bug free
 		// draws currentShape
 		for (int i = 0; i < currentShape.getCoords().length; i++) {
 			for (int j = 0; j < currentShape.getCoords()[i].length; j++) {
