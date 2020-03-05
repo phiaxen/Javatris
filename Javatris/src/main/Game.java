@@ -179,6 +179,7 @@ public class Game {
 	 * Loads a saved game
 	 */
 	public void loadGame() {
+		boolean loaded = false;
 		try {
 			Savedata loadData = (Savedata) SaveManager.loadFile("saveFile.Save");
 			board.setBoard(loadData.getBoard());
@@ -189,13 +190,16 @@ public class Game {
 			gameEngine.setTime(loadData.getTime());
 			gameEngine.setClearedRows(loadData.getRemovedRows());
 			gameEngine.setIsLoading();
+			loaded  = true;
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Could not load save-file");
+			loaded  = false;
 		}
-		gameEngine.fireGameField();
-		gamePanel.validate();
-		gamePanel.repaint();
+		if(loaded) {
+			gameEngine.fireGameField();
+			gamePanel.validate();
+			gamePanel.repaint();
+		}
 	}
 
 	/**
@@ -215,8 +219,7 @@ public class Game {
 			SaveManager.saveFile(saveData, "saveFile.Save");
 		} catch (IIOException e) {
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Could not save game");
 		}
 	}
 
