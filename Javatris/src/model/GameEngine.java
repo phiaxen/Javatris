@@ -124,11 +124,13 @@ public class GameEngine extends AbstractModel implements Runnable {
 
 		CheckCollisionY();
 		if (currentShape.hasCollidedY() && !waitBeforeStatic) {
-			checkIfGameOver();
 			setStaticShapes();
+			checkIfGameOver();
 			int rowsDeleted = 0;
 			int oldlinesC = linesCleared;
-			firePropertyChange("collisionY", currentState, currentShape.hasCollidedY());
+			if(!gameOver) {
+				firePropertyChange("collisionY", currentState, currentShape.hasCollidedY());
+			}
 
 			for (int i = 0; i < board.getBoard().length; i++) {
 				if (board.checkFullRow(i)) {
