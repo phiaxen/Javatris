@@ -1,12 +1,10 @@
-package model;
+package view;
 
 import java.awt.Color;
 import java.awt.Font;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.nio.file.FileSystems;
-import java.nio.file.Path;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -174,12 +172,11 @@ public class MusicPlayer {
 	 * @exception if no clip has been created
 	 */
 	public void stop() {
-		System.out.println("STOP SONG");
 		if (fileLoaded) {
 			try {
 				audioClip.stop();
 			} catch (Exception e) {
-				System.out.println("No musik running");
+				JOptionPane.showMessageDialog(null, "No music running");
 			}
 		}
 	}
@@ -236,7 +233,6 @@ public class MusicPlayer {
 
 			if (volume < 1.0f) {
 				volume = (float) Math.round(volume * 100) / 100;
-				System.out.println(volume);
 				FloatControl gainControl = (FloatControl) audioClip.getControl(FloatControl.Type.MASTER_GAIN);
 				gainControl.setValue(20f * (float) Math.log10(volume));
 				gobalVolume = getVolume();
@@ -261,8 +257,6 @@ public class MusicPlayer {
 
 			if (volume > 0.0f) {
 				volume = (float) Math.round(volume * 100) / 100;
-				System.out.println(volume);
-
 				FloatControl gainControl = (FloatControl) audioClip.getControl(FloatControl.Type.MASTER_GAIN);
 				gainControl.setValue(20f * (float) Math.log10(volume));
 				gobalVolume = getVolume();

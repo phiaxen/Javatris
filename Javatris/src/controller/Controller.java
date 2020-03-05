@@ -5,6 +5,7 @@ import java.awt.KeyEventDispatcher;
 import java.awt.event.KeyEvent;
 
 import model.*;
+import view.MusicPlayer;
 
 /**
  * Controller is a class that handles all user inputs.

@@ -1,9 +1,7 @@
-package view;
+package model;
 
 import java.io.Serializable;
 import java.util.LinkedList;
-
-import model.Shape;
 
 /**
  * Serializable class containing all the game data that is needed to save the

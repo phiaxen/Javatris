@@ -21,8 +21,6 @@ import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 
 import main.Game;
-import model.MusicPlayer;
-import model.SfxManager;
 
 /**
  * MenuHandler handles every menu in the game
