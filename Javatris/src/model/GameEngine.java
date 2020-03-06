@@ -192,10 +192,7 @@ public class GameEngine extends AbstractModel implements Runnable {
 		for (int i = 0; i < currentShape.getCoords().length; i++) {
 			for (int j = 0; j < currentShape.getCoords()[0].length; j++) {
 				if (currentShape.getCoords()[i][j] != 0) {
-					System.out.println(currentShape.getX() + j
-							+ currentShape.getDeltaX());
-					if (board.getBoard()[currentShape.getY() + i][currentShape.getX() + j
-							+ currentShape.getDeltaX()] != 0) {
+					if (board.getBoard()[currentShape.getY() + i][currentShape.getX() + j + currentShape.getDeltaX()] != 0) {
 						currentShape.setCollidedX(true);
 					}
 				}

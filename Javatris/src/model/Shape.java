@@ -31,26 +31,6 @@ public class Shape implements Serializable {
 	}
 
 	/**
-	 * Controls that the shape is not outside of the board on the right side
-	 */
-	public boolean rightBound() {
-		if (x + shape[0].length == 10) {
-			return true;
-		}
-		return false;
-	}
-
-	/**
-	 * Controls that the shape is not outside of the board on the left side
-	 */
-	public boolean leftBound() {
-		if (x == 0) {
-			return true;
-		}
-		return false;
-	}
-
-	/**
 	 * Moves the shape one unit down
 	 */
 	public void moveDown() {
@@ -194,17 +174,6 @@ public class Shape implements Serializable {
 	}
 
 	/**
-	 * Returns the startPos which is the horizontal position in board that shape is
-	 * spawned in
-	 * 
-	 * @return startPos : the horizontal starting coordinate that shape is spawned
-	 *         in.
-	 */
-	public int getStartPos() {
-		return startPos;
-	}
-
-	/**
 	 * Compares this with other
 	 * 
 	 * @param other : object to compare with
@@ -225,11 +194,21 @@ public class Shape implements Serializable {
 		return false;
 	}
 
+	/**
+	 * Changes the x-position of the shape
+	 * 
+	 * @param x : the x-position 
+	 */
 	public void setX(int x) {
 		this.x = x;
 
 	}
 
+	/**
+	 * Changes the 2D-array of the shape, used for rotation
+	 * 
+	 * @param coords : the new 2D-array
+	 */
 	public void setCoordianates(int[][] coords) {
 		this.shape = coords;
 	}
