@@ -14,7 +14,6 @@ import java.util.Arrays;
 public class Shape implements Cloneable, Serializable {
 
 	private static final long serialVersionUID = 2L;
-	private Board board;
 	private int[][] shape;
 	private int x, y;
 	public int currentSpeed, normalSpeed = 700, fastSpeed = 40;
@@ -24,64 +23,11 @@ public class Shape implements Cloneable, Serializable {
 	private boolean hasCollidedY = false;
 	private boolean hasCollidedX = false;
 
-	public Shape(Board board, int color, int[][] positions) {
-		this.board = board;
+	public Shape(int color, int[][] positions) {
 		this.color = color;
 		this.shape = positions;
 		x = startPos;
 		currentSpeed = normalSpeed;
-	}
-
-	/**
-	 * If the CanRotate flag is true shape rotates anti-clockwise in 90 degrees.
-	 */
-	public void rotate() {
-		
-		int rows = shape.length;
-		int cols = shape[0].length;
-		int[][] Transposed = new int[cols][rows];
-
-		// Transpose
-		for (int i = 0; i < rows; i++) {
-			for (int j = 0; j < cols; j++) {
-				Transposed[j][i] = shape[i][j];
-			}
-		}
-
-		// Flip rows
-		int[] temp = Transposed[0];
-		Transposed[0] = Transposed[cols - 1];
-		Transposed[cols - 1] = temp;
-
-		int tempx = x;
-
-		// Before setting the rotation on the shape, check if rotation is possible.
-		if ((x + deltaX + Transposed[0].length > 10) || (x + deltaX < 0)) {
-
-			while (tempx + deltaX < 0) {
-				tempx++;
-			}
-
-			while (tempx + deltaX + Transposed[0].length > 10) {
-				tempx--;
-			}
-		}
-
-		for (int i = 0; i < Transposed.length; i++) {
-			for (int j = 0; j < Transposed[0].length; j++) {
-				if (Transposed[i][j] != 0) {
-					if ((y + i) > 19) {
-						return;
-					}
-					if ((board.getBoard()[y + i][j + tempx + deltaX] != 0)) {
-						return;
-					}
-				}
-			}
-		}
-
-		x = tempx;
-		shape = Transposed;
 	}
 
 	/**
@@ -296,5 +242,14 @@ public class Shape implements Cloneable, Serializable {
 		} catch (CloneNotSupportedException e) {
 			throw new InternalError();
 		}
+	}
+
+	public void setX(int x) {
+		this.x = x;
+
+	}
+
+	public void setCoordianates(int[][] coords) {
+		this.shape = coords;
 	}
 }

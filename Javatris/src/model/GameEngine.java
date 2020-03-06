@@ -192,6 +192,8 @@ public class GameEngine extends AbstractModel implements Runnable {
 		for (int i = 0; i < currentShape.getCoords().length; i++) {
 			for (int j = 0; j < currentShape.getCoords()[0].length; j++) {
 				if (currentShape.getCoords()[i][j] != 0) {
+					System.out.println(currentShape.getX() + j
+							+ currentShape.getDeltaX());
 					if (board.getBoard()[currentShape.getY() + i][currentShape.getX() + j
 							+ currentShape.getDeltaX()] != 0) {
 						currentShape.setCollidedX(true);
@@ -220,6 +222,18 @@ public class GameEngine extends AbstractModel implements Runnable {
 		}
 	}
 
+	public void setDeltaXCurrentShape(int direction) {
+		if (((currentShape.getX() +  currentShape.getCoords()[0].length + direction <= 10))&&((currentShape.getX() + direction >= 0))) {
+			currentShape.setDeltaX(direction);
+			setDelayBeforeStatic();
+		}
+	}
+	
+	public void rotateCurrentShape() {
+		shapeHandler.rotate(currentShape);
+	}
+	
+	
 	/**
 	 * Sets the current shape and change the speed down to be the right speed for
 	 * the current level.

@@ -39,22 +39,15 @@ public class Controller implements KeyEventDispatcher {
 		if ((e.getID() == KeyEvent.KEY_PRESSED)) {
 
 			if ((key == KeyEvent.VK_RIGHT)) {
-				if (!(gameEngine.getCurrentShape().getX() + gameEngine.getCurrentShape().getCoords()[0].length == 10)) {
-					gameEngine.getCurrentShape().setDeltaX(1);
-					gameEngine.setDelayBeforeStatic();
-				}
+				gameEngine.setDeltaXCurrentShape(1);
 			}
 
 			if ((key == KeyEvent.VK_LEFT)) {
-				if (!(gameEngine.getCurrentShape().getX() == 0)) {
-					gameEngine.getCurrentShape().setDeltaX(-1);
-					gameEngine.setDelayBeforeStatic();
-				}
+				gameEngine.setDeltaXCurrentShape(-1);
 			}
 
 			if ((key == KeyEvent.VK_UP)) {
-				gameEngine.getCurrentShape().rotate();
-				gameEngine.setDelayBeforeStatic();
+				gameEngine.rotateCurrentShape();
 			}
 
 			if ((key == KeyEvent.VK_DOWN)) {
