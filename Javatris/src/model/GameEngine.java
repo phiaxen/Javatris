@@ -219,6 +219,11 @@ public class GameEngine extends AbstractModel implements Runnable {
 		}
 	}
 
+	/**
+	 * Sets delta-x for curren shape
+	 * 
+	 * @param direction : the x-direction the shape should be moved to
+	 */
 	public void setDeltaXCurrentShape(int direction) {
 		if (((currentShape.getX() +  currentShape.getCoords()[0].length + direction <= 10))&&((currentShape.getX() + direction >= 0))) {
 			currentShape.setDeltaX(direction);
@@ -226,6 +231,9 @@ public class GameEngine extends AbstractModel implements Runnable {
 		}
 	}
 	
+	/**
+	 * Rotates the current shape
+	 */
 	public void rotateCurrentShape() {
 		shapeHandler.rotate(currentShape);
 	}
