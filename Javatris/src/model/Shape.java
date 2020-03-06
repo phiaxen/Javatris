@@ -97,6 +97,25 @@ public class Shape implements Serializable {
 		currentSpeed = speed;
 		normalSpeed = speed;
 	}
+	
+	/**
+	 * Changes the x-position of the shape
+	 * 
+	 * @param x : the x-position 
+	 */
+	public void setX(int x) {
+		this.x = x;
+
+	}
+
+	/**
+	 * Changes the 2D-array of the shape, used for rotation
+	 * 
+	 * @param coords : the new 2D-array
+	 */
+	public void setCoordianates(int[][] coords) {
+		this.shape = coords;
+	}
 
 	/**
 	 * Returns the value of x, which is the horizontal position of the shape
@@ -192,24 +211,5 @@ public class Shape implements Serializable {
 			}
 		}
 		return false;
-	}
-
-	/**
-	 * Changes the x-position of the shape
-	 * 
-	 * @param x : the x-position 
-	 */
-	public void setX(int x) {
-		this.x = x;
-
-	}
-
-	/**
-	 * Changes the 2D-array of the shape, used for rotation
-	 * 
-	 * @param coords : the new 2D-array
-	 */
-	public void setCoordianates(int[][] coords) {
-		this.shape = coords;
 	}
 }
