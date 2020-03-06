@@ -16,7 +16,7 @@ public class Shape implements Serializable {
 	private static final long serialVersionUID = 2L;
 	private int[][] shape;
 	private int x, y;
-	public int currentSpeed, normalSpeed = 700, fastSpeed = 40;
+	private int currentSpeed, normalSpeed = 700, fastSpeed = 40;
 	private int deltaX = 0;
 	private final int startPos = 4;
 	private int color;
