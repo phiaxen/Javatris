@@ -421,7 +421,7 @@ public class GameEngine extends AbstractModel implements Runnable {
 	 * Pauses the game
 	 */
 	public void pause() {
-		if (!online) {
+		if (!online && running) {
 			running = false;
 			delegate.pause();
 		}
