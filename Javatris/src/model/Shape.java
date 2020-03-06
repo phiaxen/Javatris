@@ -11,7 +11,7 @@ import java.util.Arrays;
  * @author Philip Axenhamn
  * @version 1.0
  */
-public class Shape implements Cloneable, Serializable {
+public class Shape implements Serializable {
 
 	private static final long serialVersionUID = 2L;
 	private int[][] shape;
@@ -216,32 +216,13 @@ public class Shape implements Cloneable, Serializable {
 		}
 		if ((other != null) && (this.getClass() == other.getClass())) {
 			Shape temp = (Shape) other;
-			if (board.equals(temp.board) && Arrays.deepEquals(this.shape, temp.shape) && (x == temp.x) && (y == temp.y)
-					&& (hasCollidedY == temp.hasCollidedY) && (hasCollidedX == temp.hasCollidedX)
-					&& (color == temp.color)) {
+			if (Arrays.deepEquals(this.shape, temp.shape) && (x == temp.x) && (y == temp.y)	
+					&& (hasCollidedY == temp.hasCollidedY) && (hasCollidedX == temp.hasCollidedX) 
+					&& (color == temp.color) && (currentSpeed == temp.currentSpeed) && (normalSpeed == temp.normalSpeed)){
 				return true;
 			}
 		}
 		return false;
-	}
-
-	/**
-	 * Returns deep clone of shape
-	 * 
-	 * @return copy : the deep clone of the shape
-	 */
-	@Override
-	public Shape clone() {
-		try {
-			Shape copy = (Shape) super.clone();
-			copy.board = board.clone();
-			for (int i = 0; i < shape.length; i++) {
-				copy.shape[i] = shape[i].clone();
-			}
-			return copy;
-		} catch (CloneNotSupportedException e) {
-			throw new InternalError();
-		}
 	}
 
 	public void setX(int x) {
