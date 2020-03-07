@@ -2,10 +2,9 @@ package view;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.FileSystems;
-import java.nio.file.Path;
+import java.net.URL;
+
 
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -38,10 +37,10 @@ public class SfxManager implements PropertyChangeListener {
 	 * Sets mute to false.
 	 */
 	private void init() {
-		loadSound(0, "\\src\\soundEffects\\sfx1.wav", 0.1f); // soundeffect 1
-		loadSound(1, "\\src\\soundEffects\\sfx2.1.wav", 1f); // soundeffect 2
-		loadSound(2, "\\src\\soundEffects\\sfx3.wav", 1f); // soundeffect 3
-		loadSound(3, "\\src\\soundEffects\\sfx4.wav", 0.3f); // soundeffect 4
+		loadSound(0, "/soundEffects/sfx1.wav", 0.1f); // soundeffect 1
+		loadSound(1, "/soundEffects/sfx2.1.wav", 1f); // soundeffect 2
+		loadSound(2, "/soundEffects/sfx3.wav", 1f); // soundeffect 3
+		loadSound(3, "/soundEffects/sfx4.wav", 0.3f); // soundeffect 4
 		muted = false;
 	}
 
@@ -56,9 +55,9 @@ public class SfxManager implements PropertyChangeListener {
 	 * @exception UnsupportedAudioFileException
 	 */
 	private void loadSound(int index, String filePath, float volume) {
-		try {
-			Path path = FileSystems.getDefault().getPath("").toAbsolutePath();
-			File file1 = new File(path + filePath);
+		try {			
+			URL file1 = SfxManager.class.getResource(filePath);
+			
 			sfx[index] = AudioSystem.getClip();
 			sfx[index].open(AudioSystem.getAudioInputStream(file1));
 			FloatControl gainControl = (FloatControl) sfx[index].getControl(FloatControl.Type.MASTER_GAIN);
@@ -81,7 +80,8 @@ public class SfxManager implements PropertyChangeListener {
 	public void playSound1() {
 		if (!muted) {
 			sfx[0].start();
-			loadSound(0, "\\src\\soundEffects\\sfx1.wav", 0.1f);
+			loadSound(0, "/soundEffects/sfx1.wav", 0.1f);
+
 		}
 	}
 
@@ -92,7 +92,7 @@ public class SfxManager implements PropertyChangeListener {
 	public void playSound2() {
 		if (!muted) {
 			sfx[1].start();
-			loadSound(1, "\\src\\soundEffects\\sfx2.1.wav", 1f);
+			loadSound(1, "/soundEffects/sfx2.1.wav", 1f);
 		}
 	}
 
@@ -103,7 +103,7 @@ public class SfxManager implements PropertyChangeListener {
 	public void playSound3() {
 		if (!muted) {
 			sfx[2].start();
-			loadSound(2, "\\src\\soundEffects\\sfx3.wav", 1f);
+			loadSound(2, "/soundEffects/sfx3.wav", 1f);
 		}
 	}
 
@@ -114,7 +114,7 @@ public class SfxManager implements PropertyChangeListener {
 	public void playSound4() {
 		if (!muted) {
 			sfx[3].start();
-			loadSound(3, "\\src\\soundEffects\\sfx4.wav", 0.3f);
+			loadSound(3, "/soundEffects/sfx4.wav", 0.3f);
 		}
 	}
 

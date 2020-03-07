@@ -91,7 +91,7 @@ public class MusicPlayer {
 			audioClip.flush();
 		}
 
-		URL audioFile = SfxManager.class.getResource(fp);
+		URL audioFile = MusicPlayer.class.getResource(fp);
 
 		try {
 
