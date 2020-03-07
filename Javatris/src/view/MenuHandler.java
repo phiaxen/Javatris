@@ -5,7 +5,10 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -533,7 +536,6 @@ public class MenuHandler {
 		controlsMenu = new Menu(new Dimension(700, 820), 2, 1, 0.75f, Color.BLACK);
 		JButton back = new JButton("Back");
 		JLabel text = new JLabel("CONTROLS", SwingConstants.CENTER);
-		JLabel image;
 
 		back.setFont(new Font("Arial", Font.BOLD, 20));
 		back.setForeground(Color.WHITE);
@@ -549,10 +551,16 @@ public class MenuHandler {
 		text.setForeground(Color.white);
 		text.setFont(new Font("Arial", Font.BOLD, 50));
 
-		image = new JLabel(new ImageIcon("src/images/how-to-play.png"));
-
 		controlsMenu.addElementTop(text);
-		controlsMenu.addElementTop(image);
+		
+		try {
+			BufferedImage image = ImageIO.read(Menu.class.getResource("/images/how-to-play.png"));
+			JLabel title = new JLabel(new ImageIcon(image));
+			controlsMenu.addElementTop(title);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 		controlsMenu.addElementBottom(back);
 		controlsMenu.close();
 		fixedPanel.add(controlsMenu);

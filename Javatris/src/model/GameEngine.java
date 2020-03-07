@@ -633,7 +633,7 @@ public class GameEngine extends AbstractModel implements Runnable {
 		firePropertyChange("time", null, timePassed);
 		firePropertyChange("level", null, level);
 		firePropertyChange("lines cleared", null, linesCleared);
-		firePropertyChange("board", null, board.getBoard());
+		firePropertyChange("board", null, board);
 		firePropertyChange("shape", oldShape, currentShape);
 		shapeHandler.updateListeners();
 	}
