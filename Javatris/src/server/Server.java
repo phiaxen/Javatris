@@ -44,7 +44,7 @@ public class Server {
 		setupGUI();
 		try {
 			frame.setVisible(false);
-			port = Integer.parseInt(JOptionPane.showInputDialog(frame, "Enter the server port", "Tillfallig",
+			port = Integer.parseInt(JOptionPane.showInputDialog(frame, "Enter the server port", "Server port",
 					JOptionPane.PLAIN_MESSAGE));
 			sSocket = new ServerSocket(port);
 			frame.setVisible(true);
