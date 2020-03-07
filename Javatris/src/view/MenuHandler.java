@@ -274,8 +274,8 @@ public class MenuHandler {
 
 		JPanel musicChangePanel = new JPanel(new BorderLayout());
 		JLabel musicChangeLabel = new JLabel("Change Music");
-		JButton musicTrack1 = new JButton("Tetris99");
-		JButton musicTrack2 = new JButton("Tetris");
+		JButton musicTrack1 = new JButton("Tetris");
+		JButton musicTrack2 = new JButton("Tetris99");
 		JButton musicTrack3 = new JButton("Deja Vu");
 
 		JPanel musicLoadPanel = new JPanel();
