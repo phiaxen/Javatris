@@ -170,7 +170,7 @@ public class GameEngine extends AbstractModel implements Runnable {
 		currentShape.setCollidedY(false);
 		currentShape.setCollidedX(false);
 
-		firePropertyChange("board", oldBoard.getBoard(), board.getBoard());
+		firePropertyChange("board", oldBoard, board);
 		firePropertyChange("shape", oldShape, currentShape);
 	}
 
