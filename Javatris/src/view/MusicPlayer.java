@@ -229,7 +229,8 @@ public class MusicPlayer {
 	public void incVolume() {
 		if (fileLoaded) {
 			muted = false;
-			float volume = getVolume();
+			//float volume = getVolume();
+			float volume = globalVolume;
 			volume += steps;
 
 			if (volume < 1.0f) {
@@ -254,7 +255,7 @@ public class MusicPlayer {
 	public void decVolume() {
 		if (fileLoaded) {
 			muted = false;
-			float volume = getVolume();
+			float volume = globalVolume;
 			volume -= steps;
 
 			if (volume > 0.0f) {

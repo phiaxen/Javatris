@@ -79,6 +79,7 @@ public class SfxManager implements PropertyChangeListener {
 	 */
 	public void playSound1() {
 		if (!muted) {
+			
 			sfx[0].start();
 			loadSound(0, "/soundEffects/sfx1.wav", 0.1f);
 
@@ -91,6 +92,7 @@ public class SfxManager implements PropertyChangeListener {
 	 */
 	public void playSound2() {
 		if (!muted) {
+			
 			sfx[1].start();
 			loadSound(1, "/soundEffects/sfx2.1.wav", 1f);
 		}
@@ -102,6 +104,7 @@ public class SfxManager implements PropertyChangeListener {
 	 */
 	public void playSound3() {
 		if (!muted) {
+			
 			sfx[2].start();
 			loadSound(2, "/soundEffects/sfx3.wav", 1f);
 		}
@@ -113,6 +116,7 @@ public class SfxManager implements PropertyChangeListener {
 	 */
 	public void playSound4() {
 		if (!muted) {
+			
 			sfx[3].start();
 			loadSound(3, "/soundEffects/sfx4.wav", 0.3f);
 		}
