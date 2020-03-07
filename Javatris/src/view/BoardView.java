@@ -28,10 +28,6 @@ public class BoardView extends JPanel implements PropertyChangeListener {
 	private static final long serialVersionUID = 1L;
 	private BufferedImage tiles, background;
 	private int[][] boardCoords;
-	private int[][] shapeCoords;
-	private int colour;
-	private int shapeX;
-	private int shapeY;
 	private final int HEIGHT, WIDTH, BLOCKSIZE;
 	private Shape currentShape;
 	private boolean withGrid;
@@ -88,20 +84,6 @@ public class BoardView extends JPanel implements PropertyChangeListener {
 		this.currentShape = currentShape;
 	}
 
-	public void setCurrentShape(int[][] shapeCoords) {
-		this.shapeCoords = shapeCoords;
-	}
-	
-	public void setColour(int colour) {
-		this.colour = colour;
-	}
-	public void setShapeX(int shapeX) {
-		this.shapeX = shapeX;
-	}
-	public void setShapeY(int shapeY) {
-		this.shapeY = shapeY;
-	}
-
 	// paintComponent ritar upp bakgrund, Shape som man kan styra(currentShape), en
 	// grid(om man vill) och statiska shapes(shapes som har kolliderat)
 	// funktionen anropas av systemet
@@ -127,11 +109,11 @@ public class BoardView extends JPanel implements PropertyChangeListener {
 		}
 
 		// draws currentShape
-		for (int i = 0; i < shapeCoords.length; i++) {
-			for (int j = 0; j < shapeCoords[i].length; j++) {
-				if (shapeCoords[i][j] == 1) {
-					g.drawImage(colors[this.colour - 1], j * BLOCKSIZE + this.shapeX * BLOCKSIZE,
-							i * BLOCKSIZE + this.shapeY * BLOCKSIZE, null);
+		for (int i = 0; i < currentShape.getCoords().length; i++) {
+			for (int j = 0; j < currentShape.getCoords()[i].length; j++) {
+				if (currentShape.getCoords()[i][j] == 1) {
+					g.drawImage(colors[currentShape.getColor() - 1], j * BLOCKSIZE + currentShape.getX() * BLOCKSIZE,
+							i * BLOCKSIZE + currentShape.getY() * BLOCKSIZE, null);
 				}
 			}
 		}
@@ -160,13 +142,8 @@ public class BoardView extends JPanel implements PropertyChangeListener {
 		if (property.equals("board")) {
 			boardCoords = (((Board) evt.getNewValue()).getBoard());
 		}
-		if (property.equals("shapeCords")) {
-			setCurrentShape(((int[][]) evt.getOldValue()));
-			setColour(((int) evt.getNewValue()));
-		}
-		if (property.equals("shapeXY")) {
-			setShapeX(((int) evt.getOldValue()));
-			setShapeY(((int) evt.getNewValue()));
+		if (property.equals("shape")) {
+			setCurrentShape(((Shape) evt.getNewValue()));
 			repaint();
 		}
 	}
