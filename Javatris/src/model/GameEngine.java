@@ -171,6 +171,8 @@ public class GameEngine extends AbstractModel implements Runnable {
 
 		firePropertyChange("board", oldBoard, board);
 		firePropertyChange("shape", oldShape, currentShape);
+		firePropertyChange("shapeCords", currentShape.getCoords(), currentShape.getColor());
+		firePropertyChange("shapeXY", currentShape.getX(), currentShape.getY());
 	}
 
 	/**
@@ -633,6 +635,8 @@ public class GameEngine extends AbstractModel implements Runnable {
 		firePropertyChange("lines cleared", null, linesCleared);
 		firePropertyChange("board", null, board);
 		firePropertyChange("shape", oldShape, currentShape);
+		firePropertyChange("shapeCords", currentShape.getCoords(), currentShape.getColor());
+		firePropertyChange("shapeXY", currentShape.getX(), currentShape.getY());
 		shapeHandler.updateListeners();
 	}
 }
