@@ -19,7 +19,7 @@ import view.*;
 import controller.*;
 
 /**
- * This class has the main funtion. It makes a frame and starts the game.
+ * The main framework for the game, Creates most classes and handles communication between several of them.
  * 
  * @author Philip
  * @version 1.0

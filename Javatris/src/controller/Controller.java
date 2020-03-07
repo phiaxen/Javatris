@@ -8,7 +8,8 @@ import model.*;
 import view.MusicPlayer;
 
 /**
- * Controller is a class that handles all user inputs.
+ * Controller is a class that handles all user inputs. It communicates with both the gameEngine and MusicPlayer
+ * to use these inputs in a meaningful way.
  * 
  * @author Philip Axenhamn
  * @author Tobias Mauritzon
