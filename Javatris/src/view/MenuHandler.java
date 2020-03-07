@@ -227,8 +227,8 @@ public class MenuHandler {
 	 * Opens the pause menu
 	 */
 	public void openPauseMenu() {
-		pauseMenu.open();
 		volumeSlider.setValue(Math.round(musicPlayer.getVolume() * 20));
+		pauseMenu.open();
 	}
 
 	/**

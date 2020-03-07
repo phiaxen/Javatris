@@ -30,7 +30,7 @@ public class MusicPlayer {
 	private Clip audioClip;
 	private final float MaxSteps = 20; // Even numbers only
 	private final float steps = 1 / MaxSteps;
-	private float gobalVolume;
+	private float globalVolume;
 	private boolean fileLoaded = false;
 	private boolean muted;
 
@@ -101,7 +101,7 @@ public class MusicPlayer {
 			audioClip.open(audioStream);
 
 			if (fileLoaded) {
-				setVolume(gobalVolume);
+				setVolume(globalVolume);
 			}
 
 			if (!fileLoaded) {
@@ -151,7 +151,7 @@ public class MusicPlayer {
 			audioClip.loop(Clip.LOOP_CONTINUOUSLY);
 
 			if (fileLoaded) {
-				setVolume(gobalVolume);
+				setVolume(globalVolume);
 			}
 
 			if (!fileLoaded) {
@@ -203,7 +203,7 @@ public class MusicPlayer {
 			volume = (float) Math.round(volume * 100) / 100;
 			return volume;
 		}
-		return 0f;
+		return 0f;		
 	}
 
 	/**
@@ -212,13 +212,13 @@ public class MusicPlayer {
 	 * @param volume is a floating point between 0 and 1.
 	 */
 	public void setVolume(float volume) {
-
+		muted = false;
 		if (volume < 0f || volume > 1f) {
 			throw new IllegalArgumentException("Volume not valid: " + volume);
 		} else {
 			FloatControl gainControl = (FloatControl) audioClip.getControl(FloatControl.Type.MASTER_GAIN);
 			gainControl.setValue(20f * (float) Math.log10(volume));
-			gobalVolume = volume;
+			globalVolume = volume;
 		}
 
 	}
@@ -228,6 +228,7 @@ public class MusicPlayer {
 	 */
 	public void incVolume() {
 		if (fileLoaded) {
+			muted = false;
 			float volume = getVolume();
 			volume += steps;
 
@@ -235,13 +236,13 @@ public class MusicPlayer {
 				volume = (float) Math.round(volume * 100) / 100;
 				FloatControl gainControl = (FloatControl) audioClip.getControl(FloatControl.Type.MASTER_GAIN);
 				gainControl.setValue(20f * (float) Math.log10(volume));
-				gobalVolume = getVolume();
+				globalVolume = getVolume();
 			} else {
 				volume = 1f;
 
 				FloatControl gainControl = (FloatControl) audioClip.getControl(FloatControl.Type.MASTER_GAIN);
 				gainControl.setValue(20f * (float) Math.log10(volume));
-				gobalVolume = getVolume();
+				globalVolume = getVolume();
 			}
 		}
 
@@ -252,6 +253,7 @@ public class MusicPlayer {
 	 */
 	public void decVolume() {
 		if (fileLoaded) {
+			muted = false;
 			float volume = getVolume();
 			volume -= steps;
 
@@ -259,13 +261,13 @@ public class MusicPlayer {
 				volume = (float) Math.round(volume * 100) / 100;
 				FloatControl gainControl = (FloatControl) audioClip.getControl(FloatControl.Type.MASTER_GAIN);
 				gainControl.setValue(20f * (float) Math.log10(volume));
-				gobalVolume = getVolume();
+				globalVolume = getVolume();
 			} else {
 				volume = 0f;
 
 				FloatControl gainControl = (FloatControl) audioClip.getControl(FloatControl.Type.MASTER_GAIN);
 				gainControl.setValue(20f * (float) Math.log10(volume));
-				gobalVolume = getVolume();
+				globalVolume = getVolume();
 			}
 		}
 	}
@@ -276,10 +278,10 @@ public class MusicPlayer {
 	public void mute() {
 		if (fileLoaded) {
 			if (muted) {
-				setVolume(this.gobalVolume);
+				setVolume(this.globalVolume);
 				muted = false;
 			} else {
-				gobalVolume = getVolume();
+				globalVolume = getVolume();
 				FloatControl gainControl = (FloatControl) audioClip.getControl(FloatControl.Type.MASTER_GAIN);
 				gainControl.setValue(20f * (float) Math.log10(0.0f));
 				muted = true;

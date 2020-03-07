@@ -140,7 +140,7 @@ public class BoardView extends JPanel implements PropertyChangeListener {
 	public void propertyChange(PropertyChangeEvent evt) {
 		String property = evt.getPropertyName();
 		if (property.equals("board")) {
-			boardCoords = (((Board) evt.getNewValue()).getBoard());
+			boardCoords = (int[][])evt.getNewValue();
 		}
 		if (property.equals("shape")) {
 			setCurrentShape(((Shape) evt.getNewValue()));

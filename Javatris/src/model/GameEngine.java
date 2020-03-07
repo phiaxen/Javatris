@@ -153,6 +153,7 @@ public class GameEngine extends AbstractModel implements Runnable {
 				firePropertyChange("points", oldPoints, points);
 				firePropertyChange("lines cleared", oldlinesC, linesCleared);
 			}
+			
 			setCurrentShape();
 		}
 
@@ -169,7 +170,7 @@ public class GameEngine extends AbstractModel implements Runnable {
 		currentShape.setCollidedY(false);
 		currentShape.setCollidedX(false);
 
-		firePropertyChange("board", oldBoard, board);
+		firePropertyChange("board", oldBoard.getBoard(), board.getBoard());
 		firePropertyChange("shape", oldShape, currentShape);
 	}
 
@@ -244,6 +245,7 @@ public class GameEngine extends AbstractModel implements Runnable {
 	 * the current level.
 	 */
 	private void setCurrentShape() {
+		oldShape = currentShape;
 		currentShape = shapeHandler.nextShape();
 		currentShape.changeNormalSpeed(speedDown);
 	}
@@ -631,7 +633,7 @@ public class GameEngine extends AbstractModel implements Runnable {
 		firePropertyChange("time", null, timePassed);
 		firePropertyChange("level", null, level);
 		firePropertyChange("lines cleared", null, linesCleared);
-		firePropertyChange("board", null, board);
+		firePropertyChange("board", null, board.getBoard());
 		firePropertyChange("shape", oldShape, currentShape);
 		shapeHandler.updateListeners();
 	}
