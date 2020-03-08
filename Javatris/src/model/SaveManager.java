@@ -15,12 +15,11 @@ import java.nio.file.Paths;
  * @version 2020-02-19
  */
 public class SaveManager {
-	
-	
+
 	/**
 	 * Saves the data to a file with the parameter filename as the files name.
 	 * 
-	 * @param data the that is saved
+	 * @param data     the that is saved
 	 * 
 	 * @param fileName the name of file that the data is saved in
 	 */
@@ -34,6 +33,7 @@ public class SaveManager {
 	 * Reads the data from the selected file and loads it
 	 * 
 	 * @param fileName the name of file that the data is saved in
+	 * @return input stream
 	 */
 	public static Object loadFile(String fileName) throws Exception {
 		try (ObjectInputStream inputStream = new ObjectInputStream(Files.newInputStream(Paths.get(fileName)))) {
