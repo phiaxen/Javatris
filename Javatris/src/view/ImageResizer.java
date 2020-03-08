@@ -21,7 +21,7 @@ public abstract class ImageResizer {
 	 * @param scaledWidth  absolute width in pixels
 	 * @param scaledHeight absolute height in pixels
 	 * @return the resized image
-	 * @throws IOException
+	 * @throws IOException if image could not be loaded
 	 */
 	public static BufferedImage resize(BufferedImage image, int scaledWidth, int scaledHeight) throws IOException {
 		// create the resized image
@@ -41,7 +41,7 @@ public abstract class ImageResizer {
 	 * @param image   path of the original image
 	 * @param percent the percentage change in size
 	 * @return resized image of the buffered image
-	 * @throws IOException
+	 * @throws IOException if image could not be loaded
 	 */
 	public static BufferedImage resize(BufferedImage image, double percent) throws IOException {
 		int scaledWidth = (int) (image.getWidth() * percent);
