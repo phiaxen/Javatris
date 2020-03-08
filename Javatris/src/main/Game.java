@@ -9,7 +9,6 @@ import java.awt.Toolkit;
 import java.io.IOException;
 import java.net.UnknownHostException;
 
-import javax.imageio.IIOException;
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -192,7 +191,7 @@ public class Game {
 			gameEngine.setClearedRows(loadData.getRemovedRows());
 			gameEngine.setIsLoading();
 			loaded = true;
-		} catch (Exception e) {
+		} catch (IOException | ClassNotFoundException e) {
 			JOptionPane.showMessageDialog(null, "Could not load save-file");
 			loaded = false;
 		}
@@ -208,6 +207,7 @@ public class Game {
 
 	/**
 	 * Save a game
+	 * @throws IOException 
 	 */
 	public void saveGame() {
 		Savedata saveData = new Savedata();
@@ -221,8 +221,7 @@ public class Game {
 
 		try {
 			SaveManager.saveFile(saveData, "saveFile.Save");
-		} catch (IIOException e) {
-		} catch (Exception e) {
+		} catch (IOException e) {
 			JOptionPane.showMessageDialog(null, "Could not save game");
 		}
 	}
