@@ -47,7 +47,7 @@ public class BoardView extends JPanel implements PropertyChangeListener {
 	 */
 	private void init() {
 		colors = new BufferedImage[8];
-		this.setBackground(Color.white); // om man vill ha en enfärgad bakgrund:
+		this.setBackground(Color.white); // om man vill ha en enfärgad bakgrund
 		boardCoords = new int[HEIGHT][WIDTH];
 		loadImages();
 
@@ -78,7 +78,7 @@ public class BoardView extends JPanel implements PropertyChangeListener {
 	/**
 	 * Sets the current shape to parameter currentShape
 	 * 
-	 * @param currentShape: new shape
+	 * @param currentShape new shape
 	 */
 	public void setCurrentShape(Shape currentShape) {
 		this.currentShape = currentShape;
@@ -134,7 +134,7 @@ public class BoardView extends JPanel implements PropertyChangeListener {
 	/**
 	 * Applies property-changes from observed objects
 	 * 
-	 * @param evt : the fired event
+	 * @param evt the fired event
 	 */
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {

@@ -27,8 +27,8 @@ public class ShapeHandler extends AbstractModel{
 	
 	/**
 	 * Returns shape
-	 * @param shape : the number of the shape to get
-	 * @return : the selected shape
+	 * @param shape the number of the shape to get
+	 * @return the selected shape
 	 */
 	private Shape getShape(int shape) {
 		switch(shape){
@@ -58,7 +58,7 @@ public class ShapeHandler extends AbstractModel{
 	
 	/**
 	 * Returns the next shape in the list and updates the list of shapes. Notifies any listeners
-	 * @return : the next shape
+	 * @return the next shape
 	 */
 	public Shape nextShape() {
 		Shape nextShape;
@@ -154,7 +154,7 @@ public class ShapeHandler extends AbstractModel{
 	
 	/**
 	 * Sets the list of shapes as param
-	 * @param shapes : New list of shapes
+	 * @param shapes New list of shapes
 	 */
 	public void setNextShapes(LinkedList<Shape> shapes) 
 	{

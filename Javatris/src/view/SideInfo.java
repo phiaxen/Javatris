@@ -4,8 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 
 import java.awt.GridLayout;
 import java.beans.PropertyChangeEvent;
@@ -131,7 +129,7 @@ public class SideInfo extends JPanel implements PropertyChangeListener {
 	/**
 	 * Update the scoreLabel with new score
 	 * 
-	 * @param score : the score to be displayed
+	 * @param score the score to be displayed
 	 */
 	public void updateScore(int score) {
 		scoreLabel.setText("" + score);
@@ -141,7 +139,7 @@ public class SideInfo extends JPanel implements PropertyChangeListener {
 	/**
 	 * Update the timeLabel with new time
 	 * 
-	 * @param time : the time to be displayed
+	 * @param time the time to be displayed
 	 */
 	public void updateTime(int time) {
 		this.timeLabel.setText("Time: " + time + "s");
@@ -151,7 +149,7 @@ public class SideInfo extends JPanel implements PropertyChangeListener {
 	/**
 	 * Updates lines cleared with a new value
 	 * 
-	 * @param lines : the amount of cleared lines to be displayed
+	 * @param lines the amount of cleared lines to be displayed
 	 */
 	public void updateLines(int lines) {
 		this.linesLabel.setText("" + lines);
@@ -161,7 +159,7 @@ public class SideInfo extends JPanel implements PropertyChangeListener {
 	/**
 	 * Updates the level with a new value
 	 * 
-	 * @param level : the value of the level to be displayed
+	 * @param level the value of the level to be displayed
 	 */
 	public void updateLevel(int level) {
 		this.levelLabel.setText("" + level);
@@ -171,7 +169,7 @@ public class SideInfo extends JPanel implements PropertyChangeListener {
 	/**
 	 * Updates the next shape panel in SideInfo
 	 * 
-	 * @param shapes : the list of the shapes to be displayed
+	 * @param shapes the list of the shapes to be displayed
 	 */
 	public void updateNextShape(LinkedList<Shape> shapes) {
 		for (int i = 0; i < shapes.size(); i++) {
@@ -183,7 +181,7 @@ public class SideInfo extends JPanel implements PropertyChangeListener {
 	/**
 	 * Handles updating next-shape sequence after update in GameEngine
 	 * 
-	 * @param evt : event triggering update
+	 * @param evt the event triggering update
 	 */
 	@SuppressWarnings("unchecked")
 	@Override

@@ -16,14 +16,12 @@ import java.util.ArrayList;
  */
 public class ClientHandler implements Runnable
 {
-	private Socket client;
 	private PrintWriter writer;
 	private BufferedReader reader;
 	private ArrayList<ClientHandler> clients;
 
 	public ClientHandler(Socket client, ArrayList<ClientHandler> clients) throws IOException 
 	{
-		this.client = client;
 		this.clients = clients;
 		
 		reader = new  BufferedReader(new InputStreamReader(client.getInputStream()));

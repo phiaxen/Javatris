@@ -442,8 +442,8 @@ public class MenuHandler {
 	/**
 	 * Makes basic menu
 	 * 
-	 * @param title  : the title of the menu
-	 * @param index : the id of the menu
+	 * @param title  the title of the menu
+	 * @param index the id of the menu
 	 */
 	private void makeBasicMenu(String title, int index) {
 		int menuWidth = 300;
@@ -474,7 +474,7 @@ public class MenuHandler {
 
 	/**
 	 * Opens the Game Over menu
-	 * @param index : the menu that should be opened.
+	 * @param index the menu that should be opened.
 	 */
 	public void openBasicMenu(int index) {
 		basicMenus[index].open();
@@ -576,7 +576,7 @@ public class MenuHandler {
 	/**
 	 * Opens the dialog to get server info
 	 * 
-	 * @return : server IP and port
+	 * @return server IP and port
 	 */
 	public String showOnlineDialog() {
 		String code = JOptionPane.showInputDialog(frame, "Enter the server ip and port, (IP:PORT)", "Connect to server",
@@ -596,10 +596,10 @@ public class MenuHandler {
 	/**
 	 * Formats button
 	 * 
-	 * @param button     : button to be formated
-	 * @param foreground : foreground color
-	 * @param fontType   : font type bold, italic, etc.
-	 * @param fontSize   : size of the font
+	 * @param button     button to be formated
+	 * @param foreground foreground color
+	 * @param fontType   font type bold, italic, etc.
+	 * @param fontSize   size of the font
 	 */
 	private void formatButton(JButton button, Color foreground, int fontType, int fontSize) {
 		String font = "Arial";

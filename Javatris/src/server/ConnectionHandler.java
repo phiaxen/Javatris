@@ -68,8 +68,6 @@ public class ConnectionHandler implements Runnable {
 				case 12:
 					connectionLost();
 					break;
-				case 15:
-					break;
 				default:
 					break;
 				}

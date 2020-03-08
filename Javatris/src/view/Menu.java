@@ -30,13 +30,13 @@ public class Menu extends JPanel {
 	/**
 	 * Creates a menu according to user specifications. Has a top- and bottom panel.
 	 * 
-	 * @param size : size of the panel
-	 * @param topElements : amount of elements on top pane
-	 * @param bottomElements : amount of elements on bottom pane
-	 * @param topSpace : how much of the panel that should consist of the top panel. 
+	 * @param size the size of the panel
+	 * @param topElements the amount of elements on top pane
+	 * @param bottomElements the amount of elements on bottom pane
+	 * @param topSpace how much of the panel that should consist of the top panel. 
 	 * A number between 0 and 1, where 1 = 100%. 
 	 * The bottom panel will take the space that is left.
-	 * @param color : color of the whole panel
+	 * @param color the color of the whole panel
 	 */
 	public Menu(Dimension size, int topElements, int bottomElements, float topSpace, Color color) {
 		this.size = size;
@@ -80,7 +80,7 @@ public class Menu extends JPanel {
 	/**
 	 * Adds an element to the top panel
 	 * 
-	 * @param element : element to be added to the menu
+	 * @param element the element to be added to the menu
 	 */
 	public void addElementTop(Container element) {
 		topPanel.add(element);
@@ -89,7 +89,7 @@ public class Menu extends JPanel {
 	/**
 	 * Adds an element to the bottom panel
 	 * 
-	 * @param element : element to be added to the menu
+	 * @param element the element to be added to the menu
 	 */
 	public void addElementBottom(Container element) {
 		bottomPanel.add(element);
@@ -98,7 +98,7 @@ public class Menu extends JPanel {
 	/**
 	 * Adds an image as a title
 	 * 
-	 * @param fileName : directory of the image to used
+	 * @param fileName the directory of the image to used
 	 */
 	public void addTitle(String fileName) {
 		BufferedImage image;

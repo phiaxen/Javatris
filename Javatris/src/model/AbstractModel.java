@@ -22,8 +22,7 @@ public abstract class AbstractModel implements PropertyChange {
 
 	/**
 	 * Adds listener to this object
-	 * 
-	 * @param listener : listener to be added
+	 * @param listener PropertyChangeListener to be added
 	 */
 	public void addPropertyChangeListener(PropertyChangeListener listener) {
 		pcs.addPropertyChangeListener(listener);
@@ -31,8 +30,7 @@ public abstract class AbstractModel implements PropertyChange {
 
 	/**
 	 * Removes listener from this object
-	 * 
-	 * @param listener : listener to be removed
+	 * @param listener PropertyChangeListener to be removed
 	 */
 	public void removePropertyChangeListener(PropertyChangeListener listener) {
 		pcs.removePropertyChangeListener(listener);
@@ -40,8 +38,7 @@ public abstract class AbstractModel implements PropertyChange {
 
 	/**
 	 * Notifies any potential listeners that a change has occurred
-	 * 
-	 * @param evt : event to be fired
+	 * @param evt PropertyChangeEvent to be fired
 	 */
 	protected void firePropertyChange(PropertyChangeEvent evt) {
 		pcs.firePropertyChange(evt);
@@ -50,9 +47,9 @@ public abstract class AbstractModel implements PropertyChange {
 	/**
 	 * Notifies any potential listeners that a change has occurred
 	 * 
-	 * @param property : property name
-	 * @param oldValue : the property's value before change
-	 * @param newValue : the property's value after change
+	 * @param property name of the fired property
+	 * @param oldValue the property's value before change
+	 * @param newValue the property's value after change
 	 */
 	protected void firePropertyChange(String property, Object oldValue, Object newValue) {
 		pcs.firePropertyChange(property, oldValue, newValue);
@@ -61,9 +58,9 @@ public abstract class AbstractModel implements PropertyChange {
 	/**
 	 * Notifies any potential listeners that a change has occurred
 	 * 
-	 * @param property : property name
-	 * @param oldValue : the property's value before change
-	 * @param newValue : the property's value after change
+	 * @param property name of the fired property
+	 * @param oldValue the property's value before change
+	 * @param newValue the property's value after change
 	 */
 	protected void firePropertyChange(String property, int oldValue, int newValue) {
 		pcs.firePropertyChange(property, oldValue, newValue);

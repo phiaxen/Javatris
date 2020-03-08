@@ -24,7 +24,7 @@ import controller.*;
  * @author Philip
  * @version 1.0
  * 
- *          Added a simple start-menu
+ * Added a simple start-menu
  * @author Joachim Antfolk
  * @version 1.1
  */
@@ -71,7 +71,7 @@ public class Game {
 	}
 
 	/**
-	 * Initializes the game and creates all the neccecary components that are needed
+	 * Initializes the game and creates all the necessary components that are needed
 	 */
 	private void init() {
 		musicPlayer = new MusicPlayer(2);
@@ -227,9 +227,7 @@ public class Game {
 	}
 
 	/**
-	 * Starts a multiplayer Session of the game, opens up a prompt so the user can
-	 * enter the ip and port to the server It should be inputed like this:
-	 * 127.0.0.1:2525 in other words ip:port
+	 * Starts a multiplayer Session of the game, opens up a prompt so the user can enter the ip and port to the server
 	 */
 	public void startOnlineGame() {
 		String code = menuHandler.showOnlineDialog();

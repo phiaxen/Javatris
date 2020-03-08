@@ -47,7 +47,7 @@ public class Shape implements Serializable {
 	/**
 	 * Sets the boolean variable hasCollidedY to the value of the parameter
 	 * 
-	 * @param y : the new value of hasCollidedY
+	 * @param y the new value of hasCollidedY
 	 */
 	public void setCollidedY(boolean y) {
 		hasCollidedY = y;
@@ -56,7 +56,7 @@ public class Shape implements Serializable {
 	/**
 	 * Sets the boolean variable hasCollidedX to the value of the parameter
 	 * 
-	 * @param x : the new value of hasCollidedX
+	 * @param x the new value of hasCollidedX
 	 */
 	public void setCollidedX(boolean x) {
 		hasCollidedX = x;
@@ -91,7 +91,7 @@ public class Shape implements Serializable {
 	 * Changes the normalSpeed to the value of the parameter is used to increase the
 	 * speed of the game.
 	 * 
-	 * @param speed: the new value of normalSpeed;
+	 * @param speed the new value of normalSpeed;
 	 */
 	public void changeNormalSpeed(int speed) {
 		currentSpeed = speed;
@@ -101,7 +101,7 @@ public class Shape implements Serializable {
 	/**
 	 * Changes the x-position of the shape
 	 * 
-	 * @param x : the x-position 
+	 * @param x the x-position 
 	 */
 	public void setX(int x) {
 		this.x = x;
@@ -111,7 +111,7 @@ public class Shape implements Serializable {
 	/**
 	 * Changes the 2D-array of the shape, used for rotation
 	 * 
-	 * @param coords : the new 2D-array
+	 * @param coords the new 2D-array
 	 */
 	public void setCoordianates(int[][] coords) {
 		this.shape = coords;
@@ -139,7 +139,7 @@ public class Shape implements Serializable {
 	 * Returns the value of DeltaX which is the horizontal direction the shape
 	 * currently moves in
 	 * 
-	 * @return deltaX : the current horizontal movement of the shape
+	 * @return deltaX the current horizontal movement of the shape
 	 */
 	public int getDeltaX() {
 		return deltaX;
@@ -149,7 +149,7 @@ public class Shape implements Serializable {
 	 * Returns the value of hasCollidedY which checks if the shape is colliding
 	 * vertically with the board.
 	 * 
-	 * @return hasCollidedY : the value of the hasCollidedY flag
+	 * @return hasCollidedY the value of the hasCollidedY flag
 	 */
 	public boolean hasCollidedY() {
 		return hasCollidedY;
@@ -159,7 +159,7 @@ public class Shape implements Serializable {
 	 * Returns the value of hasCollidedX which checks if the shape is colliding
 	 * horizontally with the board.
 	 * 
-	 * @return hasCollidedX : the value of the hasCollidedX flag
+	 * @return hasCollidedX the value of the hasCollidedX flag
 	 */
 	public boolean hasCollidedX() {
 		return hasCollidedX;
@@ -168,7 +168,7 @@ public class Shape implements Serializable {
 	/**
 	 * return the int that represents the colour of the shape
 	 * 
-	 * @return colour: the int value that represents the colour of the shape
+	 * @return colour the int value that represents the colour of the shape
 	 */
 	public int getColor() {
 		return color;
@@ -186,7 +186,7 @@ public class Shape implements Serializable {
 	/**
 	 * Returns the currentSpeed of the shape
 	 * 
-	 * @return currentSpeed: the current speed of tha game
+	 * @return currentSpeed the current speed of tha game
 	 */
 	public int getCurrentSpeed() {
 		return currentSpeed;
@@ -195,7 +195,7 @@ public class Shape implements Serializable {
 	/**
 	 * Compares this with other
 	 * 
-	 * @param other : object to compare with
+	 * @param other object to compare with
 	 */
 	@Override
 	public boolean equals(Object other) {

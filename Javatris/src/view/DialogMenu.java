@@ -44,11 +44,11 @@ public class DialogMenu {
 	/**
 	 * Creates a dialog menu.
 	 * 
-	 * @param com       : the component to which the dialog box should be attached to
-	 * @param panelSize : the dimensions of the dialog panel
-	 * @param elements  : the amount of elements on the menu
-	 * @param title     : the title name
-	 * @param titleSize : the size of the title
+	 * @param com       the component to which the dialog box should be attached to
+	 * @param panelSize the dimensions of the dialog panel
+	 * @param elements  the amount of elements on the menu
+	 * @param title     the title name
+	 * @param titleSize the size of the title
 	 */
 	public DialogMenu(Component com, Dimension panelSize, int elements, String title, int titleSize) {
 		this.com = com;
@@ -137,7 +137,7 @@ public class DialogMenu {
 	/**
 	 * Adds an element to the menu
 	 * 
-	 * @param element : the element to be added to this menu
+	 * @param element the element to be added to this menu
 	 */
 	public void addElement(Component element) {
 		bottomPanel.add(element);

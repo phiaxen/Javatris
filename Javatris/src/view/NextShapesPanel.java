@@ -78,7 +78,7 @@ public class NextShapesPanel extends JPanel {
 	/**
 	 * Updates all shapes in side info at once
 	 * 
-	 * @param shapeList : the new list of shapes you want to display
+	 * @param shapeList the new list of shapes you want to display
 	 */
 	public void updateNextShape(LinkedList<Shape> shapeList) {
 		shapes = shapeList;

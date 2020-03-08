@@ -30,10 +30,10 @@ public class Board implements Cloneable, Serializable {
 	 * Puts static shapes on the board. Numbers between 1-7(the colors) are added to
 	 * the board's 2D array.
 	 * 
-	 * @param shape : the coordinates of a shape
-	 * @param x     : the x-position of the shape
-	 * @param y     : the y-position of the shape
-	 * @param color : the color of the shape
+	 * @param shape the coordinates of a shape
+	 * @param x the x-position of the shape
+	 * @param y the y-position of the shape
+	 * @param color the color of the shape
 	 */
 	public void setStaticShapeInBoard(int[][] shape, int x, int y, int color) {
 		for (int i = 0; i < shape.length; i++) {
@@ -59,8 +59,7 @@ public class Board implements Cloneable, Serializable {
 
 	/**
 	 * Moves rows down
-	 * 
-	 * @param row : the deleted row, all rows over this row will be moved down
+	 * @param row the index for the deleted row, all rows over this row will be moved down
 	 */
 	public void moveRowsDown(int row) {
 		for (int i = row - 1; i >= 0; i--) {
@@ -72,9 +71,8 @@ public class Board implements Cloneable, Serializable {
 
 	/**
 	 * Adds a row and moves all other rows up
-	 * 
-	 * @param column : the column that should not have a block
-	 * @param color  : the color of each block in the row
+	 * @param column the column that should not have a block
+	 * @param color the color of each block in the row
 	 */
 	public void addRow(int column, int color) {
 		moveRowsUp();
@@ -89,7 +87,7 @@ public class Board implements Cloneable, Serializable {
 	/**
 	 * Removes one row and moves all other rows down
 	 * 
-	 * @param row : the row to be removed from the board
+	 * @param row the row to be removed from the board
 	 */
 	public void deleteRow(int row) {
 		for (int i = 0; i < board[0].length; i++) {
@@ -101,8 +99,8 @@ public class Board implements Cloneable, Serializable {
 	/**
 	 * Checks if the board contains a full row, if so, delete the row
 	 * 
-	 * @param row : the row to be checked
-	 * @return deleted : True if a row was deleted, otherwise false
+	 * @param row the row to be checked
+	 * @return deleted true if a row was deleted, otherwise false
 	 */
 	public boolean checkFullRow(int row) {
 		int cols = board[0].length;
@@ -124,7 +122,7 @@ public class Board implements Cloneable, Serializable {
 	}
 
 	/**
-	 * @return board : returns this board
+	 * @return board returns this board
 	 */
 	public int[][] getBoard() {
 		return board;
@@ -132,8 +130,7 @@ public class Board implements Cloneable, Serializable {
 
 	/**
 	 * Returns deep copy of Board object
-	 * 
-	 * @return Board : copy of this Board
+	 * @return Board deep copy of this Board
 	 */
 	@Override
 	public Board clone() {
@@ -154,8 +151,7 @@ public class Board implements Cloneable, Serializable {
 
 	/**
 	 * Compares this object with parameter
-	 * 
-	 * @param other : Object to be compared to
+	 * @param other Object to be compared to
 	 */
 	@Override
 	public boolean equals(Object other) {
@@ -173,8 +169,7 @@ public class Board implements Cloneable, Serializable {
 
 	/**
 	 * Puts a board on this board
-	 * 
-	 * @param board : the board to be put on this board
+	 * @param board the board to be put on this board
 	 */
 	public void setBoard(int[][] board) {
 		this.board = board;

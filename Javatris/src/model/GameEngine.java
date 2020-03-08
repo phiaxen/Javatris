@@ -1,7 +1,6 @@
 
 package model;
 
-import server.*;
 import java.util.TimerTask;
 
 import java.util.LinkedList;
@@ -90,8 +89,7 @@ public class GameEngine extends AbstractModel implements Runnable {
 	};
 
 	/**
-	 * Sets a flag to true, starts a timer and when the timer has finnished, the
-	 * flag is set to false.
+	 * Sets a flag to true, starts a timer and when the timer has finnished, the flag is set to false
 	 */
 	public void setDelayBeforeStatic() {
 		delaysCalled++;
@@ -113,8 +111,7 @@ public class GameEngine extends AbstractModel implements Runnable {
 	}
 
 	/**
-	 * Updates the state of the current shape.
-	 * 
+	 * Updates the state of the current shape
 	 */
 	private void update() {
 		Board oldBoard = board.clone();
@@ -177,8 +174,8 @@ public class GameEngine extends AbstractModel implements Runnable {
 	/**
 	 * Adds a row with one open spot, used for versus-mode
 	 * 
-	 * @param column : Where the row should have an open spot
-	 * @param color  : Color of the row
+	 * @param column where the row should have an open spot
+	 * @param color color of the row
 	 */
 	public void addRow(int column, int color) {
 		Board oldBoard = board.clone();
@@ -223,7 +220,7 @@ public class GameEngine extends AbstractModel implements Runnable {
 	/**
 	 * Sets delta-x for curren shape
 	 * 
-	 * @param direction : the x-direction the shape should be moved to
+	 * @param direction the x-direction the shape should be moved to
 	 */
 	public void setDeltaXCurrentShape(int direction) {
 		if (((currentShape.getX() +  currentShape.getCoords()[0].length + direction <= 10))&&((currentShape.getX() + direction >= 0))) {
@@ -241,8 +238,7 @@ public class GameEngine extends AbstractModel implements Runnable {
 	
 	
 	/**
-	 * Sets the current shape and change the speed down to be the right speed for
-	 * the current level.
+	 * Sets the current shape and change the speed down to be the right speed for the current level
 	 */
 	private void setCurrentShape() {
 		oldShape = currentShape;
@@ -267,7 +263,7 @@ public class GameEngine extends AbstractModel implements Runnable {
 	}
 
 	/**
-	 * tells the game to stop and display an error message.
+	 * tells the game to stop and display an error message
 	 */
 	public void connectionLost() {
 		if (!gameOver) {
@@ -277,9 +273,8 @@ public class GameEngine extends AbstractModel implements Runnable {
 	}
 
 	/**
-	 * If loss has occured notify client and delegate
-	 * 
-	 * @param type : 0 if game over in solo game, 1 if player has lost, 2 for win
+	 * If loss has occurred notify client and delegate
+	 * @param type 0 if game over in solo game, 1 if player has lost, 2 for win
 	 */
 	public void gameOver(int type) {
 		running = false;
@@ -295,8 +290,7 @@ public class GameEngine extends AbstractModel implements Runnable {
 	}
 
 	/**
-	 * When the current shape has collided, this function is called to store the
-	 * shape in the board.
+	 * When the current shape has collided, this function is called to store the shape in the board
 	 */
 	private void setStaticShapes() {
 		board.setStaticShapeInBoard(currentShape.getCoords(), currentShape.getX(), currentShape.getY(),
@@ -305,7 +299,6 @@ public class GameEngine extends AbstractModel implements Runnable {
 
 	/**
 	 * Returns the current shape
-	 * 
 	 * @return currentShape the shape in action
 	 */
 	public Shape getCurrentShape() {
@@ -313,7 +306,7 @@ public class GameEngine extends AbstractModel implements Runnable {
 	}
 
 	/**
-	 * Increases level by one, updates the speed and lines to clear.
+	 * Increases level by one, updates the speed and lines to clear
 	 */
 	private void levelUp() {
 		int oldLevel = level;
@@ -324,14 +317,14 @@ public class GameEngine extends AbstractModel implements Runnable {
 	}
 
 	/**
-	 * Updates how many lines that the player needs to clear in order to level up.
+	 * Updates how many lines that the player needs to clear in order to level up
 	 */
 	private void updateLinesToClear() {
 		linesToClear = 10 + (level - 1) * 5;
 	}
 
 	/**
-	 * Updates the speed the shape travels downwards. Based on the current level.
+	 * Updates the speed the shape travels downwards. Based on the current level
 	 */
 	private void updateSpeedDown() {
 		if (speedDown > 120) {
@@ -341,7 +334,6 @@ public class GameEngine extends AbstractModel implements Runnable {
 
 	/**
 	 * Returns the current level
-	 * 
 	 * @return level the current level
 	 */
 	public int getLevel() {
@@ -350,8 +342,7 @@ public class GameEngine extends AbstractModel implements Runnable {
 
 	/**
 	 * Returns the current score
-	 * 
-	 * @return points the current scor
+	 * @return points the current score
 	 */
 	public int getPoints() {
 		return points;
@@ -359,7 +350,6 @@ public class GameEngine extends AbstractModel implements Runnable {
 
 	/**
 	 * Calculates the score based on current level and the amount of lines cleared
-	 * 
 	 * @return this function returns the calculated score
 	 */
 	private int getScore(int level, int rows) {
@@ -463,7 +453,7 @@ public class GameEngine extends AbstractModel implements Runnable {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		System.exit(1);
+		System.exit(0);
 	}
 
 	// This function gets called when the thread starts.
@@ -516,21 +506,24 @@ public class GameEngine extends AbstractModel implements Runnable {
 	}
 
 	/**
-	 * @return Returns a list of the next 3 shapes.
+	 * Returns a list of the next 3 shapes.
+	 * @return list of the next 3 shapes
 	 */
 	public LinkedList<Shape> GetNextShapes() {
 		return shapeHandler.getNextShapes();
 	}
 
 	/**
-	 * @return Returns the amount of row cleared.
+	 * Returns the amount of rows cleared.
+	 * @return amount of rows cleared
 	 */
 	public int getRemovedRows() {
 		return linesCleared;
 	}
 
 	/**
-	 * @return Returns the time passed.
+	 * Returns the time passed.
+	 * @return time passed
 	 */
 	public int getTime() {
 		return timePassed;
@@ -538,8 +531,7 @@ public class GameEngine extends AbstractModel implements Runnable {
 
 	/**
 	 * Gets the GameEngines shapeHandler.
-	 * 
-	 * @return : the GameEngines shapeHandler
+	 * @return the GameEngines shapeHandler
 	 */
 	public ShapeHandler getShapeHandler() {
 		return shapeHandler;
@@ -547,8 +539,7 @@ public class GameEngine extends AbstractModel implements Runnable {
 
 	/**
 	 * Sets a saved shape to the current shape.
-	 * 
-	 * @param shape : the shape to be the current shape
+	 * @param shape the shape to be the current shape
 	 */
 	public void setCurrentShape(Shape shape) {
 		currentShape = shape;
@@ -556,8 +547,7 @@ public class GameEngine extends AbstractModel implements Runnable {
 
 	/**
 	 * Sets the list of shapes in shapehandler
-	 * 
-	 * @param shapes : new list of shapes
+	 * @param shapes new list of shapes
 	 */
 	public void setNextShapes(LinkedList<Shape> shapes) {
 		shapeHandler.setNextShapes(shapes);
@@ -565,8 +555,7 @@ public class GameEngine extends AbstractModel implements Runnable {
 
 	/**
 	 * Sets the current score.
-	 * 
-	 * @param score : the score-value 
+	 * @param score the score value 
 	 */
 	public void setScore(int score) {
 		this.points = score;
@@ -574,8 +563,7 @@ public class GameEngine extends AbstractModel implements Runnable {
 	
 	/**
 	 * Sets the current time.
-	 * 
-	 * @param time : the time. 
+	 * @param time new time passed value. 
 	 */
 	public void setTime(int time) {
 		this.timePassed = time;
@@ -583,8 +571,7 @@ public class GameEngine extends AbstractModel implements Runnable {
 
 	/**
 	 * Sets the level.
-	 * 
-	 * @param level : the level. 
+	 * @param level new level value. 
 	 */
 	public void setLevel(int level) {
 		this.level = level;
@@ -592,8 +579,7 @@ public class GameEngine extends AbstractModel implements Runnable {
 
 	/**
 	 * Sets the amount of lines that has been removed.
-	 * 
-	 * @param removedRows : the amount of rows removed. 
+	 * @param removedRows the amount of rows removed. 
 	 */
 	public void setClearedRows(int removedRows) {
 		this.linesCleared = removedRows;
@@ -601,8 +587,7 @@ public class GameEngine extends AbstractModel implements Runnable {
 
 	/**
 	 * Sets the online flag to true or false
-	 * 
-	 * @param online : true for online, false for offline
+	 * @param online true for online, false for offline
 	 */
 	public void setOnline(boolean online) {
 		this.online = online;

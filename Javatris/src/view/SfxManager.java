@@ -47,9 +47,9 @@ public class SfxManager implements PropertyChangeListener {
 	/**
 	 * Loads a sound effect to the Clip array.
 	 * 
-	 * @param index : the index of the array where this sound effect should be placed.
-	 * @param filePath : the file path ocf the sound effect
-	 * @param volume : the volume of the sound effect(0-1)
+	 * @param index the index of the array where this sound effect should be placed.
+	 * @param filePath the file path ocf the sound effect
+	 * @param volume the volume of the sound effect(0-1)
 	 * @exception IOException
 	 * @exception LineUnavailableException
 	 * @exception UnsupportedAudioFileException
@@ -125,7 +125,7 @@ public class SfxManager implements PropertyChangeListener {
 	/**
 	 * Sets if the sounds should play or not
 	 * 
-	 * @param mute : boolean
+	 * @param mute true for muted, false not muted
 	 */
 	public void setMuted(boolean mute) {
 		this.muted = mute;
@@ -135,7 +135,7 @@ public class SfxManager implements PropertyChangeListener {
 	/**
 	 * Returns if sound effects are muted or not
 	 * 
-	 * @return : value of muted
+	 * @return true if muted, else false
 	 */
 	public boolean getMuted() {
 		return this.muted;
@@ -145,7 +145,7 @@ public class SfxManager implements PropertyChangeListener {
 	/**
 	 * Applies property-changes from observed objects
 	 * 
-	 * @param evt : the fired event
+	 * @param evt the fired event
 	 */
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
