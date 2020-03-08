@@ -26,7 +26,6 @@ import model.Shape;
  */
 public class NextShapesPanel extends JPanel {
 
-	
 	private static final long serialVersionUID = 1L;
 	private BufferedImage tiles;
 	private BufferedImage[] colors;
@@ -54,7 +53,8 @@ public class NextShapesPanel extends JPanel {
 	}
 
 	/**
-	 * Loads the tiles and decreases the size of the image to 75% of its origanal size.
+	 * Loads the tiles and decreases the size of the image to 75% of its origanal
+	 * size.
 	 */
 	private void loadImages() {
 		try {

@@ -14,7 +14,7 @@ import view.MusicPlayer;
  * @author Philip Axenhamn
  * @author Tobias Mauritzon
  * @author Joachim Antfolk
- * @since 2020-03-01
+ * @since 2020-03-08
  * @version 2.0
  */
 public class Controller implements KeyEventDispatcher {

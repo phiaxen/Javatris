@@ -18,12 +18,13 @@ import model.Shape;
 import javax.swing.BoxLayout;
 
 /**
- * SideInfo displays information related to the game
+ * SideInfo displays information related to the game such as time, level,
+ * removed rows , score and, upcoming shapes.
  * 
  * @author Tobias Mauritzon
  * @author Philip Axenhamn
  * @version 2.0
- * @since 2020-03-01
+ * @since 2020-03-08
  */
 
 public class SideInfo extends JPanel implements PropertyChangeListener {

@@ -21,11 +21,9 @@ import controller.*;
  * The main framework for the game, Creates most classes and handles
  * communication between several of them.
  * 
- * @author Philip
- * @version 1.0
- * 
- *          Added a simple start-menu
- * @author Joachim Antfolk
+ * @author Philip Axenhamn
+ * @author Joachim Antfolk 
+ * @since 2020-03-08
  * @version 1.1
  */
 

@@ -17,17 +17,18 @@ import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileSystemView;
 
 /**
- * MusicPlayer is a class that handles the background music
+ * MusicPlayer is a class that handles the background music. It has
+ * functionality to control music volume and can load new songs with a
+ * .wav-format. It can also control the flow of the music.
  * 
  * @author Tobias Mauritzon
  * @author Philip Axenhamn
  * @author Joachim Antfolk
  * @version 3.0
- * @since 2020-02-29
+ * @since 2020-03-07
  */
 public class MusicPlayer {
 
-	
 	private Clip audioClip;
 	private final float MaxSteps = 20; // Even numbers only
 	private final float steps = 1 / MaxSteps;

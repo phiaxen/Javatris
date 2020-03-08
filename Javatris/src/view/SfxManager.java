@@ -16,7 +16,7 @@ import javax.sound.sampled.UnsupportedAudioFileException;
  * 
  * @author Philip Axenhamn
  * @version 1.0
- * @since 2020-02-29
+ * @since 2020-03-08
  */
 public class SfxManager implements PropertyChangeListener {
 
