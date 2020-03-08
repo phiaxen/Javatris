@@ -5,7 +5,7 @@ import java.util.Arrays;
 
 /**
  * Board is a class that contains a 2D array of integers representing the board of the game.
- * It also has functions to modify it like adding rows, removing rows and adding shapes to the array..
+ * It also has functions to modify it like adding rows, removing rows and adding shapes to the array.
  * 
  * @author Philip Axenhamn
  * @author Joachim Antfolk
