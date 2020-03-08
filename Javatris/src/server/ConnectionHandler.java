@@ -32,7 +32,6 @@ public class ConnectionHandler implements Runnable {
 		void connectionLost();
 	}
 
-	
 	private BufferedReader indata;
 	public Delegate delegate;
 

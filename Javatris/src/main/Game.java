@@ -24,7 +24,7 @@ import controller.*;
  * @author Philip
  * @version 1.0
  * 
- * Added a simple start-menu
+ *          Added a simple start-menu
  * @author Joachim Antfolk
  * @version 1.1
  */
@@ -226,7 +226,8 @@ public class Game {
 	}
 
 	/**
-	 * Starts a multiplayer Session of the game, opens up a prompt so the user can enter the ip and port to the server
+	 * Starts a multiplayer Session of the game, opens up a prompt so the user can
+	 * enter the ip and port to the server
 	 */
 	public void startOnlineGame() {
 		String code = menuHandler.showOnlineDialog();

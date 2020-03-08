@@ -28,7 +28,6 @@ import javax.swing.BoxLayout;
 
 public class SideInfo extends JPanel implements PropertyChangeListener {
 
-	
 	private static final long serialVersionUID = 1L;
 	private JLabel scoreLabel;
 	private JLabel timeLabel;
@@ -82,7 +81,7 @@ public class SideInfo extends JPanel implements PropertyChangeListener {
 		nextLabel.setForeground(Color.WHITE);
 		nextLabel.setFont(new Font("Arial", Font.BOLD, 30));
 		nextPanel.add(nextLabel, BorderLayout.CENTER);
-		
+
 		scoreLabel = new JLabel("0", SwingConstants.CENTER);
 		linesLabel = new JLabel("" + rowsRemoved, SwingConstants.CENTER);
 		levelLabel = new JLabel("" + level, SwingConstants.CENTER);
@@ -102,7 +101,7 @@ public class SideInfo extends JPanel implements PropertyChangeListener {
 	/**
 	 * Standardizes the GUI for "Final" JLabes and gathers them in one array
 	 * 
-	 * @param id
+	 * @param index the index for the panel
 	 * @param title sets the displayed text
 	 * @param label the Jlabel you want to standardize
 	 * @return this function returns a customized JPanel from the array
@@ -125,7 +124,6 @@ public class SideInfo extends JPanel implements PropertyChangeListener {
 		panels[index].add(label, BorderLayout.CENTER);
 		return panels[index];
 	}
-
 
 	/**
 	 * Update the scoreLabel with new score
