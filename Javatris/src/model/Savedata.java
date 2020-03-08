@@ -37,7 +37,7 @@ public class Savedata implements Serializable {
 	/**
 	 * Returns the saved board
 	 * 
-	 * @Return the saved Board
+	 * @return the saved Board
 	 */
 	public int[][] getBoard() {
 		return board;

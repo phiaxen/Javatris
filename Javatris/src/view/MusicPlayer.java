@@ -80,9 +80,6 @@ public class MusicPlayer {
 	 * Loads a choosen song.
 	 * 
 	 * @param fp is the file path to the song as a string
-	 * @exception IOException
-	 * @exception LineUnavailableException
-	 * @exception UnsupportedAudioFileException
 	 */
 	public void loadMusic(String fp) {
 
@@ -109,14 +106,8 @@ public class MusicPlayer {
 			}
 
 			fileLoaded = true;
-		} catch (IOException e1) {
+		} catch (IOException | UnsupportedAudioFileException | LineUnavailableException e1) {
 			e1.printStackTrace();
-		}
-		catch (LineUnavailableException e2) {
-			e2.printStackTrace();
-		}
-		catch (UnsupportedAudioFileException e3) {
-			e3.printStackTrace();
 		}
 
 	}
@@ -132,7 +123,6 @@ public class MusicPlayer {
 	 * Loads and starts the song.
 	 * 
 	 * @param audioFile is the File you want to load
-	 * @return Nothing.
 	 */
 	public void playMusicFile(File audioFile) {
 
@@ -168,8 +158,6 @@ public class MusicPlayer {
 
 	/**
 	 * Stops the currently playing song.
-	 * 
-	 * @exception if no clip has been created
 	 */
 	public void stop() {
 		if (fileLoaded) {
@@ -203,7 +191,7 @@ public class MusicPlayer {
 			volume = (float) Math.round(volume * 100) / 100;
 			return volume;
 		}
-		return 0f;		
+		return 0f;
 	}
 
 	/**
@@ -229,7 +217,7 @@ public class MusicPlayer {
 	public void incVolume() {
 		if (fileLoaded) {
 			muted = false;
-			//float volume = getVolume();
+			// float volume = getVolume();
 			float volume = globalVolume;
 			volume += steps;
 

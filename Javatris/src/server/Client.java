@@ -83,7 +83,7 @@ public class Client {
 	/**
 	 * returns this instance of the client
 	 * 
-	 * @Return Returns this client
+	 * @return Returns this client
 	 */
 	public Client getClient() {
 		return this;
