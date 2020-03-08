@@ -19,7 +19,8 @@ import view.*;
 import controller.*;
 
 /**
- * The main framework for the game, Creates most classes and handles communication between several of them.
+ * The main framework for the game, Creates most classes and handles
+ * communication between several of them.
  * 
  * @author Philip
  * @version 1.0
@@ -119,7 +120,7 @@ public class Game {
 			public void connectionLost() {
 				menuHandler.openBasicMenu(4);
 			}
-			
+
 			@Override
 			public void sendInt(int number) {
 				client.sendInt(number);
@@ -190,12 +191,12 @@ public class Game {
 			gameEngine.setTime(loadData.getTime());
 			gameEngine.setClearedRows(loadData.getRemovedRows());
 			gameEngine.setIsLoading();
-			loaded  = true;
+			loaded = true;
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Could not load save-file");
-			loaded  = false;
+			loaded = false;
 		}
-		if(loaded) {
+		if (loaded) {
 			gameEngine.fireGameField();
 			gamePanel.validate();
 			gamePanel.repaint();
@@ -228,7 +229,7 @@ public class Game {
 
 	/**
 	 * Starts a multiplayer Session of the game, opens up a prompt so the user can
-	 * enter the ip and port to the server It should be inputed like this:
+	 * enter the ip and port to the server It should be inputed like this
 	 * 127.0.0.1:2525 in other words ip:port
 	 */
 	public void startOnlineGame() {
