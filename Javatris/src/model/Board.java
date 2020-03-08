@@ -4,12 +4,12 @@ import java.io.Serializable;
 import java.util.Arrays;
 
 /**
- * Board is a class that creates a 2D-array and has functions that handles all
- * changes to it
+ * Board is a class that contains a 2D array of integers representing the board of the game.
+ * It also has functions to modify it like adding and removing rows.
  * 
  * @author Philip Axenhamn
  * @author Joachim Antfolk
- * @since 2020-02-15
+ * @since 2020-03-08
  * @version 1.0
  */
 public class Board implements Cloneable, Serializable {
@@ -21,7 +21,7 @@ public class Board implements Cloneable, Serializable {
 	private final int WIDTH = 10; // Width of the game-board
 
 	/**
-	 * Creates a board
+	 * Creates a board using the value of HEIGHT and WIDTH
 	 */
 	public Board() {
 		board = new int[HEIGHT][WIDTH];
