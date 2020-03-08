@@ -5,7 +5,9 @@ import java.util.LinkedList;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
- * Handles the generation of shapes
+ * ShapeHandler contains the list of the existing shapes in the game.
+ * It uses this list to generate new shapes.
+ * It also handles the rotation of shapes.
  * 
  * @author Joachim Antfolk
  * @version 1.0
