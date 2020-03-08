@@ -25,7 +25,6 @@ import model.*;
  */
 public class BoardView extends JPanel implements PropertyChangeListener {
 
-	
 	private static final long serialVersionUID = 1L;
 	private BufferedImage tiles, background;
 	private int[][] boardCoords;
@@ -48,7 +47,7 @@ public class BoardView extends JPanel implements PropertyChangeListener {
 	 */
 	private void init() {
 		colors = new BufferedImage[8];
-		this.setBackground(Color.white); // om man vill ha en enfärgad bakgrund
+		this.setBackground(Color.white);
 		boardCoords = new int[HEIGHT][WIDTH];
 		loadImages();
 
@@ -141,7 +140,7 @@ public class BoardView extends JPanel implements PropertyChangeListener {
 	public void propertyChange(PropertyChangeEvent evt) {
 		String property = evt.getPropertyName();
 		if (property.equals("board")) {
-			boardCoords = ((Board)evt.getNewValue()).getBoard();
+			boardCoords = ((Board) evt.getNewValue()).getBoard();
 		}
 		if (property.equals("shape")) {
 			setCurrentShape(((Shape) evt.getNewValue()));
