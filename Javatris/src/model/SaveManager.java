@@ -7,7 +7,6 @@ import java.io.Serializable;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-import javax.imageio.IIOException;
 
 /**
  * A class created to manage the save data for the game, it can both save and
