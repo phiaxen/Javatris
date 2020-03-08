@@ -24,7 +24,6 @@ import javax.swing.border.EmptyBorder;
  */
 public class Server {
 
-	
 	private static int port;
 	private static ServerSocket sSocket;
 
