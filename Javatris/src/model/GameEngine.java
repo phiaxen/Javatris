@@ -1,23 +1,23 @@
-
 package model;
-
 import java.util.TimerTask;
-
 import java.util.LinkedList;
 import java.util.Timer;
 
 /**
- * GameEngine is a class that handles all the calculations in the game.
+ * GameEngine is responsible for the central game logic and updates. 
+ * It communicates with other classes to gain access to new shapes in order to update the shape's position and rotation. 
+ * Shapes that have collided are updated from being dynamic to becoming static.
  * 
  * @author Philip Axenhamn
  * @author Joachim Antfolk
  * @author Andreas Greppe
  * @author Tobias Mauritzon
  * @version 2.0
- * @since 2020-03-01
+ * @since 2020-03-08
  */
 public class GameEngine extends AbstractModel implements Runnable {
 
+	
 	/*
 	 * Interface that handles the communication with the game engine.
 	 */
@@ -28,7 +28,7 @@ public class GameEngine extends AbstractModel implements Runnable {
 		void gameOver(int type);
 
 		void connectionLost();
-
+		
 		void sendInt(int number);
 	}
 
@@ -89,8 +89,7 @@ public class GameEngine extends AbstractModel implements Runnable {
 	};
 
 	/**
-	 * Sets a flag to true, starts a timer and when the timer has finnished, the
-	 * flag is set to false
+	 * Sets a flag to true, starts a timer and when the timer has finnished, the flag is set to false
 	 */
 	public void setDelayBeforeStatic() {
 		delaysCalled++;
@@ -126,7 +125,7 @@ public class GameEngine extends AbstractModel implements Runnable {
 			checkIfGameOver();
 			int rowsDeleted = 0;
 			int oldlinesC = linesCleared;
-			if (!gameOver) {
+			if(!gameOver) {
 				firePropertyChange("collisionY", currentState, currentShape.hasCollidedY());
 			}
 
@@ -151,7 +150,7 @@ public class GameEngine extends AbstractModel implements Runnable {
 				firePropertyChange("points", oldPoints, points);
 				firePropertyChange("lines cleared", oldlinesC, linesCleared);
 			}
-
+			
 			setCurrentShape();
 		}
 
@@ -176,7 +175,7 @@ public class GameEngine extends AbstractModel implements Runnable {
 	 * Adds a row with one open spot, used for versus-mode
 	 * 
 	 * @param column where the row should have an open spot
-	 * @param color  color of the row
+	 * @param color color of the row
 	 */
 	public void addRow(int column, int color) {
 		Board oldBoard = board.clone();
@@ -191,8 +190,7 @@ public class GameEngine extends AbstractModel implements Runnable {
 		for (int i = 0; i < currentShape.getCoords().length; i++) {
 			for (int j = 0; j < currentShape.getCoords()[0].length; j++) {
 				if (currentShape.getCoords()[i][j] != 0) {
-					if (board.getBoard()[currentShape.getY() + i][currentShape.getX() + j
-							+ currentShape.getDeltaX()] != 0) {
+					if (board.getBoard()[currentShape.getY() + i][currentShape.getX() + j + currentShape.getDeltaX()] != 0) {
 						currentShape.setCollidedX(true);
 					}
 				}
@@ -225,23 +223,22 @@ public class GameEngine extends AbstractModel implements Runnable {
 	 * @param direction the x-direction the shape should be moved to
 	 */
 	public void setDeltaXCurrentShape(int direction) {
-		if (((currentShape.getX() + currentShape.getCoords()[0].length + direction <= 10))
-				&& ((currentShape.getX() + direction >= 0))) {
+		if (((currentShape.getX() +  currentShape.getCoords()[0].length + direction <= 10))&&((currentShape.getX() + direction >= 0))) {
 			currentShape.setDeltaX(direction);
 			setDelayBeforeStatic();
 		}
 	}
-
+	
 	/**
 	 * Rotates the current shape
 	 */
 	public void rotateCurrentShape() {
 		shapeHandler.rotate(currentShape);
 	}
-
+	
+	
 	/**
-	 * Sets the current shape and change the speed down to be the right speed for
-	 * the current level
+	 * Sets the current shape and change the speed down to be the right speed for the current level
 	 */
 	private void setCurrentShape() {
 		oldShape = currentShape;
@@ -277,7 +274,6 @@ public class GameEngine extends AbstractModel implements Runnable {
 
 	/**
 	 * If loss has occurred notify client and delegate
-	 * 
 	 * @param type 0 if game over in solo game, 1 if player has lost, 2 for win
 	 */
 	public void gameOver(int type) {
@@ -294,8 +290,7 @@ public class GameEngine extends AbstractModel implements Runnable {
 	}
 
 	/**
-	 * When the current shape has collided, this function is called to store the
-	 * shape in the board
+	 * When the current shape has collided, this function is called to store the shape in the board
 	 */
 	private void setStaticShapes() {
 		board.setStaticShapeInBoard(currentShape.getCoords(), currentShape.getX(), currentShape.getY(),
@@ -304,7 +299,6 @@ public class GameEngine extends AbstractModel implements Runnable {
 
 	/**
 	 * Returns the current shape
-	 * 
 	 * @return currentShape the shape in action
 	 */
 	public Shape getCurrentShape() {
@@ -340,7 +334,6 @@ public class GameEngine extends AbstractModel implements Runnable {
 
 	/**
 	 * Returns the current level
-	 * 
 	 * @return level the current level
 	 */
 	public int getLevel() {
@@ -349,7 +342,6 @@ public class GameEngine extends AbstractModel implements Runnable {
 
 	/**
 	 * Returns the current score
-	 * 
 	 * @return points the current score
 	 */
 	public int getPoints() {
@@ -358,9 +350,6 @@ public class GameEngine extends AbstractModel implements Runnable {
 
 	/**
 	 * Calculates the score based on current level and the amount of lines cleared
-	 * 
-	 * @param level the level base score should be multiplied by
-	 * @param rows  the amount of rows deleted
 	 * @return this function returns the calculated score
 	 */
 	private int getScore(int level, int rows) {
@@ -518,7 +507,6 @@ public class GameEngine extends AbstractModel implements Runnable {
 
 	/**
 	 * Returns a list of the next 3 shapes.
-	 * 
 	 * @return list of the next 3 shapes
 	 */
 	public LinkedList<Shape> GetNextShapes() {
@@ -527,7 +515,6 @@ public class GameEngine extends AbstractModel implements Runnable {
 
 	/**
 	 * Returns the amount of rows cleared.
-	 * 
 	 * @return amount of rows cleared
 	 */
 	public int getRemovedRows() {
@@ -536,7 +523,6 @@ public class GameEngine extends AbstractModel implements Runnable {
 
 	/**
 	 * Returns the time passed.
-	 * 
 	 * @return time passed
 	 */
 	public int getTime() {
@@ -545,7 +531,6 @@ public class GameEngine extends AbstractModel implements Runnable {
 
 	/**
 	 * Gets the GameEngines shapeHandler.
-	 * 
 	 * @return the GameEngines shapeHandler
 	 */
 	public ShapeHandler getShapeHandler() {
@@ -554,7 +539,6 @@ public class GameEngine extends AbstractModel implements Runnable {
 
 	/**
 	 * Sets a saved shape to the current shape.
-	 * 
 	 * @param shape the shape to be the current shape
 	 */
 	public void setCurrentShape(Shape shape) {
@@ -563,7 +547,6 @@ public class GameEngine extends AbstractModel implements Runnable {
 
 	/**
 	 * Sets the list of shapes in shapehandler
-	 * 
 	 * @param shapes new list of shapes
 	 */
 	public void setNextShapes(LinkedList<Shape> shapes) {
@@ -572,17 +555,15 @@ public class GameEngine extends AbstractModel implements Runnable {
 
 	/**
 	 * Sets the current score.
-	 * 
-	 * @param score the score value
+	 * @param score the score value 
 	 */
 	public void setScore(int score) {
 		this.points = score;
 	}
-
+	
 	/**
 	 * Sets the current time.
-	 * 
-	 * @param time new time passed value.
+	 * @param time new time passed value. 
 	 */
 	public void setTime(int time) {
 		this.timePassed = time;
@@ -590,8 +571,7 @@ public class GameEngine extends AbstractModel implements Runnable {
 
 	/**
 	 * Sets the level.
-	 * 
-	 * @param level new level value.
+	 * @param level new level value. 
 	 */
 	public void setLevel(int level) {
 		this.level = level;
@@ -599,8 +579,7 @@ public class GameEngine extends AbstractModel implements Runnable {
 
 	/**
 	 * Sets the amount of lines that has been removed.
-	 * 
-	 * @param removedRows the amount of rows removed.
+	 * @param removedRows the amount of rows removed. 
 	 */
 	public void setClearedRows(int removedRows) {
 		this.linesCleared = removedRows;
@@ -608,7 +587,6 @@ public class GameEngine extends AbstractModel implements Runnable {
 
 	/**
 	 * Sets the online flag to true or false
-	 * 
 	 * @param online true for online, false for offline
 	 */
 	public void setOnline(boolean online) {
