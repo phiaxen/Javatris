@@ -13,6 +13,7 @@ import java.util.Arrays;
  */
 public class Shape implements Serializable {
 
+	
 	private static final long serialVersionUID = 2L;
 	private int[][] shape;
 	private int x, y;

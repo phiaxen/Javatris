@@ -14,6 +14,7 @@ import java.util.Arrays;
  */
 public class Board implements Cloneable, Serializable {
 
+	
 	private static final long serialVersionUID = 1L;
 	private int[][] board; // 2D-array of the board (standard: 20x10)
 	private final int HEIGHT = 20; // Heigth of the game-board

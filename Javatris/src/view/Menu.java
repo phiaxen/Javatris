@@ -17,6 +17,7 @@ import javax.swing.border.*;
  */
 public class Menu extends JPanel {
 
+	
 	private static final long serialVersionUID = 1L;
 	private JPanel topPanel;
 	private JPanel bottomPanel;

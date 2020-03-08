@@ -27,6 +27,7 @@ import javax.swing.filechooser.FileSystemView;
  */
 public class MusicPlayer {
 
+	
 	private Clip audioClip;
 	private final float MaxSteps = 20; // Even numbers only
 	private final float steps = 1 / MaxSteps;

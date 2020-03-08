@@ -21,6 +21,7 @@ import javax.sound.sampled.UnsupportedAudioFileException;
  */
 public class SfxManager implements PropertyChangeListener {
 
+	
 	private Clip[] sfx;
 	private boolean muted;
 

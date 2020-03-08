@@ -26,6 +26,7 @@ import model.Shape;
  */
 public class NextShapesPanel extends JPanel {
 
+	
 	private static final long serialVersionUID = 1L;
 	private BufferedImage tiles;
 	private BufferedImage[] colors;

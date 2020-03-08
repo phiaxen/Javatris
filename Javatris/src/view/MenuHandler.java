@@ -37,6 +37,7 @@ import main.Game;
  */
 public class MenuHandler {
 
+	
 	private final Game game;
 	private final JFrame frame;
 	private final JPanel fixedPanel;

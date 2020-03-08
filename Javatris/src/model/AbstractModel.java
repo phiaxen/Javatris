@@ -14,6 +14,7 @@ import java.beans.PropertyChangeEvent;
  */
 public abstract class AbstractModel implements PropertyChange {
 
+	
 	private final PropertyChangeSupport pcs;
 
 	public AbstractModel() {

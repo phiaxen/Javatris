@@ -16,6 +16,7 @@ import java.util.ArrayList;
  */
 public class ClientHandler implements Runnable
 {
+	
 	private PrintWriter writer;
 	private BufferedReader reader;
 	private ArrayList<ClientHandler> clients;

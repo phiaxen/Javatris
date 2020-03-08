@@ -28,6 +28,7 @@ import javax.swing.BoxLayout;
 
 public class SideInfo extends JPanel implements PropertyChangeListener {
 
+	
 	private static final long serialVersionUID = 1L;
 	private JLabel scoreLabel;
 	private JLabel timeLabel;

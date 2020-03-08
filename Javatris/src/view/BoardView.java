@@ -25,6 +25,7 @@ import model.*;
  */
 public class BoardView extends JPanel implements PropertyChangeListener {
 
+	
 	private static final long serialVersionUID = 1L;
 	private BufferedImage tiles, background;
 	private int[][] boardCoords;

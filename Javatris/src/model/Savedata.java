@@ -15,6 +15,7 @@ import java.util.LinkedList;
  */
 public class Savedata implements Serializable {
 
+	
 	private static final long serialVersionUID = 5L;
 	int board[][];
 	Shape currentShape;

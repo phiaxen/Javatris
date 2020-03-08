@@ -19,6 +19,7 @@ import java.io.*;
  */
 public class Client {
 
+	
 	private Socket socket;
 	static PrintWriter output;
 

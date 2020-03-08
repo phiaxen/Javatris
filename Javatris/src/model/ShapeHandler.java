@@ -11,6 +11,7 @@ import java.util.concurrent.ThreadLocalRandom;
  */
 public class ShapeHandler extends AbstractModel{
 	
+	
 	private final Board board;
 	
 	private Shape shapes[] = new Shape[7];	//An array that contains 7 different shapes

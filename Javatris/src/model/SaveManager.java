@@ -15,7 +15,8 @@ import java.nio.file.Paths;
  * @version 2020-02-19
  */
 public class SaveManager {
-
+	
+	
 	/**
 	 * Saves the data to a file with the parameter filename as the files name.
 	 * 

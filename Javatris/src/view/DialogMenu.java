@@ -25,6 +25,7 @@ import javax.swing.border.EmptyBorder;
  */
 public class DialogMenu {
 
+	
 	private static final Color panelColor = new Color(0, 0, 0);
 	private static final int ALPHA = 180; // 0-255
 	private static final Color GP_Color = new Color(0, 0, 0, ALPHA); // for glassPane

@@ -18,6 +18,7 @@ import java.util.Timer;
  */
 public class GameEngine extends AbstractModel implements Runnable {
 
+	
 	/*
 	 * Interface that handles the communication with the game engine.
 	 */
