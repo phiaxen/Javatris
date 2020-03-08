@@ -207,7 +207,6 @@ public class Game {
 
 	/**
 	 * Save a game
-	 * @throws IOException 
 	 */
 	public void saveGame() {
 		Savedata saveData = new Savedata();
